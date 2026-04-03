@@ -1,0 +1,8 @@
+name: lexbeam-eu-ai-act-mcp-server
+description: "EU AI Act compliance MCP server - risk classification, deadlines, obligations, and FAQ. By Lexbeam Software."
+version: 1.0.0
+command: npx
+args:
+  - -y
+  - "@lexbeam/eu-ai-act-mcp"
+envs: {}

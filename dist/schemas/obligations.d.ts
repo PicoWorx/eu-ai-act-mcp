@@ -17,17 +17,20 @@ export declare const obligationsOutputSchema: z.ZodObject<{
     riskLevel: z.ZodString;
     obligations: z.ZodArray<z.ZodObject<{
         category: z.ZodString;
-        description: z.ZodString;
+        obligation: z.ZodString;
+        details: z.ZodString;
         article: z.ZodString;
         deadline: z.ZodNullable<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
-        description: string;
         category: string;
+        obligation: string;
+        details: string;
         article: string;
         deadline: string | null;
     }, {
-        description: string;
         category: string;
+        obligation: string;
+        details: string;
         article: string;
         deadline: string | null;
     }>, "many">;
@@ -49,8 +52,9 @@ export declare const obligationsOutputSchema: z.ZodObject<{
     source: string;
     riskLevel: string;
     obligations: {
-        description: string;
         category: string;
+        obligation: string;
+        details: string;
         article: string;
         deadline: string | null;
     }[];
@@ -65,8 +69,9 @@ export declare const obligationsOutputSchema: z.ZodObject<{
     source: string;
     riskLevel: string;
     obligations: {
-        description: string;
         category: string;
+        obligation: string;
+        details: string;
         article: string;
         deadline: string | null;
     }[];

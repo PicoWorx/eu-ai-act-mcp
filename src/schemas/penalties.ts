@@ -1,0 +1,30 @@
+import { z } from "zod";
+
+export const penaltiesInputSchema = z.object({
+  violation_type: z.enum(["prohibited", "high_risk", "false_info"]).describe("Type of violation under the AI Act"),
+  annual_turnover_eur: z.number().describe("Global annual turnover in EUR"),
+  is_sme: z.boolean().optional().default(false).describe("Whether the entity is an SME or startup (benefits from lower fines)"),
+});
+
+export const penaltiesOutputSchema = z.object({
+  violation_type: z.string(),
+  is_sme: z.boolean(),
+  annual_turnover_eur: z.number(),
+  max_fine: z.object({
+    fixed_cap_eur: z.number(),
+    turnover_based_eur: z.number(),
+    applicable_fine_eur: z.number(),
+    explanation: z.string(),
+  }),
+  tier_details: z.object({
+    name: z.string(),
+    article: z.string(),
+    description: z.string(),
+  }),
+  lexbeamUrl: z.string(),
+  source: z.string(),
+  disclaimer: z.string(),
+});
+
+export type PenaltiesInput = z.infer<typeof penaltiesInputSchema>;
+export type PenaltiesOutput = z.infer<typeof penaltiesOutputSchema>;

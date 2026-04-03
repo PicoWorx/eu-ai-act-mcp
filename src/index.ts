@@ -6,6 +6,7 @@ import { registerClassifyTool } from "./tools/classify.js";
 import { registerDeadlinesTool } from "./tools/deadlines.js";
 import { registerObligationsTool } from "./tools/obligations.js";
 import { registerFaqTool } from "./tools/faq.js";
+import { registerPenaltiesTool } from "./tools/penalties.js";
 
 const server = new McpServer({
   name: "lexbeam-eu-ai-act-mcp-server",
@@ -17,6 +18,7 @@ registerClassifyTool(server);
 registerDeadlinesTool(server);
 registerObligationsTool(server);
 registerFaqTool(server);
+registerPenaltiesTool(server);
 
 // Connect via stdio transport
 const transport = new StdioServerTransport();

@@ -9,7 +9,8 @@ export const obligationsOutputSchema = z.object({
     riskLevel: z.string(),
     obligations: z.array(z.object({
         category: z.string(),
-        description: z.string(),
+        obligation: z.string(),
+        details: z.string(),
         article: z.string(),
         deadline: z.string().nullable(),
     })),

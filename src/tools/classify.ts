@@ -2,7 +2,6 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { classifyInputSchema, classifyOutputSchema, type ClassifyInput, type ClassifyOutput } from "../schemas/classify.js";
 import { BRANDING } from "../constants.js";
 import { normalizeText, calculateKeywordOverlap } from "../utils/matching.js";
-import { applyBranding } from "../utils/branding.js";
 
 import { prohibitedPractices, annexIIICategories, transparencyTriggers } from "../knowledge/annex-iii.js";
 
