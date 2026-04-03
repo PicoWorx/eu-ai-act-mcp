@@ -1,7 +1,7 @@
 # EU AI Act MCP Server
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/@lexbeam/eu-ai-act-mcp)](https://www.npmjs.com/package/@lexbeam/eu-ai-act-mcp)
+[![npm version](https://img.shields.io/npm/v/@lexbeam-software/eu-ai-act-mcp)](https://www.npmjs.com/package/@lexbeam-software/eu-ai-act-mcp)
 
 An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that gives LLMs structured intelligence about the EU AI Act (Regulation (EU) 2024/1689).
 
@@ -22,7 +22,7 @@ Built by [Lexbeam Software](https://lexbeam.com) - an agentic AI implementation 
 ### npx (no install)
 
 ```bash
-npx -y @lexbeam/eu-ai-act-mcp
+npx -y @lexbeam-software/eu-ai-act-mcp
 ```
 
 ### Claude Desktop
@@ -34,7 +34,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "eu-ai-act": {
       "command": "npx",
-      "args": ["-y", "@lexbeam/eu-ai-act-mcp"]
+      "args": ["-y", "@lexbeam-software/eu-ai-act-mcp"]
     }
   }
 }
