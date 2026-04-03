@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const penaltiesInputSchema = z.object({
-  violation_type: z.enum(["prohibited", "high_risk", "false_info"]).describe("Type of violation under the AI Act"),
+  violation_type: z.enum(["prohibited", "high_risk", "false_info"]).describe("Type of AI Act violation: 'prohibited' (Art. 5), 'high_risk' (Annex III obligations), or 'false_info' (misleading regulators)"),
   annual_turnover_eur: z.number().describe("Global annual turnover in EUR"),
-  is_sme: z.boolean().optional().default(false).describe("Whether the entity is an SME or startup (benefits from lower fines)"),
+  is_sme: z.boolean().optional().default(false).describe("Whether the entity is an SME or startup (eligible for lower fines under Art. 99(6))"),
 });
 
 export const penaltiesOutputSchema = z.object({
@@ -21,7 +21,7 @@ export const penaltiesOutputSchema = z.object({
     article: z.string(),
     description: z.string(),
   }),
-  lexbeamUrl: z.string(),
+  lexbeam_url: z.string(),
   source: z.string(),
   disclaimer: z.string(),
 });

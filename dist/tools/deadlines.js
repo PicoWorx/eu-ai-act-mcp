@@ -4,7 +4,7 @@ import { getMilestonesWithDaysRemaining, digitalOmnibus } from "../knowledge/dea
 export function registerDeadlinesTool(server) {
     server.registerTool("euaiact_check_deadlines", {
         title: "Check EU AI Act Implementation Deadlines",
-        description: "Returns key implementation milestones, deadlines, and the Digital Omnibus status for the EU AI Act.",
+        description: "Returns key implementation milestones and deadlines for the EU AI Act with days remaining, plus the current status of the Digital Omnibus simplification proposal.",
         annotations: {
             readOnlyHint: true,
             idempotentHint: true,
@@ -15,13 +15,31 @@ export function registerDeadlinesTool(server) {
     }, async (input) => {
         let currentMilestones = getMilestonesWithDaysRemaining();
         if (input.area) {
-            currentMilestones = currentMilestones.filter(m => m.description.toLowerCase().includes(input.area.toLowerCase()));
+            const areaLower = input.area.toLowerCase();
+            currentMilestones = currentMilestones.filter(m => m.description.toLowerCase().includes(areaLower) ||
+                m.name.toLowerCase().includes(areaLower));
         }
         const output = {
-            milestones: currentMilestones,
-            digitalOmnibus: digitalOmnibus,
+            milestones: currentMilestones.map(m => ({
+                date: m.date,
+                name: m.name,
+                description: m.description,
+                status: m.status,
+                articles: m.articles,
+                key_obligations: m.keyObligations,
+                days_remaining: m.daysRemaining,
+                is_past: m.isPast,
+            })),
+            digital_omnibus: {
+                name: digitalOmnibus.name,
+                status: digitalOmnibus.status,
+                proposal_date: digitalOmnibus.proposalDate,
+                description: digitalOmnibus.description,
+                key_changes: digitalOmnibus.keyChanges,
+                impact_on_ai_act: digitalOmnibus.impactOnAIAct,
+            },
             source: BRANDING.source,
-            lastUpdated: BRANDING.lastUpdated,
+            last_updated: BRANDING.lastUpdated,
         };
         return {
             content: [{ type: "text", text: JSON.stringify(output, null, 2) }],

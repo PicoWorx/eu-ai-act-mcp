@@ -1,85 +1,85 @@
 import { z } from "zod";
 export declare const obligationsInputSchema: z.ZodObject<{
     role: z.ZodEnum<["provider", "deployer"]>;
-    risk_level: z.ZodEnum<["high-risk", "limited", "minimal"]>;
+    risk_level: z.ZodEnum<["high-risk", "limited", "minimal", "gpai"]>;
     filter_keyword: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     role: "provider" | "deployer";
-    risk_level: "high-risk" | "limited" | "minimal";
+    risk_level: "high-risk" | "limited" | "minimal" | "gpai";
     filter_keyword?: string | undefined;
 }, {
     role: "provider" | "deployer";
-    risk_level: "high-risk" | "limited" | "minimal";
+    risk_level: "high-risk" | "limited" | "minimal" | "gpai";
     filter_keyword?: string | undefined;
 }>;
 export declare const obligationsOutputSchema: z.ZodObject<{
     role: z.ZodString;
-    riskLevel: z.ZodString;
+    risk_level: z.ZodString;
     obligations: z.ZodArray<z.ZodObject<{
-        category: z.ZodString;
         obligation: z.ZodString;
-        details: z.ZodString;
         article: z.ZodString;
-        deadline: z.ZodNullable<z.ZodString>;
+        deadline: z.ZodString;
+        details: z.ZodString;
+        category: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        category: string;
         obligation: string;
-        details: string;
         article: string;
-        deadline: string | null;
+        deadline: string;
+        details: string;
+        category: string;
     }, {
-        category: string;
         obligation: string;
-        details: string;
         article: string;
-        deadline: string | null;
+        deadline: string;
+        details: string;
+        category: string;
     }>, "many">;
     penalties: z.ZodObject<{
-        maxFine: z.ZodString;
+        max_fine: z.ZodString;
         basis: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        maxFine: string;
+        max_fine: string;
         basis: string;
     }, {
-        maxFine: string;
+        max_fine: string;
         basis: string;
     }>;
-    lexbeamUrl: z.ZodString;
+    lexbeam_url: z.ZodString;
     source: z.ZodString;
     disclaimer: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     role: string;
+    lexbeam_url: string;
     source: string;
-    riskLevel: string;
+    risk_level: string;
     obligations: {
-        category: string;
         obligation: string;
-        details: string;
         article: string;
-        deadline: string | null;
+        deadline: string;
+        details: string;
+        category: string;
     }[];
     penalties: {
-        maxFine: string;
+        max_fine: string;
         basis: string;
     };
-    lexbeamUrl: string;
     disclaimer?: string | undefined;
 }, {
     role: string;
+    lexbeam_url: string;
     source: string;
-    riskLevel: string;
+    risk_level: string;
     obligations: {
-        category: string;
         obligation: string;
-        details: string;
         article: string;
-        deadline: string | null;
+        deadline: string;
+        details: string;
+        category: string;
     }[];
     penalties: {
-        maxFine: string;
+        max_fine: string;
         basis: string;
     };
-    lexbeamUrl: string;
     disclaimer?: string | undefined;
 }>;
 export type ObligationsInput = z.infer<typeof obligationsInputSchema>;

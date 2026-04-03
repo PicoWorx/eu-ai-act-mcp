@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { obligationsInputSchema, obligationsOutputSchema, type ObligationsInput, type ObligationsOutput } from "../schemas/obligations.js";
 import { BRANDING } from "../constants.js";
-import { providerHighRiskObligations, deployerHighRiskObligations, limitedRiskTransparencyObligations } from "../knowledge/obligations.js";
+import { providerHighRiskObligations, deployerHighRiskObligations, limitedRiskTransparencyObligations, providerGPAIObligations, universalObligations } from "../knowledge/obligations.js";
 
 export function registerObligationsTool(server: McpServer): void {
   server.registerTool("euaiact_get_obligations", {
@@ -16,12 +16,21 @@ export function registerObligationsTool(server: McpServer): void {
     outputSchema: obligationsOutputSchema,
   }, async (input: ObligationsInput): Promise<{ content: any[], structuredContent: ObligationsOutput }> => {
     let baseObligations: any[] = [];
-    if (input.role === 'provider' && input.risk_level === 'high-risk') {
+    if (input.risk_level === 'gpai') {
+      baseObligations = providerGPAIObligations;
+    } else if (input.role === 'provider' && input.risk_level === 'high-risk') {
       baseObligations = providerHighRiskObligations;
     } else if (input.role === 'deployer' && input.risk_level === 'high-risk') {
       baseObligations = deployerHighRiskObligations;
     } else if (input.risk_level === 'limited') {
       baseObligations = limitedRiskTransparencyObligations;
+    } else if (input.risk_level === 'minimal') {
+      baseObligations = universalObligations;
+    }
+
+    // Always include universal obligations (Art. 4 AI literacy) for non-GPAI queries
+    if (input.risk_level !== 'gpai' && input.risk_level !== 'minimal') {
+      baseObligations = [...baseObligations, ...universalObligations];
     }
 
     const filtered = input.filter_keyword
@@ -32,15 +41,17 @@ export function registerObligationsTool(server: McpServer): void {
       : baseObligations;
 
     const penaltyInfo = input.risk_level === 'high-risk'
-      ? { maxFine: "Up to EUR 15 million or 3% of global annual turnover", basis: "Art. 99(3)" }
-      : { maxFine: "Up to EUR 7.5 million or 1% of global annual turnover", basis: "Art. 99(4)" };
+      ? { max_fine: "Up to EUR 15 million or 3% of global annual turnover", basis: "Art. 99(4)" }
+      : input.risk_level === 'gpai'
+      ? { max_fine: "Up to EUR 15 million or 3% of global annual turnover (Art. 101 for GPAI-specific violations)", basis: "Art. 101" }
+      : { max_fine: "Up to EUR 7.5 million or 1% of global annual turnover", basis: "Art. 99(5)" };
 
     const output: ObligationsOutput = {
       role: input.role,
-      riskLevel: input.risk_level,
+      risk_level: input.risk_level,
       obligations: filtered,
       penalties: penaltyInfo,
-      lexbeamUrl: `${BRANDING.baseUrl}/wissen/provider-deployer-pflichten`,
+      lexbeam_url: `${BRANDING.baseUrl}/wissen/provider-deployer-pflichten`,
       source: BRANDING.source,
       disclaimer: BRANDING.disclaimer,
     };

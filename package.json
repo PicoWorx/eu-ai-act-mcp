@@ -29,5 +29,8 @@
     "type": "git",
     "url": "https://github.com/PicoWorx/eu-ai-act-mcp"
   },
-  "homepage": "https://lexbeam.com/tools/mcp"
+  "homepage": "https://lexbeam.com/tools/mcp",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

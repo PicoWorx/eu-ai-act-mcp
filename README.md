@@ -1,32 +1,33 @@
-# EU AI Act MCP Server by Lexbeam
+# EU AI Act MCP Server
 
-An open-source Model Context Protocol (MCP) server providing intelligence, classification, and compliance checking for the EU AI Act (Regulation (EU) 2024/1689).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@lexbeam/eu-ai-act-mcp)](https://www.npmjs.com/package/@lexbeam/eu-ai-act-mcp)
 
-Built by [Lexbeam Software](https://lexbeam.com), an agentic AI implementation boutique for regulated workflows.
+An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that gives LLMs structured intelligence about the EU AI Act (Regulation (EU) 2024/1689).
 
-## Features
+Built by [Lexbeam Software](https://lexbeam.com) - an agentic AI implementation boutique for regulated workflows.
 
-This server provides five core tools to LLMs for reasoning about the EU AI Act:
+## Tools
 
-1. **Classify AI System (`euaiact_classify_system`)**: Classifies an AI system's risk level (prohibited, high-risk, limited, minimal) based on a description and use case, checking against Annex III and Art. 5.
-2. **Check Deadlines (`euaiact_check_deadlines`)**: Returns key implementation milestones, deadlines, and days remaining, including the status of the Digital Omnibus proposal.
-3. **Get Obligations (`euaiact_get_obligations`)**: Returns specific compliance obligations based on the actor's role (provider/deployer) and the system's risk level.
-4. **Answer FAQ (`euaiact_answer_question`)**: Semantic search against a database of the most common EU AI Act questions, returning answers with exact article references.
-5. **Calculate Penalties (`euaiact_calculate_penalty`)**: Calculates maximum fines for violations based on violation type, global turnover, and SME status (Art. 99).
+| Tool | Description |
+|------|-------------|
+| `euaiact_classify_system` | Classify an AI system's risk level (prohibited / high-risk / limited / minimal) based on description and use case. Checks Art. 5, Annex III, and Art. 50. |
+| `euaiact_check_deadlines` | Returns implementation milestones with days remaining, plus the Digital Omnibus proposal status. |
+| `euaiact_get_obligations` | Specific compliance obligations by role (provider/deployer) and risk level, including GPAI (Art. 51-56) and universal AI literacy (Art. 4). |
+| `euaiact_answer_question` | Semantic FAQ search across 20 common EU AI Act questions with article references. |
+| `euaiact_calculate_penalty` | Calculate maximum fines by violation type, turnover, and SME status (Art. 99). |
 
-## Installation & Usage
+## Quick Start
 
-### Running via npx (Recommended)
-
-You can run this server directly without installation using `npx`:
+### npx (no install)
 
 ```bash
 npx -y @lexbeam/eu-ai-act-mcp
 ```
 
-### Adding to Claude Desktop
+### Claude Desktop
 
-Add this to your `claude_desktop_config.json`:
+Add to `claude_desktop_config.json`:
 
 ```json
 {
@@ -39,7 +40,7 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-### Running locally from source
+### From source
 
 ```bash
 git clone https://github.com/PicoWorx/eu-ai-act-mcp.git
@@ -51,22 +52,43 @@ npm start
 
 ## Knowledge Base
 
-The server is powered by a structured, curated knowledge base covering:
-- **Prohibited Practices (Art. 5)**
-- **High-Risk Categories (Annex III)**
-- **Exceptions (Art. 6(3))**
-- **Transparency Triggers (Art. 50)**
-- **Implementation Deadlines & Milestones**
-- **Provider & Deployer Obligations**
-- **Penalty Framework (Art. 99)**
+Curated, structured data covering:
+
+- **8 Annex III high-risk categories** with keyword matching
+- **8 prohibited AI practices** (Art. 5)
+- **Art. 6(3) exception conditions**
+- **Art. 50 transparency triggers** (chatbots, deepfakes, emotion recognition)
+- **5 implementation milestones** with dynamic days-remaining calculation
+- **Digital Omnibus proposal** status and impact assessment
+- **Provider obligations** (13 for high-risk, 8 for GPAI)
+- **Deployer obligations** (8 for high-risk)
+- **Limited risk transparency obligations** (4)
+- **Universal AI literacy** (Art. 4)
+- **Penalty framework** with SME protection logic (Art. 99)
+- **20 FAQ entries** with article references and Lexbeam knowledge base links
+
+All dates, articles, and obligations verified against the regulation text.
+
+## Regulatory Accuracy
+
+This server tracks the current state of the EU AI Act as published (Regulation 2024/1689). The Digital Omnibus proposal (December 2025) is included but clearly marked as `proposal_only` - not yet adopted law.
+
+Key dates verified:
+- 2 Feb 2025: Prohibited practices + AI literacy (in effect)
+- 2 Aug 2025: GPAI obligations (in effect)
+- 2 Aug 2026: High-risk Annex III obligations (upcoming)
+- 2 Aug 2027: Annex I regulated products (upcoming)
+
+## Disclaimer
+
+The information provided by this MCP server constitutes general guidance and not legal advice. For implementation support, visit [lexbeam.com/kontakt](https://lexbeam.com/kontakt).
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT. See [LICENSE](LICENSE).
 
 ## About Lexbeam
 
-[Lexbeam Software](https://lexbeam.com) builds agentic AI for compliance, legal operations, internal audit, and risk workflows. 
-*Give us one ugly, regulation-heavy workflow. We'll turn it into a working AI system fast.*
+[Lexbeam Software](https://lexbeam.com) builds agentic AI for compliance, legal operations, internal audit, and risk workflows.
 
-**Disclaimer:** The information provided by this MCP server constitutes general guidance and not legal advice. For implementation support, [contact Lexbeam](https://lexbeam.com/kontakt).
+*Give us one ugly, regulation-heavy workflow. We'll turn it into a working AI system fast.*

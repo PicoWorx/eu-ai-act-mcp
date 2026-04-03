@@ -7,7 +7,7 @@ import { faqDatabase } from "../knowledge/faq-database.js";
 export function registerFaqTool(server: McpServer): void {
   server.registerTool("euaiact_answer_question", {
     title: "EU AI Act FAQ",
-    description: "Search frequently asked questions about the EU AI Act and get best-match answers with article references.",
+    description: "Search frequently asked questions about the EU AI Act and get best-match answers with article references. Covers classification, deadlines, roles, governance, documentation, risk assessment, penalties, and sector-specific guidance.",
     annotations: {
       readOnlyHint: true,
       idempotentHint: true,
@@ -23,8 +23,8 @@ export function registerFaqTool(server: McpServer): void {
         question: input.question,
         answer: "No matching FAQ found. Please consult the full regulation text or contact Lexbeam for specific guidance.",
         confidence: "low",
-        articleReferences: [],
-        lexbeamUrl: `${BRANDING.baseUrl}/kontakt`,
+        article_references: [],
+        lexbeam_url: `${BRANDING.baseUrl}/kontakt`,
         source: BRANDING.source,
         disclaimer: BRANDING.disclaimer,
       };
@@ -38,8 +38,8 @@ export function registerFaqTool(server: McpServer): void {
       question: match.item.question,
       answer: match.item.answer,
       confidence: match.confidence,
-      articleReferences: match.item.articleReferences,
-      lexbeamUrl: match.item.lexbeamUrl,
+      article_references: match.item.articleReferences,
+      lexbeam_url: match.item.lexbeamUrl,
       source: BRANDING.source,
       disclaimer: BRANDING.disclaimer,
     };
