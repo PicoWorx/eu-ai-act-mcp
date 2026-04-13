@@ -218,8 +218,8 @@ test(
   structured(classifyResults.deepfake).risk_classification === "limited",
 );
 test(
-  "spellchecker text → minimal risk",
-  structured(classifyResults.spellchecker).risk_classification === "minimal",
+  "spellchecker text → insufficient_information (no positive match)",
+  structured(classifyResults.spellchecker).risk_classification === "insufficient_information",
 );
 
 // Signals path
@@ -262,10 +262,17 @@ test(
   "chatbot result includes matched_signals array",
   Array.isArray(structured(classifyResults.chatbot).matched_signals),
 );
-test(
-  "empty-input classify returns follow-up questions",
-  (await callTool("euaiact_classify_system", {})).structuredContent.next_questions.length > 0,
-);
+{
+  const emptyResult = (await callTool("euaiact_classify_system", {})).structuredContent;
+  test(
+    "empty-input classify returns insufficient_information",
+    emptyResult.risk_classification === "insufficient_information",
+  );
+  test(
+    "empty-input classify returns follow-up questions",
+    emptyResult.next_questions.length > 0,
+  );
+}
 test(
   "classify output has no `disclaimer` field (branding slim)",
   !("disclaimer" in structured(classifyResults.chatbot)),
