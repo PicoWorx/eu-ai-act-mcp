@@ -291,11 +291,11 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
   if (!combined) {
     return {
       ...buildBase({
-        risk_classification: "minimal",
+        risk_classification: "insufficient_information",
         confidence: "low",
         relevant_articles: ["Art. 6(1)"],
         role_determination: role,
-        obligations_summary: "Insufficient information. Please provide a description, a use case, or structured signals so the classifier can evaluate the system.",
+        obligations_summary: "Unable to classify based on provided information. Please provide a system description or structured signals.",
         caveat: "No description or signals provided.",
       }),
       matched_signals: [],
@@ -365,14 +365,14 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
     };
   }
 
-  // Step 1d: default to minimal
+  // Step 1d: default — no match found
   return {
     ...buildBase({
-      risk_classification: "minimal",
+      risk_classification: "insufficient_information",
       confidence: "low",
       relevant_articles: ["Art. 6(1)"],
       role_determination: role,
-      obligations_summary: "System appears to be minimal risk. No specific AI Act obligations beyond voluntary codes of conduct (Art. 95) and the universal AI literacy requirement (Art. 4). General product safety and consumer protection laws still apply.",
+      obligations_summary: "Unable to determine risk classification from the provided description. The system may be minimal risk, but further analysis is recommended.",
       caveat: "Classification based on limited information. A detailed assessment may reveal higher risk. All providers and deployers must ensure AI literacy (Art. 4), enforceable since 2 February 2025.",
     }),
     matched_signals: [],
