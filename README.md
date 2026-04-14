@@ -142,7 +142,7 @@ npm run dev:http     # HTTP dev server
 
 ## Disclaimer
 
-The information provided by this MCP server constitutes general guidance and not legal advice. For implementation support, visit [lexbeam.com/kontakt](https://lexbeam.com/kontakt).
+This MCP server is a structured information tool that returns references to and summaries of Regulation (EU) 2024/1689. It is **not Rechtsberatung im Sinne des § 2 RDG** and does not constitute legal advice in any jurisdiction. It cannot replace consultation with a qualified Rechtsanwalt or equivalent licensed professional. Use of this tool does not establish a lawyer-client relationship. For implementation support, visit [lexbeam.com/kontakt](https://lexbeam.com/kontakt).
 
 ## License
 
