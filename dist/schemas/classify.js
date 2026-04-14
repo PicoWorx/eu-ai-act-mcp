@@ -76,7 +76,7 @@ export const annexIIICategoryRefSchema = z
 })
     .nullable();
 export const classifyOutputSchema = z.object({
-    risk_classification: z.enum(["prohibited", "high-risk", "limited", "minimal"]),
+    risk_classification: z.enum(["prohibited", "high-risk", "limited", "minimal", "insufficient_information"]),
     confidence: z.enum(["high", "medium", "low"]),
     annex_iii_category: annexIIICategoryRefSchema,
     relevant_articles: z.array(z.string()),

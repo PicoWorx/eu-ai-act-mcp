@@ -129,7 +129,7 @@ export declare const annexIIICategoryRefSchema: z.ZodNullable<z.ZodObject<{
     name: string;
 }>>;
 export declare const classifyOutputSchema: z.ZodObject<{
-    risk_classification: z.ZodEnum<["prohibited", "high-risk", "limited", "minimal"]>;
+    risk_classification: z.ZodEnum<["prohibited", "high-risk", "limited", "minimal", "insufficient_information"]>;
     confidence: z.ZodEnum<["high", "medium", "low"]>;
     annex_iii_category: z.ZodNullable<z.ZodObject<{
         number: z.ZodNumber;
@@ -156,7 +156,7 @@ export declare const classifyOutputSchema: z.ZodObject<{
     /** Optional deep-dive link on lexbeam.com for this classification. */
     lexbeam_url: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    risk_classification: "prohibited" | "high-risk" | "limited" | "minimal";
+    risk_classification: "prohibited" | "high-risk" | "limited" | "minimal" | "insufficient_information";
     confidence: "high" | "medium" | "low";
     annex_iii_category: {
         number: number;
@@ -172,7 +172,7 @@ export declare const classifyOutputSchema: z.ZodObject<{
     basis: "signals" | "text" | "default";
     lexbeam_url?: string | undefined;
 }, {
-    risk_classification: "prohibited" | "high-risk" | "limited" | "minimal";
+    risk_classification: "prohibited" | "high-risk" | "limited" | "minimal" | "insufficient_information";
     confidence: "high" | "medium" | "low";
     annex_iii_category: {
         number: number;
