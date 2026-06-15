@@ -224,7 +224,7 @@ export const providerGPAIObligations = [
 // ---------------------------------------------------------------------------
 // Limited Risk - Transparency Obligations (Art. 50)
 // ---------------------------------------------------------------------------
-export const limitedRiskTransparencyObligations = [
+export const providerLimitedRiskTransparencyObligations = [
     {
         obligation: "Disclose AI interaction to users",
         article: "Art. 50(1)",
@@ -233,26 +233,32 @@ export const limitedRiskTransparencyObligations = [
         category: "transparency",
     },
     {
+        obligation: "Machine-readable marking of AI-generated content",
+        article: "Art. 50(2)",
+        deadline: "2026-08-02",
+        details: "Providers of AI systems generating synthetic audio, image, video, or text content must ensure the outputs are marked in a machine-readable format and detectable as artificially generated or manipulated. Technical solutions must be effective, interoperable, robust, and reliable, considering the type of content and commonly used implementation methods and tools.",
+        category: "transparency",
+    },
+];
+export const deployerLimitedRiskTransparencyObligations = [
+    {
         obligation: "Inform persons exposed to emotion recognition or biometric categorisation",
         article: "Art. 50(3)",
         deadline: "2026-08-02",
-        details: "Providers of emotion recognition or biometric categorisation systems must inform exposed natural persons of the system's operation and process personal data in accordance with the GDPR, LED, and Regulation (EU) 2018/1725 as applicable.",
+        details: "Deployers of emotion recognition or biometric categorisation systems must inform exposed natural persons of the system's operation and process personal data in accordance with the GDPR, LED, and Regulation (EU) 2018/1725 as applicable.",
         category: "transparency",
     },
     {
         obligation: "Label deep fakes and synthetic content",
         article: "Art. 50(4)",
         deadline: "2026-08-02",
-        details: "Providers of AI systems generating or manipulating image, audio, or video content (deep fakes) must disclose that content has been artificially generated or manipulated. Deployers must also label such content. AI-generated text on matters of public interest must be labelled as artificially generated, unless editorially reviewed by a human.",
+        details: "Deployers of AI systems generating or manipulating image, audio, or video content constituting a deep fake must disclose that the content has been artificially generated or manipulated. Deployers of AI systems generating or manipulating text published to inform the public on matters of public interest must disclose that the text is artificially generated or manipulated, unless a specific exception applies.",
         category: "transparency",
     },
-    {
-        obligation: "Machine-readable marking of AI-generated content",
-        article: "Art. 50(2)",
-        deadline: "2026-08-02",
-        details: "Providers must mark AI-generated synthetic audio, image, video, or text content in a machine-readable format and ensure it is detectable as artificially generated or manipulated. Technical solutions must be effective, interoperable, robust, and reliable, considering the type of content and commonly used implementation methods and tools.",
-        category: "transparency",
-    },
+];
+export const limitedRiskTransparencyObligations = [
+    ...providerLimitedRiskTransparencyObligations,
+    ...deployerLimitedRiskTransparencyObligations,
 ];
 // ---------------------------------------------------------------------------
 // Universal Obligations - AI Literacy (Art. 4)

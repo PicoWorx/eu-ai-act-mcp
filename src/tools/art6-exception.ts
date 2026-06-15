@@ -12,7 +12,7 @@ export function registerArt6ExceptionTool(server: McpServer): void {
     {
       title: "Assess Art. 6(3) 'No Significant Risk' Exception",
       description:
-        "Walk through the Art. 6(3) exception for Annex III high-risk AI systems. An Annex III system is NOT high-risk if it does not pose a significant risk to health, safety, or fundamental rights, AND falls under one of the four conditions: (a) narrow procedural task, (b) improves prior human activity, (c) detects patterns without replacing human assessment, (d) preparatory task. CRITICAL: The exception does NOT apply if the system performs profiling of natural persons (Art. 6(3) second subparagraph). Providers invoking the exception must document the assessment (Art. 6(4)) and still register in the EU database (Art. 49(2)).",
+        "Walk through the Art. 6(3) exception for Annex III high-risk AI systems. An Annex III system is NOT high-risk only if the provider affirmatively assesses no significant risk to health, safety, or fundamental rights, AND the system falls under one of the four conditions: (a) narrow procedural task, (b) improves prior human activity, (c) detects patterns without replacing human assessment, (d) preparatory task. Set no_significant_risk_to_health_safety_fundamental_rights=true only when that threshold has been assessed. CRITICAL: The exception does NOT apply if the system performs profiling of natural persons (Art. 6(3) second subparagraph). Providers invoking the exception must document the assessment (Art. 6(4)) and still register in the EU database (Art. 49(2)).",
       annotations: {
         readOnlyHint: true,
         idempotentHint: true,
@@ -47,6 +47,8 @@ export function registerArt6ExceptionTool(server: McpServer): void {
 
       const anyConditionApplies = conditions.some((c) => c.applies);
       const profilingBlocks = input.performs_profiling === true;
+      const noSignificantRiskAssessed =
+        input.no_significant_risk_to_health_safety_fundamental_rights === true;
 
       let exceptionAvailable: boolean;
       let reasoning: string;
@@ -55,6 +57,10 @@ export function registerArt6ExceptionTool(server: McpServer): void {
         exceptionAvailable = false;
         reasoning =
           "Art. 6(3) exception is NOT available. Art. 6(3) second subparagraph: the exception does not apply to AI systems that perform profiling of natural persons — regardless of whether one of the four conditions would otherwise be met. The system remains high-risk under Art. 6(2) and must comply with Chapter III Section 2.";
+      } else if (!noSignificantRiskAssessed) {
+        exceptionAvailable = false;
+        reasoning =
+          "Art. 6(3) exception is NOT available based on the provided signals. The provider must affirmatively assess that the system does not pose a significant risk of harm to health, safety, or fundamental rights, including by not materially influencing the outcome of decision-making. One of the four Art. 6(3)(a)-(d) conditions alone is not enough.";
       } else if (!anyConditionApplies) {
         exceptionAvailable = false;
         reasoning =
@@ -62,7 +68,7 @@ export function registerArt6ExceptionTool(server: McpServer): void {
       } else {
         exceptionAvailable = true;
         const applicable = conditions.filter((c) => c.applies).map((c) => c.article).join(", ");
-        reasoning = `Art. 6(3) exception MAY be available. One or more conditions asserted: ${applicable}. The provider must independently verify that the system does not pose a significant risk to health, safety, or fundamental rights (including by not materially influencing the outcome of decision-making), and must document the assessment under Art. 6(4) before placing on the market.`;
+        reasoning = `Art. 6(3) exception MAY be available. The provider has asserted no significant risk to health, safety, or fundamental rights and one or more conditions: ${applicable}. The provider must document the assessment under Art. 6(4) before placing on the market.`;
       }
 
       const documentationReminder = input.documented_assessment

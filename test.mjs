@@ -1,5 +1,7 @@
 // Direct function tests for the EU AI Act MCP server.
 // Run `npm run build` first so dist/ is up to date.
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { classifyInputSchema } from "./dist/schemas/classify.js";
 import { obligationsInputSchema } from "./dist/schemas/obligations.js";
 import { penaltiesInputSchema } from "./dist/schemas/penalties.js";
@@ -16,6 +18,8 @@ import {
   providerHighRiskObligations,
   deployerHighRiskObligations,
   limitedRiskTransparencyObligations,
+  providerLimitedRiskTransparencyObligations,
+  deployerLimitedRiskTransparencyObligations,
   providerGPAIObligations,
   universalObligations,
 } from "./dist/knowledge/obligations.js";
@@ -109,6 +113,35 @@ test("art6 input: missing profiling rejected", !art6ExceptionInputSchema.safePar
 test("annex iv: empty ok", annexIvInputSchema.safeParse({}).success);
 test("annex iv: checklist format", annexIvInputSchema.safeParse({ format: "checklist" }).success);
 
+// ─── DIST / SOURCE CONSISTENCY ─────────────────────────────────────────────
+console.log("\n📦 DIST / SOURCE CONSISTENCY");
+function listTsFiles(dir) {
+  return readdirSync(dir).flatMap((entry) => {
+    const full = join(dir, entry);
+    return statSync(full).isDirectory() ? listTsFiles(full) : [full];
+  }).filter((path) => path.endsWith(".ts"));
+}
+
+for (const sourcePath of listTsFiles("src")) {
+  const generatedPath = sourcePath.replace(/^src\//, "dist/").replace(/\.ts$/, ".js");
+  test(`source has generated JS: ${generatedPath}`, existsSync(generatedPath));
+}
+
+for (const path of [
+  "dist/tools/annex-iv.js",
+  "dist/tools/art6-exception.js",
+  "dist/tools/article.js",
+  "dist/tools/gpai-systemic.js",
+  "dist/tools/penalties.js",
+  "dist/schemas/annex-iv.js",
+  "dist/schemas/art6.js",
+  "dist/schemas/article.js",
+  "dist/schemas/gpai-systemic.js",
+  "dist/schemas/penalties.js",
+]) {
+  test(`generated file present: ${path}`, existsSync(path));
+}
+
 // ─── MATCHING REGRESSIONS (v1.1.0) ─────────────────────────────────────────
 console.log("\n🛠️ MATCHING BUG REGRESSIONS");
 
@@ -163,13 +196,17 @@ for (const [key, input] of Object.entries({
   creditScoring: { description: "credit scoring model determining loan eligibility", use_case: "Bank creditworthiness" },
   deepfake: { description: "AI that generates deepfake videos from a photo", use_case: "Entertainment" },
   spellchecker: { description: "Spell checker that suggests corrections as you type", use_case: "Word processor" },
-  signalsRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true } },
+  signalsRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: true } },
+  signalsNonPublicRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: false } },
   signalsEmployment: { signals: { domain: "employment" } },
   signalsSocialScoring: { signals: { performs_social_scoring_by_public_authority: true } },
+  signalsPrivateSocialScoring: { signals: { performs_social_scoring: true } },
   signalsChatbot: { signals: { interacts_with_natural_persons: true } },
   signalsSynthetic: { signals: { generates_synthetic_content: true } },
   signalsAnnexI: { signals: { is_safety_component_of_regulated_product: true } },
   signalsEmotionWorkplace: { signals: { performs_emotion_recognition_workplace_or_school: true } },
+  lifeHealthInsurance: { description: "AI model used for risk assessment and pricing for life and health insurance", use_case: "Insurance underwriting" },
+  carInsurance: { description: "AI model used to calculate car insurance premiums for vehicle insurance", use_case: "Motor insurance pricing" },
 })) {
   classifyResults[key] = await callTool("euaiact_classify_system", input);
 }
@@ -230,6 +267,12 @@ test(
     structured(classifyResults.signalsRbi).basis === "signals",
 );
 test(
+  "signals non-public RBI → not prohibited without publicly accessible space",
+  structured(classifyResults.signalsNonPublicRbi).risk_classification === "high-risk" &&
+    structured(classifyResults.signalsNonPublicRbi).annex_iii_category?.number === 1 &&
+    structured(classifyResults.signalsNonPublicRbi).basis === "signals",
+);
+test(
   "signals employment → high-risk Annex III(4)",
   structured(classifyResults.signalsEmployment).risk_classification === "high-risk" &&
     structured(classifyResults.signalsEmployment).annex_iii_category?.number === 4,
@@ -238,6 +281,11 @@ test(
   "signals social scoring → prohibited Art. 5(1)(c)",
   structured(classifyResults.signalsSocialScoring).risk_classification === "prohibited" &&
     structured(classifyResults.signalsSocialScoring).relevant_articles.some((a) => a.includes("5(1)(c)")),
+);
+test(
+  "signals private social scoring → prohibited Art. 5(1)(c)",
+  structured(classifyResults.signalsPrivateSocialScoring).risk_classification === "prohibited" &&
+    /public authorities/i.test(structured(classifyResults.signalsPrivateSocialScoring).obligations_summary) === false,
 );
 test(
   "signals interacts_with_natural_persons → limited Art. 50(1)",
@@ -255,6 +303,15 @@ test(
 test(
   "signals emotion recognition workplace → prohibited Art. 5(1)(f)",
   structured(classifyResults.signalsEmotionWorkplace).risk_classification === "prohibited",
+);
+test(
+  "life/health insurance pricing → high-risk Annex III(5)",
+  structured(classifyResults.lifeHealthInsurance).risk_classification === "high-risk" &&
+    structured(classifyResults.lifeHealthInsurance).annex_iii_category?.number === 5,
+);
+test(
+  "ordinary car insurance pricing does not hit Annex III(5) from generic insurance",
+  structured(classifyResults.carInsurance).annex_iii_category?.number !== 5,
 );
 
 // matched_signals + next_questions populated
@@ -304,6 +361,8 @@ console.log("\n📜 OBLIGATIONS");
 test("Provider high-risk: 13 obligations", providerHighRiskObligations.length === 13);
 test("Deployer high-risk: 8 obligations", deployerHighRiskObligations.length === 8);
 test("Limited risk transparency: 4 obligations", limitedRiskTransparencyObligations.length === 4);
+test("Provider limited-risk transparency: 2 obligations", providerLimitedRiskTransparencyObligations.length === 2);
+test("Deployer limited-risk transparency: 2 obligations", deployerLimitedRiskTransparencyObligations.length === 2);
 test("GPAI obligations: 8 obligations", providerGPAIObligations.length === 8);
 test("Universal obligations: 1 (AI literacy)", universalObligations.length === 1);
 {
@@ -311,6 +370,23 @@ test("Universal obligations: 1 (AI literacy)", universalObligations.length === 1
   test("obligations tool has no `disclaimer` field", !("disclaimer" in structured(r)));
   test("obligations tool has no `source` field", !("source" in structured(r)));
   test("obligations tool includes lexbeam_url", typeof structured(r).lexbeam_url === "string");
+}
+{
+  const r = await callTool("euaiact_get_obligations", { role: "deployer", risk_level: "limited", filter_keyword: "emotion" });
+  const p = structured(r);
+  test("limited-risk deployer emotion obligation uses deployer actor", p.obligations.length === 1 && /Deployers/.test(p.obligations[0].details));
+  test("limited-risk penalties use Art. 99(4)", p.penalties.basis === "Art. 99(4)");
+}
+{
+  const r = await callTool("euaiact_get_obligations", { role: "provider", risk_level: "limited", filter_keyword: "machine-readable" });
+  const p = structured(r);
+  test("limited-risk provider marking obligation is Art. 50(2)", p.obligations.length === 1 && p.obligations[0].article === "Art. 50(2)");
+}
+{
+  const r = await callTool("euaiact_get_obligations", { role: "deployer", risk_level: "gpai" });
+  const p = structured(r);
+  test("GPAI deployer query does not return provider obligations", p.obligations.length === 0);
+  test("GPAI deployer penalty basis explains provider-only Art. 101", /providers/i.test(p.penalties.basis));
 }
 
 // ─── PENALTIES ──────────────────────────────────────────────────────────────
@@ -380,6 +456,15 @@ test(
   test("answer_question: FLOPs question → faq-21", /10\^25|1e25|10\*\*25|1\.e\+25/i.test(structured(r).answer));
   test("answer_question response has no `source` field", !("source" in structured(r)));
 }
+{
+  const r = await callTool("euaiact_answer_question", { question: "What are transparency obligations for chatbots and generated content under Article 50?" });
+  test("FAQ transparency answer maps machine-readable marking to Art. 50(2)", /Art\. 50\(2\).*machine-readable|machine-readable.*Art\. 50\(2\)/s.test(structured(r).answer));
+  test("FAQ transparency answer does not cite Art. 50(5) for marking", !/50\(5\).*machine-readable|machine-readable.*50\(5\)/s.test(structured(r).answer));
+}
+{
+  const ids = transparencyTriggers.map((t) => t.id);
+  test("Art. 50 transparency trigger ids are unique", new Set(ids).size === ids.length);
+}
 
 // ─── NEW TOOLS (v1.1.0) ────────────────────────────────────────────────────
 console.log("\n🆕 NEW TOOLS");
@@ -436,12 +521,23 @@ test("findArticle('Art. 99') returns Art. 99", findArticle("Art. 99")?.number ==
 {
   const r = await callTool("euaiact_assess_art6_3_exception", {
     performs_profiling: false,
+    no_significant_risk_to_health_safety_fundamental_rights: true,
     narrow_procedural_task: true,
     documented_assessment: true,
   });
   const p = structured(r);
   test("art6: narrow procedural + no profiling + documented → available", p.exception_available === true);
   test("art6: Art. 49(2) registration duty mentioned", /49\(2\)/.test(p.registration_duty));
+}
+{
+  const r = await callTool("euaiact_assess_art6_3_exception", {
+    performs_profiling: false,
+    narrow_procedural_task: true,
+    documented_assessment: true,
+  });
+  const p = structured(r);
+  test("art6: narrow task without no-significant-risk gate → unavailable", p.exception_available === false);
+  test("art6: no-significant-risk gate absence is explained", /significant risk/i.test(p.reasoning));
 }
 {
   const r = await callTool("euaiact_assess_art6_3_exception", {

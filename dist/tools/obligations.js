@@ -1,6 +1,6 @@
 import { obligationsInputSchema, obligationsOutputSchema } from "../schemas/obligations.js";
 import { BRANDING } from "../constants.js";
-import { providerHighRiskObligations, deployerHighRiskObligations, limitedRiskTransparencyObligations, providerGPAIObligations, universalObligations } from "../knowledge/obligations.js";
+import { providerHighRiskObligations, deployerHighRiskObligations, providerLimitedRiskTransparencyObligations, deployerLimitedRiskTransparencyObligations, providerGPAIObligations, universalObligations, } from "../knowledge/obligations.js";
 export function registerObligationsTool(server) {
     server.registerTool("euaiact_get_obligations", {
         title: "Get Obligations by Role and Risk Level",
@@ -15,7 +15,7 @@ export function registerObligationsTool(server) {
     }, async (input) => {
         let baseObligations = [];
         if (input.risk_level === 'gpai') {
-            baseObligations = providerGPAIObligations;
+            baseObligations = input.role === 'provider' ? providerGPAIObligations : [];
         }
         else if (input.role === 'provider' && input.risk_level === 'high-risk') {
             baseObligations = providerHighRiskObligations;
@@ -24,7 +24,9 @@ export function registerObligationsTool(server) {
             baseObligations = deployerHighRiskObligations;
         }
         else if (input.risk_level === 'limited') {
-            baseObligations = limitedRiskTransparencyObligations;
+            baseObligations = input.role === 'provider'
+                ? providerLimitedRiskTransparencyObligations
+                : deployerLimitedRiskTransparencyObligations;
         }
         else if (input.risk_level === 'minimal') {
             baseObligations = universalObligations;
@@ -37,11 +39,13 @@ export function registerObligationsTool(server) {
             ? baseObligations.filter((obl) => obl.details.toLowerCase().includes(input.filter_keyword.toLowerCase()) ||
                 obl.category.toLowerCase().includes(input.filter_keyword.toLowerCase()))
             : baseObligations;
-        const penaltyInfo = input.risk_level === 'high-risk'
+        const penaltyInfo = input.risk_level === 'high-risk' || input.risk_level === 'limited'
             ? { max_fine: "Up to EUR 15 million or 3% of global annual turnover", basis: "Art. 99(4)" }
             : input.risk_level === 'gpai'
-                ? { max_fine: "Up to EUR 15 million or 3% of global annual turnover (Art. 101 for GPAI-specific violations)", basis: "Art. 101" }
-                : { max_fine: "Up to EUR 7.5 million or 1% of global annual turnover", basis: "Art. 99(5)" };
+                ? input.role === 'provider'
+                    ? { max_fine: "Up to EUR 15 million or 3% of global annual turnover for GPAI provider infringements", basis: "Art. 101" }
+                    : { max_fine: "No GPAI model-provider fine returned for deployer role; classify the downstream AI system separately if applicable", basis: "Art. 101 applies to providers of general-purpose AI models" }
+                : { max_fine: "No specific risk-level penalty tier returned; penalties depend on the infringed obligation and Member State rules under Art. 99", basis: "Art. 99" };
         const output = {
             role: input.role,
             risk_level: input.risk_level,

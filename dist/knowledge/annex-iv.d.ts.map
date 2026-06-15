@@ -1,0 +1,1 @@
+{"version":3,"file":"annex-iv.d.ts","sourceRoot":"","sources":["../../src/knowledge/annex-iv.ts"],"names":[],"mappings":"AAAA;;;;;;;;;GASG;AAEH,MAAM,WAAW,WAAW;IAC1B,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;IACpB,SAAS,EAAE,MAAM,EAAE,CAAC;IACpB,gBAAgB,EAAE,MAAM,EAAE,CAAC;CAC5B;AAED,eAAO,MAAM,YAAY,EAAE,WAAW,EA6HrC,CAAC"}

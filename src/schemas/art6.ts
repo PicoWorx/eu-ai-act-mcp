@@ -8,6 +8,10 @@ export const art6ExceptionInputSchema = z.object({
     .max(8)
     .optional()
     .describe("Annex III category number (1-8). Provide if known — helps the response reference the right rules."),
+  no_significant_risk_to_health_safety_fundamental_rights: z
+    .boolean()
+    .optional()
+    .describe("Has the provider affirmatively assessed that the system does not pose a significant risk of harm to health, safety, or fundamental rights, including by not materially influencing decision-making outcomes? Required for Art. 6(3)."),
   performs_profiling: z
     .boolean()
     .describe(

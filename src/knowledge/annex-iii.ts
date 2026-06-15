@@ -60,7 +60,7 @@ export const annexIIICategories: HighRiskCategory[] = [
       "biometric identification", "biometric categorisation", "iris scan",
       "fingerprint recognition", "gait recognition", "voice biometric",
     ],
-    relevantArticles: ["Art. 5(1)(d)", "Art. 5(1)(g)", "Art. 5(1)(h)", "Art. 26(10)", "Annex III(1)"],
+    relevantArticles: ["Annex III(1)", "Art. 6(2)", "Art. 5(1)(f)", "Art. 5(1)(g)", "Art. 5(1)(h)", "Art. 26(10)"],
   },
   {
     number: 2,
@@ -123,18 +123,18 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 5,
     name: "Access to essential private and public services and benefits",
     description:
-      "AI systems intended to evaluate eligibility for essential public and private services and benefits, including healthcare, credit scoring, insurance risk assessment, and emergency services dispatching.",
+      "AI systems intended for the specific essential-service use cases listed in Annex III(5): public-authority eligibility decisions for essential public assistance benefits and services, creditworthiness or credit scoring of natural persons, risk assessment and pricing for life and health insurance, and emergency-call classification, dispatch, prioritisation, or emergency healthcare triage.",
     examples: [
       "AI credit scoring systems determining loan eligibility",
       "AI systems assessing eligibility for social benefits or public assistance",
-      "Insurance premium calculation and risk assessment AI",
+      "Life or health insurance premium calculation and risk assessment AI",
       "AI-based triage systems in emergency dispatch centres",
       "AI evaluating creditworthiness for mortgage applications",
     ],
     keywords: [
-      "credit scoring", "creditworthiness", "insurance", "social benefits", "public assistance",
-      "healthcare access", "emergency dispatch", "loan approval", "risk assessment",
-      "essential services", "benefit eligibility",
+      "credit scoring", "creditworthiness", "life insurance", "health insurance", "life and health insurance", "social benefits", "public assistance",
+      "healthcare access", "emergency dispatch", "loan approval", "life insurance risk assessment", "health insurance pricing",
+      "essential public assistance", "benefit eligibility",
     ],
     relevantArticles: ["Annex III(5)", "Art. 6(2)"],
   },
@@ -229,15 +229,15 @@ export const prohibitedPractices: ProhibitedPractice[] = [
   },
   {
     id: "art5-1c",
-    name: "Social scoring by public authorities",
+    name: "Social scoring",
     description:
-      "AI systems used by or on behalf of public authorities for social scoring - evaluating or classifying natural persons based on social behaviour or personality characteristics, leading to detrimental or unfavourable treatment unrelated to or disproportionate to the context.",
+      "AI systems used for social scoring - evaluating or classifying natural persons or groups over a certain period based on social behaviour or known, inferred, or predicted personal or personality characteristics, where the social score leads to detrimental or unfavourable treatment in unrelated contexts or treatment that is unjustified or disproportionate.",
     examples: [
       "Government AI assigning citizen trustworthiness scores affecting access to services",
       "Municipal AI ranking residents' social behaviour to determine housing priority",
-      "Public authority AI penalising citizens in unrelated contexts based on prior conduct data",
+      "Private platform scoring people across unrelated contexts and restricting access to services based on inferred personality traits",
     ],
-    keywords: ["social scoring", "social credit", "citizen score", "trustworthiness score", "public authority scoring"],
+    keywords: ["social scoring", "social credit", "citizen score", "trustworthiness score", "public authority scoring", "private social scoring", "social behaviour score"],
     article: "Art. 5(1)(c)",
   },
   {
@@ -296,7 +296,7 @@ export const prohibitedPractices: ProhibitedPractice[] = [
     id: "art5-1h",
     name: "Real-time remote biometric identification in public spaces for law enforcement",
     description:
-      "Use of real-time remote biometric identification systems in publicly accessible spaces for law enforcement, except in strictly defined cases: targeted search for victims of abduction/trafficking/sexual exploitation, prevention of specific imminent threat to life or terrorist attack, and identification of suspects of serious crimes listed in Annex IIa.",
+      "Use of real-time remote biometric identification systems in publicly accessible spaces for law enforcement, except in strictly defined cases: targeted search for victims of abduction/trafficking/sexual exploitation, prevention of specific imminent threat to life or terrorist attack, and identification of suspects of serious crimes listed in Annex II.",
     examples: [
       "Live facial recognition cameras in city centres for general surveillance",
       "Real-time biometric scanning at public events without specific threat justification",
@@ -400,10 +400,10 @@ export const transparencyTriggers: TransparencyTrigger[] = [
     article: "Art. 50(3)",
   },
   {
-    id: "art50-3",
+    id: "art50-4",
     name: "Deep fakes and synthetic content",
     description:
-      "Providers of AI systems generating or manipulating image, audio, or video content constituting a deep fake must disclose that the content has been artificially generated or manipulated. This also applies to AI-generated text published to inform the public on matters of public interest, which must be labelled as artificially generated.",
+      "Deployers of AI systems that generate or manipulate image, audio, or video content constituting a deep fake must disclose that the content has been artificially generated or manipulated. Deployers of AI systems generating or manipulating text published to inform the public on matters of public interest must disclose that the text is artificially generated or manipulated, unless a specific exception applies.",
     examples: [
       "AI-generated video showing a public figure saying something they never said",
       "AI voice cloning used in audio content",

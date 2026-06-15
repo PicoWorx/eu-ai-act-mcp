@@ -49,7 +49,7 @@ const penaltyTiers: PenaltyTier[] = [
       "Any entity violating Art. 5 prohibitions",
     ],
     examples: [
-      "Operating a social scoring system as a public authority",
+      "Operating a prohibited social scoring system",
       "Deploying subliminal manipulation AI causing significant harm",
       "Using untargeted facial scraping to build recognition databases",
       "Operating real-time remote biometric identification in public spaces without legal basis",

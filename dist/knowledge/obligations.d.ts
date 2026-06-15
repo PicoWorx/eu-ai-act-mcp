@@ -13,6 +13,8 @@ export interface Obligation {
 export declare const providerHighRiskObligations: Obligation[];
 export declare const deployerHighRiskObligations: Obligation[];
 export declare const providerGPAIObligations: Obligation[];
+export declare const providerLimitedRiskTransparencyObligations: Obligation[];
+export declare const deployerLimitedRiskTransparencyObligations: Obligation[];
 export declare const limitedRiskTransparencyObligations: Obligation[];
 export declare const universalObligations: Obligation[];
 //# sourceMappingURL=obligations.d.ts.map

@@ -22,6 +22,7 @@ import { registerArt6ExceptionTool } from "./tools/art6-exception.js";
 import { registerAnnexIvTool } from "./tools/annex-iv.js";
 import { annexIIICategories } from "./knowledge/annex-iii.js";
 import { annexIVItems } from "./knowledge/annex-iv.js";
+import { digitalOmnibus, getMilestonesWithDaysRemaining } from "./knowledge/deadlines.js";
 export function createServer() {
     const server = new McpServer({
         name: "lexbeam-eu-ai-act-mcp-server",
@@ -46,13 +47,22 @@ export function createServer() {
                 mimeType: "application/json",
                 text: JSON.stringify({
                     regulation: "EU AI Act (Regulation 2024/1689)",
-                    milestones: [
-                        { date: "2024-08-01", event: "Entry into force", status: "past" },
-                        { date: "2025-02-02", event: "Prohibited AI practices ban + AI literacy obligation", status: "past" },
-                        { date: "2025-08-02", event: "GPAI model obligations apply", status: "past" },
-                        { date: "2026-08-02", event: "Most provisions apply (high-risk, transparency, governance)", status: "upcoming" },
-                        { date: "2027-08-02", event: "High-risk AI in Annex I (EU harmonisation legislation) fully applies", status: "upcoming" },
-                    ],
+                    milestones: getMilestonesWithDaysRemaining().map((m) => ({
+                        date: m.date,
+                        event: m.name,
+                        description: m.description,
+                        status: m.status,
+                        articles: m.articles,
+                        key_obligations: m.keyObligations,
+                        days_remaining: m.daysRemaining,
+                        is_past: m.isPast,
+                    })),
+                    digital_omnibus: {
+                        status: digitalOmnibus.status,
+                        proposal_date: digitalOmnibus.proposalDate,
+                        caveat: digitalOmnibus.impactOnAIAct,
+                        key_changes_if_adopted: digitalOmnibus.keyChanges,
+                    },
                 }, null, 2),
             }],
     }));

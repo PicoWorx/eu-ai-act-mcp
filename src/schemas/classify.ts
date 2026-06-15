@@ -28,6 +28,10 @@ export const classifySignalsSchema = z
     uses_biometrics: z.boolean().optional().describe("System processes biometric data (face, fingerprint, iris, voice, gait)"),
     biometric_realtime: z.boolean().optional().describe("Biometric processing happens in real time"),
     biometric_law_enforcement: z.boolean().optional().describe("Biometric system is used by or for law enforcement"),
+    biometric_publicly_accessible_space: z
+      .boolean()
+      .optional()
+      .describe("Real-time remote biometric identification takes place in publicly accessible spaces (Art. 5(1)(h))"),
     is_safety_component_of_regulated_product: z
       .boolean()
       .optional()
@@ -52,10 +56,14 @@ export const classifySignalsSchema = z
       .boolean()
       .optional()
       .describe("System infers emotions of natural persons in the workplace or educational institutions (Art. 5(1)(f))"),
+    performs_social_scoring: z
+      .boolean()
+      .optional()
+      .describe("System evaluates or classifies natural persons or groups over time based on social behaviour or personal/personality characteristics, leading to detrimental treatment (Art. 5(1)(c))"),
     performs_social_scoring_by_public_authority: z
       .boolean()
       .optional()
-      .describe("System is used by or on behalf of a public authority to score natural persons (Art. 5(1)(c))"),
+      .describe("Legacy alias: public-authority social scoring. Art. 5(1)(c) is not limited to public authorities."),
   })
   .optional();
 

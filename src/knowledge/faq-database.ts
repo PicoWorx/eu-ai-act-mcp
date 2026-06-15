@@ -32,7 +32,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-02-august-2026",
     question: "What does my company need to do before August 2026?",
     answer:
-      "By 2 August 2026, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration (Art. 49). Deployers need human oversight processes (Art. 26), and public-sector deployers need Fundamental Rights Impact Assessments (Art. 27). Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025.",
+      "By 2 August 2026 under the Regulation currently in force, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration (Art. 49). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. The Digital Omnibus provisional agreement would shift some dates if formally adopted; check euaiact_check_deadlines for current-law and provisional status.",
     articleReferences: ["Art. 4", "Art. 5", "Art. 9", "Art. 11", "Art. 26", "Art. 27", "Art. 43", "Art. 49", "Art. 113"],
     keywords: ["deadline", "2026", "compliance", "preparation", "timeline", "roadmap"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-august-2026-vorbereitung",
@@ -132,8 +132,8 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-12-chatbot-transparency",
     question: "What are transparency obligations for chatbots?",
     answer:
-      "Under Art. 50(1), providers must ensure that persons interacting with an AI system are informed they are interacting with AI, unless this is obvious from the circumstances. For deep fakes and synthetic content, Art. 50(4) requires disclosure that content was artificially generated or manipulated. Art. 50(5) requires machine-readable marking of AI-generated content. These are limited-risk obligations that apply regardless of whether the system is classified as high-risk.",
-    articleReferences: ["Art. 50(1)", "Art. 50(4)", "Art. 50(5)"],
+      "Under Art. 50(1), providers must ensure that persons interacting with an AI system are informed they are interacting with AI, unless this is obvious from the circumstances. Art. 50(2) requires providers of systems generating synthetic audio, image, video, or text to ensure machine-readable marking and detectability. Art. 50(4) requires deployers to disclose deep fakes and certain AI-generated or manipulated public-interest text, unless a specific exception applies. These are limited-risk obligations that apply regardless of whether the system is classified as high-risk.",
+    articleReferences: ["Art. 50(1)", "Art. 50(2)", "Art. 50(4)"],
     keywords: ["chatbot", "transparency", "disclosure", "AI interaction", "synthetic content", "deep fake", "labelling"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/transparenzpflichten-chatbots-ki",
     category: "transparency",
@@ -152,7 +152,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-14-financial-services",
     question: "How does the EU AI Act apply to financial services?",
     answer:
-      "Financial services are directly affected through Annex III(5) (credit scoring, insurance risk assessment, benefit eligibility) and through overlap with DORA. AI-based creditworthiness and credit scoring systems are explicitly high-risk. Deployers in financial services using such systems must comply with Art. 26 (use, oversight, monitoring) and potentially Art. 27 (FRIA for essential services). GPAI models used in financial decision-making inherit obligations from both the AI Act and DORA's ICT risk management framework.",
+      "Financial services are directly affected through Annex III(5), especially creditworthiness and credit scoring of natural persons and risk assessment and pricing for life and health insurance. AI-based creditworthiness and credit scoring systems are explicitly high-risk. Deployers using credit scoring systems under Annex III(5)(b) or life/health insurance risk-and-pricing systems under Annex III(5)(c) must comply with Art. 26 and perform a FRIA under Art. 27 before putting the system into use. GPAI models used in financial decision-making inherit obligations from both the AI Act and DORA's ICT risk management framework.",
     articleReferences: ["Art. 6(2)", "Art. 26", "Art. 27", "Annex III(5)"],
     keywords: ["financial services", "banking", "insurance", "credit scoring", "DORA", "fintech", "financial AI"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-finanzdienstleistungen",
