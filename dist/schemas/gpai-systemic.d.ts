@@ -19,14 +19,14 @@ export declare const obligationRefSchema: z.ZodObject<{
     details: z.ZodString;
     category: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    obligation: string;
     article: string;
+    obligation: string;
     deadline: string;
     details: string;
     category: string;
 }, {
-    obligation: string;
     article: string;
+    obligation: string;
     deadline: string;
     details: string;
     category: string;
@@ -44,14 +44,14 @@ export declare const gpaiSystemicOutputSchema: z.ZodObject<{
         details: z.ZodString;
         category: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
     }, {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
@@ -63,14 +63,14 @@ export declare const gpaiSystemicOutputSchema: z.ZodObject<{
         details: z.ZodString;
         category: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
     }, {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
@@ -85,15 +85,15 @@ export declare const gpaiSystemicOutputSchema: z.ZodObject<{
     systemic_risk_designation: "commission_designated" | "threshold_met" | "none";
     is_gpai_with_systemic_risk: boolean;
     baseline_obligations_art_53: {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
     }[];
     systemic_risk_obligations_art_55: {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
@@ -107,15 +107,15 @@ export declare const gpaiSystemicOutputSchema: z.ZodObject<{
     systemic_risk_designation: "commission_designated" | "threshold_met" | "none";
     is_gpai_with_systemic_risk: boolean;
     baseline_obligations_art_53: {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;
     }[];
     systemic_risk_obligations_art_55: {
-        obligation: string;
         article: string;
+        obligation: string;
         deadline: string;
         details: string;
         category: string;

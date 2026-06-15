@@ -12,6 +12,7 @@ export interface PenaltyTier {
     description: string;
     applicableTo: string[];
     examples: string[];
+    smeLowerApplies?: boolean;
 }
 export interface SMEReduction {
     entityType: string;
@@ -26,9 +27,10 @@ export interface PenaltyFramework {
     enforcementAuthority: string;
     notes: string[];
 }
+export type PenaltyViolationType = "prohibited" | "high_risk" | "gpai" | "false_info";
 export declare const penaltyFramework: PenaltyFramework;
-export declare function getPenaltyTier(violationType: "prohibited" | "high_risk" | "false_info"): PenaltyTier;
-export declare function calculateMaxFine(violationType: "prohibited" | "high_risk" | "false_info", annualTurnoverEUR: number, isSME?: boolean): {
+export declare function getPenaltyTier(violationType: PenaltyViolationType): PenaltyTier;
+export declare function calculateMaxFine(violationType: PenaltyViolationType, annualTurnoverEUR: number, isSME?: boolean): {
     fixedCap: number;
     turnoverBased: number;
     applicableFine: number;

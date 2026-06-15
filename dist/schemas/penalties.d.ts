@@ -1,14 +1,14 @@
 import { z } from "zod";
 export declare const penaltiesInputSchema: z.ZodObject<{
-    violation_type: z.ZodEnum<["prohibited", "high_risk", "false_info"]>;
+    violation_type: z.ZodEnum<["prohibited", "high_risk", "gpai", "false_info"]>;
     annual_turnover_eur: z.ZodNumber;
     is_sme: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
 }, "strip", z.ZodTypeAny, {
-    violation_type: "prohibited" | "high_risk" | "false_info";
+    violation_type: "gpai" | "prohibited" | "high_risk" | "false_info";
     annual_turnover_eur: number;
     is_sme: boolean;
 }, {
-    violation_type: "prohibited" | "high_risk" | "false_info";
+    violation_type: "gpai" | "prohibited" | "high_risk" | "false_info";
     annual_turnover_eur: number;
     is_sme?: boolean | undefined;
 }>;

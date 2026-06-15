@@ -5,6 +5,60 @@ export const deadlinesInputSchema = z.object({
         .boolean()
         .optional()
         .describe("If true, return only milestones that have not yet come into effect."),
+    include_pending_omnibus: z
+        .boolean()
+        .optional()
+        .describe("If true, also return the structured Digital Omnibus pack (proposal + political agreement). OFF by default: the milestone timeline always reflects current OJ law only. The pending pack is NOT enacted law and is labelled with its source status."),
+});
+const sourceStatusEnum = z.enum([
+    "enacted_oj",
+    "commission_proposal",
+    "political_agreement",
+    "commission_guideline_draft",
+    "commission_guideline_final",
+    "commission_study",
+    "code_under_assessment",
+    "code_adequate_voluntary_tool",
+]);
+const omnibusDeltaSchema = z.object({
+    article: z.string(),
+    change: z.string(),
+    source_status: sourceStatusEnum,
+    source_id: z.string(),
+    effective_date: z.string().optional(),
+    note: z.string().optional(),
+});
+const pendingOmnibusSchema = z.object({
+    name: z.string(),
+    enacted: z.literal(false),
+    proposal: z.object({
+        com: z.string(),
+        celex: z.string(),
+        date: z.string(),
+        procedure: z.string(),
+        source_id: z.string(),
+    }),
+    political_agreement: z.object({
+        date: z.string(),
+        source_id: z.string(),
+    }),
+    high_risk_timeline: z.object({
+        mechanism: z.string(),
+        mechanism_source_status: sourceStatusEnum,
+        backstop: z.object({
+            annex_iii_art_6_2: z.string(),
+            annex_i_art_6_1: z.string(),
+        }),
+        backstop_source_status: sourceStatusEnum,
+        current_law: z.object({
+            annex_iii_art_6_2: z.string(),
+            annex_i_art_6_1: z.string(),
+        }),
+        note: z.string(),
+    }),
+    deltas: z.array(omnibusDeltaSchema),
+    coverage_note: z.string(),
+    warning: z.string(),
 });
 export const deadlinesOutputSchema = z.object({
     milestones: z.array(z.object({
@@ -32,5 +86,6 @@ export const deadlinesOutputSchema = z.object({
         key_changes: z.array(z.string()),
         impact_on_ai_act: z.string(),
     }),
+    pending_omnibus: pendingOmnibusSchema.nullable(),
 });
 //# sourceMappingURL=deadlines.js.map

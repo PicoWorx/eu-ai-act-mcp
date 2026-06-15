@@ -1,7 +1,7 @@
 /**
  * EU AI Act - FAQ Database
  *
- * 20 frequently asked questions based on top ICP queries.
+ * 24 frequently asked questions based on top ICP queries.
  * Each answer references specific articles from Regulation (EU) 2024/1689.
  *
  * URLs point to lexbeam.com/de/wissen/[slug] for German-language knowledge base.

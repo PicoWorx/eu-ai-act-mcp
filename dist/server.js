@@ -22,11 +22,12 @@ import { registerArt6ExceptionTool } from "./tools/art6-exception.js";
 import { registerAnnexIvTool } from "./tools/annex-iv.js";
 import { annexIIICategories } from "./knowledge/annex-iii.js";
 import { annexIVItems } from "./knowledge/annex-iv.js";
-import { digitalOmnibus, getMilestonesWithDaysRemaining } from "./knowledge/deadlines.js";
+import { digitalOmnibusPack, getMilestonesWithDaysRemaining } from "./knowledge/deadlines.js";
+import { sourceRegistry } from "./knowledge/sources.js";
 export function createServer() {
     const server = new McpServer({
         name: "lexbeam-eu-ai-act-mcp-server",
-        version: "1.2.0",
+        version: "1.3.0",
     }, {
         instructions: SERVER_INSTRUCTIONS,
     });
@@ -58,10 +59,10 @@ export function createServer() {
                         is_past: m.isPast,
                     })),
                     digital_omnibus: {
-                        status: digitalOmnibus.status,
-                        proposal_date: digitalOmnibus.proposalDate,
-                        caveat: digitalOmnibus.impactOnAIAct,
-                        key_changes_if_adopted: digitalOmnibus.keyChanges,
+                        status: "political_agreement",
+                        enacted: false,
+                        note: "A Digital Omnibus on AI is in progress but not enacted. This timeline reflects current OJ law only. See the euaiact://omnibus resource, or euaiact_check_deadlines with include_pending_omnibus, for the pending changes and dates.",
+                        resource: "euaiact://omnibus",
                     },
                 }, null, 2),
             }],
@@ -119,6 +120,22 @@ export function createServer() {
                     items: annexIVItems,
                     relevant_articles: ["Art. 11"],
                     eurlex_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689#anx_IV",
+                }, null, 2),
+            },
+        ],
+    }));
+    server.resource("EU AI Act Digital Omnibus — Pending Changes (not enacted)", "euaiact://omnibus", {
+        description: "Source-state-aware view of the Digital Omnibus on AI (COM(2025) 836, political agreement 2026-05-07). NOT enacted law: current OJ law (Regulation 2024/1689) governs. Each item carries its source status. Includes the source registry.",
+        mimeType: "application/json",
+    }, async () => ({
+        contents: [
+            {
+                uri: "euaiact://omnibus",
+                mimeType: "application/json",
+                text: JSON.stringify({
+                    disclaimer: "NOT enacted law. Current binding law is Regulation (EU) 2024/1689 as published in the OJ. The items below are a Commission proposal and a political agreement, surfaced for planning only and labelled with their source status. Re-verify the consolidated OJ text on adoption.",
+                    digital_omnibus: digitalOmnibusPack,
+                    sources: sourceRegistry,
                 }, null, 2),
             },
         ],

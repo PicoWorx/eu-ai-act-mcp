@@ -42,6 +42,22 @@ export function registerObligationsTool(server: McpServer): void {
       baseObligations = [...baseObligations, ...universalObligations];
     }
 
+    if (input.role === 'provider' && input.risk_level === 'high-risk') {
+      const source = input.high_risk_source ?? 'unknown';
+      const annexPoint = input.annex_iii_point;
+      if (source === 'annex_i' || annexPoint === 2) {
+        baseObligations = baseObligations.filter((obl: any) => obl.article !== 'Art. 49');
+      }
+    }
+
+    if (input.role === 'provider' && input.risk_level === 'gpai' && input.gpai_model_placed_on_market_before_2025_08_02) {
+      baseObligations = baseObligations.map((obl: any) => ({
+        ...obl,
+        deadline: '2027-08-02',
+        details: `${obl.details} Art. 111(3) transition applied: this response assumes the GPAI model was placed on the market before 2 August 2025.`,
+      }));
+    }
+
     const filtered = input.filter_keyword
       ? baseObligations.filter((obl: any) => 
           obl.details.toLowerCase().includes(input.filter_keyword!.toLowerCase()) ||

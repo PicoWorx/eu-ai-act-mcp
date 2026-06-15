@@ -1,7 +1,7 @@
 /**
  * EU AI Act - FAQ Database
  *
- * 20 frequently asked questions based on top ICP queries.
+ * 24 frequently asked questions based on top ICP queries.
  * Each answer references specific articles from Regulation (EU) 2024/1689.
  *
  * URLs point to lexbeam.com/de/wissen/[slug] for German-language knowledge base.
@@ -19,7 +19,7 @@ export const faqDatabase = [
     {
         id: "faq-02-august-2026",
         question: "What does my company need to do before August 2026?",
-        answer: "By 2 August 2026 under the Regulation currently in force, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration (Art. 49). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. The Digital Omnibus provisional agreement would shift some dates if formally adopted; check euaiact_check_deadlines for current-law and provisional status.",
+        answer: "By 2 August 2026 under the Regulation currently in force, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration where Art. 49 applies (Annex III systems except point 2, plus Art. 6(3) registrations). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. The Digital Omnibus provisional agreement would shift some dates if formally adopted; check euaiact_check_deadlines for current-law and provisional status.",
         articleReferences: ["Art. 4", "Art. 5", "Art. 9", "Art. 11", "Art. 26", "Art. 27", "Art. 43", "Art. 49", "Art. 113"],
         keywords: ["deadline", "2026", "compliance", "preparation", "timeline", "roadmap"],
         lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-august-2026-vorbereitung",
@@ -82,7 +82,7 @@ export const faqDatabase = [
     {
         id: "faq-09-chatgpt-copilot",
         question: "What does the AI Act mean for ChatGPT/Copilot usage in my company?",
-        answer: "As a deployer of general-purpose AI tools like ChatGPT or Copilot, you must ensure AI literacy of users (Art. 4, enforceable since February 2025). If you use these tools for high-risk purposes listed in Annex III (e.g. HR screening, credit decisions), the high-risk deployer obligations apply to you (Art. 26). The providers of these models (OpenAI, Microsoft) carry GPAI obligations under Art. 51-56. If you fine-tune or substantially modify a model, you may become a provider yourself (Art. 25).",
+        answer: "As a deployer of general-purpose AI tools like ChatGPT or Copilot, you must ensure AI literacy of users (Art. 4, enforceable since February 2025). If you use these tools for high-risk purposes listed in Annex III (e.g. HR screening, credit decisions), the high-risk deployer obligations apply to you (Art. 26). The providers of these models (OpenAI, Microsoft) carry GPAI obligations under Chapter V, especially Art. 53-55. If you fine-tune or substantially modify a model, you may become a provider yourself (Art. 25).",
         articleReferences: ["Art. 4", "Art. 25", "Art. 26", "Art. 51", "Art. 53"],
         keywords: ["ChatGPT", "Copilot", "GPT", "general purpose", "LLM", "foundation model", "enterprise AI"],
         lexbeamUrl: "https://lexbeam.com/de/wissen/chatgpt-copilot-eu-ai-act",
@@ -163,7 +163,7 @@ export const faqDatabase = [
     {
         id: "faq-18-digital-omnibus",
         question: "What is the Digital Omnibus proposal and how does it affect the AI Act?",
-        answer: "The Digital Omnibus Simplification Package is a European Commission proposal tabled in December 2025 aiming to reduce compliance burden across the AI Act, GDPR, NIS2, DORA, and other digital regulations. The AI Act portion progressed to a Council/Parliament PROVISIONAL POLITICAL AGREEMENT on 2026-05-07. The provisional agreement would shift Annex III high-risk obligations from 2 Aug 2026 to 2 Dec 2027, Annex I from 2 Aug 2027 to 2 Aug 2028, and Article 50 watermarking from 2 Aug 2026 to 2 Dec 2026; it would also expand Article 5 prohibited practices (CSAM, non-consensual sexual/intimate content) and broaden sensitive-data processing for bias detection while retaining the 'strictly necessary' clause. GPAI obligations themselves and the registration mandate for exempted Annex III systems remain UNCHANGED. As of 2026-05-08, the provisional agreement is NOT adopted law: still pending formal adoption by Council and Parliament, legal/linguistic revision, and Official Journal publication. Organisations should continue preparing against the current regulation text and treat the provisional shifts as politically foreseeable but not yet binding.",
+        answer: "[UNVERIFIED against local OJ text: legislative update outside CELEX 32024R1689.] The Digital Omnibus Simplification Package is described here as an external legislative update, not as current AI Act text. The provisional changes mentioned in non-OJ sources are not adopted law in this knowledge base. Organisations should continue preparing against Regulation (EU) 2024/1689 as published unless and until a later Official Journal text amends it.",
         articleReferences: [],
         keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus"],
         lexbeamUrl: "https://lexbeam.com/de/wissen/digital-omnibus-ai-act-auswirkungen",

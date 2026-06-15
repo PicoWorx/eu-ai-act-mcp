@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-06-15
+
+Source-state awareness. The server now separates current OJ law from the Digital Omnibus on AI (Commission proposal plus political agreement). Current law stays the default in every answer; pending changes are opt-in and labelled with their source status. Cross-read in-house against COM(2025) 836 (CELEX 52025PC0836) and the official Commission pages on 2026-06-15. See `docs/audit-2026-06-15-verification.md`.
+
+### Added
+
+- **Source-status registry** (`src/knowledge/sources.ts`): a `SourceStatus` type (`enacted_oj`, `commission_proposal`, `political_agreement`, guidance/code variants) and a registry of cross-read sources (OJ 2024/1689, COM(2025) 836, the 2026-05-07 political agreement, the Commission overview page).
+- **Structured Digital Omnibus pack** (`src/knowledge/digital-omnibus.ts`): proposal COM(2025) 836 (19 Nov 2025), political agreement (7 May 2026), the high-risk timeline (6/12-month support-measure mechanism, backstop 2 Dec 2027 / 2 Aug 2028), and per-article deltas (Art. 4 literacy, new Art. 4a / Art. 10(5), Art. 49 / Art. 6(3) registration, Art. 50(2) to 2 Feb 2027, Art. 75, Art. 99, Art. 72). Each delta carries its source status.
+- **`euaiact_check_deadlines` gains `include_pending_omnibus`** (default false). The milestone timeline always reflects current OJ law; the pending pack is returned only on opt-in, in a separate `pending_omnibus` field, never as enacted law.
+- **New resource `euaiact://omnibus`**: the full source-state view plus the source registry, with a not-enacted disclaimer.
+- 34 new tests (191 to 225), including full-payload guardrails: the entire default response (not just the milestone list) is free of pending shift dates, the Art. 50(2) transition date, and the nudification/CSAM prohibition when pending is off; opt-in does expose them; the high-risk timeline tags the mechanism (`commission_proposal`) and the backstop dates (`political_agreement`) separately.
+
+### Fixed
+
+- The earlier free-text Digital Omnibus block carried errors, now corrected against the proposal text: proposal date was 2025-12-04 (actual 19 November 2025); the Art. 50(2) transition date was 2 Dec 2026 (actual 2 February 2027); and it asserted the registration duty for Art. 6(3)-exempted systems "REMAINS MANDATED", which contradicts the proposal (which deletes it). The proposal-versus-agreement divergence on registration is now explicitly flagged for OJ-consolidation review.
+
+### Notes
+
+- Nothing in the Omnibus pack is enacted. Re-verify the consolidated OJ text on adoption before flipping any item to `enacted_oj`.
+- The high-risk guidance, standards, Article 50 code, and GPAI code sources from the 2026-06-15 research memo are a verified follow-on and are intentionally not yet included.
+- Cross-model grade (Codex, producer Claude): an initial build leaked pending shift dates and the nudification prohibition into the default `digital_omnibus` summary and the `euaiact://timeline` resource, the guardrail tests checked only the milestone list (false green), the Commission overview page was mis-tagged `enacted_oj`, the timeline source tag was coarse, and the delta list was non-exhaustive without saying so. All six findings reproduced and fixed before release. See `docs/audit-2026-06-15-verification.md`.
+
 ## [1.2.0] - 2026-06-15
 
 Legal-accuracy and release-hygiene release following a cross-model audit (Codex) and an independent primary-source cross-read against OJ CELEX 32024R1689. See `docs/audit-2026-06-15-*.md`.

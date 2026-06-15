@@ -16,14 +16,7 @@ export interface MilestoneWithDaysRemaining extends Milestone {
     isPast: boolean;
 }
 export declare const milestones: Milestone[];
-export interface LegislativeProposal {
-    name: string;
-    status: string;
-    proposalDate: string;
-    description: string;
-    keyChanges: string[];
-    impactOnAIAct: string;
-}
-export declare const digitalOmnibus: LegislativeProposal;
+export type { LegislativeProposal, DigitalOmnibusPack, OmnibusDelta } from "./digital-omnibus.js";
+export { digitalOmnibusPack, omnibusSummary as digitalOmnibus } from "./digital-omnibus.js";
 export declare function getMilestonesWithDaysRemaining(): MilestoneWithDaysRemaining[];
 //# sourceMappingURL=deadlines.d.ts.map

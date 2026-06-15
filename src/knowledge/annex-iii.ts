@@ -48,15 +48,15 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 1,
     name: "Biometrics",
     description:
-      "AI systems intended for biometric identification, categorisation, or emotion recognition of natural persons, except where legally permitted for specific law enforcement purposes.",
+      "AI systems intended for remote biometric identification, biometric categorisation according to sensitive or protected attributes, or emotion recognition of natural persons, in so far as their use is permitted under Union or national law. Sole-purpose biometric verification to confirm that a specific natural person is who they claim to be is excluded from Annex III(1)(a).",
     examples: [
-      "Real-time facial recognition in public spaces for law enforcement",
+      "Remote biometric identification systems where legally permitted",
       "Biometric categorisation systems inferring race, political opinions, or sexual orientation",
-      "Emotion recognition systems in workplaces or educational institutions",
+      "Emotion recognition systems outside the Art. 5(1)(f) workplace and education prohibition",
       "Fingerprint or iris-based remote biometric identification systems",
     ],
     keywords: [
-      "biometric", "facial recognition", "face detection", "emotion recognition",
+      "remote biometric identification", "facial recognition", "emotion recognition",
       "biometric identification", "biometric categorisation", "iris scan",
       "fingerprint recognition", "gait recognition", "voice biometric",
     ],
@@ -142,18 +142,18 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 6,
     name: "Law enforcement",
     description:
-      "AI systems intended for use by law enforcement authorities for individual risk assessment, polygraphs and similar tools, evaluation of evidence reliability, predicting occurrence or reoccurrence of criminal offences, profiling of natural persons, and crime analytics.",
+      "AI systems intended for use by or on behalf of law enforcement authorities for victim risk assessment, polygraphs and similar tools, evaluation of evidence reliability, assessing the risk of a natural person offending or re-offending, assessment of personality traits or past criminal behaviour of natural persons or groups, or profiling natural persons in criminal detection, investigation, or prosecution.",
     examples: [
-      "Predictive policing systems forecasting crime hotspots",
+      "AI systems assessing the risk of a natural person becoming a victim of crime",
       "AI-based lie detection or polygraph analysis tools",
       "AI profiling systems assessing individual criminal risk",
       "Automated evidence reliability assessment tools",
-      "AI crime analytics platforms identifying offence patterns",
+      "AI systems profiling natural persons during criminal investigations",
     ],
     keywords: [
-      "law enforcement", "predictive policing", "crime prediction", "polygraph",
-      "lie detection", "criminal profiling", "evidence assessment", "crime analytics",
-      "recidivism prediction", "risk assessment law enforcement",
+      "victim risk assessment", "criminal offence risk assessment", "polygraph",
+      "lie detection", "criminal profiling", "evidence assessment",
+      "recidivism prediction", "risk assessment law enforcement", "profiling natural persons criminal",
     ],
     relevantArticles: ["Annex III(6)", "Art. 5(1)(d)", "Art. 6(2)"],
   },
@@ -161,16 +161,16 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 7,
     name: "Migration, asylum, and border control management",
     description:
-      "AI systems intended for use by competent public authorities in migration, asylum, and border control as polygraphs or similar tools, for assessing security risks, for examining applications for asylum, visa, and residence permits, and for detecting, recognising, or identifying natural persons in border control.",
+      "AI systems intended for use by competent public authorities in migration, asylum, and border control as polygraphs or similar tools, for assessing risks posed by natural persons entering a Member State, for examining applications for asylum, visa, and residence permits, and for detecting, recognising, or identifying natural persons in border control. Verification of travel documents is excluded from Annex III(7)(d).",
     examples: [
       "AI systems screening visa and asylum applications",
-      "Automated border control identity verification systems (e-gates)",
+      "Automated border control systems identifying natural persons",
       "AI risk assessment tools for irregular migration detection",
-      "AI-powered document authenticity verification at borders",
+      "AI systems assessing security or health risks posed by a person entering a Member State",
     ],
     keywords: [
       "migration", "asylum", "border control", "visa", "residence permit",
-      "immigration", "border security", "travel document", "refugee",
+      "immigration", "border security", "refugee",
       "irregular migration",
     ],
     relevantArticles: ["Annex III(7)", "Art. 6(2)"],
@@ -179,7 +179,7 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 8,
     name: "Administration of justice and democratic processes",
     description:
-      "AI systems intended to assist judicial authorities in researching and interpreting facts and law and in applying the law to concrete facts, or to be used to influence the outcome of elections or referendums or the voting behaviour of natural persons.",
+      "AI systems intended to assist judicial authorities in researching and interpreting facts and law and in applying the law to concrete facts, or to be used to influence the outcome of elections or referendums or the voting behaviour of natural persons. Campaign administration or logistics tools are excluded where natural persons are not directly exposed to the output.",
     examples: [
       "AI systems assisting judges in sentencing recommendations",
       "AI legal research tools used by courts for case law analysis",
@@ -250,7 +250,7 @@ export const prohibitedPractices: ProhibitedPractice[] = [
       "Pre-crime systems profiling individuals without any link to verified criminal activity",
       "AI generating criminal propensity scores from personality analysis alone",
     ],
-    keywords: ["criminal prediction", "pre-crime", "profiling", "criminal risk", "predictive crime individual"],
+    keywords: ["criminal prediction", "pre-crime", "based solely on profiling", "criminal risk", "predictive crime individual", "criminal propensity score", "personality traits criminal"],
     article: "Art. 5(1)(d)",
   },
   {

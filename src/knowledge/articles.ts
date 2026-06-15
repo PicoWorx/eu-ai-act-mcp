@@ -89,7 +89,7 @@ export const articles: ArticleEntry[] = [
     number: "12",
     title: "Record-keeping",
     summary:
-      "High-risk AI systems must technically allow for the automatic recording of events (logs) over the lifetime of the system. Logging capabilities must enable the recording of events relevant for identifying situations that may result in the AI system presenting a risk within the meaning of Art. 79(1), or for facilitating post-market monitoring under Art. 72. Logs must be kept for an appropriate period (at minimum six months, unless otherwise provided by applicable EU or national law).",
+      "High-risk AI systems must technically allow for the automatic recording of events (logs) over the lifetime of the system. Logging capabilities must enable the recording of events relevant for identifying situations that may result in the AI system presenting a risk within the meaning of Art. 79(1), for facilitating post-market monitoring under Art. 72, and for monitoring the operation of high-risk AI systems referred to in Art. 26(5). Retention of automatically generated logs is dealt with separately for providers in Art. 19 and for deployers in Art. 26(6).",
     eurlex_url: anchor("12"),
     related_annexes: [],
   },
@@ -137,7 +137,7 @@ export const articles: ArticleEntry[] = [
     number: "26",
     title: "Obligations of deployers of high-risk AI systems",
     summary:
-      "Deployers of high-risk AI systems must: take appropriate technical and organisational measures to ensure use in accordance with the instructions for use; assign human oversight to natural persons with the necessary competence, training, authority, and support; ensure input data is relevant and sufficiently representative; monitor the operation and inform the provider if they identify a risk under Art. 79(1); keep logs automatically generated for at least six months; where the deployer is an employer, inform workers' representatives and affected workers; complete a data protection impact assessment where required; and cooperate with competent authorities.",
+      "Deployers of high-risk AI systems must: take appropriate technical and organisational measures to ensure use in accordance with the instructions for use; assign human oversight to natural persons with the necessary competence, training, authority, and support; ensure input data is relevant and sufficiently representative; monitor operation and, where Art. 26(5) requires, notify the provider or distributor and the relevant market surveillance authority and suspend use; report serious incidents through the provider/importer/distributor and market surveillance authority chain; keep automatically generated logs under their control for at least six months unless applicable law provides otherwise; where the deployer is an employer, inform workers' representatives and affected workers before workplace use; inform natural persons subject to qualifying Annex III high-risk AI use under Art. 26(11); complete a data protection impact assessment where required; and cooperate with competent authorities.",
     eurlex_url: anchor("26"),
     related_annexes: [],
   },
@@ -185,7 +185,7 @@ export const articles: ArticleEntry[] = [
     number: "51",
     title: "Classification of general-purpose AI models as models with systemic risk",
     summary:
-      "A general-purpose AI model is classified as a GPAI model with systemic risk if it has high-impact capabilities evaluated on the basis of appropriate technical tools and methodologies, or if the Commission decides (ex officio or following a qualified alert from the scientific panel) that the model has capabilities or an impact equivalent to the former. A GPAI model is presumed to have high-impact capabilities when the cumulative amount of computation used for its training measured in floating point operations (FLOPs) is greater than 10^25. Providers must notify the Commission when their model meets or will meet this condition within two weeks.",
+      "A general-purpose AI model is classified as a GPAI model with systemic risk if it has high-impact capabilities evaluated on the basis of appropriate technical tools and methodologies, or if the Commission decides (ex officio or following a qualified alert from the scientific panel) that the model has capabilities or an impact equivalent to the former. A GPAI model is presumed to have high-impact capabilities when the cumulative amount of computation used for its training measured in floating point operations (FLOPs) is greater than 10^25. Under the procedure in Art. 52, providers must notify the Commission without delay and within two weeks when their model meets or will meet the Art. 51(1)(a) condition.",
     eurlex_url: anchor("51"),
     related_annexes: ["Annex XIII"],
   },
@@ -225,7 +225,7 @@ export const articles: ArticleEntry[] = [
     number: "99",
     title: "Penalties",
     summary:
-      "Art. 99(3): Non-compliance with the prohibition of the AI practices referred to in Art. 5 is subject to administrative fines of up to EUR 35,000,000 or, if the offender is an undertaking, up to 7% of total worldwide annual turnover for the preceding financial year, whichever is higher. Art. 99(4): Non-compliance with other provisions applicable to providers, deployers, notified bodies, or authorised representatives (high-risk obligations, GPAI obligations, transparency obligations, etc.) is subject to fines of up to EUR 15,000,000 or 3% of total worldwide annual turnover, whichever is higher. Art. 99(5): The supply of incorrect, incomplete, or misleading information to notified bodies and national competent authorities is subject to fines of up to EUR 7,500,000 or 1% of turnover, whichever is higher. Art. 99(6): For SMEs, including start-ups, each fine referred to in Art. 99 is up to the percentages or amount referred to, whichever is lower.",
+      "Art. 99(3): Non-compliance with the prohibition of the AI practices referred to in Art. 5 is subject to administrative fines of up to EUR 35,000,000 or, if the offender is an undertaking, up to 7% of total worldwide annual turnover for the preceding financial year, whichever is higher. Art. 99(4): Non-compliance with the listed operator, notified-body, and Art. 50 transparency obligations is subject to fines of up to EUR 15,000,000 or 3% of total worldwide annual turnover, whichever is higher. Art. 99(5): The supply of incorrect, incomplete, or misleading information to notified bodies and national competent authorities is subject to fines of up to EUR 7,500,000 or 1% of turnover, whichever is higher. Art. 99(6): For SMEs, including start-ups, each fine referred to in Art. 99 is up to the percentages or amount referred to, whichever is lower. Fines for providers of general-purpose AI models are governed separately by Art. 101.",
     eurlex_url: anchor("99"),
     related_annexes: [],
   },

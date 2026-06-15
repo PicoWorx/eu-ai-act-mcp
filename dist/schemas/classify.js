@@ -25,6 +25,14 @@ export const classifySignalsSchema = z
         .optional()
         .describe("Primary sector where the system operates"),
     uses_biometrics: z.boolean().optional().describe("System processes biometric data (face, fingerprint, iris, voice, gait)"),
+    biometric_sole_purpose_verification: z
+        .boolean()
+        .optional()
+        .describe("Biometric use is solely to verify that a specific natural person is the person they claim to be, which is excluded from Annex III(1)(a)"),
+    biometric_remote_identification: z
+        .boolean()
+        .optional()
+        .describe("System performs remote biometric identification, not merely one-to-one biometric verification"),
     biometric_realtime: z.boolean().optional().describe("Biometric processing happens in real time"),
     biometric_law_enforcement: z.boolean().optional().describe("Biometric system is used by or for law enforcement"),
     biometric_publicly_accessible_space: z
@@ -35,6 +43,10 @@ export const classifySignalsSchema = z
         .boolean()
         .optional()
         .describe("System is a safety component of a product covered by EU harmonisation legislation (Annex I)"),
+    requires_third_party_conformity_assessment: z
+        .boolean()
+        .optional()
+        .describe("The product or AI system is required to undergo third-party conformity assessment under the applicable Annex I legislation"),
     affects_fundamental_rights: z
         .boolean()
         .optional()

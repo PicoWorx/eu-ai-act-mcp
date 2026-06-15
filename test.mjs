@@ -13,7 +13,8 @@ import { art6ExceptionInputSchema } from "./dist/schemas/art6.js";
 import { annexIvInputSchema } from "./dist/schemas/annex-iv.js";
 import { scoreKeywordMatch, calculateKeywordOverlap, findBestMatch } from "./dist/utils/matching.js";
 import { prohibitedPractices, annexIIICategories, transparencyTriggers } from "./dist/knowledge/annex-iii.js";
-import { getMilestonesWithDaysRemaining, digitalOmnibus } from "./dist/knowledge/deadlines.js";
+import { getMilestonesWithDaysRemaining, digitalOmnibus, digitalOmnibusPack } from "./dist/knowledge/deadlines.js";
+import { sourceRegistry } from "./dist/knowledge/sources.js";
 import {
   providerHighRiskObligations,
   deployerHighRiskObligations,
@@ -23,7 +24,7 @@ import {
   providerGPAIObligations,
   universalObligations,
 } from "./dist/knowledge/obligations.js";
-import { calculateMaxFine, getPenaltyTier } from "./dist/knowledge/penalties.js";
+import { calculateMaxFine, getPenaltyTier, penaltyFramework } from "./dist/knowledge/penalties.js";
 import { faqDatabase } from "./dist/knowledge/faq-database.js";
 import { articles, findArticle } from "./dist/knowledge/articles.js";
 import { annexIVItems } from "./dist/knowledge/annex-iv.js";
@@ -98,9 +99,14 @@ console.log("\n📋 SCHEMA VALIDATION");
 test("classify: empty input (signals-only ok)", classifyInputSchema.safeParse({}).success);
 test("classify: description+use_case", classifyInputSchema.safeParse({ description: "x", use_case: "y" }).success);
 test("classify: signals only", classifyInputSchema.safeParse({ signals: { domain: "employment" } }).success);
+test("classify: Annex I signal includes third-party conformity condition", classifyInputSchema.safeParse({ signals: { is_safety_component_of_regulated_product: true, requires_third_party_conformity_assessment: true } }).success);
+test("classify: biometric verification exclusion signal parses", classifyInputSchema.safeParse({ signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }).success);
 test("obligations input parses", obligationsInputSchema.safeParse({ role: "provider", risk_level: "high-risk" }).success);
+test("obligations input parses high-risk source", obligationsInputSchema.safeParse({ role: "provider", risk_level: "high-risk", high_risk_source: "annex_i" }).success);
+test("obligations input parses GPAI legacy flag", obligationsInputSchema.safeParse({ role: "provider", risk_level: "gpai", gpai_model_placed_on_market_before_2025_08_02: true }).success);
 test("obligations gpai", obligationsInputSchema.safeParse({ role: "provider", risk_level: "gpai" }).success);
 test("penalties input parses", penaltiesInputSchema.safeParse({ violation_type: "prohibited", annual_turnover_eur: 1000000 }).success);
+test("penalties gpai input parses", penaltiesInputSchema.safeParse({ violation_type: "gpai", annual_turnover_eur: 1000000 }).success);
 test("faq input parses", faqInputSchema.safeParse({ question: "test" }).success);
 test("deadlines empty parses", deadlinesInputSchema.safeParse({}).success);
 test("deadlines with area parses", deadlinesInputSchema.safeParse({ area: "GPAI" }).success);
@@ -203,10 +209,17 @@ for (const [key, input] of Object.entries({
   signalsPrivateSocialScoring: { signals: { performs_social_scoring: true } },
   signalsChatbot: { signals: { interacts_with_natural_persons: true } },
   signalsSynthetic: { signals: { generates_synthetic_content: true } },
-  signalsAnnexI: { signals: { is_safety_component_of_regulated_product: true } },
+  signalsAnnexI: { signals: { is_safety_component_of_regulated_product: true, requires_third_party_conformity_assessment: true } },
+  signalsAnnexIIncomplete: { signals: { is_safety_component_of_regulated_product: true } },
+  signalsAnnexINoThirdParty: { description: "AI component in a regulated product that is not subject to third-party conformity assessment", signals: { is_safety_component_of_regulated_product: true, requires_third_party_conformity_assessment: false } },
+  signalsBiometricVerification: { description: "Fingerprint biometric verification only to confirm an employee is the person they claim to be for workstation login.", signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } },
+  signalsBiometricsOnly: { signals: { domain: "biometrics" } },
   signalsEmotionWorkplace: { signals: { performs_emotion_recognition_workplace_or_school: true } },
   lifeHealthInsurance: { description: "AI model used for risk assessment and pricing for life and health insurance", use_case: "Insurance underwriting" },
   carInsurance: { description: "AI model used to calculate car insurance premiums for vehicle insurance", use_case: "Motor insurance pricing" },
+  travelDocumentVerification: { description: "AI-powered document authenticity verification for travel documents at an automated border e-gate.", role: "provider" },
+  crimeAnalyticsNoIndividual: { description: "Police dashboard uses AI crime analytics to identify offence patterns and hotspots from aggregated historical reports. It does not assess individual risk or make decisions about natural persons.", role: "deployer" },
+  withoutProfiling: { description: "Police dashboard uses AI crime analytics to identify offence patterns and hotspots from aggregated historical reports, without profiling natural persons or assessing individual risk.", role: "deployer" },
 })) {
   classifyResults[key] = await callTool("euaiact_classify_system", input);
 }
@@ -301,6 +314,24 @@ test(
     structured(classifyResults.signalsAnnexI).relevant_articles.includes("Art. 6(1)"),
 );
 test(
+  "signals Annex I without third-party conformity fact → insufficient information",
+  structured(classifyResults.signalsAnnexIIncomplete).risk_classification === "insufficient_information" &&
+    /third-party conformity/i.test(structured(classifyResults.signalsAnnexIIncomplete).caveat),
+);
+test(
+  "signals Annex I with no third-party conformity → not high-risk from Art. 6(1)",
+  structured(classifyResults.signalsAnnexINoThirdParty).risk_classification === "insufficient_information",
+);
+test(
+  "sole-purpose biometric verification signal does not auto-classify Annex III(1)",
+  structured(classifyResults.signalsBiometricVerification).risk_classification === "insufficient_information" &&
+    structured(classifyResults.signalsBiometricVerification).relevant_articles.includes("Annex III(1)(a)"),
+);
+test(
+  "domain=biometrics alone does not auto-classify Annex III(1)",
+  structured(classifyResults.signalsBiometricsOnly).risk_classification === "insufficient_information",
+);
+test(
   "signals emotion recognition workplace → prohibited Art. 5(1)(f)",
   structured(classifyResults.signalsEmotionWorkplace).risk_classification === "prohibited",
 );
@@ -312,6 +343,18 @@ test(
 test(
   "ordinary car insurance pricing does not hit Annex III(5) from generic insurance",
   structured(classifyResults.carInsurance).annex_iii_category?.number !== 5,
+);
+test(
+  "travel document verification does not hit Annex III(7)",
+  structured(classifyResults.travelDocumentVerification).annex_iii_category?.number !== 7,
+);
+test(
+  "aggregated crime analytics without individual risk does not hit Annex III(6)",
+  structured(classifyResults.crimeAnalyticsNoIndividual).annex_iii_category?.number !== 6,
+);
+test(
+  "without profiling text does not trigger prohibited Art. 5(1)(d)",
+  structured(classifyResults.withoutProfiling).risk_classification !== "prohibited",
 );
 
 // matched_signals + next_questions populated
@@ -346,8 +389,10 @@ test("5 milestones total", milestones.length === 5);
 test("Entry into force is past", milestones[0].isPast === true);
 test("Aug 2026 is upcoming", milestones[3].isPast === false);
 test("Aug 2027 is upcoming", milestones[4].isPast === false);
-test("Digital Omnibus is provisional_agreement", digitalOmnibus.status === "provisional_agreement");
-test("Digital Omnibus impact keeps not-adopted caveat", digitalOmnibus.impactOnAIAct.includes("NOT yet adopted law"));
+test("Digital Omnibus summary status is political_agreement", digitalOmnibus.status === "political_agreement");
+test("Digital Omnibus impact keeps not-enacted caveat", digitalOmnibus.impactOnAIAct.includes("not yet adopted law"));
+test("Chapter XII penalty framework date is 2025-08-02", penaltyFramework.enforcementDate === "2025-08-02");
+test("2025 milestone includes Chapter XII penalties except Art. 101", milestones[2].keyObligations.some((o) => /Chapter XII penalty framework applies, except Art\. 101/.test(o)));
 
 // Tool-level: only_upcoming filter
 {
@@ -356,10 +401,68 @@ test("Digital Omnibus impact keeps not-adopted caveat", digitalOmnibus.impactOnA
   test("deadlines next_milestone shortcut populated", structured(r).next_milestone !== null);
 }
 
+// ─── SOURCE-STATE: DIGITAL OMNIBUS (v1.3.0) ─────────────────────────────────
+console.log("\n🧭 SOURCE-STATE / DIGITAL OMNIBUS");
+
+// Verified proposal facts (cross-read against COM(2025) 836 on 2026-06-15)
+test("Omnibus proposal date is 2025-11-19", digitalOmnibusPack.proposal.date === "2025-11-19");
+test("Omnibus proposal CELEX is 52025PC0836", digitalOmnibusPack.proposal.celex === "52025PC0836");
+test("Omnibus pack is not enacted", digitalOmnibusPack.enacted === false);
+test("Omnibus political agreement date is 2026-05-07", digitalOmnibusPack.politicalAgreement.date === "2026-05-07");
+test("Omnibus high-risk backstop Annex III is 2027-12-02", digitalOmnibusPack.highRiskTimeline.backstop.annex_iii_art_6_2 === "2027-12-02");
+test("Omnibus high-risk backstop Annex I is 2028-08-02", digitalOmnibusPack.highRiskTimeline.backstop.annex_i_art_6_1 === "2028-08-02");
+test("Omnibus Art 50(2) transition date is 2027-02-02", digitalOmnibusPack.deltas.some((d) => d.article.includes("50(2)") && d.effectiveDate === "2027-02-02"));
+
+// Nudification belongs to the political agreement, not the proposal
+{
+  const nud = digitalOmnibusPack.deltas.find((d) => /Art\. 5 \(prohibited/.test(d.article));
+  test("Nudification delta is tagged political_agreement", !!nud && nud.sourceStatus === "political_agreement");
+  test("Nudification delta noted as not in proposal", !!nud && /NOT present in proposal/i.test(nud.note || ""));
+}
+
+// Source registry carries correct statuses
+test("Source registry: OJ is enacted_oj", sourceRegistry.oj_2024_1689.status === "enacted_oj");
+test("Source registry: COM(2025) 836 is commission_proposal", sourceRegistry.com_2025_836.status === "commission_proposal");
+test("Source registry: agreement is political_agreement", sourceRegistry.omnibus_agreement_2026_05_07.status === "political_agreement");
+test("Source registry: exactly one enacted_oj source (the OJ instrument, no policy page)", Object.values(sourceRegistry).filter((x) => x.status === "enacted_oj").length === 1);
+test("Omnibus delta pack is expanded but curated (>=13 deltas)", digitalOmnibusPack.deltas.length >= 13);
+test("Omnibus pack carries a non-exhaustive coverage note", /NON-EXHAUSTIVE/i.test(digitalOmnibusPack.coverageNote));
+test("Omnibus deltas include Art 43 conformity assessment", digitalOmnibusPack.deltas.some((d) => /Art\. 43/.test(d.article)));
+test("Omnibus timeline mechanism tagged commission_proposal", digitalOmnibusPack.highRiskTimeline.mechanismSourceStatus === "commission_proposal");
+test("Omnibus timeline backstop tagged political_agreement", digitalOmnibusPack.highRiskTimeline.backstopSourceStatus === "political_agreement");
+
+// Tool guardrail: default keeps current OJ law; pending specifics withheld from the WHOLE payload (not just milestones)
+{
+  const r = await callTool("euaiact_check_deadlines", {});
+  const s = structured(r);
+  const full = JSON.stringify(s);
+  test("deadlines default: pending_omnibus is null", s.pending_omnibus === null);
+  test("deadlines default: current-law Annex III date 2026-08-02 present", s.milestones.some((m) => m.date === "2026-08-02"));
+  test("deadlines default: current-law Annex I date 2027-08-02 present", s.milestones.some((m) => m.date === "2027-08-02"));
+  test("deadlines default: FULL payload has no high-risk backstop dates", !/2027-12-02|2028-08-02|2 Dec 2027|2 Aug 2028/.test(full));
+  test("deadlines default: FULL payload has no Art 50(2) transition date", !/2027-02-02|2 Feb 2027/.test(full));
+  test("deadlines default: FULL payload never mentions nudification/CSAM", !/nudif|CSAM/i.test(full));
+}
+
+// Tool guardrail: pending mode surfaces the flagged pack; current-law milestones unchanged
+{
+  const r = await callTool("euaiact_check_deadlines", { include_pending_omnibus: true });
+  const s = structured(r);
+  const full = JSON.stringify(s);
+  test("deadlines pending: pending_omnibus populated", s.pending_omnibus !== null);
+  test("deadlines pending: pack marked not enacted", s.pending_omnibus.enacted === false);
+  test("deadlines pending: backstop Annex III is 2027-12-02", s.pending_omnibus.high_risk_timeline.backstop.annex_iii_art_6_2 === "2027-12-02");
+  test("deadlines pending: mechanism tagged commission_proposal", s.pending_omnibus.high_risk_timeline.mechanism_source_status === "commission_proposal");
+  test("deadlines pending: backstop tagged political_agreement", s.pending_omnibus.high_risk_timeline.backstop_source_status === "political_agreement");
+  test("deadlines pending: coverage_note marks deltas non-exhaustive", /NON-EXHAUSTIVE/i.test(s.pending_omnibus.coverage_note));
+  test("deadlines pending: opt-in DOES expose backstop dates", /2027-12-02/.test(full) && /2028-08-02/.test(full));
+  test("deadlines pending: current-law milestone 2026-08-02 still present", s.milestones.some((m) => m.date === "2026-08-02"));
+}
+
 // ─── OBLIGATIONS ────────────────────────────────────────────────────────────
 console.log("\n📜 OBLIGATIONS");
 test("Provider high-risk: 13 obligations", providerHighRiskObligations.length === 13);
-test("Deployer high-risk: 8 obligations", deployerHighRiskObligations.length === 8);
+test("Deployer high-risk: 9 obligations", deployerHighRiskObligations.length === 9);
 test("Limited risk transparency: 4 obligations", limitedRiskTransparencyObligations.length === 4);
 test("Provider limited-risk transparency: 2 obligations", providerLimitedRiskTransparencyObligations.length === 2);
 test("Deployer limited-risk transparency: 2 obligations", deployerLimitedRiskTransparencyObligations.length === 2);
@@ -370,6 +473,15 @@ test("Universal obligations: 1 (AI literacy)", universalObligations.length === 1
   test("obligations tool has no `disclaimer` field", !("disclaimer" in structured(r)));
   test("obligations tool has no `source` field", !("source" in structured(r)));
   test("obligations tool includes lexbeam_url", typeof structured(r).lexbeam_url === "string");
+  test("provider high-risk Art. 49 obligation is conditional", /Annex III/.test(structured(r).obligations.find((o) => o.article === "Art. 49")?.details ?? ""));
+}
+{
+  const r = await callTool("euaiact_get_obligations", { role: "provider", risk_level: "high-risk", high_risk_source: "annex_i" });
+  test("provider Annex I high-risk obligations omit Art. 49 EU database registration", !structured(r).obligations.some((o) => o.article === "Art. 49"));
+}
+{
+  const r = await callTool("euaiact_get_obligations", { role: "provider", risk_level: "high-risk", high_risk_source: "annex_iii", annex_iii_point: 2 });
+  test("provider Annex III point 2 obligations omit Art. 49 EU database registration", !structured(r).obligations.some((o) => o.article === "Art. 49"));
 }
 {
   const r = await callTool("euaiact_get_obligations", { role: "deployer", risk_level: "limited", filter_keyword: "emotion" });
@@ -388,6 +500,11 @@ test("Universal obligations: 1 (AI literacy)", universalObligations.length === 1
   test("GPAI deployer query does not return provider obligations", p.obligations.length === 0);
   test("GPAI deployer penalty basis explains provider-only Art. 101", /providers/i.test(p.penalties.basis));
 }
+{
+  const r = await callTool("euaiact_get_obligations", { role: "provider", risk_level: "gpai", gpai_model_placed_on_market_before_2025_08_02: true });
+  const p = structured(r);
+  test("GPAI legacy model obligations use Art. 111(3) 2027 deadline", p.obligations.length > 0 && p.obligations.every((o) => o.deadline === "2027-08-02"));
+}
 
 // ─── PENALTIES ──────────────────────────────────────────────────────────────
 console.log("\n💰 PENALTIES");
@@ -400,6 +517,11 @@ test("EUR 10M SME prohibited: 7% = 700K (lower of two)", p3.applicableFine === 7
 const p5 = calculateMaxFine("false_info", 2_000_000_000, false);
 test("EUR 2B false_info: 1% = 20M (higher)", p5.applicableFine === 20_000_000);
 test("Prohibited tier = Art. 99(3)", getPenaltyTier("prohibited").article === "Art. 99(3)");
+test("GPAI penalty tier = Art. 101", getPenaltyTier("gpai").article === "Art. 101");
+{
+  const p = calculateMaxFine("gpai", 1_000_000_000, true);
+  test("GPAI penalties do not apply Art. 99(6) SME lower cap", p.applicableFine === 30_000_000);
+}
 
 // Tool-level: SME description contradiction fix
 {
@@ -430,6 +552,17 @@ test("Prohibited tier = Art. 99(3)", getPenaltyTier("prohibited").article === "A
     "SME response has no `disclaimer` field (branding slim)",
     !("disclaimer" in payload),
   );
+}
+{
+  const r = await callTool("euaiact_calculate_penalty", {
+    violation_type: "gpai",
+    annual_turnover_eur: 1_000_000_000,
+    is_sme: true,
+  });
+  const payload = structured(r);
+  test("GPAI penalty tool uses Art. 101", payload.tier_details.article === "Art. 101");
+  test("GPAI SME response still uses higher amount", payload.max_fine.applicable_fine_eur === 30_000_000);
+  test("GPAI SME response explains no Art. 99(6) lower cap", /no Art\. 99\(6\)/i.test(payload.max_fine.explanation));
 }
 
 // ─── FAQ ────────────────────────────────────────────────────────────────────
@@ -473,6 +606,8 @@ console.log("\n🆕 NEW TOOLS");
 test("articles corpus has Art. 5", articles.some((a) => a.number === "5"));
 test("findArticle('5') returns Art. 5", findArticle("5")?.number === "5");
 test("findArticle('Art. 99') returns Art. 99", findArticle("Art. 99")?.number === "99");
+test("findArticle('12') separates technical logging from retention duties", /Retention of automatically generated logs is dealt with separately/.test(findArticle("12")?.summary ?? ""));
+test("findArticle('99') does not place GPAI fines under Art. 99(4)", !/GPAI obligations/.test(findArticle("99")?.summary ?? "") && /Art\. 101/.test(findArticle("99")?.summary ?? ""));
 {
   const r = await callTool("euaiact_get_article", { article: "5" });
   const p = structured(r);

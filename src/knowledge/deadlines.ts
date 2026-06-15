@@ -52,19 +52,22 @@ export const milestones: Milestone[] = [
     date: "2025-08-02",
     name: "GPAI model obligations and governance",
     description:
-      "Obligations for providers of general-purpose AI models (Art. 51-56) apply from 2 August 2025 (12 months after entry into force). Governance structures including the AI Office, AI Board, and advisory forum become operational.",
+      "Obligations for providers of general-purpose AI models (Art. 51-56) apply from 2 August 2025 for new models, subject to the Art. 111(3) transition for GPAI models placed on the market before that date. Governance structures including the AI Office, AI Board, and advisory forum become operational. Chapter XII penalties also apply from this date, except Art. 101.",
     status: "in_effect",
     articles: [
       "Art. 51", "Art. 52", "Art. 53", "Art. 54", "Art. 55", "Art. 56",
       "Art. 64", "Art. 65", "Art. 66", "Art. 67",
+      "Art. 99", "Art. 100", "Art. 113(b)",
     ],
     keyObligations: [
       "GPAI providers must publish training data summaries",
+      "GPAI models placed on the market before 2 August 2025 have an Art. 111(3) transition until 2 August 2027",
       "Technical documentation for GPAI models required",
       "Copyright compliance policies must be in place",
       "Systemic risk GPAI models: additional evaluation, testing, incident reporting, and cybersecurity obligations",
       "AI Office and AI Board operational",
       "Codes of practice for GPAI expected to be finalised",
+      "Chapter XII penalty framework applies, except Art. 101",
     ],
   },
   {
@@ -77,7 +80,7 @@ export const milestones: Milestone[] = [
       "Art. 6", "Art. 9", "Art. 10", "Art. 11", "Art. 12", "Art. 13",
       "Art. 14", "Art. 15", "Art. 16", "Art. 17", "Art. 26", "Art. 27",
       "Art. 43", "Art. 47", "Art. 49", "Art. 50", "Art. 72", "Art. 73",
-      "Art. 99",
+      "Art. 101",
     ],
     keyObligations: [
       "Risk management systems for high-risk AI",
@@ -93,7 +96,7 @@ export const milestones: Milestone[] = [
       "Deployer obligations including FRIA",
       "Limited risk transparency obligations (Art. 50)",
       "Post-market monitoring and incident reporting",
-      "Penalties framework enforceable",
+      "Art. 101 GPAI fines follow the general application date",
     ],
   },
   {
@@ -113,38 +116,15 @@ export const milestones: Milestone[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Digital Omnibus Proposal
+// Digital Omnibus (source-state-aware)
 // ---------------------------------------------------------------------------
+//
+// The structured, verified pack lives in `digital-omnibus.ts`. The legacy
+// `digitalOmnibus` summary is derived from it (`omnibusSummary`) so the two
+// never drift, and the richer pack is re-exported for the pending-mode output.
 
-export interface LegislativeProposal {
-  name: string;
-  status: string;
-  proposalDate: string;
-  description: string;
-  keyChanges: string[];
-  impactOnAIAct: string;
-}
-
-export const digitalOmnibus: LegislativeProposal = {
-  name: "Digital Omnibus Simplification Package",
-  status: "provisional_agreement", // updated 2026-05-08: was "proposal_only"; political agreement reached 2026-05-07, not yet formally adopted
-  proposalDate: "2025-12-04", // Commission tabled the original proposal on this date
-  description:
-    "European Commission proposal (tabled 2025-12-04) to simplify reporting and compliance obligations across the AI Act, GDPR, NIS2, DORA. The AI Act portion progressed to a Council/Parliament PROVISIONAL POLITICAL AGREEMENT on 2026-05-07. Status as of 2026-05-08: not formally adopted. Pending Council and Parliament endorsement, legal/linguistic revision, and Official Journal publication. EP Legislative Observatory (procedure 2025/0359(COD)) shows file as awaiting Parliament's position in 1st reading.",
-  keyChanges: [
-    "Annex III high-risk obligations: current law 2 Aug 2026 -> provisional agreement would shift to 2 Dec 2027",
-    "Annex I high-risk obligations: current law 2 Aug 2027 -> provisional agreement would shift to 2 Aug 2028",
-    "Article 50 GenAI watermarking and output detection: current law 2 Aug 2026 -> provisional agreement would shift to 2 Dec 2026",
-    "Article 5 prohibited practices list expanded with CSAM and non-consensual sexual/intimate content; provisional compliance by 2 Dec 2026",
-    "Registration of 'exempted' Annex III high-risk systems: REMAINS MANDATED (Parliament blocked Commission simplification)",
-    "Sensitive personal data processing for bias detection: broader scope, 'strictly necessary' clause retained",
-    "GPAI obligations themselves (in force since 2 Aug 2025): UNCHANGED",
-    "Commission enforcement powers and fines for GPAI (start 2 Aug 2026): UNCHANGED",
-    "Legacy GPAI compliance deadline (2 Aug 2027 for models placed before 2 Aug 2025): UNCHANGED",
-  ],
-  impactOnAIAct:
-    "The 2026-05-07 provisional Council/Parliament political agreement would shift several deadlines for high-risk AI systems IF formally adopted. The agreement is NOT yet adopted law: pending formal adoption plus Official Journal publication, current-law dates remain authoritative for compliance advice. Plan against current law; treat the provisional shifts as politically foreseeable but not yet binding. Sources: Council press release 2026-05-07, European Parliament press release 2026-05-07, EP Legislative Observatory procedure 2025/0359(COD), AI Act Service Desk timeline.",
-};
+export type { LegislativeProposal, DigitalOmnibusPack, OmnibusDelta } from "./digital-omnibus.js";
+export { digitalOmnibusPack, omnibusSummary as digitalOmnibus } from "./digital-omnibus.js";
 
 // ---------------------------------------------------------------------------
 // Helper Function

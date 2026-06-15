@@ -8,10 +8,13 @@ import { z } from "zod";
 export declare const classifySignalsSchema: z.ZodOptional<z.ZodObject<{
     domain: z.ZodOptional<z.ZodEnum<["employment", "education", "biometrics", "critical_infrastructure", "law_enforcement", "migration", "justice", "essential_services", "health", "gpai", "product_safety", "other"]>>;
     uses_biometrics: z.ZodOptional<z.ZodBoolean>;
+    biometric_sole_purpose_verification: z.ZodOptional<z.ZodBoolean>;
+    biometric_remote_identification: z.ZodOptional<z.ZodBoolean>;
     biometric_realtime: z.ZodOptional<z.ZodBoolean>;
     biometric_law_enforcement: z.ZodOptional<z.ZodBoolean>;
     biometric_publicly_accessible_space: z.ZodOptional<z.ZodBoolean>;
     is_safety_component_of_regulated_product: z.ZodOptional<z.ZodBoolean>;
+    requires_third_party_conformity_assessment: z.ZodOptional<z.ZodBoolean>;
     affects_fundamental_rights: z.ZodOptional<z.ZodBoolean>;
     targets_children_or_vulnerable: z.ZodOptional<z.ZodBoolean>;
     generates_synthetic_content: z.ZodOptional<z.ZodBoolean>;
@@ -22,10 +25,13 @@ export declare const classifySignalsSchema: z.ZodOptional<z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
     uses_biometrics?: boolean | undefined;
+    biometric_sole_purpose_verification?: boolean | undefined;
+    biometric_remote_identification?: boolean | undefined;
     biometric_realtime?: boolean | undefined;
     biometric_law_enforcement?: boolean | undefined;
     biometric_publicly_accessible_space?: boolean | undefined;
     is_safety_component_of_regulated_product?: boolean | undefined;
+    requires_third_party_conformity_assessment?: boolean | undefined;
     affects_fundamental_rights?: boolean | undefined;
     targets_children_or_vulnerable?: boolean | undefined;
     generates_synthetic_content?: boolean | undefined;
@@ -36,10 +42,13 @@ export declare const classifySignalsSchema: z.ZodOptional<z.ZodObject<{
 }, {
     domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
     uses_biometrics?: boolean | undefined;
+    biometric_sole_purpose_verification?: boolean | undefined;
+    biometric_remote_identification?: boolean | undefined;
     biometric_realtime?: boolean | undefined;
     biometric_law_enforcement?: boolean | undefined;
     biometric_publicly_accessible_space?: boolean | undefined;
     is_safety_component_of_regulated_product?: boolean | undefined;
+    requires_third_party_conformity_assessment?: boolean | undefined;
     affects_fundamental_rights?: boolean | undefined;
     targets_children_or_vulnerable?: boolean | undefined;
     generates_synthetic_content?: boolean | undefined;
@@ -55,10 +64,13 @@ export declare const classifyInputSchema: z.ZodObject<{
     signals: z.ZodOptional<z.ZodObject<{
         domain: z.ZodOptional<z.ZodEnum<["employment", "education", "biometrics", "critical_infrastructure", "law_enforcement", "migration", "justice", "essential_services", "health", "gpai", "product_safety", "other"]>>;
         uses_biometrics: z.ZodOptional<z.ZodBoolean>;
+        biometric_sole_purpose_verification: z.ZodOptional<z.ZodBoolean>;
+        biometric_remote_identification: z.ZodOptional<z.ZodBoolean>;
         biometric_realtime: z.ZodOptional<z.ZodBoolean>;
         biometric_law_enforcement: z.ZodOptional<z.ZodBoolean>;
         biometric_publicly_accessible_space: z.ZodOptional<z.ZodBoolean>;
         is_safety_component_of_regulated_product: z.ZodOptional<z.ZodBoolean>;
+        requires_third_party_conformity_assessment: z.ZodOptional<z.ZodBoolean>;
         affects_fundamental_rights: z.ZodOptional<z.ZodBoolean>;
         targets_children_or_vulnerable: z.ZodOptional<z.ZodBoolean>;
         generates_synthetic_content: z.ZodOptional<z.ZodBoolean>;
@@ -69,10 +81,13 @@ export declare const classifyInputSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
         uses_biometrics?: boolean | undefined;
+        biometric_sole_purpose_verification?: boolean | undefined;
+        biometric_remote_identification?: boolean | undefined;
         biometric_realtime?: boolean | undefined;
         biometric_law_enforcement?: boolean | undefined;
         biometric_publicly_accessible_space?: boolean | undefined;
         is_safety_component_of_regulated_product?: boolean | undefined;
+        requires_third_party_conformity_assessment?: boolean | undefined;
         affects_fundamental_rights?: boolean | undefined;
         targets_children_or_vulnerable?: boolean | undefined;
         generates_synthetic_content?: boolean | undefined;
@@ -83,10 +98,13 @@ export declare const classifyInputSchema: z.ZodObject<{
     }, {
         domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
         uses_biometrics?: boolean | undefined;
+        biometric_sole_purpose_verification?: boolean | undefined;
+        biometric_remote_identification?: boolean | undefined;
         biometric_realtime?: boolean | undefined;
         biometric_law_enforcement?: boolean | undefined;
         biometric_publicly_accessible_space?: boolean | undefined;
         is_safety_component_of_regulated_product?: boolean | undefined;
+        requires_third_party_conformity_assessment?: boolean | undefined;
         affects_fundamental_rights?: boolean | undefined;
         targets_children_or_vulnerable?: boolean | undefined;
         generates_synthetic_content?: boolean | undefined;
@@ -102,10 +120,13 @@ export declare const classifyInputSchema: z.ZodObject<{
     signals?: {
         domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
         uses_biometrics?: boolean | undefined;
+        biometric_sole_purpose_verification?: boolean | undefined;
+        biometric_remote_identification?: boolean | undefined;
         biometric_realtime?: boolean | undefined;
         biometric_law_enforcement?: boolean | undefined;
         biometric_publicly_accessible_space?: boolean | undefined;
         is_safety_component_of_regulated_product?: boolean | undefined;
+        requires_third_party_conformity_assessment?: boolean | undefined;
         affects_fundamental_rights?: boolean | undefined;
         targets_children_or_vulnerable?: boolean | undefined;
         generates_synthetic_content?: boolean | undefined;
@@ -121,10 +142,13 @@ export declare const classifyInputSchema: z.ZodObject<{
     signals?: {
         domain?: "employment" | "education" | "biometrics" | "critical_infrastructure" | "law_enforcement" | "migration" | "justice" | "essential_services" | "health" | "gpai" | "product_safety" | "other" | undefined;
         uses_biometrics?: boolean | undefined;
+        biometric_sole_purpose_verification?: boolean | undefined;
+        biometric_remote_identification?: boolean | undefined;
         biometric_realtime?: boolean | undefined;
         biometric_law_enforcement?: boolean | undefined;
         biometric_publicly_accessible_space?: boolean | undefined;
         is_safety_component_of_regulated_product?: boolean | undefined;
+        requires_third_party_conformity_assessment?: boolean | undefined;
         affects_fundamental_rights?: boolean | undefined;
         targets_children_or_vulnerable?: boolean | undefined;
         generates_synthetic_content?: boolean | undefined;

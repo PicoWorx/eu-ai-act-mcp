@@ -32,21 +32,41 @@ const penaltyTiers = [
         maxFineEUR: 15_000_000,
         globalTurnoverPercentage: 3,
         article: "Art. 99(4)",
-        description: "Non-compliance with obligations for providers, deployers, and other actors under the Regulation (other than Art. 5 and false information). Covers high-risk requirements (Art. 9-17), deployer obligations (Art. 26-27), conformity assessment (Art. 43), and other substantive requirements. Up to EUR 15 million or 3% of global turnover, whichever is higher.",
+        description: "Non-compliance with the operator, notified-body, and Art. 50 transparency obligations listed in Art. 99(4), including provider obligations under Art. 16, deployer obligations under Art. 26, and transparency obligations under Art. 50. Up to EUR 15 million or 3% of global turnover, whichever is higher.",
         applicableTo: [
             "Providers of high-risk AI systems",
             "Deployers of high-risk AI systems",
             "Importers and distributors",
             "Authorised representatives",
-            "GPAI model providers (for Art. 51-56 violations)",
+            "Notified bodies for the listed Art. 31, 33, and 34 infringements",
+            "Providers and deployers subject to Art. 50 transparency obligations",
         ],
         examples: [
             "Placing a high-risk AI system on the market without conformity assessment",
             "Failing to implement a risk management system for high-risk AI",
             "Deployer failing to perform a FRIA when required",
-            "GPAI provider failing to provide technical documentation",
             "Failure to register in the EU database",
+            "Provider or deployer failing to comply with Art. 50 transparency obligations",
         ],
+    },
+    {
+        id: "tier-gpai",
+        name: "General-purpose AI model provider infringements",
+        maxFineEUR: 15_000_000,
+        globalTurnoverPercentage: 3,
+        article: "Art. 101",
+        description: "The Commission may fine providers of general-purpose AI models up to EUR 15 million or 3% of worldwide annual turnover, whichever is higher, for intentional or negligent infringements of relevant GPAI provisions, failure to comply with Commission information or measure requests, incorrect or misleading information, or failure to provide model access for evaluation.",
+        applicableTo: [
+            "Providers of general-purpose AI models",
+            "Providers of general-purpose AI models with systemic risk",
+        ],
+        examples: [
+            "GPAI provider failing to provide required technical documentation",
+            "GPAI provider supplying incorrect or misleading information to the Commission",
+            "GPAI provider failing to comply with a measure requested under Art. 93",
+            "GPAI provider failing to make model access available for evaluation under Art. 92",
+        ],
+        smeLowerApplies: false,
     },
     {
         id: "tier-3-false-info",
@@ -54,7 +74,7 @@ const penaltyTiers = [
         maxFineEUR: 7_500_000,
         globalTurnoverPercentage: 1,
         article: "Art. 99(5)",
-        description: "Supplying incorrect, incomplete, or misleading information to notified bodies, national competent authorities, or the AI Office in reply to a request. Up to EUR 7.5 million or 1% of global turnover, whichever is higher.",
+        description: "Supplying incorrect, incomplete, or misleading information to notified bodies or national competent authorities in reply to a request. Up to EUR 7.5 million or 1% of global turnover, whichever is higher. Incorrect or misleading information by GPAI model providers to the Commission is handled under Art. 101.",
         applicableTo: [
             "Any entity providing information to regulators",
             "Providers during conformity assessments",
@@ -91,15 +111,16 @@ const smeReductions = [
 export const penaltyFramework = {
     tiers: penaltyTiers,
     smeReductions,
-    enforcementDate: "2026-08-02",
+    enforcementDate: "2025-08-02",
     enforcementAuthority: "National market surveillance authorities (each Member State designates at least one). The AI Office enforces GPAI-specific provisions at EU level.",
     notes: [
+        "Chapter XII penalties apply from 2 August 2025, except Art. 101, which follows the general 2 August 2026 application date.",
         "Member States must lay down rules on penalties by 2 August 2025 and notify the Commission.",
         "Penalties must be effective, proportionate, and dissuasive (Art. 99(1)).",
         "When deciding the fine amount, authorities consider: nature, gravity, and duration of the infringement; whether other fines have already been imposed; size and market share of the entity; any previous infringements; degree of cooperation; and the way the infringement became known to the authority.",
         "Fines apply to providers, deployers, importers, distributors, authorised representatives, and product manufacturers where applicable.",
         "The 'whichever is higher' rule applies for large undertakings; for SMEs/startups, 'whichever is lower' applies (Art. 99(6)).",
-        "AI Office can fine GPAI providers up to EUR 15M or 3% of turnover for Art. 51-56 violations, and up to EUR 7.5M or 1% for false information (Art. 101).",
+        "The Commission (supervised via the AI Office) can fine GPAI model providers up to EUR 15M or 3% of turnover under Art. 101.",
     ],
 };
 // ---------------------------------------------------------------------------
@@ -109,6 +130,7 @@ export function getPenaltyTier(violationType) {
     const mapping = {
         prohibited: "tier-1-prohibited",
         high_risk: "tier-2-high-risk",
+        gpai: "tier-gpai",
         false_info: "tier-3-false-info",
     };
     const tier = penaltyTiers.find((t) => t.id === mapping[violationType]);
@@ -122,8 +144,9 @@ export function getPenaltyTier(violationType) {
 export function calculateMaxFine(violationType, annualTurnoverEUR, isSME = false) {
     const tier = getPenaltyTier(violationType);
     const turnoverBased = annualTurnoverEUR * (tier.globalTurnoverPercentage / 100);
+    const smeLowerApplies = tier.smeLowerApplies !== false;
     // SMEs get the lower amount; large undertakings get the higher amount
-    const applicableFine = isSME
+    const applicableFine = isSME && smeLowerApplies
         ? Math.min(tier.maxFineEUR, turnoverBased)
         : Math.max(tier.maxFineEUR, turnoverBased);
     return {

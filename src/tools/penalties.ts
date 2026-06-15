@@ -28,11 +28,16 @@ export function registerPenaltiesTool(server: McpServer): void {
     const calculation = calculateMaxFine(input.violation_type, input.annual_turnover_eur, input.is_sme);
     const calculationNonSme = calculateMaxFine(input.violation_type, input.annual_turnover_eur, false);
     const calculationSme = calculateMaxFine(input.violation_type, input.annual_turnover_eur, true);
+    const smeLowerApplies = tier.smeLowerApplies !== false;
 
-    const rule = input.is_sme ? "LOWER (SME/startup protection under Art. 99(6))" : "HIGHER";
+    const rule = input.is_sme && smeLowerApplies
+      ? "LOWER (SME/startup protection under Art. 99(6))"
+      : input.is_sme
+        ? "HIGHER (Art. 101 has no Art. 99(6) SME/startup lower-cap rule)"
+        : "HIGHER";
     const explanation = `For ${tier.name} violations (${tier.article}): up to EUR ${tier.maxFineEUR.toLocaleString()} or ${tier.globalTurnoverPercentage}% of global annual turnover, whichever is ${rule}.`;
 
-    const tierDescription = input.is_sme ? descriptionForSme(tier.description) : tier.description;
+    const tierDescription = input.is_sme && smeLowerApplies ? descriptionForSme(tier.description) : tier.description;
 
     const output: PenaltiesOutput = {
       violation_type: input.violation_type,
