@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-15
+
+Legal-accuracy and release-hygiene release following a cross-model audit (Codex) and an independent primary-source cross-read against OJ CELEX 32024R1689. See `docs/audit-2026-06-15-*.md`.
+
+### Fixed
+
+- **Art. 5(1)(c) social scoring** no longer scoped to public authorities. The final AI Act covers public and private actors (Recital 31). Corrected in `articles.ts`, `annex-iii.ts`, `penalties.ts`, and the classifier output in `classify.ts`.
+- **Art. 5(1)(h) real-time RBI** now requires a `biometric_publicly_accessible_space` signal before a prohibited classification; matches "in publicly accessible spaces for the purposes of law enforcement".
+- **Citation:** Art. 5(1)(h)(iii) references **Annex II** (was Annex IIa).
+- **Art. 50 roles and paragraphs:** provider duties 50(1)/(2), deployer duties 50(3)/(4); machine-readable marking is **50(2)** (FAQ previously cited 50(5), which governs timing/clarity).
+- **Penalty tier:** Art. 50 transparency violations map to **Art. 99(4)** (15M/3%, named in 99(4)(g)), not 99(5).
+- **Art. 6(3) exception** no longer returns a false green: requires an explicit `no_significant_risk_to_health_safety_fundamental_rights` assessment in addition to one of the four conditions; profiling still blocks the exception.
+- **Annex III(5):** creditworthiness carve-out for financial-fraud detection; insurance narrowed to **life and health** (5(c)). Annex III(1) article references corrected to the biometric provisions.
+- **GPAI obligations** no longer mis-assigned when `role=deployer`, `risk_level=gpai`.
+- **Timeline resource** no longer hardcodes dates; uses the central deadline source, with the Digital Omnibus kept separate as a provisional (political-agreement) track.
+- **Release hygiene:** regenerated complete `dist` (previously missing `penalties` artefacts broke `node dist/index.js`); `dist` is now reproducible from source and checked in tests.
+
+### Added
+
+- New signals: `performs_social_scoring`, `biometric_publicly_accessible_space`; Art. 6(3) `no_significant_risk_to_health_safety_fundamental_rights` gate. Legacy signals retained as aliases (backward compatible).
+- Adversarial legal tests plus a source-to-`dist` consistency check (110 to 166 tests).
+
 ### Changed
 
 - Moved repository to the `lexbeam-software` GitHub organization. Updated `repository` and `bugs` fields in `package.json`. Old `PicoWorx/eu-ai-act-mcp` URLs continue to redirect.

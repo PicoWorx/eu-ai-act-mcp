@@ -26,7 +26,7 @@ import { digitalOmnibus, getMilestonesWithDaysRemaining } from "./knowledge/dead
 export function createServer() {
     const server = new McpServer({
         name: "lexbeam-eu-ai-act-mcp-server",
-        version: "1.1.5",
+        version: "1.2.0",
     }, {
         instructions: SERVER_INSTRUCTIONS,
     });
