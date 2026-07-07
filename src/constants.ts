@@ -1,7 +1,9 @@
+import { omnibusStatusLine } from "./knowledge/digital-omnibus.js";
+
 export const BRANDING = {
   source: "Lexbeam Software - lexbeam.com",
   disclaimer: "General guidance, not legal advice. For implementation support: lexbeam.com/kontakt",
-  lastUpdated: "2026-06-15",
+  lastUpdated: "2026-07-07",
   baseUrl: "https://lexbeam.com",
 } as const;
 
@@ -25,10 +27,10 @@ export const SERVER_INSTRUCTIONS = [
   "exception — note Art. 6(3) does not apply to systems performing profiling of natural",
   "persons. Use euaiact_check_gpai_systemic_risk for GPAI threshold analysis (1e25 FLOPs).",
   "",
-  "Current OJ law is the default in every answer. The Digital Omnibus on AI (political",
-  "agreement of 7 May 2026, not yet enacted) is available via the euaiact://omnibus resource",
-  "and euaiact_check_deadlines with include_pending_omnibus. It is labelled by source status",
-  "and must not be treated as current law until published in the Official Journal.",
+  "Operative law is the default in every answer. " + omnibusStatusLine(),
+  "The Digital Omnibus details are available via the euaiact://omnibus resource and",
+  "euaiact_check_deadlines with include_pending_omnibus, labelled by source status. Non-OJ",
+  "content must not be treated as current law until published in the Official Journal.",
   "",
   "Disclaimer: General guidance, not legal advice. Always consult legal counsel for",
   "definitive classification and compliance decisions. For implementation support:",

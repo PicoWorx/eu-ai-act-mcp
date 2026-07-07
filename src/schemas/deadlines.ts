@@ -9,19 +9,29 @@ export const deadlinesInputSchema = z.object({
   include_pending_omnibus: z
     .boolean()
     .optional()
-    .describe("If true, also return the structured Digital Omnibus pack (proposal + political agreement). OFF by default: the milestone timeline always reflects current OJ law only. The pending pack is NOT enacted law and is labelled with its source status."),
+    .describe("If true, also return the structured Digital Omnibus pack with per-item source-status labels. OFF by default: the milestone timeline always reflects the operative law only. Check the pack's `status` and `enacted` fields for its current legislative state; non-enacted content must not be treated as current law."),
 });
 
 const sourceStatusEnum = z.enum([
   "enacted_oj",
   "commission_proposal",
   "political_agreement",
+  "adopted_pending_publication",
   "commission_guideline_draft",
   "commission_guideline_final",
   "commission_study",
   "code_under_assessment",
   "code_adequate_voluntary_tool",
 ]);
+
+const omnibusEnactmentSchema = z.object({
+  status: sourceStatusEnum,
+  ep_endorsement: z.string(),
+  council_adoption: z.string(),
+  celex: z.string().nullable(),
+  oj_publication_date: z.string().nullable(),
+  entry_into_force: z.string().nullable(),
+});
 
 const omnibusDeltaSchema = z.object({
   article: z.string(),
@@ -34,7 +44,9 @@ const omnibusDeltaSchema = z.object({
 
 const pendingOmnibusSchema = z.object({
   name: z.string(),
-  enacted: z.literal(false),
+  enacted: z.boolean(),
+  status: sourceStatusEnum,
+  enactment: omnibusEnactmentSchema,
   proposal: z.object({
     com: z.string(),
     celex: z.string(),

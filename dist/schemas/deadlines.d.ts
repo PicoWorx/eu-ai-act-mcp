@@ -78,7 +78,30 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
     }>;
     pending_omnibus: z.ZodNullable<z.ZodObject<{
         name: z.ZodString;
-        enacted: z.ZodLiteral<false>;
+        enacted: z.ZodBoolean;
+        status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "adopted_pending_publication", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
+        enactment: z.ZodObject<{
+            status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "adopted_pending_publication", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
+            ep_endorsement: z.ZodString;
+            council_adoption: z.ZodString;
+            celex: z.ZodNullable<z.ZodString>;
+            oj_publication_date: z.ZodNullable<z.ZodString>;
+            entry_into_force: z.ZodNullable<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        }, {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        }>;
         proposal: z.ZodObject<{
             com: z.ZodString;
             celex: z.ZodString;
@@ -87,15 +110,15 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
             source_id: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         }, {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         }>;
         political_agreement: z.ZodObject<{
@@ -110,7 +133,7 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         }>;
         high_risk_timeline: z.ZodObject<{
             mechanism: z.ZodString;
-            mechanism_source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
+            mechanism_source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "adopted_pending_publication", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
             backstop: z.ZodObject<{
                 annex_iii_art_6_2: z.ZodString;
                 annex_i_art_6_1: z.ZodString;
@@ -121,7 +144,7 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             }>;
-            backstop_source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
+            backstop_source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "adopted_pending_publication", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
             current_law: z.ZodObject<{
                 annex_iii_art_6_2: z.ZodString;
                 annex_i_art_6_1: z.ZodString;
@@ -136,12 +159,12 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         }, "strip", z.ZodTypeAny, {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -149,12 +172,12 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         }, {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -163,50 +186,59 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         deltas: z.ZodArray<z.ZodObject<{
             article: z.ZodString;
             change: z.ZodString;
-            source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
+            source_status: z.ZodEnum<["enacted_oj", "commission_proposal", "political_agreement", "adopted_pending_publication", "commission_guideline_draft", "commission_guideline_final", "commission_study", "code_under_assessment", "code_adequate_voluntary_tool"]>;
             source_id: z.ZodString;
             effective_date: z.ZodOptional<z.ZodString>;
             note: z.ZodOptional<z.ZodString>;
         }, "strip", z.ZodTypeAny, {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }, {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }>, "many">;
         coverage_note: z.ZodString;
         warning: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        name: string;
         political_agreement: {
             date: string;
             source_id: string;
         };
-        enacted: false;
+        status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+        name: string;
+        enacted: boolean;
+        enactment: {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        };
         proposal: {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         };
         high_risk_timeline: {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -215,36 +247,45 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         deltas: {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }[];
         coverage_note: string;
         warning: string;
     }, {
-        name: string;
         political_agreement: {
             date: string;
             source_id: string;
         };
-        enacted: false;
+        status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+        name: string;
+        enacted: boolean;
+        enactment: {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        };
         proposal: {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         };
         high_risk_timeline: {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -253,10 +294,10 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         deltas: {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }[];
         coverage_note: string;
         warning: string;
@@ -286,28 +327,37 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         impact_on_ai_act: string;
     };
     pending_omnibus: {
-        name: string;
         political_agreement: {
             date: string;
             source_id: string;
         };
-        enacted: false;
+        status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+        name: string;
+        enacted: boolean;
+        enactment: {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        };
         proposal: {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         };
         high_risk_timeline: {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -316,10 +366,10 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         deltas: {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }[];
         coverage_note: string;
         warning: string;
@@ -349,28 +399,37 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         impact_on_ai_act: string;
     };
     pending_omnibus: {
-        name: string;
         political_agreement: {
             date: string;
             source_id: string;
         };
-        enacted: false;
+        status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+        name: string;
+        enacted: boolean;
+        enactment: {
+            status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            ep_endorsement: string;
+            council_adoption: string;
+            celex: string | null;
+            oj_publication_date: string | null;
+            entry_into_force: string | null;
+        };
         proposal: {
             date: string;
+            celex: string;
             source_id: string;
             com: string;
-            celex: string;
             procedure: string;
         };
         high_risk_timeline: {
             note: string;
             mechanism: string;
-            mechanism_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            mechanism_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             backstop: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
             };
-            backstop_source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            backstop_source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             current_law: {
                 annex_iii_art_6_2: string;
                 annex_i_art_6_1: string;
@@ -379,10 +438,10 @@ export declare const deadlinesOutputSchema: z.ZodObject<{
         deltas: {
             article: string;
             change: string;
-            source_status: "enacted_oj" | "commission_proposal" | "political_agreement" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
+            source_status: "commission_proposal" | "political_agreement" | "adopted_pending_publication" | "enacted_oj" | "commission_guideline_draft" | "commission_guideline_final" | "commission_study" | "code_under_assessment" | "code_adequate_voluntary_tool";
             source_id: string;
-            effective_date?: string | undefined;
             note?: string | undefined;
+            effective_date?: string | undefined;
         }[];
         coverage_note: string;
         warning: string;

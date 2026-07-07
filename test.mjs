@@ -13,8 +13,19 @@ import { art6ExceptionInputSchema } from "./dist/schemas/art6.js";
 import { annexIvInputSchema } from "./dist/schemas/annex-iv.js";
 import { scoreKeywordMatch, calculateKeywordOverlap, findBestMatch } from "./dist/utils/matching.js";
 import { prohibitedPractices, annexIIICategories, transparencyTriggers } from "./dist/knowledge/annex-iii.js";
-import { getMilestonesWithDaysRemaining, digitalOmnibus, digitalOmnibusPack } from "./dist/knowledge/deadlines.js";
-import { sourceRegistry } from "./dist/knowledge/sources.js";
+import {
+  getMilestonesWithDaysRemaining,
+  digitalOmnibus,
+  digitalOmnibusPack,
+  omnibusEnactment,
+  isOmnibusEnacted,
+  resolveOmnibusStatus,
+  buildOmnibusSummary,
+  getOperativeHighRiskDates,
+  getOperativeMilestones,
+  getEffectiveSourceRegistry,
+} from "./dist/knowledge/deadlines.js";
+import { sourceRegistry, SOURCE_STATUS_LABELS, isEnacted } from "./dist/knowledge/sources.js";
 import {
   providerHighRiskObligations,
   deployerHighRiskObligations,
@@ -389,8 +400,8 @@ test("5 milestones total", milestones.length === 5);
 test("Entry into force is past", milestones[0].isPast === true);
 test("Aug 2026 is upcoming", milestones[3].isPast === false);
 test("Aug 2027 is upcoming", milestones[4].isPast === false);
-test("Digital Omnibus summary status is political_agreement", digitalOmnibus.status === "political_agreement");
-test("Digital Omnibus impact keeps not-enacted caveat", digitalOmnibus.impactOnAIAct.includes("not yet adopted law"));
+test("Digital Omnibus summary status is adopted_pending_publication", digitalOmnibus.status === "adopted_pending_publication");
+test("Digital Omnibus impact keeps not-yet-in-force caveat", digitalOmnibus.impactOnAIAct.includes("not yet in force"));
 test("Chapter XII penalty framework date is 2025-08-02", penaltyFramework.enforcementDate === "2025-08-02");
 test("2025 milestone includes Chapter XII penalties except Art. 101", milestones[2].keyObligations.some((o) => /Chapter XII penalty framework applies, except Art\. 101/.test(o)));
 
@@ -423,7 +434,8 @@ test("Omnibus Art 50(2) transition date is 2027-02-02", digitalOmnibusPack.delta
 // Source registry carries correct statuses
 test("Source registry: OJ is enacted_oj", sourceRegistry.oj_2024_1689.status === "enacted_oj");
 test("Source registry: COM(2025) 836 is commission_proposal", sourceRegistry.com_2025_836.status === "commission_proposal");
-test("Source registry: agreement is political_agreement", sourceRegistry.omnibus_agreement_2026_05_07.status === "political_agreement");
+test("Source registry: omnibus record is adopted_pending_publication", sourceRegistry.omnibus_agreement_2026_05_07.status === "adopted_pending_publication");
+test("Source registry: omnibus note records EP 2026-06-16 and Council 2026-06-29", /2026-06-16/.test(sourceRegistry.omnibus_agreement_2026_05_07.note) && /2026-06-29/.test(sourceRegistry.omnibus_agreement_2026_05_07.note));
 test("Source registry: exactly one enacted_oj source (the OJ instrument, no policy page)", Object.values(sourceRegistry).filter((x) => x.status === "enacted_oj").length === 1);
 test("Omnibus delta pack is expanded but curated (>=13 deltas)", digitalOmnibusPack.deltas.length >= 13);
 test("Omnibus pack carries a non-exhaustive coverage note", /NON-EXHAUSTIVE/i.test(digitalOmnibusPack.coverageNote));
@@ -457,7 +469,112 @@ test("Omnibus timeline backstop tagged political_agreement", digitalOmnibusPack.
   test("deadlines pending: coverage_note marks deltas non-exhaustive", /NON-EXHAUSTIVE/i.test(s.pending_omnibus.coverage_note));
   test("deadlines pending: opt-in DOES expose backstop dates", /2027-12-02/.test(full) && /2028-08-02/.test(full));
   test("deadlines pending: current-law milestone 2026-08-02 still present", s.milestones.some((m) => m.date === "2026-08-02"));
+  test("deadlines pending: pack status is adopted_pending_publication", s.pending_omnibus.status === "adopted_pending_publication");
+  test("deadlines pending: enactment record served with null CELEX/OJ/EIF", s.pending_omnibus.enactment.celex === null && s.pending_omnibus.enactment.oj_publication_date === null && s.pending_omnibus.enactment.entry_into_force === null);
+  test("deadlines pending: enactment record carries EP and Council adoption dates", s.pending_omnibus.enactment.ep_endorsement === "2026-06-16" && s.pending_omnibus.enactment.council_adoption === "2026-06-29");
 }
+
+// ─── OMNIBUS ENACTMENT FLIP (M2/M3, prep 2026-07-07) ───────────────────────
+console.log("\n🔀 OMNIBUS ENACTMENT FLIP (M2/M3)");
+
+// New source-status tier between political_agreement and enacted_oj
+test(
+  "adopted_pending_publication tier has the agreed label",
+  SOURCE_STATUS_LABELS.adopted_pending_publication === "Adopted by the co-legislators, pending Official Journal publication",
+);
+test("isEnacted(adopted_pending_publication) is false", isEnacted("adopted_pending_publication") === false);
+test("isEnacted(enacted_oj) is true", isEnacted("enacted_oj") === true);
+
+// (a) DORMANT: the committed default stays pre-OJ
+test(
+  "dormant: committed enactment record is pending with all three OJ values null",
+  omnibusEnactment.status === "adopted_pending_publication" &&
+    omnibusEnactment.celex === null &&
+    omnibusEnactment.ojPublicationDate === null &&
+    omnibusEnactment.entryIntoForce === null,
+);
+test(
+  "dormant: record carries EP 2026-06-16 and Council 2026-06-29",
+  omnibusEnactment.epEndorsement === "2026-06-16" && omnibusEnactment.councilAdoption === "2026-06-29",
+);
+test("dormant: isOmnibusEnacted() is false by default", isOmnibusEnacted() === false);
+test("dormant: resolveOmnibusStatus() is adopted_pending_publication (NOT enacted)", resolveOmnibusStatus() === "adopted_pending_publication");
+test("dormant: pack.enacted is false", digitalOmnibusPack.enacted === false);
+test("dormant: pack.status is adopted_pending_publication", digitalOmnibusPack.status === "adopted_pending_publication");
+test("dormant: operative Annex III date is current-law 2026-08-02", getOperativeHighRiskDates().annexIiiHighRisk === "2026-08-02");
+test("dormant: operative Annex I date is current-law 2027-08-02", getOperativeHighRiskDates().annexIHighRisk === "2027-08-02");
+test(
+  "dormant: operative milestones are the 5 current-law milestones (Annex III at 2026-08-02, Annex I at 2027-08-02)",
+  getOperativeMilestones().length === 5 &&
+    getOperativeMilestones()[3].date === "2026-08-02" &&
+    getOperativeMilestones()[4].date === "2027-08-02",
+);
+{
+  const r = await callTool("euaiact_check_deadlines", {});
+  const s = structured(r);
+  test(
+    "dormant: default tool output lists 2026-08-02 Annex III high-risk as current law",
+    s.milestones.some((m) => m.date === "2026-08-02" && /Annex III/.test(m.name)),
+  );
+  test("dormant: default tool output contains no deferred dates", !/2027-12-02|2028-08-02/.test(JSON.stringify(s)));
+  test("dormant: default digital_omnibus status resolves adopted_pending_publication", s.digital_omnibus.status === "adopted_pending_publication");
+  test("dormant: default digital_omnibus impact says not yet in force / plan against current law", /not yet published|not yet in force/i.test(s.digital_omnibus.impact_on_ai_act) && /current OJ law/i.test(s.digital_omnibus.impact_on_ai_act));
+}
+
+// Fail-closed guard: a half-flipped record must NOT read as enacted
+{
+  const halfFlipped = { ...omnibusEnactment, status: "enacted_oj" };
+  test("fail-closed: status=enacted_oj without CELEX/OJ/EIF is NOT enacted", isOmnibusEnacted(halfFlipped) === false);
+  test("fail-closed: half-flipped record resolves back to adopted_pending_publication", resolveOmnibusStatus(halfFlipped) === "adopted_pending_publication");
+  test("fail-closed: half-flipped record keeps current-law Annex III date", getOperativeHighRiskDates(halfFlipped).annexIiiHighRisk === "2026-08-02");
+}
+
+// (b) FLIP: a filled copy of the record proves the one-edit flip.
+// All three values are FAKE test fixtures; the real ones exist only on OJ day.
+{
+  const fakeEnacted = {
+    ...omnibusEnactment,
+    status: "enacted_oj",
+    celex: "32026R9999",            // FAKE CELEX, test-only
+    ojPublicationDate: "2026-07-20", // FAKE OJ date, test-only
+    entryIntoForce: "2026-07-23",    // FAKE entry into force (3rd day after), test-only
+  };
+  test("flip: isOmnibusEnacted(filled record) is true", isOmnibusEnacted(fakeEnacted) === true);
+  test("flip: status resolves enacted_oj", resolveOmnibusStatus(fakeEnacted) === "enacted_oj");
+
+  const dates = getOperativeHighRiskDates(fakeEnacted);
+  test("flip: operative Annex III date becomes 2027-12-02", dates.annexIiiHighRisk === "2027-12-02");
+  test("flip: operative Annex I date becomes 2028-08-02", dates.annexIHighRisk === "2028-08-02");
+  test("flip: Art. 50 transparency stays 2026-08-02 (NOT deferred)", dates.art50Transparency === "2026-08-02");
+  test("flip: GPAI enforcement/fines stay 2026-08-02 (NOT deferred)", dates.gpaiEnforcementFines === "2026-08-02");
+  test("flip: legacy GPAI compliance stays 2027-08-02 (NOT deferred)", dates.legacyGpaiCompliance === "2027-08-02");
+
+  const ms = getMilestonesWithDaysRemaining(fakeEnacted);
+  test("flip: milestones list Annex III high-risk at 2027-12-02", ms.some((m) => m.date === "2027-12-02" && /Annex III/.test(m.name)));
+  test("flip: milestones list Annex I at 2028-08-02", ms.some((m) => m.date === "2028-08-02" && /Annex I/.test(m.name)));
+  test(
+    "flip: 2026-08-02 milestone survives, re-scoped to Art. 50 + GPAI enforcement",
+    ms.some((m) => m.date === "2026-08-02" && /Art\. 50/.test(m.name) && /GPAI/.test(m.name)),
+  );
+  test("flip: no milestone still presents Annex III high-risk at 2026-08-02", !ms.some((m) => m.date === "2026-08-02" && /Annex III/.test(m.name)));
+  test("flip: legacy GPAI keeps its own 2027-08-02 milestone", ms.some((m) => m.date === "2027-08-02" && /Legacy GPAI/i.test(m.name)));
+  test("flip: milestones stay date-sorted", ms.every((m, i, a) => i === 0 || a[i - 1].date <= m.date));
+  test("flip: milestone descriptions cite the (fake) CELEX and OJ date", ms.some((m) => m.description.includes("32026R9999") && m.description.includes("2026-07-20")));
+
+  const summary = buildOmnibusSummary(fakeEnacted);
+  test("flip: derived summary status is enacted_oj", summary.status === "enacted_oj");
+  test("flip: derived summary impact reads as enacted/in force", /in force since 2026-07-23/.test(summary.impactOnAIAct));
+
+  const reg = getEffectiveSourceRegistry(fakeEnacted);
+  test("flip: effective source registry gains an enacted_oj omnibus record with the (fake) CELEX", reg.omnibus_oj?.status === "enacted_oj" && reg.omnibus_oj?.celex === "32026R9999");
+  test("flip: static source registry itself is untouched by the derived view", !("omnibus_oj" in sourceRegistry));
+}
+
+// The flip simulation must not have mutated the committed default
+test(
+  "post-flip-sim: committed record still pending (pure functions, no mutation)",
+  omnibusEnactment.celex === null && omnibusEnactment.status === "adopted_pending_publication" && isOmnibusEnacted() === false,
+);
 
 // ─── OBLIGATIONS ────────────────────────────────────────────────────────────
 console.log("\n📜 OBLIGATIONS");

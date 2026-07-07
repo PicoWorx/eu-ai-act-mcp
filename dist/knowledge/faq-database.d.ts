@@ -5,6 +5,10 @@
  * Each answer references specific articles from Regulation (EU) 2024/1689.
  *
  * URLs point to lexbeam.com/de/wissen/[slug] for German-language knowledge base.
+ *
+ * faq-18 (Digital Omnibus) derives its answer from the `omnibusEnactment`
+ * record in digital-omnibus.ts so it flips together with the rest of the
+ * server on OJ publication (audit items M2/M3).
  */
 export interface FAQEntry {
     id: string;

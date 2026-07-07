@@ -5,7 +5,17 @@
  * Each answer references specific articles from Regulation (EU) 2024/1689.
  *
  * URLs point to lexbeam.com/de/wissen/[slug] for German-language knowledge base.
+ *
+ * faq-18 (Digital Omnibus) derives its answer from the `omnibusEnactment`
+ * record in digital-omnibus.ts so it flips together with the rest of the
+ * server on OJ publication (audit items M2/M3).
  */
+
+import { isOmnibusEnacted, omnibusEnactment } from "./digital-omnibus.js";
+
+const omnibusFaqAnswer = isOmnibusEnacted(omnibusEnactment)
+  ? `The Digital Omnibus on AI (Commission proposal COM(2025) 836 of 19 November 2025, procedure 2025/0359(COD)) amends Regulation (EU) 2024/1689. It was politically agreed on 7 May 2026, formally adopted by the European Parliament (${omnibusEnactment.epEndorsement}) and the Council (${omnibusEnactment.councilAdoption}), published in the Official Journal on ${omnibusEnactment.ojPublicationDate} (CELEX ${omnibusEnactment.celex}), and entered into force on ${omnibusEnactment.entryIntoForce}. Operative dates now: Annex III high-risk obligations apply from 2 December 2027 and Annex I product-integrated high-risk obligations from 2 August 2028. NOT deferred: Art. 50 transparency obligations and the Commission's GPAI enforcement powers and fines apply since 2 August 2026; GPAI obligations have been in force since 2 August 2025; the legacy GPAI compliance date stays 2 August 2027. The Art. 5 prohibited-practices list was expanded (non-consensual intimate imagery / CSAM), not delayed. Use euaiact_check_deadlines for the operative timeline and verify article-level wording against the OJ text.`
+  : "The Digital Omnibus on AI (Commission proposal COM(2025) 836 of 19 November 2025, procedure 2025/0359(COD)) amends Regulation (EU) 2024/1689. After the political agreement of 7 May 2026 it has been FORMALLY ADOPTED by both co-legislators: the European Parliament endorsed it on 16 June 2026 and the Council gave its final adoption on 29 June 2026. It is NOT yet published in the Official Journal and therefore not yet in force; it takes legal effect on OJ publication, entering into force on the third day after publication. Once in force, the headline changes are: Annex III high-risk obligations deferred from 2 August 2026 to 2 December 2027, and Annex I product-integrated high-risk obligations deferred from 2 August 2027 to 2 August 2028. NOT deferred: Art. 50 transparency obligations and the Commission's GPAI enforcement powers and fines still apply from 2 August 2026, GPAI obligations remain in force since 2 August 2025, and the legacy GPAI compliance date stays 2 August 2027. The Art. 5 prohibited-practices list is expanded (non-consensual intimate imagery / CSAM), not delayed. Until OJ publication, Regulation (EU) 2024/1689 as published remains authoritative for compliance planning; use euaiact_check_deadlines with include_pending_omnibus for the adopted changes with source-status labels.";
 
 export interface FAQEntry {
   id: string;
@@ -32,7 +42,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-02-august-2026",
     question: "What does my company need to do before August 2026?",
     answer:
-      "By 2 August 2026 under the Regulation currently in force, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration where Art. 49 applies (Annex III systems except point 2, plus Art. 6(3) registrations). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. The Digital Omnibus provisional agreement would shift some dates if formally adopted; check euaiact_check_deadlines for current-law and provisional status.",
+      "By 2 August 2026 under the Regulation currently in force, providers and deployers of high-risk AI systems under Annex III must fully comply. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration where Art. 49 applies (Annex III systems except point 2, plus Art. 6(3) registrations). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. The Digital Omnibus, adopted by the co-legislators in June 2026, defers the Annex III high-risk date once it is published in the Official Journal; until publication the dates above remain current law. Check euaiact_check_deadlines for the operative status.",
     articleReferences: ["Art. 4", "Art. 5", "Art. 9", "Art. 11", "Art. 26", "Art. 27", "Art. 43", "Art. 49", "Art. 113"],
     keywords: ["deadline", "2026", "compliance", "preparation", "timeline", "roadmap"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-august-2026-vorbereitung",
@@ -190,11 +200,10 @@ export const faqDatabase: FAQEntry[] = [
   },
   {
     id: "faq-18-digital-omnibus",
-    question: "What is the Digital Omnibus proposal and how does it affect the AI Act?",
-    answer:
-      "[UNVERIFIED against local OJ text: legislative update outside CELEX 32024R1689.] The Digital Omnibus Simplification Package is described here as an external legislative update, not as current AI Act text. The provisional changes mentioned in non-OJ sources are not adopted law in this knowledge base. Organisations should continue preparing against Regulation (EU) 2024/1689 as published unless and until a later Official Journal text amends it.",
-    articleReferences: [],
-    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus"],
+    question: "What is the Digital Omnibus and how does it affect the AI Act?",
+    answer: omnibusFaqAnswer,
+    articleReferences: ["Art. 5", "Art. 6", "Art. 50", "Art. 113"],
+    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus", "adopted", "Official Journal", "deferral", "postponement"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/digital-omnibus-ai-act-auswirkungen",
     category: "legislative_updates",
   },

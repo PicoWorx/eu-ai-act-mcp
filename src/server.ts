@@ -23,8 +23,15 @@ import { registerArt6ExceptionTool } from "./tools/art6-exception.js";
 import { registerAnnexIvTool } from "./tools/annex-iv.js";
 import { annexIIICategories } from "./knowledge/annex-iii.js";
 import { annexIVItems } from "./knowledge/annex-iv.js";
-import { digitalOmnibusPack, getMilestonesWithDaysRemaining } from "./knowledge/deadlines.js";
-import { sourceRegistry } from "./knowledge/sources.js";
+import {
+  digitalOmnibusPack,
+  getMilestonesWithDaysRemaining,
+  getEffectiveSourceRegistry,
+  isOmnibusEnacted,
+  omnibusStatusLine,
+  resolveOmnibusStatus,
+} from "./knowledge/deadlines.js";
+import { SOURCE_STATUS_LABELS } from "./knowledge/sources.js";
 
 export function createServer(): McpServer {
   const server = new McpServer(
@@ -70,9 +77,9 @@ export function createServer(): McpServer {
             is_past: m.isPast,
           })),
           digital_omnibus: {
-            status: "political_agreement",
-            enacted: false,
-            note: "A Digital Omnibus on AI is in progress but not enacted. This timeline reflects current OJ law only. See the euaiact://omnibus resource, or euaiact_check_deadlines with include_pending_omnibus, for the pending changes and dates.",
+            status: resolveOmnibusStatus(),
+            enacted: isOmnibusEnacted(),
+            note: `${omnibusStatusLine()} See the euaiact://omnibus resource, or euaiact_check_deadlines with include_pending_omnibus, for the changes and dates.`,
             resource: "euaiact://omnibus",
           },
         }, null, 2),
@@ -164,10 +171,10 @@ export function createServer(): McpServer {
   );
 
   server.resource(
-    "EU AI Act Digital Omnibus — Pending Changes (not enacted)",
+    "EU AI Act Digital Omnibus",
     "euaiact://omnibus",
     {
-      description: "Source-state-aware view of the Digital Omnibus on AI (COM(2025) 836, political agreement 2026-05-07). NOT enacted law: current OJ law (Regulation 2024/1689) governs. Each item carries its source status. Includes the source registry.",
+      description: `Source-state-aware view of the Digital Omnibus on AI (COM(2025) 836; political agreement 2026-05-07; adopted by the European Parliament 2026-06-16 and the Council 2026-06-29). Current status: ${SOURCE_STATUS_LABELS[resolveOmnibusStatus()]}. Each item carries its source status. Includes the source registry.`,
       mimeType: "application/json",
     },
     async () => ({
@@ -177,10 +184,11 @@ export function createServer(): McpServer {
           mimeType: "application/json",
           text: JSON.stringify(
             {
-              disclaimer:
-                "NOT enacted law. Current binding law is Regulation (EU) 2024/1689 as published in the OJ. The items below are a Commission proposal and a political agreement, surfaced for planning only and labelled with their source status. Re-verify the consolidated OJ text on adoption.",
+              disclaimer: isOmnibusEnacted()
+                ? "Enacted: the Digital Omnibus on AI has been published in the Official Journal and is in force; the amended dates are reflected in the milestone timeline. Item-level stage labels (proposal / political agreement) are provenance, not current status. Verify exact wording against the OJ text."
+                : "NOT yet in force. Current binding law is Regulation (EU) 2024/1689 as published in the OJ. The Digital Omnibus on AI has been formally adopted by both co-legislators (European Parliament 2026-06-16, Council 2026-06-29) but awaits Official Journal publication. The items below are surfaced for planning only and labelled with their source status. Re-verify the consolidated OJ text on publication.",
               digital_omnibus: digitalOmnibusPack,
-              sources: sourceRegistry,
+              sources: getEffectiveSourceRegistry(),
             },
             null,
             2,

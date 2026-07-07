@@ -1,9 +1,9 @@
 import { deadlinesInputSchema, deadlinesOutputSchema } from "../schemas/deadlines.js";
-import { getMilestonesWithDaysRemaining, digitalOmnibus, digitalOmnibusPack } from "../knowledge/deadlines.js";
+import { getMilestonesWithDaysRemaining, digitalOmnibus, digitalOmnibusPack, isOmnibusEnacted, omnibusStatusLine, } from "../knowledge/deadlines.js";
 export function registerDeadlinesTool(server) {
     server.registerTool("euaiact_check_deadlines", {
         title: "Check EU AI Act Implementation Deadlines",
-        description: "Returns key implementation milestones and deadlines for the EU AI Act with days remaining, a `next_milestone` shortcut, and a summary of the Digital Omnibus. The milestone timeline always reflects current OJ law. Set `include_pending_omnibus: true` to also receive the structured Digital Omnibus pack (proposal + political agreement, NOT enacted law, each item source-status labelled). Use `only_upcoming: true` to drop past milestones.",
+        description: "Returns key implementation milestones and deadlines for the EU AI Act with days remaining, a `next_milestone` shortcut, and a summary of the Digital Omnibus. The milestone timeline always reflects the operative law. Set `include_pending_omnibus: true` to also receive the structured Digital Omnibus pack (each item source-status labelled; its `status` and `enacted` fields carry the current legislative state). Use `only_upcoming: true` to drop past milestones.",
         annotations: {
             readOnlyHint: true,
             idempotentHint: true,
@@ -25,7 +25,16 @@ export function registerDeadlinesTool(server) {
         const pendingOmnibus = input.include_pending_omnibus
             ? {
                 name: digitalOmnibusPack.name,
-                enacted: false,
+                enacted: digitalOmnibusPack.enacted,
+                status: digitalOmnibusPack.status,
+                enactment: {
+                    status: digitalOmnibusPack.enactment.status,
+                    ep_endorsement: digitalOmnibusPack.enactment.epEndorsement,
+                    council_adoption: digitalOmnibusPack.enactment.councilAdoption,
+                    celex: digitalOmnibusPack.enactment.celex,
+                    oj_publication_date: digitalOmnibusPack.enactment.ojPublicationDate,
+                    entry_into_force: digitalOmnibusPack.enactment.entryIntoForce,
+                },
                 proposal: {
                     com: digitalOmnibusPack.proposal.com,
                     celex: digitalOmnibusPack.proposal.celex,
@@ -76,9 +85,10 @@ export function registerDeadlinesTool(server) {
                 }
                 : null,
             // Source-state guard: by default the summary is a minimal, clearly-flagged
-            // pointer with NO pending shift dates or pending prohibitions. The dated
-            // changes are surfaced only when the caller opts in, so current OJ law is
-            // never presented alongside non-enacted specifics.
+            // pointer with NO non-enacted shift dates or pending prohibitions. The
+            // dated changes are surfaced only when the caller opts in, so operative
+            // law is never presented alongside non-enacted specifics. All status
+            // strings derive from the omnibusEnactment record (single-source flip).
             digital_omnibus: input.include_pending_omnibus
                 ? {
                     name: digitalOmnibus.name,
@@ -92,11 +102,15 @@ export function registerDeadlinesTool(server) {
                     name: digitalOmnibus.name,
                     status: digitalOmnibus.status,
                     proposal_date: digitalOmnibus.proposalDate,
-                    description: "A Digital Omnibus on AI (Commission proposal COM(2025) 836; political agreement 7 May 2026) is in progress but NOT enacted. Current OJ law governs. Pass include_pending_omnibus: true, or read euaiact://omnibus, for the specific pending changes and dates.",
+                    description: `${omnibusStatusLine()} Pass include_pending_omnibus: true, or read euaiact://omnibus, for the specific changes and dates.`,
                     key_changes: [
-                        "Withheld by default so non-enacted changes are not shown alongside current law. Opt in via include_pending_omnibus or the euaiact://omnibus resource.",
+                        isOmnibusEnacted()
+                            ? "The amended dates are operative law and are reflected in the milestone timeline. Opt in via include_pending_omnibus for the full delta list."
+                            : "Withheld by default so non-enacted changes are not shown alongside current law. Opt in via include_pending_omnibus or the euaiact://omnibus resource.",
                     ],
-                    impact_on_ai_act: "Not enacted. Plan against current OJ law.",
+                    impact_on_ai_act: isOmnibusEnacted()
+                        ? "Enacted; the milestone timeline reflects the amended dates."
+                        : "Adopted by the co-legislators but not yet published in the Official Journal; not yet in force. Plan against current OJ law.",
                 },
             pending_omnibus: pendingOmnibus,
         };
