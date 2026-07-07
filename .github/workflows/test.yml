@@ -27,6 +27,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Guard - dist/ must not be tracked in git
+        run: |
+          if [ -n "$(git ls-files dist/)" ]; then
+            echo "ERROR: compiled dist/ files are tracked in git. dist/ is a build artifact and must stay untracked (see .gitignore). Run: git rm -r --cached dist/"
+            git ls-files dist/
+            exit 1
+          fi
+
       - name: Build
         run: npm run build
 
