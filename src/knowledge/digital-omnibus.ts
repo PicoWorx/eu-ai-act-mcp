@@ -69,9 +69,9 @@ export const omnibusEnactment: OmnibusEnactment = {
 export function isOmnibusEnacted(e: OmnibusEnactment = omnibusEnactment): boolean {
   return (
     e.status === "enacted_oj" &&
-    e.celex !== null &&
-    e.ojPublicationDate !== null &&
-    e.entryIntoForce !== null
+    typeof e.celex === "string" && e.celex.trim() !== "" &&
+    typeof e.ojPublicationDate === "string" && e.ojPublicationDate.trim() !== "" &&
+    typeof e.entryIntoForce === "string" && e.entryIntoForce.trim() !== ""
   );
 }
 
@@ -244,7 +244,7 @@ export const digitalOmnibusPack: DigitalOmnibusPack = {
     {
       article: "Art. 50(2)",
       change:
-        "Transition for synthetic-content systems already on the market before 2 Aug 2026: comply with Art. 50(2) marking by 2 Feb 2027.",
+        "Transition for synthetic-content systems already on the market before 2 Aug 2026: comply with Art. 50(2) marking by 2 Feb 2027 (proposal date; pending reconciliation against the adopted OJ text, see note).",
       sourceStatus: "commission_proposal",
       sourceId: "com_2025_836",
       effectiveDate: "2027-02-02",

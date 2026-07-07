@@ -527,6 +527,13 @@ test(
   test("fail-closed: status=enacted_oj without CELEX/OJ/EIF is NOT enacted", isOmnibusEnacted(halfFlipped) === false);
   test("fail-closed: half-flipped record resolves back to adopted_pending_publication", resolveOmnibusStatus(halfFlipped) === "adopted_pending_publication");
   test("fail-closed: half-flipped record keeps current-law Annex III date", getOperativeHighRiskDates(halfFlipped).annexIiiHighRisk === "2026-08-02");
+
+  // Blank-string / whitespace OJ values must also fail closed (not just null)
+  const blankFilled = { ...omnibusEnactment, status: "enacted_oj", celex: "", ojPublicationDate: "", entryIntoForce: "" };
+  test("fail-closed: status=enacted_oj with BLANK-string OJ values is NOT enacted", isOmnibusEnacted(blankFilled) === false);
+  test("fail-closed: blank-string record keeps current-law Annex III date", getOperativeHighRiskDates(blankFilled).annexIiiHighRisk === "2026-08-02");
+  const whitespaceFilled = { ...omnibusEnactment, status: "enacted_oj", celex: "  ", ojPublicationDate: " ", entryIntoForce: "\t" };
+  test("fail-closed: whitespace-only OJ values are NOT enacted", isOmnibusEnacted(whitespaceFilled) === false);
 }
 
 // (b) FLIP: a filled copy of the record proves the one-edit flip.
