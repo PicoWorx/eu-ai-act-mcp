@@ -599,6 +599,44 @@ test(
   test("reverse-sim: a pending copy keeps the current-law Annex I date", getOperativeHighRiskDates(pendingCopy).annexIHighRisk === "2027-08-02");
 }
 
+// ─── ART. 5 PROHIBITION KEYWORD SENSITIVITY ────────────────────────────────
+// The new Art. 5(1)(ba)/(bb) prohibitions must fire on how people actually
+// describe these systems, without catching ordinary Art. 50 generative tools.
+// Bare single words match loosely by stem: "deepfake" once reclassified a
+// marketing text generator as prohibited, and a bare "nude" would catch a
+// colour-palette tool. Hence phrases.
+console.log("\n🚫 ART. 5 PROHIBITION KEYWORDS");
+{
+  const ba = prohibitedPractices.find((p) => p.id === "art5-1ba");
+  const bb = prohibitedPractices.find((p) => p.id === "art5-1bb");
+  const shouldMatch = [
+    ["nudification app", ba],
+    ["an app that undresses people in photos", ba],
+    ["generates a realistic nude image of a real person", ba],
+    ["creates naked photos of someone without their consent", ba],
+    ["creates sexually explicit images of identifiable people", ba],
+    ["generates child sexual abuse material", bb],
+  ];
+  for (const [text, practice] of shouldMatch) {
+    test(
+      `Art. 5 keywords match: "${text.slice(0, 44)}"`,
+      scoreKeywordMatch(text, practice.keywords).strongCount > 0,
+    );
+  }
+  const mustNotMatch = [
+    "deepfake text generator for marketing copy",
+    "nude colour palette generator for interior design",
+    "chatbot that answers customer questions",
+  ];
+  for (const text of mustNotMatch) {
+    test(
+      `Art. 5 keywords do NOT match: "${text.slice(0, 44)}"`,
+      scoreKeywordMatch(text, ba.keywords).strongCount === 0 &&
+        scoreKeywordMatch(text, bb.keywords).strongCount === 0,
+    );
+  }
+}
+
 // ─── CROSS-TOOL CONSISTENCY ─────────────────────────────────────────────────
 // Regression guard: the obligations tool and the deadlines tool must never state
 // different application dates for the same system. Before this guard existed the

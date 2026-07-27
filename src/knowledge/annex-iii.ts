@@ -237,7 +237,10 @@ export const prohibitedPractices: ProhibitedPractice[] = [
       "Face-swap tools marketed for placing identifiable people into sexually explicit video",
       "Voice-cloning services generating sexual audio attributed to an identifiable person",
     ],
-    keywords: ["nudification", "intimate image", "sexually explicit", "non-consensual intimate", "undress", "sexual deepfake", "intimate parts"],
+    // Phrases rather than bare words: single-word keywords match loosely by stem
+    // and previously made "deepfake" reclassify an ordinary Art. 50 text generator
+    // as prohibited. Multi-word phrases require every word to be present.
+    keywords: ["nudification", "nudify", "intimate image", "sexually explicit", "non-consensual intimate", "undress", "sexual deepfake", "intimate parts", "nude image", "nude photo", "nude picture", "naked image", "naked photo"],
     article: "Art. 5(1)(ba)",
   },
   {

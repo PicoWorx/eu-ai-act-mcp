@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-07-27
+
+### Fixed
+
+- **Art. 5(1)(ba) prohibition missed the plainest phrasing.** A description such as "generates a realistic nude image of a real person" returned `insufficient_information` instead of prohibited, because the keyword list covered "nudification" and "undress" but not "nude image" or "naked photo". Found by querying the deployed server rather than by reading the data.
+- Added phrase keywords (`nudify`, `nude image`, `nude photo`, `nude picture`, `naked image`, `naked photo`) rather than the bare words. Single-word keywords match loosely by stem, which is how `deepfake` previously reclassified an ordinary Art. 50 text generator as prohibited, and a bare `nude` would catch a colour-palette tool.
+
+### Added
+
+- Keyword-sensitivity tests for the Art. 5(1)(ba) and (bb) prohibitions: six phrasings that must match and three that must not, including the two known false-positive shapes.
+
+
 ## [1.4.0] - 2026-07-26
 
 ### Changed
