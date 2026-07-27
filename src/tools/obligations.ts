@@ -9,6 +9,15 @@ import {
   providerGPAIObligations,
   universalObligations,
 } from "../knowledge/obligations.js";
+import { getOperativeHighRiskDates } from "../knowledge/deadlines.js";
+
+/**
+ * The general high-risk application date as authored in the static obligation
+ * data. Obligations carrying this date follow Chapter III Sections 1 to 3 and
+ * therefore move with the Omnibus deferral; obligations with their own anchor
+ * (Art. 4 AI literacy, GPAI transitions) must not be remapped.
+ */
+const AUTHORED_HIGH_RISK_DEADLINE = "2026-08-02";
 
 export function registerObligationsTool(server: McpServer): void {
   server.registerTool("euaiact_get_obligations", {
@@ -47,6 +56,31 @@ export function registerObligationsTool(server: McpServer): void {
       const annexPoint = input.annex_iii_point;
       if (source === 'annex_i' || annexPoint === 2) {
         baseObligations = baseObligations.filter((obl: any) => obl.article !== 'Art. 49');
+      }
+    }
+
+    // Chapter III Sections 1 to 3 move with the Omnibus deferral. Derive those
+    // deadlines from the same operative-date source the deadlines tool uses, so
+    // the two tools can never state different law for the same system.
+    if (input.risk_level === 'high-risk') {
+      const operative = getOperativeHighRiskDates();
+      const isAnnexI = (input.high_risk_source ?? 'unknown') === 'annex_i';
+      const operativeDeadline = isAnnexI ? operative.annexIHighRisk : operative.annexIiiHighRisk;
+      const sourceLabel = isAnnexI
+        ? "Art. 6(1) and Annex I"
+        : (input.high_risk_source ?? 'unknown') === 'annex_iii'
+          ? "Art. 6(2) and Annex III"
+          : "Art. 6(2) and Annex III (assumed: no high_risk_source given; this is the earlier of the two dates)";
+      if (operativeDeadline !== AUTHORED_HIGH_RISK_DEADLINE) {
+        baseObligations = baseObligations.map((obl: any) =>
+          obl.deadline === AUTHORED_HIGH_RISK_DEADLINE
+            ? {
+                ...obl,
+                deadline: operativeDeadline,
+                details: `${obl.details} Application date ${operativeDeadline} for ${sourceLabel}, per Art. 113(3)(c) as amended by the Digital Omnibus on AI.`,
+              }
+            : obl,
+        );
       }
     }
 

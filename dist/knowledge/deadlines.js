@@ -150,6 +150,17 @@ function buildEnactedMilestones(enactment) {
             ],
         },
         {
+            date: "2026-12-02",
+            name: "New Art. 5 prohibitions and the Art. 50(2) legacy transition",
+            description: "Two obligations introduced by the Digital Omnibus on AI apply from 2 December 2026. First, the new prohibited practices in Art. 5(1)(ba) and (bb), covering non-consensual intimate material and child sexual abuse material, subject to the qualifications in Art. 5(1a) and (1b). Second, under the new Art. 111(4), providers of AI systems generating synthetic audio, image, video or text content that were placed on the market before 2 August 2026 must have taken the necessary steps to comply with Art. 50(2) by this date. Art. 50(2) itself already applies from 2 August 2026 to systems placed on the market from that date.",
+            status: "upcoming",
+            articles: ["Art. 5(1)(ba)", "Art. 5(1)(bb)", "Art. 5(1a)", "Art. 5(1b)", "Art. 50(2)", "Art. 111(4)"],
+            keyObligations: [
+                "New Art. 5 prohibitions on non-consensual intimate material and CSAM become enforceable",
+                "Synthetic-content systems already on the market complete Art. 50(2) marking compliance",
+            ],
+        },
+        {
             date: dates.legacyGpaiCompliance,
             name: "Legacy GPAI compliance deadline (unchanged)",
             description: "GPAI models placed on the market before 2 August 2025 must comply by 2 August 2027 (Art. 111(3)). The Digital Omnibus did not change this date.",
@@ -162,7 +173,7 @@ function buildEnactedMilestones(enactment) {
         {
             date: dates.annexIiiHighRisk,
             name: "High-risk Annex III obligations (deferred by the Digital Omnibus)",
-            description: `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026.`,
+            description: `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). This is the backstop date: the obligations can bite earlier, six months after a Commission decision that the supporting standards and support measures are available. Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026.`,
             status: "upcoming",
             articles: [
                 "Art. 6", "Art. 9", "Art. 10", "Art. 11", "Art. 12", "Art. 13",

@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-26
+
+### Changed
+
+- **Digital Omnibus on AI enacted.** The `omnibusEnactment` record now carries CELEX `32026R1744`, OJ publication `2026-07-24` and entry into force `2026-07-27`, verified against the enacted OJ text on 2026-07-26. All derived surfaces (operative dates, milestone timeline, status labels, server instructions, resources) resolve to the enacted state.
+- **Annex III high-risk obligations deferred to 2 December 2027** and **Annex I to 2 August 2028** (Art. 113(3)(c) as amended). Both are backstop dates; a Commission decision on support measures can bring them forward.
+- **Obligation deadlines are derived rather than hardcoded.** `euaiact_get_obligations` now takes its high-risk application dates from the same source as `euaiact_check_deadlines`, split by Annex III and Annex I, so the two tools cannot state different law for the same system. Previously every high-risk obligation carried a fixed `2026-08-02`.
+- **Art. 50(2) transition reconciled and reattributed.** The entry now cites the new Art. 111(4) where the rule sits, carries the enacted date 2 December 2026 and is tagged to the enacted OJ text. The proposal's 2 February 2027 does not appear in the adopted act. `OmnibusDelta.sourceStatus` accepts `enacted_oj` so reconciled items can be labelled honestly.
+- Summary key-changes, the source registry note, the Art. 113 article summary and three FAQ answers rewritten for the enacted state.
+
+### Added
+
+- **Art. 5(1)(ba) and (bb) prohibited practices** (non-consensual intimate material and child sexual abuse material), with the Art. 5(1a) and (1b) qualifications, applying from 2 December 2026. These are now reachable through classification and prohibited-practice lookups.
+- **Milestone for 2 December 2026** covering the new Art. 5 prohibitions and the Art. 111(4) synthetic-content transition.
+- **Cross-tool consistency tests** asserting that obligation deadlines match the operative deadline dates, and that limited-risk Art. 50 duties stay on 2 August 2026.
+- Reverse-simulation tests proving a pending record still resolves to pre-OJ behaviour after the flip.
+
+### Fixed
+
+- The Annex III milestone description now states that the deferred date is a backstop and that obligations can apply earlier after a Commission decision.
+
+### Known limitations
+
+- The treatment of the Art. 49 registration duty for self-assessed not-high-risk systems is still unresolved against the enacted text and remains labelled as a divergence in the data.
+
+
 ## [1.3.0] - 2026-06-15
 
 Source-state awareness. The server now separates current OJ law from the Digital Omnibus on AI (Commission proposal plus political agreement). Current law stays the default in every answer; pending changes are opt-in and labelled with their source status. Cross-read in-house against COM(2025) 836 (CELEX 52025PC0836) and the official Commission pages on 2026-06-15. See `docs/audit-2026-06-15-verification.md`.

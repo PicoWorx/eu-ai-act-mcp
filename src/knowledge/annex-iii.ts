@@ -228,6 +228,31 @@ export const prohibitedPractices: ProhibitedPractice[] = [
     article: "Art. 5(1)(b)",
   },
   {
+    id: "art5-1ba",
+    name: "Non-consensual intimate or sexually explicit material",
+    description:
+      "AI systems that generate or manipulate realistic images, videos, audio or similar material depicting an identifiable natural person's intimate parts, or that person engaged in sexually explicit activities, without their freely-given, specific, informed, unambiguous and explicit consent. Added by the Digital Omnibus on AI (Regulation (EU) 2026/1744); applies from 2 December 2026. Art. 5(1a) limits the market-placement prohibition to systems whose intended purpose is such generation, or where it is a reasonably foreseeable and reproducible outcome absent adequate safeguards; Art. 5(1b) excludes manipulations that neither increase exposure nor alter the nature of the depicted acts.",
+    examples: [
+      "So-called nudification apps that undress an identifiable person in a supplied photograph",
+      "Face-swap tools marketed for placing identifiable people into sexually explicit video",
+      "Voice-cloning services generating sexual audio attributed to an identifiable person",
+    ],
+    keywords: ["nudification", "intimate image", "sexually explicit", "non-consensual intimate", "undress", "sexual deepfake", "intimate parts"],
+    article: "Art. 5(1)(ba)",
+  },
+  {
+    id: "art5-1bb",
+    name: "Child sexual abuse material",
+    description:
+      "AI systems that generate or manipulate material or performance within the meaning of Article 2, points (c) and (e), of Directive 2011/93/EU, except where a 'without right' defence applies under national law. Added by the Digital Omnibus on AI (Regulation (EU) 2026/1744); applies from 2 December 2026. The same Art. 5(1a) and (1b) qualifications apply.",
+    examples: [
+      "Generative systems whose intended purpose is producing child sexual abuse material",
+      "Image models offered with the reasonably foreseeable and reproducible capability to produce such material absent adequate safeguards",
+    ],
+    keywords: ["csam", "child sexual abuse", "minor", "directive 2011/93", "child protection"],
+    article: "Art. 5(1)(bb)",
+  },
+  {
     id: "art5-1c",
     name: "Social scoring",
     description:

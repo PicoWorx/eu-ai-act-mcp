@@ -10,17 +10,24 @@
  * 2026-06-29) were verified on 2026-07-07 against the Council press release
  * of 2026-06-29 plus convergent major-firm trackers.
  *
- * STATUS: formally ADOPTED by both co-legislators, but NOT yet published in
- * the Official Journal and therefore NOT yet in force. Current law remains
- * Regulation (EU) 2024/1689 as published in the OJ.
+ * STATUS: ENACTED. Published in the Official Journal on 24 July 2026 as
+ * Regulation (EU) 2026/1744 (CELEX 32026R1744), in force from 27 July 2026.
+ * The enactment record below carries those identifiers and was verified
+ * against the enacted OJ text on 2026-07-26.
  *
- * SINGLE-SOURCE ENACTMENT FLIP (audit item M3): the `omnibusEnactment`
- * record below is the ONE flip point. On OJ publication, fill its three
- * null fields (celex, ojPublicationDate, entryIntoForce), set its status to
- * "enacted_oj", rebuild, and every derived surface (operative deadline
- * dates, milestone timeline, enacted flags, status labels, server
- * instructions, resources) flips with it. Nothing else needs editing;
- * reconcile-on-OJ items are listed in the flip checklist.
+ * SINGLE-SOURCE ENACTMENT RECORD (audit item M3): the `omnibusEnactment`
+ * record below drives every derived surface (operative deadline dates,
+ * milestone timeline, enacted flags, status labels, server instructions,
+ * resources). It resolves fail-closed: a record whose status says enacted
+ * without all three OJ identifiers reads as pending.
+ *
+ * NOTE, corrected on flip day 2026-07-26: the earlier claim that "nothing
+ * else needs editing" was wrong. Flipping the record alone left the
+ * obligations data, the summary key-changes list, the source-registry note,
+ * several FAQ answers and the prohibited-practices data stating superseded
+ * law. Those were corrected in the same change and a cross-tool consistency
+ * test now guards the worst of them. Treat a future amendment as a content
+ * pass, not a one-line edit.
  */
 
 import { isEnacted, sourceRegistry, type SourceRef, type SourceStatus } from "./sources.js";
@@ -53,12 +60,12 @@ export interface OmnibusEnactment {
  * null: those values do not exist yet and must never be guessed.
  */
 export const omnibusEnactment: OmnibusEnactment = {
-  status: "adopted_pending_publication",
+  status: "enacted_oj",
   epEndorsement: "2026-06-16",
   councilAdoption: "2026-06-29",
-  celex: null,
-  ojPublicationDate: null,
-  entryIntoForce: null,
+  celex: "32026R1744",
+  ojPublicationDate: "2026-07-24",
+  entryIntoForce: "2026-07-27",
 };
 
 /**
@@ -132,8 +139,11 @@ export interface OmnibusDelta {
   article: string;
   /** What would change. */
   change: string;
-  /** Where this is established: proposal text vs political agreement. */
-  sourceStatus: Extract<SourceStatus, "commission_proposal" | "political_agreement">;
+  /**
+   * Where this is established: proposal text, political agreement, or, once an
+   * item has been reconciled against the published OJ text, the enacted act.
+   */
+  sourceStatus: Extract<SourceStatus, "commission_proposal" | "political_agreement" | "enacted_oj">;
   /** Registry id of the source. */
   sourceId: string;
   /** Specific effective date in the proposal, if any (ISO). */
@@ -242,13 +252,13 @@ export const digitalOmnibusPack: DigitalOmnibusPack = {
       note: "DIVERGENCE: earlier reporting suggested the political agreement may retain this registration duty. Proposal deletes it; agreement treatment not independently verified. Resolve against the consolidated OJ text on adoption.",
     },
     {
-      article: "Art. 50(2)",
+      article: "Art. 111(4) (new) / Art. 50(2)",
       change:
-        "Transition for synthetic-content systems already on the market before 2 Aug 2026: comply with Art. 50(2) marking by 2 Feb 2027 (proposal date; pending reconciliation against the adopted OJ text, see note).",
-      sourceStatus: "commission_proposal",
-      sourceId: "com_2025_836",
-      effectiveDate: "2027-02-02",
-      note: "RECONCILE ON OJ (known discrepancy): this entry records the PROPOSAL's transition date (2 Feb 2027, cross-read against COM(2025) 836 on 2026-06-15). External trackers report the adopted act moves the Art. 50(2) marking obligation to 2 Dec 2026 with a transition for systems already on the market. Neither has been verified against the OJ text; do not emit either as law. Verify against the published OJ text on flip day and correct this delta then.",
+        "Transition for synthetic-content systems already on the market: providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content that were placed on the market before 2 Aug 2026 shall take the necessary steps in order to comply with Art. 50(2) by 2 Dec 2026. Art. 50(2) itself is unamended and still applies from 2 Aug 2026 to systems placed on the market from that date.",
+      sourceStatus: "enacted_oj",
+      sourceId: "omnibus_oj",
+      effectiveDate: "2026-12-02",
+      note: "RECONCILED ON OJ (2026-07-26): verified against the enacted text of Regulation (EU) 2026/1744 (CELEX 32026R1744, OJ L of 24.7.2026). The transition date is 2 Dec 2026, confirming the external trackers; the proposal's 2 Feb 2027 was not carried into the adopted act and that string does not appear in the published regulation. Note the distinction: Art. 50(2) itself applies from 2 Aug 2026 (not deferred), and 2 Dec 2026 is the compliance deadline for systems already on the market before that date.",
     },
     {
       article: "Art. 75",
@@ -352,18 +362,36 @@ export function buildOmnibusSummary(e: OmnibusEnactment = omnibusEnactment): Leg
     description: enacted
       ? `Digital Omnibus on AI. Commission proposal COM(2025) 836 final (CELEX 52025PC0836, 19 Nov 2025, procedure 2025/0359(COD)) amending Regulation (EU) 2024/1689. Politically agreed 7 May 2026, adopted by the European Parliament (${e.epEndorsement}) and the Council (${e.councilAdoption}), published in the Official Journal on ${e.ojPublicationDate} (CELEX ${e.celex}) and in force since ${e.entryIntoForce}.`
       : `Digital Omnibus on AI. Commission proposal COM(2025) 836 final (CELEX 52025PC0836, 19 Nov 2025, procedure 2025/0359(COD)) amending Regulation (EU) 2024/1689. Politically agreed on 7 May 2026 and since FORMALLY ADOPTED by both co-legislators: European Parliament endorsement ${e.epEndorsement}, Council final adoption ${e.councilAdoption}. Not yet in force: it takes legal effect on publication in the Official Journal (entry into force the third day after publication). Until then current OJ law governs.`,
-    keyChanges: [
-      "High-risk Annex III (Art. 6(2)) obligations: current law 2 Aug 2026 -> backstop 2 Dec 2027 (or 6 months after a Commission support-measures decision).",
-      "High-risk Annex I (Art. 6(1)) obligations: current law 2 Aug 2027 -> backstop 2 Aug 2028 (or 12 months after that decision).",
-      "NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 Aug 2026; the legacy GPAI compliance date stays 2 Aug 2027.",
-      "Art. 50(2) synthetic-content marking: systems placed before 2 Aug 2026 get until 2 Feb 2027 (proposal date; trackers report 2 Dec 2026 for the adopted act; reconcile against the OJ text).",
-      "Art. 4 AI literacy recast to a Commission/Member-State duty (proposal).",
-      "New Art. 4a replacing Art. 10(5): special-category data for bias detection/correction (proposal).",
-      "Art. 49/Art. 6(3): registration duty for self-assessed not-high-risk systems deleted in the proposal; agreement treatment unverified.",
-      "Art. 75: AI Office centralisation for GPAI-based and VLOP/VLOSE-embedded systems (proposal).",
-      "Art. 99: SME penalty privileges extended to small mid-caps (proposal).",
-      "Art. 5: nudification/CSAM prohibition added at the political-agreement stage (NOT in the proposal).",
-    ],
+    keyChanges: enacted
+      ? [
+          "High-risk Annex III (Art. 6(2)) obligations: deferred from 2 Aug 2026 to 2 Dec 2027 by Art. 113(3)(c)(i) as amended (or 6 months after a Commission support-measures decision, whichever is earlier).",
+          "High-risk Annex I (Art. 6(1)) obligations: deferred from 2 Aug 2027 to 2 Aug 2028 by Art. 113(3)(c)(ii) as amended (or 12 months after that decision).",
+          "NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 Aug 2026; the legacy GPAI compliance date in Art. 111(3) stays 2 Aug 2027.",
+          "New Art. 111(4): systems generating synthetic content placed on the market before 2 Aug 2026 must comply with Art. 50(2) by 2 Dec 2026. Art. 50(2) itself still applies from 2 Aug 2026 to later systems.",
+          "New Art. 5(1) points (ba) and (bb) plus Art. 5(1a) and (1b): non-consensual intimate material and CSAM prohibitions, applying from 2 Dec 2026.",
+          "Art. 6 gains paragraphs 1a to 1c narrowing the safety-component gateway; Art. 3(14) gains an intended-purpose test.",
+          "Art. 111(2) replaced: the high-risk grandfathering cutoff now moves with the new application dates instead of being fixed at 2 Aug 2026.",
+          "Art. 75 replaced plus new Arts. 75a to 75d: AI Office exclusive competence for GPAI-based and VLOP/VLOSE-embedded systems, with new investigation and fining powers. New Art. 75(1a) routes serious-incident reporting for those systems to the AI Office by derogation from Art. 73.",
+          "Art. 56(6) replaced: the power to give a GPAI code of practice general validity by implementing act is deleted; codes grant no presumption of conformity.",
+          "Art. 27(4) and (5) replaced: DPIA cross-referencing allowed inside the FRIA, and an AI Office template questionnaire including an automated tool.",
+          "Annex I: Section A point 1 deleted and the Machinery Regulation (EU) 2023/1230 added as Section B point 21, so the AI Act applies to those machines only as set out in Art. 2(2), itself rewritten by this act.",
+          "Art. 4 AI literacy softened to a duty to take supporting measures; new Art. 4a replaces Art. 10(5) on special-category data for bias detection.",
+          "Art. 99: SME penalty privileges extended to small mid-caps.",
+          "Art. 113(3)(d) added: Articles 102 to 110 apply from 27 July 2026, pulled forward rather than deferred.",
+          "Unresolved against the OJ text: the Art. 49/Art. 6(3) registration duty for self-assessed not-high-risk systems.",
+        ]
+      : [
+          "High-risk Annex III (Art. 6(2)) obligations: current law 2 Aug 2026 -> backstop 2 Dec 2027 (or 6 months after a Commission support-measures decision).",
+          "High-risk Annex I (Art. 6(1)) obligations: current law 2 Aug 2027 -> backstop 2 Aug 2028 (or 12 months after that decision).",
+          "NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 Aug 2026; the legacy GPAI compliance date stays 2 Aug 2027.",
+          "Art. 50(2) synthetic-content marking: systems placed before 2 Aug 2026 get until 2 Feb 2027 (proposal date; trackers report 2 Dec 2026 for the adopted act; reconcile against the OJ text).",
+          "Art. 4 AI literacy recast to a Commission/Member-State duty (proposal).",
+          "New Art. 4a replacing Art. 10(5): special-category data for bias detection/correction (proposal).",
+          "Art. 49/Art. 6(3): registration duty for self-assessed not-high-risk systems deleted in the proposal; agreement treatment unverified.",
+          "Art. 75: AI Office centralisation for GPAI-based and VLOP/VLOSE-embedded systems (proposal).",
+          "Art. 99: SME penalty privileges extended to small mid-caps (proposal).",
+          "Art. 5: nudification/CSAM prohibition added at the political-agreement stage (NOT in the proposal).",
+        ],
     impactOnAIAct: enacted
       ? `Enacted: in force since ${e.entryIntoForce}. The amended high-risk dates (Annex III 2 Dec 2027, Annex I 2 Aug 2028) are operative law and are reflected in the milestone timeline. Art. 50 transparency and GPAI enforcement/fines were NOT deferred and apply since 2 Aug 2026. Verify article-level wording against the OJ text (CELEX ${e.celex}).`
       : "Adopted but not yet in force: current OJ-law dates remain authoritative for compliance until publication in the Official Journal. On publication, the Annex III high-risk date moves to 2 Dec 2027 and the Annex I date to 2 Aug 2028; Art. 50 transparency and GPAI enforcement/fines are NOT deferred and stay on 2 Aug 2026. Plan against current law until the OJ text is published.",

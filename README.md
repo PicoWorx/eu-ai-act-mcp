@@ -17,6 +17,14 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **Version skew resolved.** `package.json`, MCP server metadata (`src/server.ts`), and `/health` endpoint now all report `1.1.5` consistently.
 - **Test count.** Local suite is now **110 tests passing**.
 
+## What's new in 1.4.0
+
+- **The Digital Omnibus on AI is enacted.** Published in the Official Journal on 24 July 2026 as **Regulation (EU) 2026/1744** (CELEX 32026R1744), in force from **27 July 2026**. The server now serves the amended dates as operative law.
+- **Deferred:** Annex III high-risk obligations move from 2 August 2026 to **2 December 2027**; Annex I product-integrated high-risk obligations from 2 August 2027 to **2 August 2028**. Both are backstop dates and can bite earlier following a Commission decision on support measures.
+- **Not deferred:** Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 August 2026; the legacy GPAI compliance date in Art. 111(3) stays 2 August 2027.
+- **New obligations from 2 December 2026:** the Art. 5(1)(ba) and (bb) prohibitions on non-consensual intimate material and CSAM, and the Art. 111(4) transition requiring synthetic-content systems already on the market to comply with Art. 50(2).
+- **Obligation deadlines are now derived**, not hardcoded, so `euaiact_get_obligations` and `euaiact_check_deadlines` can no longer state different application dates for the same system. A cross-tool consistency test guards this.
+
 ## What's new in 1.1.4
 
 - **Digital Omnibus block** in `euaiact_check_deadlines` updated to reflect the **2026-05-07 Council/Parliament provisional political agreement**. `status` flips from `"proposal_only"` to `"provisional_agreement"`. The agreement is **not yet adopted law** — current-law dates remain authoritative for compliance advice until formal adoption plus Official Journal publication.
@@ -135,7 +143,7 @@ All dates, articles, and obligations verified against the regulation text.
 
 ## Regulatory Accuracy
 
-This server tracks the current state of the EU AI Act as published (Regulation 2024/1689). The Digital Omnibus reached a Council/Parliament **provisional political agreement on 2026-05-07** (procedure 2025/0359(COD)) and is now reported with `status: "provisional_agreement"`. The agreement is **not yet adopted law** — current-law dates remain authoritative for compliance advice until formal adoption plus Official Journal publication.
+This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 July 2026; one item remains unresolved and is labelled as such in the data, namely the treatment of the Art. 49 registration duty for self-assessed not-high-risk systems.
 
 Key dates verified:
 - **2 Feb 2025** — Prohibited practices + AI literacy (in effect)
