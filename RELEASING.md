@@ -49,8 +49,31 @@ always compiled from source. Do NOT use `prepare` for this: it runs during
 `npm install`, and the Dockerfile runs `npm ci` before copying `tsconfig.json`
 and `src/`, so the build would fail and take the deployment with it.
 
+## Tracking beats ignoring
+
+`.gitignore` only filters files git is not already tracking. Once a file is tracked, git
+never consults the ignore rules for it again, so a path can sit in `.gitignore` and be
+committed at the same time. This repo hit it twice:
+
+- `dist/` — 120 compiled files, untracked in `f00ab45`.
+- `node_modules/` — 3,714 files, roughly 69 MB including a platform-specific `esbuild`
+  binary. Every clone dragged them down, and `npm ci` then rewrote the directory, so git
+  reported thousands of changes to a path it was told to ignore.
+
+`git status` will not warn you, because it stays quiet about tracked, unmodified files, and
+`git check-ignore` reports nothing for a tracked file by design. The only reliable check:
+
+```bash
+git ls-files node_modules dist | head    # must be empty
+```
+
+The cure is `git rm -r --cached <path>`, which drops it from the index and leaves it on
+disk. Note this cleans the current tree, not history, so old clones stay large until the
+history is rewritten.
+
 ## Checklist
 
+0. `git ls-files node_modules dist` must return nothing.
 1. Bump the version in `package.json` and `smithery.yaml`.
 2. `npm run build && node test.mjs` — the suite must be fully green.
 3. Add a CHANGELOG entry, including anything left unresolved.

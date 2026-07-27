@@ -17,6 +17,7 @@
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "lexbeam-eu-ai-act-mcp": "dist/index.js"
   },
