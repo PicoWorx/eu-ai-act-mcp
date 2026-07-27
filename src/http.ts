@@ -13,6 +13,7 @@
 import { createServer as createHttpServer } from "node:http";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { createServer } from "./server.js";
+import { SERVER_VERSION } from "./constants.js";
 
 const PORT = parseInt(process.env.PORT || "3000", 10);
 
@@ -32,7 +33,7 @@ const httpServer = createHttpServer(async (req, res) => {
   // Health check
   if (req.method === "GET" && req.url === "/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ status: "ok", server: "lexbeam-eu-ai-act-mcp", version: "1.3.0" }));
+    res.end(JSON.stringify({ status: "ok", server: "lexbeam-eu-ai-act-mcp", version: SERVER_VERSION }));
     return;
   }
 

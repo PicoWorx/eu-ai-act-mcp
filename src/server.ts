@@ -32,12 +32,13 @@ import {
   resolveOmnibusStatus,
 } from "./knowledge/deadlines.js";
 import { SOURCE_STATUS_LABELS } from "./knowledge/sources.js";
+import { SERVER_VERSION } from "./constants.js";
 
 export function createServer(): McpServer {
   const server = new McpServer(
     {
       name: "lexbeam-eu-ai-act-mcp-server",
-      version: "1.3.0",
+      version: SERVER_VERSION,
     },
     {
       instructions: SERVER_INSTRUCTIONS,

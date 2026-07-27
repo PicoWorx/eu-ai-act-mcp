@@ -1,4 +1,15 @@
+import { createRequire } from "node:module";
 import { omnibusStatusLine } from "./knowledge/digital-omnibus.js";
+
+/**
+ * Single source of truth for the served version. Read from package.json rather
+ * than hardcoded, because the version previously lived in three places
+ * (package.json, the MCP handshake in server.ts, the health endpoint in
+ * http.ts) and drifted: a release bumped package.json while the running server
+ * kept introducing itself with the old number.
+ */
+const require = createRequire(import.meta.url);
+export const SERVER_VERSION: string = require("../package.json").version;
 
 export const BRANDING = {
   source: "Lexbeam Software - lexbeam.com",
