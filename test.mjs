@@ -426,11 +426,53 @@ test("Omnibus Art 50(2) transition date is the enacted 2026-12-02", digitalOmnib
 test("Omnibus Art 50(2) delta is attributed to the enacted OJ text", digitalOmnibusPack.deltas.some((d) => d.article.includes("50(2)") && d.sourceStatus === "enacted_oj" && d.sourceId === "omnibus_oj"));
 test("Retired proposal date 2027-02-02 appears in no delta", digitalOmnibusPack.deltas.every((d) => d.effectiveDate !== "2027-02-02"));
 
-// Nudification belongs to the political agreement, not the proposal
+// Art. 5 prohibitions are enacted law now, not an unverified agreement item.
+// Guards the 2026-07-27 correction: the old "do not emit as current Art. 5 law"
+// caution survived the flip and was actively wrong.
 {
   const nud = digitalOmnibusPack.deltas.find((d) => /Art\. 5 \(prohibited/.test(d.article));
-  test("Nudification delta is tagged political_agreement", !!nud && nud.sourceStatus === "political_agreement");
-  test("Nudification delta noted as not in proposal", !!nud && /NOT present in proposal/i.test(nud.note || ""));
+  test("Art. 5 delta is tagged enacted_oj", !!nud && nud.sourceStatus === "enacted_oj");
+  test("Art. 5 delta carries the enacted 2026-12-02 date", !!nud && nud.effectiveDate === "2026-12-02");
+  test("Art. 5 delta no longer warns against emitting it as current law", !!nud && !/do not emit as current/i.test(nud.note || ""));
+}
+
+// Art. 4 was REPLACED, not recast into a Commission-only duty. The proposal's
+// version shipped in 1.4.1 and was wrong as law; this guards the correction.
+{
+  const a4 = digitalOmnibusPack.deltas.find((d) => /^Art\. 4 \(AI literacy\)/.test(d.article));
+  test("Art. 4 delta exists and is tagged enacted_oj", !!a4 && a4.sourceStatus === "enacted_oj");
+  test("Art. 4 delta does not claim a Commission/Member-State-only recast", !!a4 && !/recast into a duty on the Commission and Member States/i.test(a4.change));
+  test("Art. 4 delta states the support-the-development duty", !!a4 && /SUPPORT THE DEVELOPMENT/i.test(a4.change));
+  test("Art. 4 delta records that no specific literacy level must be guaranteed", !!a4 && /does not require .*guarantee any specific level/i.test(a4.change));
+}
+
+// Art. 49 registration duty SURVIVES the enacted act. The proposal deleted it;
+// stating that as law would tell a provider to skip a live registration duty.
+{
+  const a49 = digitalOmnibusPack.deltas.find((d) => /Art\. 49/.test(d.article));
+  test("Art. 49 delta exists and is tagged enacted_oj", !!a49 && a49.sourceStatus === "enacted_oj");
+  test("Art. 49 delta states the registration duty survives", !!a49 && /SURVIVES/.test(a49.change));
+  test("Art. 49 delta does not claim the duty was deleted", !!a49 && !/^Deletes the EU-database registration duty/i.test(a49.change));
+  test("Art. 49 delta records the Annex VIII Section B points 7 and 9 deletion", !!a49 && /Annex VIII Section B points 7 and 9/.test(a49.change));
+}
+
+// Once the pack reads as enacted, no delta may still be sourced to the proposal
+// or the political agreement: each one must have been reconciled against the OJ.
+{
+  const stale = digitalOmnibusPack.deltas.filter((d) => d.sourceStatus !== "enacted_oj");
+  test(
+    `Enacted pack: every delta reconciled against the OJ text (${stale.length} stale)`,
+    !digitalOmnibusPack.enacted || stale.length === 0,
+  );
+  test("Enacted pack: every delta cites its amending item number", !digitalOmnibusPack.enacted || digitalOmnibusPack.deltas.every((d) => /item(s)? \d/.test(d.change)));
+}
+
+// The superseded Art. 4 wording must not survive anywhere in the knowledge base.
+{
+  const a4art = articles.find((a) => a.number === "4");
+  test("Art. 4 article summary drops the superseded 'ensure ... sufficient level' wording", !!a4art && !/must take measures to ensure, to their best extent, a sufficient level/i.test(a4art.summary));
+  test("Art. 4 article summary records the 27 July 2026 replacement", !!a4art && /27 July 2026/.test(a4art.summary));
+  test("Universal obligation reflects the support-the-development duty", /support the development/i.test(universalObligations[0].obligation));
 }
 
 // Source registry carries correct statuses

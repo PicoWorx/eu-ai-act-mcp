@@ -143,20 +143,23 @@ All dates, articles, and obligations verified against the regulation text.
 
 ## Regulatory Accuracy
 
-This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 July 2026; one item remains unresolved and is labelled as such in the data, namely the treatment of the Art. 49 registration duty for self-assessed not-high-risk systems.
+This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 and 27 July 2026, delta by delta against the 43 numbered amendments in Article 1 of the amending act. No item is left unresolved. The Art. 49 registration duty for self-assessed not-high-risk systems, previously carried as unresolved, SURVIVES: the enacted act does not amend Art. 49 and deletes only Annex VIII Section B points 7 and 9.
 
-Key dates verified:
-- **2 Feb 2025** — Prohibited practices + AI literacy (in effect)
-- **2 Aug 2025** — GPAI model obligations (in effect)
-- **2 Aug 2026** — High-risk Annex III obligations (upcoming)
-- **2 Aug 2027** — Annex I regulated products (upcoming)
+Operative dates as amended:
+- **2 Feb 2025** — Prohibited practices (Art. 5) + AI literacy (Art. 4), in effect
+- **2 Aug 2025** — GPAI model obligations, in effect
+- **2 Aug 2026** — Art. 50 transparency, and Commission GPAI enforcement powers and fines. **Not deferred**
+- **2 Dec 2026** — The two new Art. 5 prohibitions (non-consensual intimate material, CSAM), and the Art. 111(4) deadline for synthetic-content systems already on the market to meet Art. 50(2)
+- **2 Aug 2027** — Legacy GPAI models (Art. 111(3)), unchanged
+- **2 Dec 2027** — High-risk Annex III obligations. Deferred from 2 Aug 2026
+- **2 Aug 2028** — High-risk Annex I regulated products. Deferred from 2 Aug 2027
 
 ## Development
 
 ```bash
 npm install
 npm run build        # typescript -> dist/
-node test.mjs        # run the 108-test suite
+node test.mjs        # run the 303-test suite
 npm run dev          # stdio dev server
 npm run dev:http     # HTTP dev server
 ```

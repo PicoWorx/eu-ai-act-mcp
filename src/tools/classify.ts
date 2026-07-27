@@ -546,7 +546,7 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
       relevant_articles: ["Art. 6(1)"],
       role_determination: role,
       obligations_summary: "Unable to determine risk classification from the provided description. The system may be minimal risk, but further analysis is recommended.",
-      caveat: "Classification based on limited information. A detailed assessment may reveal higher risk. All providers and deployers must ensure AI literacy (Art. 4), enforceable since 2 February 2025.",
+      caveat: "Classification based on limited information. A detailed assessment may reveal higher risk. All providers and deployers must take measures to support the development of AI literacy (Art. 4, applicable since 2 February 2025 and replaced with effect from 27 July 2026).",
     }),
     matched_signals: [],
     missing_signals: missing,

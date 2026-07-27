@@ -103,7 +103,7 @@ export function createServer(): McpServer {
             { level: "limited_risk", description: "Transparency obligations (Art. 50): chatbots, emotion recognition, deepfakes, AI-generated content must be disclosed.", articles: ["Art. 50"] },
             { level: "minimal", description: "No specific obligations. Voluntary codes of conduct encouraged (Art. 95).", articles: ["Art. 95"] },
           ],
-          universal: { obligation: "AI literacy", article: "Art. 4", applies_to: "all providers and deployers", enforceable_since: "2025-02-02" },
+          universal: { obligation: "Take measures to support the development of AI literacy (Art. 4 as replaced from 27 July 2026; no guaranteed level of literacy is required)", article: "Art. 4", applies_to: "all providers and deployers", enforceable_since: "2025-02-02" },
         }, null, 2),
       }],
     })

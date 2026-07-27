@@ -41,7 +41,7 @@ export const articles: ArticleEntry[] = [
     number: "4",
     title: "AI literacy",
     summary:
-      "Providers and deployers of AI systems must take measures to ensure, to their best extent, a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf. Measures must take into account technical knowledge, experience, education and training of the persons, the context of use, and the persons or groups on whom the AI systems are to be used. Enforceable since 2 February 2025.",
+      "Providers and deployers of AI systems must take measures to SUPPORT THE DEVELOPMENT of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf, taking into account their technical knowledge, experience, education and training, the context the AI systems are to be used in, and the persons or groups on whom the AI systems are to be used. Art. 4 was REPLACED by Regulation (EU) 2026/1744 with effect from 27 July 2026: the duty is one of supporting development and it expressly does NOT require providers or deployers to guarantee any specific level of AI literacy of any individual. New Art. 4(2) obliges the Commission and the Member States to support and facilitate that effort, in particular for SMEs, with practical compliance examples to be published on the single information platform. Applicable since 2 February 2025 in its original form.",
     eurlex_url: anchor("4"),
     related_annexes: [],
   },

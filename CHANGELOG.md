@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-07-27
+
+### Fixed
+
+- **Two deltas in the Digital Omnibus pack still carried the Commission proposal's version and were wrong as enacted law.** Both shipped in 1.4.1.
+  - **Art. 4 (AI literacy)** was described as "recast into a duty on the Commission and Member States to foster AI literacy". That is the proposal. The enacted Art. 4(1) keeps the provider and deployer duty, recast as taking measures to **support the development** of AI literacy, and states expressly that it "does not require providers or deployers to guarantee any specific level of AI literacy of any individual". The Commission and Member State duty was **added** as a new Art. 4(2), it did not replace anything.
+  - **Art. 49 / Art. 6(3)** was described as deleting the EU-database registration duty for Annex III systems self-assessed as not high-risk, and was carried as the one item unresolved against the OJ text. The enacted act does **not amend Art. 49 at all**. It deletes only Annex VIII Section B points 7 and 9, which simplifies what that registration must contain. The duty stands. Telling a provider registration was no longer required would have been a live compliance error.
+- **The superseded Art. 4 wording was live in six places**: `articles.ts`, `obligations.ts`, `deadlines.ts`, `classify.ts` (the low-confidence caveat), `server.ts` (the risk-levels resource) and two FAQ answers all still said providers and deployers "must ensure ... a sufficient level of AI literacy".
+- **The Art. 5 delta still warned against emitting the nudification and CSAM prohibitions as current law.** They have been enacted since 27 July 2026 and apply from 2 December 2026. The caution was tagged `political_agreement` and survived the 1.4.0 flip.
+- **README served the pre-Omnibus dates as "verified"**, listing high-risk Annex III at 2 Aug 2026 and Annex I at 2 Aug 2027 two paragraphs below the note saying those dates were deferred. Replaced with the full operative timeline, including the 2 Dec 2026 and 2 Aug 2028 dates. The stale 108-test count was also corrected.
+
+### Changed
+
+- **Every delta reconciled article by article against the enacted OJ text**, not against the proposal or a tracker. The list is rewritten and expanded from 13 to 20 entries, each citing its item number in Article 1 of Regulation (EU) 2026/1744 so a reader can find it in the OJ. No delta is tagged `commission_proposal` or `political_agreement` any more.
+- New deltas covering Art. 2(13), Art. 11(1)/17(2)/63(1), Art. 25(2) and (4), Art. 28 to 30, Art. 43(3), Art. 50(7)/56(6), Art. 57/60/60a, Art. 72(3), Art. 95(4)/96(1)/99, Art. 111(2) and Art. 113 third paragraph.
+- The Art. 27 delta records that **Art. 27(3) was not amended**: FRIA notification is owed on the results of every completed assessment, not only where a specific risk is found.
+- The Art. 56(6) delta records that recital 41 cites "Art. 53(4) and Art. 54(2)" for code reliance, while Art. 54(2) governs the authorised representative's mandate. The operative pair is Art. 53(4) and Art. 55(2).
+- `OmnibusEnactment` gains `actDate` ("2026-07-08", from the face of the act). The enacted description now quotes that date, and keeps the EP and Council dates as provenance with their source named, since those come from the Council press release rather than the OJ text.
+
+### Added
+
+- 14 regression tests: the Art. 4, Art. 49 and Art. 5 corrections each guarded by name, plus two structural guards that fail if any delta is still sourced to the proposal or is missing its amending item number once the pack reads as enacted, plus three guards on the Art. 4 wording in `articles.ts` and `obligations.ts`. 289 -> 303 tests.
+
 ## [1.4.1] - 2026-07-27
 
 ### Fixed

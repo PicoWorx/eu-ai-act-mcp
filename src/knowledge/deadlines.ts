@@ -62,7 +62,7 @@ export const milestones: Milestone[] = [
     articles: ["Art. 5", "Art. 4", "Art. 113(a)"],
     keyObligations: [
       "All prohibited AI practices (Art. 5) must cease",
-      "Providers and deployers must ensure AI literacy of staff (Art. 4)",
+      "Providers and deployers must take measures to support the development of AI literacy of staff (Art. 4, as replaced with effect from 27 July 2026; no specific level of literacy must be guaranteed)",
       "Subliminal manipulation, exploitation of vulnerabilities, social scoring, untargeted facial scraping, emotion recognition in workplaces/schools - all banned",
     ],
   },

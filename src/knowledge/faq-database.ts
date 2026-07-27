@@ -102,7 +102,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-08-ai-literacy",
     question: "How do I implement AI literacy training (Art. 4)?",
     answer:
-      "Art. 4 requires providers and deployers to ensure sufficient AI literacy of staff and other persons operating AI systems on their behalf. This has been enforceable since 2 February 2025. Implementation should cover: understanding of basic AI concepts and limitations, awareness of AI Act obligations relevant to the person's role, practical skills for the specific AI systems they operate, and knowledge of risks and potential harms. Training must account for technical knowledge, experience, and the context of AI system use.",
+      "Art. 4 requires providers and deployers to take measures to SUPPORT THE DEVELOPMENT of AI literacy of staff and other persons operating AI systems on their behalf. It has been applicable since 2 February 2025 and was REPLACED with effect from 27 July 2026 by Regulation (EU) 2026/1744: the text now states expressly that the obligation does not require guaranteeing any specific level of AI literacy in any individual, so this is a duty of demonstrable effort, not of measured competence. New Art. 4(2) puts a supporting duty on the Commission and Member States, including practical compliance examples on the single information platform. Implementation should cover: understanding of basic AI concepts and limitations, awareness of AI Act obligations relevant to the person's role, practical skills for the specific AI systems they operate, and knowledge of risks and potential harms. Training must account for technical knowledge, experience, and the context of AI system use.",
     articleReferences: ["Art. 4"],
     keywords: ["AI literacy", "training", "staff education", "awareness", "competence", "Art. 4"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/ki-kompetenz-art-4-umsetzung",
@@ -112,7 +112,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-09-chatgpt-copilot",
     question: "What does the AI Act mean for ChatGPT/Copilot usage in my company?",
     answer:
-      "As a deployer of general-purpose AI tools like ChatGPT or Copilot, you must ensure AI literacy of users (Art. 4, enforceable since February 2025). If you use these tools for high-risk purposes listed in Annex III (e.g. HR screening, credit decisions), the high-risk deployer obligations apply to you (Art. 26). The providers of these models (OpenAI, Microsoft) carry GPAI obligations under Chapter V, especially Art. 53-55. If you fine-tune or substantially modify a model, you may become a provider yourself (Art. 25).",
+      "As a deployer of general-purpose AI tools like ChatGPT or Copilot, you must take measures to support the development of AI literacy of users (Art. 4, applicable since February 2025 and replaced from 27 July 2026; you are not required to guarantee any specific level of literacy). If you use these tools for high-risk purposes listed in Annex III (e.g. HR screening, credit decisions), the high-risk deployer obligations apply to you (Art. 26). The providers of these models (OpenAI, Microsoft) carry GPAI obligations under Chapter V, especially Art. 53-55. If you fine-tune or substantially modify a model, you may become a provider yourself (Art. 25).",
     articleReferences: ["Art. 4", "Art. 25", "Art. 26", "Art. 51", "Art. 53"],
     keywords: ["ChatGPT", "Copilot", "GPT", "general purpose", "LLM", "foundation model", "enterprise AI"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/chatgpt-copilot-eu-ai-act",
