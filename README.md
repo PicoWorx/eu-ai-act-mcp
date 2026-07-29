@@ -17,10 +17,17 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **Version skew resolved.** `package.json`, MCP server metadata (`src/server.ts`), and `/health` endpoint now all report `1.1.5` consistently.
 - **Test count.** Local suite is now **110 tests passing**.
 
+## What's new in 1.4.3
+
+- **Corrected a mechanism claim that was wrong as law.** The server described 2 December 2027 as a *backstop* that high-risk obligations could beat by six months after a Commission decision confirming that supporting standards and support measures were available. That conditional trigger comes from Commission proposal COM(2025) 836. It was **deleted before adoption**. Art. 113, third paragraph, point (c) as replaced by item 40 of Regulation (EU) 2026/1744 sets two plain calendar dates with no condition, so **2 December 2027 and 2 August 2028 are fixed and nothing can pull them forward**. The wrong version shipped in 1.4.0 through 1.4.2.
+- **Renamed the timeline fields so the names cannot re-teach the error.** In `euaiact_check_deadlines` with `include_pending_omnibus: true`, `high_risk_timeline.mechanism` is now `superseded_proposal_mechanism` and `high_risk_timeline.backstop` is now `application_dates`, each with its `*_source_status` renamed to match. The superseded proposal text is retained, clearly labelled, so analyses written from the proposal can be recognised as out of date.
+- **Nine new guard tests**, including a payload-level assertion that no milestone in the default response calls a high-risk date a backstop or offers an earlier support-measures trigger. Suite is **312 tests passing**.
+- `smithery.yaml` had drifted to 1.4.1 while `package.json` was at 1.4.2; both now read 1.4.3.
+
 ## What's new in 1.4.0
 
 - **The Digital Omnibus on AI is enacted.** Published in the Official Journal on 24 July 2026 as **Regulation (EU) 2026/1744** (CELEX 32026R1744), in force from **27 July 2026**. The server now serves the amended dates as operative law.
-- **Deferred:** Annex III high-risk obligations move from 2 August 2026 to **2 December 2027**; Annex I product-integrated high-risk obligations from 2 August 2027 to **2 August 2028**. Both are backstop dates and can bite earlier following a Commission decision on support measures.
+- **Deferred:** Annex III high-risk obligations move from 2 August 2026 to **2 December 2027**; Annex I product-integrated high-risk obligations from 2 August 2027 to **2 August 2028**. Both are unconditional calendar dates. The Commission proposal would have tied application to a decision on the availability of support measures; that trigger was deleted before adoption and is not in Art. 113(3)(c) as enacted.
 - **Not deferred:** Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 August 2026; the legacy GPAI compliance date in Art. 111(3) stays 2 August 2027.
 - **New obligations from 2 December 2026:** the Art. 5(1)(ba) and (bb) prohibitions on non-consensual intimate material and CSAM, and the Art. 111(4) transition requiring synthetic-content systems already on the market to comply with Art. 50(2).
 - **Obligation deadlines are now derived**, not hardcoded, so `euaiact_get_obligations` and `euaiact_check_deadlines` can no longer state different application dates for the same system. A cross-tool consistency test guards this.

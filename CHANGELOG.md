@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.3] - 2026-07-29
+
+### Fixed
+
+- **The Annex III high-risk date was described as a backstop that could bite earlier. It cannot.** `euaiact_check_deadlines` told callers that 2 December 2027 was "the backstop date" and that "the obligations can bite earlier, six months after a Commission decision that the supporting standards and support measures are available". That mechanism is Commission proposal COM(2025) 836 text. It was **deleted before adoption** and does not appear in the enacted act. Art. 113, third paragraph, point (c), as replaced by item 40 of Article 1 of Regulation (EU) 2026/1744, reads in full:
+
+  > Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III; and (ii) 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I;
+
+  No condition, no decision, no earlier trigger. Recital 40 keeps the delayed availability of standards as the *reason* for the deferral and asks the Commission to have support measures in place in due time, but that is an undertaking addressed to the Commission and cannot move either date. The wrong description shipped in 1.4.0, 1.4.1 and 1.4.2. Corrected in the Annex III milestone description, the Art. 113 delta, the enacted `key_changes` list, the structured high-risk timeline and the README.
+
+  Practical effect for anyone who planned against it: the error made the deadline look **less** certain and potentially earlier than it is. It would have driven over-preparation, not a missed deadline.
+
+### Changed
+
+- **`high_risk_timeline` fields renamed** in the opt-in `pending_omnibus` payload, so the field names cannot re-teach the deleted mechanism:
+  - `mechanism` → `superseded_proposal_mechanism` (and `mechanism_source_status` → `superseded_proposal_mechanism_source_status`)
+  - `backstop` → `application_dates` (and `backstop_source_status` → `application_dates_source_status`)
+
+  The superseded proposal text is kept, prefixed `SUPERSEDED, NOT LAW`, so an analysis written from the proposal can be identified as out of date rather than silently contradicted. `application_dates_source_status` is now derived from the enactment record instead of the hardcoded `political_agreement`, so it reads `enacted_oj`.
+- `smithery.yaml` had drifted to 1.4.1 while `package.json` was at 1.4.2. Both are now 1.4.3. `RELEASING.md` step 1 covers this; it was missed in the 1.4.2 release.
+
+### Added
+
+- **Nine tests**, 303 to 312. Four assert the corrected timeline content (the mechanism is labelled superseded, the note calls the dates unconditional and quotes the enacted point (c), the Art. 113 delta records the deletion). Three are payload-level guards on the **default** response: no milestone calls a high-risk date a backstop, no text offers an earlier support-measures trigger, and the Annex III milestone states the date is fixed. Two guard the enacted `key_changes` list against a live "or 6/12 months after" alternative. Prose was what was wrong here, and prose is what `RELEASING.md` warns the suite cannot catch, so these assert on the served strings.
+
+### Source
+
+Verified against the plain text of CELEX 32026R1744 held at `projects/lawvable/_omnibus-flip-review-2026-07-26/sources/32026R1744.txt`, item 40 of Article 1 and recital 40. Two independent published analyses of the final text reached the same conclusion (Modulos, "EU AI Act Omnibus now law"; Freshfields, "EU AI Act unpacked #34").
+
 ## [1.4.2] - 2026-07-27
 
 ### Fixed

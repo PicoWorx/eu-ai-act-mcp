@@ -420,8 +420,8 @@ test("Omnibus proposal date is 2025-11-19", digitalOmnibusPack.proposal.date ===
 test("Omnibus proposal CELEX is 52025PC0836", digitalOmnibusPack.proposal.celex === "52025PC0836");
 test("Omnibus pack is enacted", digitalOmnibusPack.enacted === true);
 test("Omnibus political agreement date is 2026-05-07", digitalOmnibusPack.politicalAgreement.date === "2026-05-07");
-test("Omnibus high-risk backstop Annex III is 2027-12-02", digitalOmnibusPack.highRiskTimeline.backstop.annex_iii_art_6_2 === "2027-12-02");
-test("Omnibus high-risk backstop Annex I is 2028-08-02", digitalOmnibusPack.highRiskTimeline.backstop.annex_i_art_6_1 === "2028-08-02");
+test("Omnibus high-risk application date Annex III is 2027-12-02", digitalOmnibusPack.highRiskTimeline.applicationDates.annex_iii_art_6_2 === "2027-12-02");
+test("Omnibus high-risk application date Annex I is 2028-08-02", digitalOmnibusPack.highRiskTimeline.applicationDates.annex_i_art_6_1 === "2028-08-02");
 test("Omnibus Art 50(2) transition date is the enacted 2026-12-02", digitalOmnibusPack.deltas.some((d) => d.article.includes("50(2)") && d.effectiveDate === "2026-12-02"));
 test("Omnibus Art 50(2) delta is attributed to the enacted OJ text", digitalOmnibusPack.deltas.some((d) => d.article.includes("50(2)") && d.sourceStatus === "enacted_oj" && d.sourceId === "omnibus_oj"));
 test("Retired proposal date 2027-02-02 appears in no delta", digitalOmnibusPack.deltas.every((d) => d.effectiveDate !== "2027-02-02"));
@@ -484,8 +484,17 @@ test("Source registry: exactly one enacted_oj source (the OJ instrument, no poli
 test("Omnibus delta pack is expanded but curated (>=13 deltas)", digitalOmnibusPack.deltas.length >= 13);
 test("Omnibus pack carries a non-exhaustive coverage note", /NON-EXHAUSTIVE/i.test(digitalOmnibusPack.coverageNote));
 test("Omnibus deltas include Art 43 conformity assessment", digitalOmnibusPack.deltas.some((d) => /Art\. 43/.test(d.article)));
-test("Omnibus timeline mechanism tagged commission_proposal", digitalOmnibusPack.highRiskTimeline.mechanismSourceStatus === "commission_proposal");
-test("Omnibus timeline backstop tagged political_agreement", digitalOmnibusPack.highRiskTimeline.backstopSourceStatus === "political_agreement");
+test("Omnibus superseded proposal mechanism tagged commission_proposal", digitalOmnibusPack.highRiskTimeline.supersededProposalMechanismSourceStatus === "commission_proposal");
+test("Omnibus application dates tagged enacted_oj", digitalOmnibusPack.highRiskTimeline.applicationDatesSourceStatus === "enacted_oj");
+
+// Art. 113(3)(c) as enacted is TWO PLAIN DATES. The Commission proposal's trigger
+// (application 6/12 months after a decision on the availability of support
+// measures) was deleted before adoption. The server described 2027-12-02 as a
+// beatable backstop until 1.4.3; these guard that it never says so again.
+test("Omnibus mechanism field states it is superseded and not law", /SUPERSEDED, NOT LAW/.test(digitalOmnibusPack.highRiskTimeline.supersededProposalMechanism));
+test("Omnibus timeline note calls the dates unconditional", /UNCONDITIONAL/.test(digitalOmnibusPack.highRiskTimeline.note));
+test("Omnibus timeline note quotes the enacted Art. 113(3)(c)", /with the exception of Article 6\(5\), shall apply from/.test(digitalOmnibusPack.highRiskTimeline.note));
+test("Omnibus Art. 113 delta records the trigger as deleted", digitalOmnibusPack.deltas.some((d) => /Art\. 113/.test(d.article) && /DELETED/.test(d.note ?? "")));
 
 // Tool guardrail: default keeps current OJ law; pending specifics withheld from the WHOLE payload (not just milestones)
 {
@@ -498,6 +507,12 @@ test("Omnibus timeline backstop tagged political_agreement", digitalOmnibusPack.
   test("deadlines default: the 2026-08-02 milestone is scoped to what was NOT deferred", s.milestones.some((m) => m.date === "2026-08-02" && /not deferred/i.test(m.name)) && !s.milestones.some((m) => m.date === "2026-08-02" && /Annex III/i.test(m.name)));
   test("deadlines default: retired 2 Feb 2027 date never appears", !/2027-02-02|2 Feb 2027/.test(full));
   test("deadlines default: the enacted Art. 5 prohibitions ARE surfaced (they are operative law)", /CSAM|intimate/i.test(full) && s.milestones.some((m) => m.date === "2026-12-02"));
+  // Regression guard for the 1.4.2 defect: the Annex III milestone told callers
+  // 2027-12-02 was a backstop that obligations could beat by six months after a
+  // Commission support-measures decision. That trigger is not in the enacted act.
+  test("deadlines default: no milestone calls a high-risk date a backstop", !s.milestones.some((m) => /backstop/i.test(m.description) && !/not a backstop/i.test(m.description)));
+  test("deadlines default: no milestone offers an earlier support-measures trigger", !/(bite|apply|start).{0,60}earlier.{0,120}(Commission|support measure)/is.test(full));
+  test("deadlines default: Annex III milestone states the date is fixed", s.milestones.some((m) => m.date === "2027-12-02" && /fixed date, not a backstop/i.test(m.description)));
 }
 
 // Tool guardrail: pending mode surfaces the flagged pack; current-law milestones unchanged
@@ -507,15 +522,19 @@ test("Omnibus timeline backstop tagged political_agreement", digitalOmnibusPack.
   const full = JSON.stringify(s);
   test("deadlines pending: pending_omnibus populated", s.pending_omnibus !== null);
   test("deadlines pending: pack marked enacted", s.pending_omnibus.enacted === true);
-  test("deadlines pending: backstop Annex III is 2027-12-02", s.pending_omnibus.high_risk_timeline.backstop.annex_iii_art_6_2 === "2027-12-02");
-  test("deadlines pending: mechanism tagged commission_proposal", s.pending_omnibus.high_risk_timeline.mechanism_source_status === "commission_proposal");
-  test("deadlines pending: backstop tagged political_agreement", s.pending_omnibus.high_risk_timeline.backstop_source_status === "political_agreement");
+  test("deadlines pending: application date Annex III is 2027-12-02", s.pending_omnibus.high_risk_timeline.application_dates.annex_iii_art_6_2 === "2027-12-02");
+  test("deadlines pending: superseded mechanism tagged commission_proposal", s.pending_omnibus.high_risk_timeline.superseded_proposal_mechanism_source_status === "commission_proposal");
+  test("deadlines pending: application dates tagged enacted_oj", s.pending_omnibus.high_risk_timeline.application_dates_source_status === "enacted_oj");
   test("deadlines pending: coverage_note marks deltas non-exhaustive", /NON-EXHAUSTIVE/i.test(s.pending_omnibus.coverage_note));
-  test("deadlines pending: opt-in DOES expose backstop dates", /2027-12-02/.test(full) && /2028-08-02/.test(full));
+  test("deadlines pending: opt-in DOES expose the deferred dates", /2027-12-02/.test(full) && /2028-08-02/.test(full));
   test("deadlines pending: current-law milestone 2026-08-02 still present", s.milestones.some((m) => m.date === "2026-08-02"));
   test("deadlines pending: pack status is enacted_oj", s.pending_omnibus.status === "enacted_oj");
   test("deadlines pending: enactment record served with the real CELEX/OJ/EIF", s.pending_omnibus.enactment.celex === "32026R1744" && s.pending_omnibus.enactment.oj_publication_date === "2026-07-24" && s.pending_omnibus.enactment.entry_into_force === "2026-07-27");
   test("deadlines pending: enactment record carries EP and Council adoption dates", s.pending_omnibus.enactment.ep_endorsement === "2026-06-16" && s.pending_omnibus.enactment.council_adoption === "2026-06-29");
+  // The deleted trigger may appear in the opt-in pack, but only as superseded
+  // proposal text: never in the enacted key-changes list as a live alternative.
+  test("deadlines pending: enacted key_changes carry no live support-measures trigger", !s.digital_omnibus.key_changes.some((k) => /(or|whichever).{0,40}(6|12|six|twelve) months after/i.test(k)));
+  test("deadlines pending: enacted key_changes call the Annex III date unconditional", s.digital_omnibus.key_changes.some((k) => /Annex III/.test(k) && /unconditional/i.test(k)));
 }
 
 // ─── OMNIBUS ENACTMENT FLIP (M2/M3, prep 2026-07-07) ───────────────────────

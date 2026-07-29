@@ -177,7 +177,7 @@ export interface OperativeHighRiskDates {
  * The operative deadline dates, derived from the enactment record. With the
  * committed pending record this returns the current-law dates (2 Aug 2026 /
  * 2 Aug 2027). With a filled, enacted record it returns the deferred Omnibus
- * dates (2 Dec 2027 / 2 Aug 2028) from the pack's backstop, while the
+ * dates (2 Dec 2027 / 2 Aug 2028) from the pack's applicationDates, while the
  * never-deferred dates stay fixed.
  */
 export function getOperativeHighRiskDates(
@@ -188,8 +188,8 @@ export function getOperativeHighRiskDates(
   return {
     omnibusEnacted: enacted,
     omnibusStatus: resolveOmnibusStatus(enactment),
-    annexIiiHighRisk: enacted ? timeline.backstop.annex_iii_art_6_2 : timeline.currentLaw.annex_iii_art_6_2,
-    annexIHighRisk: enacted ? timeline.backstop.annex_i_art_6_1 : timeline.currentLaw.annex_i_art_6_1,
+    annexIiiHighRisk: enacted ? timeline.applicationDates.annex_iii_art_6_2 : timeline.currentLaw.annex_iii_art_6_2,
+    annexIHighRisk: enacted ? timeline.applicationDates.annex_i_art_6_1 : timeline.currentLaw.annex_i_art_6_1,
     art50Transparency: "2026-08-02",
     gpaiEnforcementFines: "2026-08-02",
     legacyGpaiCompliance: "2027-08-02",
@@ -249,7 +249,7 @@ function buildEnactedMilestones(enactment: OmnibusEnactment): Milestone[] {
       date: dates.annexIiiHighRisk,
       name: "High-risk Annex III obligations (deferred by the Digital Omnibus)",
       description:
-        `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). This is the backstop date: the obligations can bite earlier, six months after a Commission decision that the supporting standards and support measures are available. Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026.`,
+        `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). This is a fixed date, not a backstop: Art. 113(3)(c)(i) as amended sets it unconditionally, and the Commission proposal's trigger that would have brought the obligations forward six months after a decision on the availability of support measures was deleted before adoption. Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026.`,
       status: "upcoming",
       articles: [
         "Art. 6", "Art. 9", "Art. 10", "Art. 11", "Art. 12", "Art. 13",

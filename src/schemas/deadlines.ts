@@ -59,13 +59,15 @@ const pendingOmnibusSchema = z.object({
     source_id: z.string(),
   }),
   high_risk_timeline: z.object({
-    mechanism: z.string(),
-    mechanism_source_status: sourceStatusEnum,
-    backstop: z.object({
+    // Named for what they are since 1.4.3: the conditional trigger below is the
+    // DELETED proposal text, and the dates are unconditional, not backstops.
+    superseded_proposal_mechanism: z.string(),
+    superseded_proposal_mechanism_source_status: sourceStatusEnum,
+    application_dates: z.object({
       annex_iii_art_6_2: z.string(),
       annex_i_art_6_1: z.string(),
     }),
-    backstop_source_status: sourceStatusEnum,
+    application_dates_source_status: sourceStatusEnum,
     current_law: z.object({
       annex_iii_art_6_2: z.string(),
       annex_i_art_6_1: z.string(),

@@ -29,6 +29,16 @@
  * Section B points 7 and 9 were deleted). Both are corrected and every delta now
  * carries its amending item number from Article 1 of Regulation (EU) 2026/1744.
  *
+ * THIRD CONTENT PASS 2026-07-29: the high-risk timeline still carried the
+ * proposal's conditional trigger, describing 2 Dec 2027 as a backstop that
+ * obligations could beat by six months after a Commission decision on the
+ * availability of support measures. That trigger was DELETED before adoption.
+ * Art. 113, third paragraph, point (c) as enacted (item 40) is two plain
+ * calendar dates with no condition attached. The timeline fields were renamed
+ * from `mechanism`/`backstop` to `supersededProposalMechanism`/`applicationDates`
+ * so the names cannot re-teach the wrong model, and a guard test now asserts the
+ * enacted surfaces never call either date a backstop.
+ *
  * NOTE, corrected on flip day 2026-07-26: the earlier claim that "nothing
  * else needs editing" was wrong. Flipping the record alone left the
  * obligations data, the summary key-changes list, the source-registry note,
@@ -169,17 +179,22 @@ export interface OmnibusDelta {
 }
 
 export interface HighRiskTimelineShift {
-  mechanism: string;
-  /** The 6/12-month-after-decision mechanism is from the proposal text. */
-  mechanismSourceStatus: SourceStatus;
-  /** Backstop dates that apply absent (or before) the Commission decision. */
-  backstop: {
+  /**
+   * The Commission proposal's conditional trigger, which was DELETED from the
+   * enacted act. Retained so that analyses written from the proposal can be
+   * recognised as superseded; it is not law and never was.
+   */
+  supersededProposalMechanism: string;
+  /** Always "commission_proposal": the trigger existed only in the proposal. */
+  supersededProposalMechanismSourceStatus: SourceStatus;
+  /** The application dates in Art. 113(3)(c) as amended. Unconditional. */
+  applicationDates: {
     annex_iii_art_6_2: string;
     annex_i_art_6_1: string;
   };
-  /** Backstop dates appear in both the proposal and the political agreement. */
-  backstopSourceStatus: SourceStatus;
-  /** Current OJ-law dates these would replace. */
+  /** Derived from the enactment record; "enacted_oj" once the act is in the OJ. */
+  applicationDatesSourceStatus: SourceStatus;
+  /** Pre-Omnibus OJ-law dates these replaced. */
   currentLaw: {
     annex_iii_art_6_2: string;
     annex_i_art_6_1: string;
@@ -230,19 +245,19 @@ export const digitalOmnibusPack: DigitalOmnibusPack = {
     sourceId: "omnibus_agreement_2026_05_07",
   },
   highRiskTimeline: {
-    mechanism:
-      "Proposal amends Art. 113: Chapter III high-risk obligations (Sections 1-3) apply after a Commission decision confirming adequate support measures (harmonised standards, common specifications, guidelines) are available: 6 months after that decision for Art. 6(2)/Annex III systems, 12 months after for Art. 6(1)/Annex I systems.",
-    mechanismSourceStatus: "commission_proposal",
-    backstop: {
+    supersededProposalMechanism:
+      "SUPERSEDED, NOT LAW. The Commission proposal COM(2025) 836 would have amended Art. 113 so that Chapter III high-risk obligations (Sections 1-3) applied only after a Commission decision confirming that adequate support measures (harmonised standards, common specifications, guidelines) were available: 6 months after that decision for Art. 6(2)/Annex III systems, 12 months after for Art. 6(1)/Annex I systems, with backstop dates if no decision came. Regulation (EU) 2026/1744 did NOT carry that trigger into law; item 40 of its Article 1 replaces Art. 113, third paragraph, point (c) with two plain calendar dates and no condition.",
+    supersededProposalMechanismSourceStatus: "commission_proposal",
+    applicationDates: {
       annex_iii_art_6_2: "2027-12-02",
       annex_i_art_6_1: "2028-08-02",
     },
-    backstopSourceStatus: "political_agreement",
+    applicationDatesSourceStatus: resolveOmnibusStatus(omnibusEnactment),
     currentLaw: {
       annex_iii_art_6_2: "2026-08-02",
       annex_i_art_6_1: "2027-08-02",
     },
-    note: "The post-decision 6/12-month mechanism is from the proposal text (COM(2025) 836 Art. 113 amendment). The backstop dates 2027-12-02 and 2028-08-02 appear in BOTH the proposal backstop and the political agreement, so they are tagged political_agreement (the stronger status). Backstop dates apply absent the Commission decision, or where earlier than the post-decision dates.",
+    note: "The enacted dates are UNCONDITIONAL calendar dates, not backstops. Art. 113, third paragraph, point (c) as amended reads: 'Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III; and (ii) 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I'. Nothing can pull either date forward. Recital 40 keeps the delayed availability of standards as the REASON for the deferral and states that the Commission should ensure support measures are in place in due time, but that is an undertaking addressed to the Commission, not an operative trigger. Any analysis still describing 2027-12-02 as a backstop reachable earlier by a Commission decision is reading the proposal, not the act.",
   },
   deltas: [
     // Reconciled against the ENACTED text of Regulation (EU) 2026/1744 (CELEX
@@ -412,11 +427,11 @@ export const digitalOmnibusPack: DigitalOmnibusPack = {
     {
       article: "Art. 113, third paragraph",
       change:
-        "Application dates re-cut (item 40): Annex III / Art. 6(2) high-risk deferred to 2 December 2027 and Annex I / Art. 6(1) high-risk to 2 August 2028, each also expressible as 6 or 12 months after a Commission support-measures decision where that is earlier; the two new Art. 5 prohibitions set at 2 December 2026; and a new point (d) applying Arts. 102 to 110 from 27 July 2026.",
+        "Application dates re-cut (item 40): point (c) is replaced so that Chapter III, Sections 1, 2 and 3, except Art. 6(5), apply from 2 December 2027 for Annex III / Art. 6(2) high-risk systems and from 2 August 2028 for Annex I / Art. 6(1) high-risk systems. Both are unconditional calendar dates. Point (a) is replaced to carve the new Art. 5(1)(ba), (bb) and Art. 5(1a), (1b) prohibitions out to 2 December 2026, and a new point (d) applies Arts. 102 to 110 from 27 July 2026.",
       sourceStatus: "enacted_oj",
       sourceId: "omnibus_oj",
       effectiveDate: "2026-07-27",
-      note: "NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 August 2026, and the legacy GPAI compliance date in Art. 111(3) stays 2 August 2027.",
+      note: "The proposal's conditional trigger (application 6 or 12 months after a Commission decision on the availability of support measures) was DELETED and does NOT appear in the enacted act; 2027-12-02 and 2028-08-02 are fixed dates, not backstops. Verified against the OJ text on 2026-07-29. NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 August 2026, and the legacy GPAI compliance date in Art. 111(3) stays 2 August 2027.",
     },
   ],
   coverageNote:
@@ -458,8 +473,8 @@ export function buildOmnibusSummary(e: OmnibusEnactment = omnibusEnactment): Leg
       : `Digital Omnibus on AI. Commission proposal COM(2025) 836 final (CELEX 52025PC0836, 19 Nov 2025, procedure 2025/0359(COD)) amending Regulation (EU) 2024/1689. Politically agreed on 7 May 2026 and since FORMALLY ADOPTED by both co-legislators: European Parliament endorsement ${e.epEndorsement}, Council final adoption ${e.councilAdoption}. Not yet in force: it takes legal effect on publication in the Official Journal (entry into force the third day after publication). Until then current OJ law governs.`,
     keyChanges: enacted
       ? [
-          "High-risk Annex III (Art. 6(2)) obligations: deferred from 2 Aug 2026 to 2 Dec 2027 by Art. 113(3)(c)(i) as amended (or 6 months after a Commission support-measures decision, whichever is earlier).",
-          "High-risk Annex I (Art. 6(1)) obligations: deferred from 2 Aug 2027 to 2 Aug 2028 by Art. 113(3)(c)(ii) as amended (or 12 months after that decision).",
+          "High-risk Annex III (Art. 6(2)) obligations: deferred from 2 Aug 2026 to 2 Dec 2027 by Art. 113(3)(c)(i) as amended. An unconditional date: the proposal's trigger tying application to a Commission decision on support measures was deleted and is not in the act.",
+          "High-risk Annex I (Art. 6(1)) obligations: deferred from 2 Aug 2027 to 2 Aug 2028 by Art. 113(3)(c)(ii) as amended, likewise unconditional.",
           "NOT deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 Aug 2026; the legacy GPAI compliance date in Art. 111(3) stays 2 Aug 2027.",
           "New Art. 111(4): systems generating synthetic content placed on the market before 2 Aug 2026 must comply with Art. 50(2) by 2 Dec 2026. Art. 50(2) itself still applies from 2 Aug 2026 to later systems.",
           "New Art. 5(1) points (ba) and (bb) plus Art. 5(1a) and (1b): non-consensual intimate material and CSAM prohibitions, applying from 2 Dec 2026.",
