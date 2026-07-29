@@ -28,14 +28,37 @@ That should return nothing.
 
 - **Railway** builds from the `Dockerfile`, which copies `src/` and runs
   `npm run build`. It never uses committed build output. Pushing to `main` is
-  what updates it.
+  what updates it. It serves **https://mcp.lexbeam.com**.
 - **Smithery** serves the Railway deployment, so the version it shows comes from
   the MCP initialize handshake, not from npm. It updates when Railway restarts.
+  Listing: https://smithery.ai/servers/lexbeam-software/eu-ai-act
 - **npm** is a separate path used by anyone running `npx @lexbeam-software/eu-ai-act-mcp`.
   It only updates when you publish, and it is easy to forget precisely because
-  Railway and Smithery look correct without it.
+  Railway and Smithery look correct without it. Publishing needs `npm login`,
+  which lives on one machine only, so a release started elsewhere stops here.
 
 Pushing to main fixes the hosted path. It does nothing for npm consumers.
+
+## Verifying a release actually landed
+
+A version bump proves nothing; check the payload, not the number.
+
+```bash
+# 1. hosted version, usually current within a minute or two of the push
+curl -s https://mcp.lexbeam.com/health
+# {"status":"ok","server":"lexbeam-eu-ai-act-mcp","version":"1.4.3"}
+
+# 2. the content itself, which is the check that matters
+curl -s -X POST https://mcp.lexbeam.com/mcp \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"euaiact_check_deadlines","arguments":{}}}'
+
+# 3. npm, the path that silently stays behind
+npm view @lexbeam-software/eu-ai-act-mcp version
+```
+
+Note that `/` returns 404; only `/health` and `/mcp` are served.
 
 ## `dist/` is not tracked
 
