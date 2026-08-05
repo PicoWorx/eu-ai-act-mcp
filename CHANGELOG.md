@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
+- **Release checks remain valid after 2 August 2026.** The deadline suite no longer
+  assumes that the Art. 50 and GPAI enforcement milestone is still upcoming after
+  its application date.
 - **The Annex III high-risk date was described as a backstop that could bite earlier. It cannot.** `euaiact_check_deadlines` told callers that 2 December 2027 was "the backstop date" and that "the obligations can bite earlier, six months after a Commission decision that the supporting standards and support measures are available". That mechanism is Commission proposal COM(2025) 836 text. It was **deleted before adoption** and does not appear in the enacted act. Art. 113, third paragraph, point (c), as replaced by item 40 of Article 1 of Regulation (EU) 2026/1744, reads in full:
 
   > Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III; and (ii) 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I;
@@ -20,6 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Raised the supported Node.js baseline from 18 to 20 and the MCP SDK dependency
+  floor to 1.30.0. This picks up patched HTTP transitives and makes the package's
+  engine metadata match the SDK it installs. Runtime `npm audit` is clean.
 - **`high_risk_timeline` fields renamed** in the opt-in `pending_omnibus` payload, so the field names cannot re-teach the deleted mechanism:
   - `mechanism` → `superseded_proposal_mechanism` (and `mechanism_source_status` → `superseded_proposal_mechanism_source_status`)
   - `backstop` → `application_dates` (and `backstop_source_status` → `application_dates_source_status`)

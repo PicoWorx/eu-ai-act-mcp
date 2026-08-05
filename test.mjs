@@ -398,7 +398,7 @@ console.log("\n📅 DEADLINES");
 const milestones = getMilestonesWithDaysRemaining();
 test("8 milestones total (enacted state)", milestones.length === 8);
 test("Entry into force is past", milestones[0].isPast === true);
-test("Aug 2026 is upcoming", milestones[3].isPast === false);
+test("Aug 2026 application date has passed", milestones[3].isPast === true);
 test("Aug 2027 is upcoming", milestones[4].isPast === false);
 test("Digital Omnibus summary status is enacted_oj", digitalOmnibus.status === "enacted_oj");
 test("Digital Omnibus impact states it is enacted and in force", digitalOmnibus.impactOnAIAct.includes("in force since 2026-07-27"));
