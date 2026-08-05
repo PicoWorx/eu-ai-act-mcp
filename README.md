@@ -2,24 +2,16 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/@lexbeam-software/eu-ai-act-mcp)](https://www.npmjs.com/package/@lexbeam-software/eu-ai-act-mcp)
-[![smithery badge](https://smithery.ai/badge/lexbeam-software/eu-ai-act)](https://smithery.ai/servers/lexbeam-software/eu-ai-act)
+[Smithery listing](https://smithery.ai/servers/lexbeam-software/eu-ai-act)
 [![Test](https://github.com/lexbeam-software/eu-ai-act-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/lexbeam-software/eu-ai-act-mcp/actions/workflows/test.yml)
 
 An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that gives LLMs structured intelligence about the EU AI Act (Regulation (EU) 2024/1689).
 
 Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementation boutique for regulated workflows.
 
-## What's new in 1.1.5
-
-- **Annex III(5) FRIA citation labels corrected.** Article 27(1) universal FRIA triggers are now correctly cited as **Annex III(5)(b)** (creditworthiness or credit scoring) and **Annex III(5)(c)** (risk assessment and pricing for life and health insurance). Previous labels (5(a)/5(b) or 5(b)/5(a)) are fixed across `articles.ts`, `faq-database.ts`, `obligations.ts`, and the generated `dist`.
-- **Article 27 carve-out clarified.** Annex III point 2 (critical infrastructure) is the only Annex III category exempt from FRIA, now stated explicitly in every relevant surface.
-- **Article 43 conformity assessment text corrected.** Previous wording suggested "certain critical infrastructure" required notified-body involvement. Fixed: Annex III points 2-8 follow internal-control under Annex VI per Art. 43(2). Notified-body involvement is the Annex III(1) biometrics route under Art. 43(1) and the Annex I sectoral route under Art. 43(3).
-- **Version skew resolved.** `package.json`, MCP server metadata (`src/server.ts`), and `/health` endpoint now all report `1.1.5` consistently.
-- **Test count.** Local suite is now **110 tests passing**.
-
 ## What's new in 1.4.3
 
-- **Corrected a mechanism claim that was wrong as law.** The server described 2 December 2027 as a *backstop* that high-risk obligations could beat by six months after a Commission decision confirming that supporting standards and support measures were available. That conditional trigger comes from Commission proposal COM(2025) 836. It was **deleted before adoption**. Art. 113, third paragraph, point (c) as replaced by item 40 of Regulation (EU) 2026/1744 sets two plain calendar dates with no condition, so **2 December 2027 and 2 August 2028 are fixed and nothing can pull them forward**. The wrong version shipped in 1.4.0 through 1.4.2.
+- **Corrected a mechanism claim that was wrong as law.** The server described 2 December 2027 as a *backstop* that high-risk obligations could beat by six months after a Commission decision confirming that supporting standards and support measures were available. That conditional trigger comes from Commission proposal COM(2025) 836. It was **deleted before adoption**. Art. 113, third paragraph, point (c) as replaced by item 40 of Regulation (EU) 2026/1744 sets two plain calendar dates with no condition, so **2 December 2027 and 2 August 2028 are fixed and nothing can pull them forward**. The wrong version shipped to npm in 1.4.1 and 1.4.2; 1.4.0 was never published.
 - **Renamed the timeline fields so the names cannot re-teach the error.** In `euaiact_check_deadlines` with `include_pending_omnibus: true`, `high_risk_timeline.mechanism` is now `superseded_proposal_mechanism` and `high_risk_timeline.backstop` is now `application_dates`, each with its `*_source_status` renamed to match. The superseded proposal text is retained, clearly labelled, so analyses written from the proposal can be recognised as out of date.
 - **Nine new guard tests**, including a payload-level assertion that no milestone in the default response calls a high-risk date a backstop or offers an earlier support-measures trigger. Suite is **312 tests passing**.
 - `smithery.yaml` had drifted to 1.4.1 while `package.json` was at 1.4.2; both now read 1.4.3.
@@ -31,6 +23,14 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **Not deferred:** Art. 50 transparency and the Commission's GPAI enforcement powers and fines stay on 2 August 2026; the legacy GPAI compliance date in Art. 111(3) stays 2 August 2027.
 - **New obligations from 2 December 2026:** the Art. 5(1)(ba) and (bb) prohibitions on non-consensual intimate material and CSAM, and the Art. 111(4) transition requiring synthetic-content systems already on the market to comply with Art. 50(2).
 - **Obligation deadlines are now derived**, not hardcoded, so `euaiact_get_obligations` and `euaiact_check_deadlines` can no longer state different application dates for the same system. A cross-tool consistency test guards this.
+
+## What's new in 1.1.5
+
+- **Annex III(5) FRIA citation labels corrected.** Article 27(1) universal FRIA triggers are now correctly cited as **Annex III(5)(b)** (creditworthiness or credit scoring) and **Annex III(5)(c)** (risk assessment and pricing for life and health insurance). Previous labels (5(a)/5(b) or 5(b)/5(a)) are fixed across `articles.ts`, `faq-database.ts`, `obligations.ts`, and the generated `dist`.
+- **Article 27 carve-out clarified.** Annex III point 2 (critical infrastructure) is the only Annex III category exempt from FRIA, now stated explicitly in every relevant surface.
+- **Article 43 conformity assessment text corrected.** Previous wording suggested "certain critical infrastructure" required notified-body involvement. Fixed: Annex III points 2-8 follow internal-control under Annex VI per Art. 43(2). Notified-body involvement is the Annex III(1) biometrics route under Art. 43(1) and the Annex I sectoral route under Art. 43(3).
+- **Version skew resolved.** `package.json`, MCP server metadata (`src/server.ts`), and `/health` endpoint now all report `1.1.5` consistently.
+- **Test count.** Local suite was **110 tests passing** at that release. Current count is 312, see Development below.
 
 ## What's new in 1.1.4
 
@@ -44,7 +44,7 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **4 new tools:**
   - `euaiact_get_article` — retrieve operational summaries of the most-cited articles (Art. 3, 4, 5, 6, 9-17, 26, 27, 43, 47, 49, 50, 51, 53, 55, 72, 73, 99, 100, 113) plus stable EUR-Lex URLs for grounded citations.
   - `euaiact_check_gpai_systemic_risk` — determine whether a GPAI model crosses the Art. 51(2) 10²⁵ FLOPs threshold and return Art. 53 baseline + Art. 55 systemic-risk obligations with the Art. 52 notification duty.
-  - `euaiact_assess_art6_3_exception` — walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3) second subparagraph) and the Art. 6(4) documentation reminder + Art. 49(2) registration duty.
+  - `euaiact_assess_art6_3_exception` — walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3) third subparagraph) and the Art. 6(4) documentation reminder + Art. 49(2) registration duty.
   - `euaiact_annex_iv_checklist` — return all nine Annex IV technical-documentation items, optionally as a markdown checklist, with an SME-simplified note.
 - **2 new resources:** `euaiact://annex/iii` (full Annex III categories) and `euaiact://annex/iv` (full Annex IV checklist), joining the existing `euaiact://timeline` and `euaiact://risk-levels`.
 - **New prompt:** `ground-citation` — guides the agent to call `euaiact_get_article` and quote with an EUR-Lex URL.
@@ -53,21 +53,21 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **Better deadlines tool.** New `only_upcoming` filter and a `next_milestone` shortcut at the top of the response.
 - **Improved FAQ search.** `findBestMatch` uses symmetric overlap (`matched / min(query_words, item_words)`), so specific multi-word queries like *"FRIA for credit scoring"* no longer drop to generic answers.
 - **Slim per-response branding.** `disclaimer`, `source`, and `last_updated` were moved into the MCP `serverInfo.instructions` shown once on initialize. Agents no longer pay a per-call context tax for attribution. `lexbeam_url` is kept only where it adds deep-dive value (FAQ, obligations, classifier).
-- **Comprehensive test suite.** Includes regression tests for every bug fixed in this release. Current local suite count: 110 tests passing.
+- **Comprehensive test suite.** Includes regression tests for every bug fixed in this release. Suite count at that release: 110 tests.
 
 ## Tools
 
 | Tool | Description |
 |------|-------------|
 | `euaiact_classify_system` | Classify an AI system's risk level (prohibited / high-risk / limited / minimal) from free text **or** structured signals. Returns matched signals, missing signals, and follow-up questions. |
-| `euaiact_check_deadlines` | Implementation milestones with days remaining, `next_milestone` shortcut, `only_upcoming` filter, and the Digital Omnibus proposal status. |
+| `euaiact_check_deadlines` | Implementation milestones with days remaining, `next_milestone` shortcut, `only_upcoming` filter, and the enacted Digital Omnibus (Regulation (EU) 2026/1744) status. |
 | `euaiact_get_obligations` | Specific compliance obligations by role (provider/deployer) and risk level, including GPAI (Art. 51-56) and universal AI literacy (Art. 4). |
 | `euaiact_answer_question` | Semantic FAQ search across 24 curated EU AI Act questions with article references. |
 | `euaiact_calculate_penalty` | Calculate maximum fines by violation type, turnover, and SME status (Art. 99) with a comparative non-SME vs SME block. |
-| `euaiact_get_article` **(new)** | Retrieve an operational summary and EUR-Lex URL for a specific article (Art. 3-113). |
-| `euaiact_check_gpai_systemic_risk` **(new)** | Check whether a GPAI model crosses the 10²⁵ FLOPs threshold and return Art. 53 + Art. 55 obligations plus the Art. 52 notification duty. |
-| `euaiact_assess_art6_3_exception` **(new)** | Walk through the Art. 6(3) "no significant risk" exception with explicit profiling block and Art. 6(4) / Art. 49(2) reminders. |
-| `euaiact_annex_iv_checklist` **(new)** | Return all nine Annex IV technical-documentation items, optionally as a markdown checklist. |
+| `euaiact_get_article` | Retrieve an operational summary and EUR-Lex URL for a specific article. Covers 27 curated articles between Art. 3 and Art. 113, not the full act. |
+| `euaiact_check_gpai_systemic_risk` | Check whether a GPAI model crosses the 10²⁵ FLOPs threshold and return Art. 53 + Art. 55 obligations plus the Art. 52 notification duty. |
+| `euaiact_assess_art6_3_exception` | Walk through the Art. 6(3) "no significant risk" exception with explicit profiling block and Art. 6(4) / Art. 49(2) reminders. |
+| `euaiact_annex_iv_checklist` | Return all nine Annex IV technical-documentation items, optionally as a markdown checklist. |
 
 ## Resources
 
@@ -75,15 +75,16 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 |-----|-------------|
 | `euaiact://timeline` | Key implementation milestones of the EU AI Act. |
 | `euaiact://risk-levels` | Overview of the four risk categories. |
-| `euaiact://annex/iii` **(new)** | Full Annex III high-risk AI categories (1-8) with descriptions, examples, and article references. |
-| `euaiact://annex/iv` **(new)** | Full Annex IV technical-documentation items (1-9). |
+| `euaiact://annex/iii` | Full Annex III high-risk AI categories (1-8) with descriptions, examples, and article references. |
+| `euaiact://annex/iv` | Full Annex IV technical-documentation items (1-9). |
+| `euaiact://omnibus` | The Digital Omnibus on AI (Regulation (EU) 2026/1744) as enacted: amended dates, deltas, and source status per item. |
 
 ## Prompts
 
 - `classify-my-system` — guided classification using `euaiact_classify_system` with signal inference
 - `compliance-checklist` — risk-level + role obligations checklist, including Annex IV for high-risk
 - `penalty-risk-assessment` — penalty calculation with SME comparative
-- `ground-citation` **(new)** — retrieve article text + EUR-Lex URL for grounded citations
+- `ground-citation` — retrieve article text + EUR-Lex URL for grounded citations
 
 ## Quick Start
 
@@ -114,7 +115,9 @@ Add to `claude_desktop_config.json`:
 npx -y @smithery/cli@latest mcp add lexbeam-software/eu-ai-act
 ```
 
-Direct MCP endpoint: `https://eu-ai-act--lexbeam-software.run.tools`.
+Direct MCP endpoint: `https://mcp.lexbeam.com/mcp` (health check at `/health`). Open, no auth required.
+
+The Smithery-hosted endpoint `https://eu-ai-act--lexbeam-software.run.tools` requires Smithery authentication and returns 401 without it.
 
 ### From source
 
@@ -132,13 +135,13 @@ npm run start:http  # streamable HTTP (for Smithery/Railway)
 Curated, structured data covering:
 
 - **8 Annex III high-risk categories** with keyword matching and examples
-- **8 prohibited AI practices** (Art. 5 (1) (a)-(h))
+- **10 prohibited AI practices**: Art. 5(1)(a)-(h), plus (ba) and (bb) applying from 2 December 2026
 - **Art. 6(3) exception conditions** with the profiling block rule
 - **Art. 50 transparency triggers** (chatbots, deepfakes, emotion recognition, machine-readable marking)
-- **5 implementation milestones** with dynamic days-remaining calculation
-- **Digital Omnibus proposal** status and impact assessment
+- **8 implementation milestones** with dynamic days-remaining calculation
+- **Digital Omnibus (enacted)** status and impact assessment
 - **Provider obligations** (13 for high-risk, 8 for GPAI including Art. 53 + Art. 55)
-- **Deployer obligations** (8 for high-risk)
+- **Deployer obligations** (9 for high-risk)
 - **Limited-risk transparency obligations** (4 under Art. 50)
 - **Universal AI literacy** (Art. 4)
 - **Penalty framework** with SME protection logic (Art. 99)
@@ -166,7 +169,7 @@ Operative dates as amended:
 ```bash
 npm install
 npm run build        # typescript -> dist/
-node test.mjs        # run the 303-test suite
+node test.mjs        # run the 312-test suite
 npm run dev          # stdio dev server
 npm run dev:http     # HTTP dev server
 ```
