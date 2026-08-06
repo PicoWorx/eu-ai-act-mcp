@@ -6,6 +6,79 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-08-06
+
+Correctness release. Twenty adjudicated defects fixed after a three-artifact audit
+(four auditors, three adversarial verifiers, three Codex cross-validation rounds),
+plus the validation infrastructure that keeps them fixed.
+
+### Fixed
+
+- **Classifier.** `minimal` is reachable (complete negative signal set answers it);
+  negative signals can no longer override risky free text (recruitment/benefits
+  descriptions classify high-risk again); the Annex III(1)(a) verification exclusion
+  answers "Not high-risk under Annex III(1)(a)" with remaining checks named instead
+  of an overall minimal, fires from the description alone (e-gate), and surfaces
+  signal-vs-text contradictions (watchlist wording); `relevant_articles` deduplicated.
+- **FAQ.** Echoes the caller's question verbatim and names the matched entry in a new
+  `matched_question` field (a silent substitution answered a different question at
+  high confidence); abstains below the match threshold; near-ties cap at medium;
+  routing repaired for deadline, penalty, risk-tier, copilot, registration and
+  Digital Omnibus questions.
+- **Deadlines.** Milestone `status` is derived from the clock (2 August 2026 was
+  served as "upcoming" three days after taking effect); Arts. 99-100 correctly dated
+  2 August 2025 under Art. 113(3)(b) (the enacted builder had regressed them to
+  2026); the 2027-12-02 milestone lists only Chapter III Sections 1-3 articles; day
+  counts use UTC getters, so results no longer depend on the host timezone.
+- **Obligations.** Arts. 43/47/49/72/73/86 no longer cite Art. 113(3)(c) directly:
+  they state the formal date (Art. 113, second paragraph) and the practical trigger
+  through the deferred Art. 6 classification, with the Art. 5(2)/Art. 49 qualifier.
+- **Penalties.** Negative and non-finite turnover rejected (previously a negative
+  fine, and Infinity serialised three non-nullable fields to null).
+- **GPAI.** Without `training_flops` or `commission_designated` the tool returns
+  `undetermined` with nullable fields and an explicit do-not-treat-as-negative note,
+  instead of a confident false negative.
+- **Article corpus.** Art. 5 carries the enacted (ba)/(bb) prohibitions with their
+  2 December 2026 date and correct qualifications (the without-right defence sits
+  inside (bb); Art. 5(1b) qualifies (ba) only); Art. 6 carries (1a)-(1c); Art. 10
+  states the deletion of its former paragraph 5; Art. 99 carries point (da) and
+  Art. 99(6a); the Art. 6(3) profiling carve-out reads third subparagraph everywhere;
+  Annex III(5)(b) states the financial-fraud carve-out.
+- **Links.** Every article and annex deep link points at the consolidated text
+  (CELEX 02024R1689-20260727), so following a citation shows the amended law instead
+  of the superseded original.
+- **Tests.** The suite is date- and timezone-stable through 2031 (it previously went
+  red on 2026-12-02); the backstop guard covers every milestone field with negation
+  awareness (the documented keyObligations bypass is caught).
+
+### Added
+
+- `law/`: pinned, hash-verified legal corpus (consolidated act as amended, Omnibus,
+  superseded original, superseded proposal) with a fetch/verify/freshness CLI.
+  Not shipped to npm.
+- `is_smc` input on `euaiact_calculate_penalty`: Art. 99(6a) lower-of rule for the
+  99(4)/(5) tiers only.
+- Art. 4a entry (special-category processing for bias detection, both paragraphs and
+  the no-obligation sentence); the corpus grows to 28 articles.
+- `test-claims.mjs`: 66-check claim matrix, every load-bearing legal fact checked
+  against BOTH the pinned corpus (article-bounded slices) and the built dist.
+- `test-schemas.mjs`: 48 post-serialization output-schema checks, 9 tools and
+  5 resources.
+- Ten end-to-end agent journeys in the suite.
+
+### Changed
+
+- Reuse wording: EUR-Lex content is reused under the Commission Decision 2011/833/EU
+  conditions; the "public domain" phrasing is gone from all surfaces.
+- README states accuracy as gate coverage instead of a blanket claim, and documents
+  the three gates.
+
+### Source
+
+Verified against the pinned consolidated text (CELEX 02024R1689-20260727) and the
+enacted Digital Omnibus (CELEX 32026R1744). Cross-model validated: two Claude
+families plus three Codex rounds, final verdict SHIP after one remaining routing fix.
+
 ## [1.4.3] - 2026-07-29
 
 ### Fixed

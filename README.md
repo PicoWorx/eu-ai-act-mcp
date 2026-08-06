@@ -9,6 +9,19 @@ An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) s
 
 Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementation boutique for regulated workflows.
 
+## What's new in 1.4.4
+
+- **Twenty correctness fixes** from a three-artifact audit with cross-model validation
+  (details in CHANGELOG): honest FAQ answers with `matched_question`, a reachable
+  `minimal` classification reconciled against the description text, a scoped
+  Annex III(1)(a) verification exclusion, GPAI abstention instead of false negatives,
+  penalty input guards plus the Art. 99(6a) SMC rule, and an article corpus current
+  with the amended act including the new Art. 4a.
+- **All citation links point at the consolidated text** (CELEX 02024R1689-20260727).
+- **A pinned legal corpus** (`law/`) and two new gates: a 66-check claim matrix
+  against the corpus and a 48-check post-serialization schema gate. The suite is
+  date- and timezone-stable through 2031.
+
 ## What's new in 1.4.3
 
 - **Corrected a mechanism claim that was wrong as law.** The server described 2 December 2027 as a *backstop* that high-risk obligations could beat by six months after a Commission decision confirming that supporting standards and support measures were available. That conditional trigger comes from Commission proposal COM(2025) 836. It was **deleted before adoption**. Art. 113, third paragraph, point (c) as replaced by item 40 of Regulation (EU) 2026/1744 sets two plain calendar dates with no condition, so **2 December 2027 and 2 August 2028 are fixed and nothing can pull them forward**. The wrong version shipped to npm in 1.4.1 and 1.4.2; 1.4.0 was never published.
