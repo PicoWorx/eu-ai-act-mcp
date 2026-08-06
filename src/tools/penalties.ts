@@ -5,7 +5,7 @@ import { calculateMaxFine, getPenaltyTier } from "../knowledge/penalties.js";
 /**
  * Rewrites the tier description to the lower-of wording when a protection rule
  * applies. Fixes a v1.0.1 bug where `tier.description` (baked into the knowledge
- * base) always said "whichever is higher" — contradicting `max_fine.explanation`
+ * base) always said "whichever is higher" - contradicting `max_fine.explanation`
  * on the same response.
  */
 function descriptionForLowerRule(base: string, ruleCite: string): string {

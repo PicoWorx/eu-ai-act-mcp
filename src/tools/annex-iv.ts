@@ -8,7 +8,7 @@ import {
 import { annexIVItems } from "../knowledge/annex-iv.js";
 
 function toChecklistMarkdown(): string {
-  const lines: string[] = ["# Annex IV — Technical Documentation Checklist", ""];
+  const lines: string[] = ["# Annex IV - Technical Documentation Checklist", ""];
   for (const item of annexIVItems) {
     lines.push(`## ${item.number}. ${item.title}`);
     lines.push("");

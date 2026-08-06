@@ -1157,7 +1157,7 @@ console.log("\n📖 1.4.4 REGRESSIONS: ARTICLE CORPUS");
 // tool-by-tool while breaking end-to-end.
 console.log("\n🧭 AGENT JOURNEYS");
 {
-  // J1: CV screening — what and by when
+  // J1: CV screening - what and by when
   const j1c = structured(await callTool("euaiact_classify_system", { description: "AI system that screens and ranks CVs for recruitment shortlisting", signals: { domain: "employment" } }));
   const j1o = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "provider", high_risk_source: "annex_iii" }));
   test("J1 CV screening: high-risk, dated obligations", j1c.risk_classification === "high-risk" && j1o.obligations.length > 0 && j1o.obligations.some((o) => o.deadline === "2027-12-02"));

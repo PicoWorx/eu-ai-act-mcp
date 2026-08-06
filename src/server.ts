@@ -110,7 +110,7 @@ export function createServer(): McpServer {
   );
 
   server.resource(
-    "EU AI Act Annex III — High-Risk Categories",
+    "EU AI Act Annex III - High-Risk Categories",
     "euaiact://annex/iii",
     {
       description: "Full Annex III high-risk AI system categories (1-8) with descriptions, examples, and relevant articles. Source: Regulation (EU) 2024/1689 as amended, Annex III; reused under Commission Decision 2011/833/EU conditions.",
@@ -132,7 +132,7 @@ export function createServer(): McpServer {
                 examples: c.examples,
                 relevant_articles: c.relevantArticles,
               })),
-              note: "Providers may rely on the Art. 6(3) exception to classify an Annex III system as not high-risk under specific conditions — see euaiact_assess_art6_3_exception. The exception does NOT apply to systems performing profiling of natural persons.",
+              note: "Providers may rely on the Art. 6(3) exception to classify an Annex III system as not high-risk under specific conditions - see euaiact_assess_art6_3_exception. The exception does NOT apply to systems performing profiling of natural persons.",
               eurlex_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#anx_III",
             },
             null,
@@ -144,7 +144,7 @@ export function createServer(): McpServer {
   );
 
   server.resource(
-    "EU AI Act Annex IV — Technical Documentation",
+    "EU AI Act Annex IV - Technical Documentation",
     "euaiact://annex/iv",
     {
       description: "Full Annex IV technical documentation requirements (items 1-9) that providers of high-risk AI systems must prepare under Art. 11. EUR-Lex content reused under Commission Decision 2011/833/EU conditions.",

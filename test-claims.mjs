@@ -209,7 +209,7 @@ check("E6 Art. 6(1c) radio-spectrum conformity does not fulfil 6(1)(b)", "law",
 check("E6", "served", /radio spectrum/.test(art("6")?.summary ?? ""));
 
 check("E7 Art. 10(5) deleted; special-category processing moved to Art. 4a", "law",
-  inLaw("Processing of special categories of personal data for bias detection and correction") && ART10.includes("—————"));
+  inLaw("Processing of special categories of personal data for bias detection and correction") && ART10.includes("\u2014".repeat(5)));
 check("E7", "served", /deleted/.test(art("10")?.summary ?? "") && art("4a") !== undefined);
 
 check("E8 Art. 4a safeguards + paragraph 2 + no-obligation sentence", "law",

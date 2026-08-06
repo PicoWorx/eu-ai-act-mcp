@@ -56,7 +56,7 @@ export function registerArt6ExceptionTool(server: McpServer): void {
       if (profilingBlocks) {
         exceptionAvailable = false;
         reasoning =
-          "Art. 6(3) exception is NOT available. Art. 6(3), third subparagraph: the exception does not apply to AI systems that perform profiling of natural persons — regardless of whether one of the four conditions would otherwise be met. The system remains high-risk under Art. 6(2) and must comply with Chapter III Section 2.";
+          "Art. 6(3) exception is NOT available. Art. 6(3), third subparagraph: the exception does not apply to AI systems that perform profiling of natural persons - regardless of whether one of the four conditions would otherwise be met. The system remains high-risk under Art. 6(2) and must comply with Chapter III Section 2.";
       } else if (!noSignificantRiskAssessed) {
         exceptionAvailable = false;
         reasoning =

@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.5] - 2026-08-06
+
+### Changed
+
+- Published the complete 1.4.4 correctness release to npm under 1.4.5 after the
+  1.4.4 npm publication did not complete.
+- Replaced em dashes in documentation, source comments, and served prose with
+  ordinary punctuation. Legal rules, schemas, and tool behavior are unchanged.
+
 ## [1.4.4] - 2026-08-06
 
 Correctness release. Twenty adjudicated defects fixed after a three-artifact audit

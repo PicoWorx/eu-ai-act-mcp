@@ -7,7 +7,7 @@ export const art6ExceptionInputSchema = z.object({
     .min(1)
     .max(8)
     .optional()
-    .describe("Annex III category number (1-8). Provide if known — helps the response reference the right rules."),
+    .describe("Annex III category number (1-8). Provide if known - helps the response reference the right rules."),
   no_significant_risk_to_health_safety_fundamental_rights: z
     .boolean()
     .optional()

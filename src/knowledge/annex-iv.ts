@@ -1,5 +1,5 @@
 /**
- * EU AI Act — Annex IV: Technical Documentation requirements.
+ * EU AI Act - Annex IV: Technical Documentation requirements.
  *
  * Source: Regulation (EU) 2024/1689, Annex IV. EUR-Lex content reused under the conditions of
  * Commission Decision 2011/833/EU.

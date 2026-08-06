@@ -45,7 +45,7 @@ const SIGNAL_QUESTIONS: Record<keyof ClassifySignals, string> = {
   biometric_realtime: "If the system uses biometrics, does it process them in real time?",
   biometric_law_enforcement: "Is the biometric system used by or on behalf of law enforcement authorities?",
   biometric_publicly_accessible_space: "If the system uses real-time remote biometric identification for law enforcement, is it deployed in publicly accessible spaces?",
-  is_safety_component_of_regulated_product: "Is the system a safety component of a product covered by EU harmonisation legislation (Annex I — medical devices, machinery, toys, etc.)?",
+  is_safety_component_of_regulated_product: "Is the system a safety component of a product covered by EU harmonisation legislation (Annex I - medical devices, machinery, toys, etc.)?",
   requires_third_party_conformity_assessment: "Is the product or AI system required to undergo third-party conformity assessment under the applicable Annex I legislation?",
   affects_fundamental_rights: "Could the system materially affect the health, safety, or fundamental rights of natural persons?",
   targets_children_or_vulnerable: "Is the system directed at, or does it materially affect, children or other vulnerable groups?",
@@ -176,7 +176,7 @@ function isGenericAggregatedCrimeAnalytics(text: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// Step 0 — Structured signals → deterministic classification
+// Step 0 - Structured signals → deterministic classification
 // ---------------------------------------------------------------------------
 
 /**
@@ -202,8 +202,8 @@ function textIndicatesRisk(text: string): boolean {
 
 /**
  * Sole-purpose 1:1 biometric verification is expressly excluded from Annex
- * III(1)(a). The exclusion answers exactly ONE question — this system is not
- * high-risk on the Annex III(1)(a) ground — and does not establish an overall
+ * III(1)(a). The exclusion answers exactly ONE question - this system is not
+ * high-risk on the Annex III(1)(a) ground - and does not establish an overall
  * risk level, so the classification stays insufficient_information with the
  * exclusion stated first and the remaining checks named. (An earlier 1.4.4
  * draft returned "minimal" here; cross-model review correctly rejected that
@@ -221,7 +221,7 @@ function verificationExclusionResult(params: {
       relevant_articles: ["Annex III(1)(a)", "Art. 6(2)", "Art. 6(1)", "Art. 50"],
       role_determination: params.role,
       obligations_summary:
-        "Not high-risk under Annex III(1)(a): sole-purpose biometric verification (1:1 confirmation that a person is who they claim to be) is expressly excluded. The overall risk level is not established by the exclusion alone — verify separately: the Art. 6(1)/Annex I safety-component path, any other Annex III use, and Art. 50 transparency duties if the system interacts with natural persons or performs biometric categorisation. Art. 4 AI literacy measures apply to all providers and deployers.",
+        "Not high-risk under Annex III(1)(a): sole-purpose biometric verification (1:1 confirmation that a person is who they claim to be) is expressly excluded. The overall risk level is not established by the exclusion alone - verify separately: the Art. 6(1)/Annex I safety-component path, any other Annex III use, and Art. 50 transparency duties if the system interacts with natural persons or performs biometric categorisation. Art. 4 AI literacy measures apply to all providers and deployers.",
       caveat:
         "Automated pre-assessment. The exclusion covers only verification of a claimed identity; remote biometric identification, biometric categorisation and emotion recognition are separate analyses.",
     }),
@@ -245,7 +245,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
   const missing = missingFromSignals(s).map(String);
   const combined = `${input.description ?? ""} ${input.use_case ?? ""}`.trim();
 
-  // Prohibited practices (Art. 5) — highest priority
+  // Prohibited practices (Art. 5) - highest priority
   if (s.performs_social_scoring || s.performs_social_scoring_by_public_authority) {
     matched.push(
       s.performs_social_scoring
@@ -277,7 +277,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
         relevant_articles: ["Art. 5", "Art. 5(1)(h)"],
         role_determination: role,
         obligations_summary: "Prohibited: real-time remote biometric identification in publicly accessible spaces for law enforcement (Art. 5(1)(h)). Narrow statutory exceptions apply only with prior judicial/administrative authorisation.",
-        caveat: "Automated pre-assessment based on signals. Narrow Art. 5(1)(h) exceptions may apply for specific serious crimes — consult legal counsel.",
+        caveat: "Automated pre-assessment based on signals. Narrow Art. 5(1)(h) exceptions may apply for specific serious crimes - consult legal counsel.",
       }),
       matched_signals: matched,
       missing_signals: missing,
@@ -294,7 +294,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
         confidence: "high",
         relevant_articles: ["Art. 5", "Art. 5(1)(f)"],
         role_determination: role,
-        obligations_summary: "Prohibited: emotion recognition in the workplace or educational institutions (Art. 5(1)(f)). Medical or safety-purpose exceptions exist — consult legal counsel.",
+        obligations_summary: "Prohibited: emotion recognition in the workplace or educational institutions (Art. 5(1)(f)). Medical or safety-purpose exceptions exist - consult legal counsel.",
         caveat: "Automated pre-assessment based on signals.",
       }),
       matched_signals: matched,
@@ -319,7 +319,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
           role,
           relevantArticles: ["Annex III(1)", "Annex III(1)(a)", "Art. 6(2)"],
           obligationsSummary:
-            "The signals state sole-purpose verification, but the description contains identification, watchlist, categorisation or emotion-recognition wording. These are mutually exclusive: the Annex III(1)(a) exclusion covers only 1:1 verification of a claimed identity. Resolve the contradiction before classification — remote biometric identification is high-risk under Annex III(1)(a) and may be prohibited under Art. 5(1)(h) in real-time law-enforcement settings.",
+            "The signals state sole-purpose verification, but the description contains identification, watchlist, categorisation or emotion-recognition wording. These are mutually exclusive: the Annex III(1)(a) exclusion covers only 1:1 verification of a claimed identity. Resolve the contradiction before classification - remote biometric identification is high-risk under Annex III(1)(a) and may be prohibited under Art. 5(1)(h) in real-time law-enforcement settings.",
           caveat: "Contradictory inputs. Do not rely on the verification exclusion until the actual biometric purpose is established.",
           nextQuestions: [
             SIGNAL_QUESTIONS.biometric_remote_identification,
@@ -522,7 +522,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
 }
 
 // ---------------------------------------------------------------------------
-// Step 1 — Text classification via rewritten scoring
+// Step 1 - Text classification via rewritten scoring
 // ---------------------------------------------------------------------------
 
 interface TextHit<T> {
@@ -653,7 +653,7 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
     };
   }
 
-  // Step 1d: default — no match found
+  // Step 1d: default - no match found
   return {
     ...buildBase({
       risk_classification: "insufficient_information",

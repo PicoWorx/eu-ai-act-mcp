@@ -1,5 +1,5 @@
 /**
- * EU AI Act — Article text corpus.
+ * EU AI Act - Article text corpus.
  *
  * Source: Regulation (EU) 2024/1689 of the European Parliament and of the
  * Council of 13 June 2024 (the "EU AI Act"), as amended by Regulation (EU)
@@ -8,8 +8,8 @@
  *
  * Every entry includes a stable EUR-Lex URL to the consolidated version
  * (CELEX: 02024R1689-20260727) so callers can always jump to the source. Article text here is a condensed
- * operational summary of the most-cited articles — not a verbatim reproduction
- * of the full regulation — suitable for first-pass agent grounding. For
+ * operational summary of the most-cited articles - not a verbatim reproduction
+ * of the full regulation - suitable for first-pass agent grounding. For
  * definitive wording agents should follow the eurlex_url.
  */
 
@@ -94,7 +94,7 @@ export const articles: ArticleEntry[] = [
     number: "11",
     title: "Technical documentation",
     summary:
-      "Before a high-risk AI system is placed on the market or put into service, technical documentation must be drawn up and kept up to date. Documentation must demonstrate that the system complies with the requirements set out in Chapter III Section 2 and provide national competent authorities and notified bodies with all information necessary to assess compliance. At minimum, documentation must contain the elements set out in Annex IV. SMEs may provide the elements of Annex IV in a simplified manner — the Commission will establish a simplified template.",
+      "Before a high-risk AI system is placed on the market or put into service, technical documentation must be drawn up and kept up to date. Documentation must demonstrate that the system complies with the requirements set out in Chapter III Section 2 and provide national competent authorities and notified bodies with all information necessary to assess compliance. At minimum, documentation must contain the elements set out in Annex IV. SMEs may provide the elements of Annex IV in a simplified manner - the Commission will establish a simplified template.",
     eurlex_url: anchor("11"),
     related_annexes: ["Annex IV"],
   },
@@ -182,7 +182,7 @@ export const articles: ArticleEntry[] = [
     number: "49",
     title: "Registration in the EU database",
     summary:
-      "Before placing on the market or putting into service a high-risk AI system listed in Annex III (except point 2), the provider or authorised representative must register themselves and their system in the EU database referred to in Art. 71. Providers that conclude, under Art. 6(3), that a system listed in Annex III is not high-risk must nonetheless register themselves and the system in the EU database under Art. 49(2). Deployers that are public authorities, Union institutions, bodies, offices, or agencies — or persons acting on their behalf — must register themselves, select the system, and register its use.",
+      "Before placing on the market or putting into service a high-risk AI system listed in Annex III (except point 2), the provider or authorised representative must register themselves and their system in the EU database referred to in Art. 71. Providers that conclude, under Art. 6(3), that a system listed in Annex III is not high-risk must nonetheless register themselves and the system in the EU database under Art. 49(2). Deployers that are public authorities, Union institutions, bodies, offices, or agencies - or persons acting on their behalf - must register themselves, select the system, and register its use.",
     eurlex_url: anchor("49"),
     related_annexes: ["Annex III", "Annex VIII"],
   },
@@ -190,7 +190,7 @@ export const articles: ArticleEntry[] = [
     number: "50",
     title: "Transparency obligations for providers and deployers of certain AI systems",
     summary:
-      "Art. 50(1): Providers must ensure that AI systems intended to interact directly with natural persons are designed so that persons concerned are informed they are interacting with an AI system, unless obvious from the circumstances. Art. 50(2): Providers of AI systems generating synthetic audio, image, video, or text content must ensure outputs are marked in a machine-readable format and detectable as artificially generated or manipulated. Art. 50(3): Deployers of emotion recognition or biometric categorisation systems must inform natural persons exposed to the system. Art. 50(4): Deployers of AI systems generating deep fakes must disclose that the content has been artificially generated or manipulated. Deployers of AI systems generating or manipulating text published to inform the public on matters of public interest must disclose the content is artificially generated — unless the content has undergone a process of human review or editorial control. Exceptions apply for law enforcement use.",
+      "Art. 50(1): Providers must ensure that AI systems intended to interact directly with natural persons are designed so that persons concerned are informed they are interacting with an AI system, unless obvious from the circumstances. Art. 50(2): Providers of AI systems generating synthetic audio, image, video, or text content must ensure outputs are marked in a machine-readable format and detectable as artificially generated or manipulated. Art. 50(3): Deployers of emotion recognition or biometric categorisation systems must inform natural persons exposed to the system. Art. 50(4): Deployers of AI systems generating deep fakes must disclose that the content has been artificially generated or manipulated. Deployers of AI systems generating or manipulating text published to inform the public on matters of public interest must disclose the content is artificially generated - unless the content has undergone a process of human review or editorial control. Exceptions apply for law enforcement use.",
     eurlex_url: anchor("50"),
     related_annexes: [],
   },

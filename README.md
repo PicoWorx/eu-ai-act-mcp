@@ -7,9 +7,13 @@
 
 An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that gives LLMs structured intelligence about the EU AI Act (Regulation (EU) 2024/1689, as amended by the Digital Omnibus, Regulation (EU) 2026/1744).
 
-Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementation boutique for regulated workflows.
+Built by [Lexbeam Software](https://lexbeam.com) - an agentic AI implementation boutique for regulated workflows.
 
-## What's new in 1.4.4
+## What's new in 1.4.5
+
+Version 1.4.5 is the npm follow-up to the 1.4.4 correctness release. It includes
+the complete 1.4.4 audit fixes and removes em dashes from documentation and served
+prose without changing legal rules, schemas, or tool behavior.
 
 - **Twenty correctness fixes** from a three-artifact audit with cross-model validation
   (details in CHANGELOG): honest FAQ answers with `matched_question`, a reachable
@@ -94,10 +98,10 @@ npm run start:http  # streamable HTTP (for Smithery/Railway)
 
 ## Prompts
 
-- `classify-my-system` — guided classification using `euaiact_classify_system` with signal inference
-- `compliance-checklist` — risk-level + role obligations checklist, including Annex IV for high-risk
-- `penalty-risk-assessment` — penalty calculation with SME comparative
-- `ground-citation` — retrieve article text + EUR-Lex URL for grounded citations
+- `classify-my-system` - guided classification using `euaiact_classify_system` with signal inference
+- `compliance-checklist` - risk-level + role obligations checklist, including Annex IV for high-risk
+- `penalty-risk-assessment` - penalty calculation with SME comparative
+- `ground-citation` - retrieve article text + EUR-Lex URL for grounded citations
 
 ## Knowledge Base
 
@@ -125,13 +129,13 @@ Load-bearing dates, thresholds, amounts and exceptions are checked on every buil
 This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 and 27 July 2026, delta by delta against the 43 numbered amendments in Article 1 of the amending act. No Omnibus delta was left unresolved in that reconciliation. The Art. 49 registration duty for self-assessed not-high-risk systems, previously carried as unresolved, SURVIVES: the enacted act does not amend Art. 49 and deletes only Annex VIII Section B points 7 and 9.
 
 Operative dates as amended:
-- **2 Feb 2025** — Prohibited practices (Art. 5) + AI literacy (Art. 4), in effect
-- **2 Aug 2025** — GPAI model obligations, in effect
-- **2 Aug 2026** — Art. 50 transparency, and Commission GPAI enforcement powers and fines. **Not deferred**
-- **2 Dec 2026** — The two new Art. 5 prohibitions (non-consensual intimate material, CSAM), and the Art. 111(4) deadline for synthetic-content systems already on the market to meet Art. 50(2)
-- **2 Aug 2027** — Legacy GPAI models (Art. 111(3)), unchanged
-- **2 Dec 2027** — High-risk Annex III obligations. Deferred from 2 Aug 2026
-- **2 Aug 2028** — High-risk Annex I regulated products. Deferred from 2 Aug 2027
+- **2 Feb 2025** - Prohibited practices (Art. 5) + AI literacy (Art. 4), in effect
+- **2 Aug 2025** - GPAI model obligations, in effect
+- **2 Aug 2026** - Art. 50 transparency, and Commission GPAI enforcement powers and fines. **Not deferred**
+- **2 Dec 2026** - The two new Art. 5 prohibitions (non-consensual intimate material, CSAM), and the Art. 111(4) deadline for synthetic-content systems already on the market to meet Art. 50(2)
+- **2 Aug 2027** - Legacy GPAI models (Art. 111(3)), unchanged
+- **2 Dec 2027** - High-risk Annex III obligations. Deferred from 2 Aug 2026
+- **2 Aug 2028** - High-risk Annex I regulated products. Deferred from 2 Aug 2027
 
 ## Development
 

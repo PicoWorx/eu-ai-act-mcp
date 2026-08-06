@@ -13,12 +13,12 @@
  *
  * 2. Fractional-denominator false negative: scoring was `matches / total_keywords`.
  *    A realistic recruitment description only hit 3 of 14 Annex III(4) keywords
- *    (21%) — well below the 0.3 threshold — so the textbook Annex III(4) case
+ *    (21%) - well below the 0.3 threshold - so the textbook Annex III(4) case
  *    was mis-classified as minimal risk.
  *
  * The new API returns *per-keyword* match information plus a strong/weak signal,
  * and the classifier consumes absolute match counts rather than a fraction.
- * Not a replacement for legal analysis — first-pass grounding only.
+ * Not a replacement for legal analysis - first-pass grounding only.
  */
 
 export function normalizeText(text: string): string {
@@ -151,7 +151,7 @@ function stemVariants(word: string): string[] {
  * query against a named field on each item. Uses symmetric word overlap so
  * long, specific queries are not penalised relative to short records.
  *
- * Previously: `matched / queryWords.length` — a specific query like
+ * Previously: `matched / queryWords.length` - a specific query like
  * "FRIA for credit scoring" would dilute the score because "credit" and
  * "scoring" added to the denominator. The new denominator is the smaller
  * side, so any tight subset match is rewarded proportionally.

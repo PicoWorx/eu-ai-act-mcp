@@ -78,8 +78,8 @@ and `src/`, so the build would fail and take the deployment with it.
 never consults the ignore rules for it again, so a path can sit in `.gitignore` and be
 committed at the same time. This repo hit it twice:
 
-- `dist/` — 120 compiled files, untracked in `f00ab45`.
-- `node_modules/` — 3,714 files, roughly 69 MB including a platform-specific `esbuild`
+- `dist/` - 120 compiled files, untracked in `f00ab45`.
+- `node_modules/` - 3,714 files, roughly 69 MB including a platform-specific `esbuild`
   binary. Every clone dragged them down, and `npm ci` then rewrote the directory, so git
   reported thousands of changes to a path it was told to ignore.
 
@@ -98,7 +98,7 @@ history is rewritten.
 
 0. `git ls-files node_modules dist` must return nothing.
 1. Bump the version in `package.json` and `smithery.yaml`.
-2. `npm run build && node test.mjs` — the suite must be fully green.
+2. `npm run build && node test.mjs` - the suite must be fully green.
 3. Add a CHANGELOG entry, including anything left unresolved.
 4. Commit, push to `main`, wait for the Railway build.
 5. `curl https://mcp.lexbeam.com/health` and confirm the version matches.

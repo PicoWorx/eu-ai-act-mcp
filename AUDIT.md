@@ -1,6 +1,6 @@
 # MCP Server Quality Audit
 
-## v1.1.0 — 2026-04-08
+## v1.1.0 - 2026-04-08
 
 Agent-driven black-box probing on the live Smithery deployment surfaced three
 classes of issues. All are fixed in v1.1.0 with regression tests.
@@ -19,7 +19,7 @@ euaiact_classify_system {
 **Root cause:** `src/utils/matching.ts::calculateKeywordOverlap` had a fallback
 path that ran `stem.startsWith(tw) || tw.startsWith(stem)` with the full
 multi-word keyword as `stem`. When the input text contained a single-character
-token — `"e"` from `"e-commerce"` after punctuation stripping — the check
+token - `"e"` from `"e-commerce"` after punctuation stripping - the check
 `"emotion recognition workplace".startsWith("e")` returned true. Multi-word
 keywords `"emotion recognition workplace"` and `"emotion detection school"`
 both started with `"e"`, giving 2/4 matches = 0.5, which crossed the prohibited
@@ -45,7 +45,7 @@ euaiact_classify_system {
 
 **Root cause:** `calculateKeywordOverlap` returned `matches / total_keywords`.
 Annex III(4) employment had 14 keywords. A realistic recruitment description
-only hit 3 of them (`recruitment`, `hiring`, `CV screening`), scoring 0.21 —
+only hit 3 of them (`recruitment`, `hiring`, `CV screening`), scoring 0.21,
 well below the 0.3 threshold the classifier used. The textbook Annex III(4)
 case, the most-cited example in all AI Act discourse, was mis-classified as
 minimal risk.
@@ -105,7 +105,7 @@ explain the SME protection to the user without a second call. Regression test
 **Repro (v1.0.1):** *"Do I need a FRIA if I deploy an AI system for credit
 scoring?"* returned a generic FRIA explanation that never engaged with credit
 scoring. *"What is the FLOPs threshold for systemic risk GPAI?"* returned a
-high-risk documentation answer — completely missing the 10²⁵ FLOPs threshold
+high-risk documentation answer - completely missing the 10²⁵ FLOPs threshold
 from Art. 51(2).
 
 **Root cause:** `findBestMatch` used `matched / queryWords.length` as the
@@ -127,20 +127,20 @@ hits faq-21`.
 
 Agent-grounding gaps surfaced during the same probe session:
 
-- `euaiact_get_article` — retrieves an operational summary and EUR-Lex URL for
+- `euaiact_get_article` - retrieves an operational summary and EUR-Lex URL for
   27 of the most-cited articles. Lets agents quote primary source instead of
   paraphrasing via the FAQ.
-- `euaiact_check_gpai_systemic_risk` — evaluates the 10²⁵ FLOPs threshold per
+- `euaiact_check_gpai_systemic_risk` - evaluates the 10²⁵ FLOPs threshold per
   Art. 51(2), returns the Art. 53 baseline + Art. 55 systemic-risk obligations
   and the Art. 52 notification duty (within two weeks of crossing the
   threshold). Unblocks GPAI-specific conversations.
-- `euaiact_assess_art6_3_exception` — walks through the Art. 6(3) "no
+- `euaiact_assess_art6_3_exception` - walks through the Art. 6(3) "no
   significant risk" exception, with explicit handling of the profiling block
   (Art. 6(3), third subparagraph; corrected 2026-08-06, the conditions list is the second). Critical: the exception does NOT apply if
   the system performs profiling of natural persons, regardless of whether one
   of the four conditions would otherwise be met. Also reminds about the
   Art. 6(4) documentation duty and the Art. 49(2) EU database registration.
-- `euaiact_annex_iv_checklist` — returns all nine Annex IV items (general
+- `euaiact_annex_iv_checklist` - returns all nine Annex IV items (general
   description, detailed elements + development process, monitoring/functioning/
   control, performance metrics, risk management, lifecycle changes, harmonised
   standards, EU declaration, post-market monitoring plan). Optionally emits a
@@ -148,7 +148,7 @@ Agent-grounding gaps surfaced during the same probe session:
 - Resources: `euaiact://annex/iii` (full categories) and `euaiact://annex/iv`
   (full technical-documentation items). Public-domain EU text under
   Commission Decision 2011/833/EU.
-- Prompt: `ground-citation` — guides agents to retrieve article text and
+- Prompt: `ground-citation` - guides agents to retrieve article text and
   EUR-Lex URL before quoting.
 
 ### ➕ Added: Structured classifier signals
@@ -170,7 +170,7 @@ user next.
 ### ➕ Slim per-response branding
 
 The `disclaimer`, `source`, and `last_updated` fields were moved off every
-tool response and into `McpServer.instructions` — shown once on initialize.
+tool response and into `McpServer.instructions` - shown once on initialize.
 `lexbeam_url` is kept only where it adds deep-dive value (FAQ, obligations,
 classifier). Measured impact: a typical `get_obligations` response is now
 ~10% shorter and a `check_deadlines` response ~5% shorter.
@@ -187,7 +187,7 @@ classifier). Measured impact: a typical `get_obligations` response is now
 
 ---
 
-## v1.0.1 — 2026-04-03 (legacy audit)
+## v1.0.1 - 2026-04-03 (legacy audit)
 
 ## 1. REGULATORY ACCURACY (verified against content/EU-AI-ACT-TIMELINE.md)
 

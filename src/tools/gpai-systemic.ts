@@ -47,9 +47,9 @@ export function registerGpaiSystemicTool(server: McpServer): void {
       const systemic = providerGPAIObligations.filter((o) => o.article.startsWith("Art. 55"));
 
       const notification = undetermined
-        ? "UNDETERMINED: supply the cumulative training compute (training_flops) or state whether the Commission has designated the model (commission_designated). Without either, systemic-risk status cannot be assessed — do not treat this response as a negative finding. Baseline Art. 53 obligations apply to every GPAI model regardless."
+        ? "UNDETERMINED: supply the cumulative training compute (training_flops) or state whether the Commission has designated the model (commission_designated). Without either, systemic-risk status cannot be assessed - do not treat this response as a negative finding. Baseline Art. 53 obligations apply to every GPAI model regardless."
         : crossesFlops
-          ? "Art. 52(1): Providers must notify the Commission without delay and in any event within two weeks of when the model meets — or it becomes known that it will meet — the systemic-risk threshold. The provider may present arguments that the model does not present systemic risks; the Commission assesses the arguments."
+          ? "Art. 52(1): Providers must notify the Commission without delay and in any event within two weeks of when the model meets - or it becomes known that it will meet - the systemic-risk threshold. The provider may present arguments that the model does not present systemic risks; the Commission assesses the arguments."
           : "No notification duty under Art. 52 on the basis of the current inputs. Re-evaluate when training compute approaches 10^25 FLOPs or Commission designation criteria may apply.";
 
       const output: GpaiSystemicOutput = {
