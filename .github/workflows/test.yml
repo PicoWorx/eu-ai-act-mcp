@@ -34,5 +34,7 @@ jobs:
         run: node test.mjs
       - name: Claim matrix (corpus vs served facts)
         run: node test-claims.mjs
+      - name: Post-serialization schema gate
+        run: node test-schemas.mjs
       - name: Corpus integrity
         run: node law/fetch.mjs verify
