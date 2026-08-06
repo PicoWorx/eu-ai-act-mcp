@@ -1127,6 +1127,55 @@ console.log("\n📖 1.4.4 REGRESSIONS: ARTICLE CORPUS");
   test("reuse wording: no bare public-domain claim in server instructions", !/public.domain/i.test(SERVER_INSTRUCTIONS) && /2011\/833\/EU/.test(SERVER_INSTRUCTIONS));
 }
 
+// ─── AGENT JOURNEYS (the ten end-to-end navigation tasks from 2026-08-06) ──
+// Each journey is what a consuming agent actually does: a question, one or two
+// chained tool calls, and an answer it can act on. These caught 4 failures the
+// per-tool tests missed; they run on every build so the surface cannot regress
+// tool-by-tool while breaking end-to-end.
+console.log("\n🧭 AGENT JOURNEYS");
+{
+  // J1: CV screening — what and by when
+  const j1c = structured(await callTool("euaiact_classify_system", { description: "AI system that screens and ranks CVs for recruitment shortlisting", signals: { domain: "employment" } }));
+  const j1o = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "provider", high_risk_source: "annex_iii" }));
+  test("J1 CV screening: high-risk, dated obligations", j1c.risk_classification === "high-risk" && j1o.obligations.length > 0 && j1o.obligations.some((o) => o.deadline === "2027-12-02"));
+
+  // J2: chatbot transparency
+  const j2 = structured(await callTool("euaiact_classify_system", { description: "customer service chatbot that talks to our users", signals: { interacts_with_natural_persons: true } }));
+  test("J2 chatbot: limited risk with Art. 50(1)", j2.risk_classification === "limited" && j2.relevant_articles.includes("Art. 50(1)"));
+
+  // J3: FRIA via FAQ
+  const j3 = structured(await callTool("euaiact_answer_question", { question: "We are a private bank deploying credit scoring. Do we need a FRIA?" }));
+  test("J3 FRIA: answers the FRIA question with Art. 27", /FRIA|Article 27|Art\. 27/.test(j3.answer) && j3.question.includes("private bank"));
+
+  // J4: maximum fine for an Art. 5 breach
+  const j4 = structured(await callTool("euaiact_calculate_penalty", { violation_type: "prohibited", annual_turnover_eur: 500000000, is_sme: false }));
+  test("J4 penalty: 35M for prohibited at 500M turnover", j4.max_fine.applicable_fine_eur === 35000000);
+
+  // J5: GPAI at 3e25 FLOPs
+  const j5 = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 3e25 }));
+  test("J5 GPAI 3e25: systemic with Art. 55 obligations", j5.is_gpai_with_systemic_risk === true && j5.systemic_risk_obligations_art_55.length > 0);
+
+  // J6: airport e-gate (canonical Annex III(1)(a) exclusion)
+  const j6 = structured(await callTool("euaiact_classify_system", { description: "airport e-gate that matches a traveller face against their passport photo to verify the claimed identity", signals: { uses_biometrics: true } }));
+  test("J6 e-gate: minimal via the verification exclusion", j6.risk_classification === "minimal" && j6.relevant_articles.includes("Annex III(1)(a)"));
+
+  // J7: when do Annex III obligations apply (asked naturally, via FAQ)
+  const j7 = structured(await callTool("euaiact_answer_question", { question: "When do the high-risk obligations for Annex III systems apply?" }));
+  test("J7 deadlines: dated answer to the natural-language question", /2 December 2027/.test(j7.answer) && j7.question === "When do the high-risk obligations for Annex III systems apply?");
+
+  // J8: grounded citation for Art. 113
+  const j8 = structured(await callTool("euaiact_get_article", { article: "113" }));
+  test("J8 grounding: summary says 2027 AND the link shows the same law", /2 December 2027/.test(j8.article.summary) && j8.eurlex_url.includes("02024R1689-20260727"));
+
+  // J9: deployer of an Annex III system
+  const j9 = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "deployer", high_risk_source: "annex_iii" }));
+  test("J9 deployer: obligations returned incl. Art. 26", j9.obligations.length >= 5 && j9.obligations.some((o) => /Art\. 26/.test(o.article)));
+
+  // J10: nudification app (enacted Art. 5(1)(ba))
+  const j10 = structured(await callTool("euaiact_classify_system", { description: "app that generates non-consensual intimate images of real people from their photos" }));
+  test("J10 nudification: prohibited under Art. 5(1)(ba)", j10.risk_classification === "prohibited" && j10.relevant_articles.includes("Art. 5(1)(ba)"));
+}
+
 // ─── SUMMARY ────────────────────────────────────────────────────────────────
 console.log(`\n${"=".repeat(50)}`);
 console.log(`RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} tests`);
