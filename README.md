@@ -30,7 +30,7 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 - **Article 27 carve-out clarified.** Annex III point 2 (critical infrastructure) is the only Annex III category exempt from FRIA, now stated explicitly in every relevant surface.
 - **Article 43 conformity assessment text corrected.** Previous wording suggested "certain critical infrastructure" required notified-body involvement. Fixed: Annex III points 2-8 follow internal-control under Annex VI per Art. 43(2). Notified-body involvement is the Annex III(1) biometrics route under Art. 43(1) and the Annex I sectoral route under Art. 43(3).
 - **Version skew resolved.** `package.json`, MCP server metadata (`src/server.ts`), and `/health` endpoint now all report `1.1.5` consistently.
-- **Test count.** Local suite was **110 tests passing** at that release. Current count is 312, see Development below.
+- **Test count.** Local suite was **110 tests passing** at that release; see Development below for the current gates.
 
 ## What's new in 1.1.4
 
@@ -62,8 +62,8 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 | `euaiact_classify_system` | Classify an AI system's risk level (prohibited / high-risk / limited / minimal) from free text **or** structured signals. Returns matched signals, missing signals, and follow-up questions. |
 | `euaiact_check_deadlines` | Implementation milestones with days remaining, `next_milestone` shortcut, `only_upcoming` filter, and the enacted Digital Omnibus (Regulation (EU) 2026/1744) status. |
 | `euaiact_get_obligations` | Specific compliance obligations by role (provider/deployer) and risk level, including GPAI (Art. 51-56) and universal AI literacy (Art. 4). |
-| `euaiact_answer_question` | Semantic FAQ search across 24 curated EU AI Act questions with article references. |
-| `euaiact_calculate_penalty` | Calculate maximum fines by violation type, turnover, and SME status (Art. 99) with a comparative non-SME vs SME block. |
+| `euaiact_answer_question` | Keyword FAQ search (lexical matching with stopword filtering, tie handling and abstention) across 24 curated EU AI Act questions; echoes your question and names the matched entry. |
+| `euaiact_calculate_penalty` | Calculate maximum fines by violation type, turnover, SME status (Art. 99(6)) and SMC status (Art. 99(6a), tiers 99(4)-(5) only), with a comparative non-SME vs SME block. |
 | `euaiact_get_article` | Retrieve an operational summary and EUR-Lex URL for a specific article. Covers 28 curated articles between Art. 3 and Art. 113 (including the new Art. 4a), not the full act. |
 | `euaiact_check_gpai_systemic_risk` | Check whether a GPAI model crosses the 10²⁵ FLOPs threshold and return Art. 53 + Art. 55 obligations plus the Art. 52 notification duty. |
 | `euaiact_assess_art6_3_exception` | Walk through the Art. 6(3) "no significant risk" exception with explicit profiling block and Art. 6(4) / Art. 49(2) reminders. |
@@ -149,11 +149,11 @@ Curated, structured data covering:
 - **28 article summaries** with EUR-Lex URLs to the consolidated text
 - **Annex IV (9 documentation items)** *(new in 1.1.0)*
 
-All dates, articles, and obligations verified against the regulation text.
+Load-bearing dates, thresholds, amounts and exceptions are checked on every build by a claim matrix (`test-claims.mjs`) against a pinned, hash-verified copy of the consolidated act (`law/`). Coverage is the matrix, not a blanket claim.
 
 ## Regulatory Accuracy
 
-This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 and 27 July 2026, delta by delta against the 43 numbered amendments in Article 1 of the amending act. No item is left unresolved. The Art. 49 registration duty for self-assessed not-high-risk systems, previously carried as unresolved, SURVIVES: the enacted act does not amend Art. 49 and deletes only Annex VIII Section B points 7 and 9.
+This server tracks the current state of the EU AI Act (Regulation 2024/1689) **as amended by the Digital Omnibus on AI**, Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The amended application dates are served as operative law. Article-level wording was verified against the enacted OJ text on 26 and 27 July 2026, delta by delta against the 43 numbered amendments in Article 1 of the amending act. No Omnibus delta was left unresolved in that reconciliation. The Art. 49 registration duty for self-assessed not-high-risk systems, previously carried as unresolved, SURVIVES: the enacted act does not amend Art. 49 and deletes only Annex VIII Section B points 7 and 9.
 
 Operative dates as amended:
 - **2 Feb 2025** — Prohibited practices (Art. 5) + AI literacy (Art. 4), in effect
@@ -169,7 +169,9 @@ Operative dates as amended:
 ```bash
 npm install
 npm run build        # typescript -> dist/
-node test.mjs        # run the 312-test suite
+node test.mjs         # full suite incl. ten agent journeys
+node test-claims.mjs  # claim matrix: pinned law corpus vs served facts
+node test-schemas.mjs # post-serialization output-schema gate
 npm run dev          # stdio dev server
 npm run dev:http     # HTTP dev server
 ```

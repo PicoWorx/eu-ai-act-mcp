@@ -34,7 +34,7 @@ export const faqDatabase: FAQEntry[] = [
     answer:
       "Classification follows a risk-based approach across four tiers: prohibited (Art. 5), high-risk (Art. 6 + Annex III and Annex I), limited risk requiring transparency (Art. 50), and minimal risk with no specific obligations. Start by checking Art. 5 for prohibited practices, then Art. 6(1) for safety components in regulated products (Annex I), then Art. 6(2) for the eight Annex III use-case categories. If your system falls into Annex III, check whether the Art. 6(3) exception applies.",
     articleReferences: ["Art. 5", "Art. 6", "Annex I", "Annex III"],
-    keywords: ["classification", "risk level", "categorisation", "risk tier", "high-risk", "prohibited", "limited risk"],
+    keywords: ["classification", "risk level", "categorisation", "risk tier", "which tier", "high-risk", "prohibited", "limited risk", "image generation model", "classify system"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/ki-system-klassifizierung-eu-ai-act",
     category: "classification",
   },
@@ -114,7 +114,7 @@ export const faqDatabase: FAQEntry[] = [
     answer:
       "As a deployer of general-purpose AI tools like ChatGPT or Copilot, you must take measures to support the development of AI literacy of users (Art. 4, applicable since February 2025 and replaced from 27 July 2026; you are not required to guarantee any specific level of literacy). If you use these tools for high-risk purposes listed in Annex III (e.g. HR screening, credit decisions), the high-risk deployer obligations apply to you (Art. 26). The providers of these models (OpenAI, Microsoft) carry GPAI obligations under Chapter V, especially Art. 53-55. If you fine-tune or substantially modify a model, you may become a provider yourself (Art. 25).",
     articleReferences: ["Art. 4", "Art. 25", "Art. 26", "Art. 51", "Art. 53"],
-    keywords: ["ChatGPT", "Copilot", "GPT", "general purpose", "LLM", "foundation model", "enterprise AI"],
+    keywords: ["ChatGPT", "Copilot", "GPT", "general purpose", "LLM", "foundation model", "enterprise AI", "employees", "staff", "workplace tools", "copilot at work"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/chatgpt-copilot-eu-ai-act",
     category: "gpai",
   },
@@ -203,7 +203,7 @@ export const faqDatabase: FAQEntry[] = [
     question: "What is the Digital Omnibus and how does it affect the AI Act?",
     answer: omnibusFaqAnswer,
     articleReferences: ["Art. 5", "Art. 6", "Art. 50", "Art. 113"],
-    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus", "adopted", "Official Journal", "deferral", "postponement"],
+    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus", "adopted", "Official Journal", "deferral", "postponement", "postponed", "delayed", "delay", "pushed back"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/digital-omnibus-ai-act-auswirkungen",
     category: "legislative_updates",
   },
@@ -213,7 +213,7 @@ export const faqDatabase: FAQEntry[] = [
     answer:
       "Yes, if you are a provider of a high-risk AI system. Art. 49(1) requires providers (or their authorised representatives) to register themselves and the system in the EU database before placing it on the market or putting it into service. Deployers who are public-law bodies or act on behalf of public authorities must also register (Art. 49(3)). Providers relying on the Art. 6(3) exception must still register and document their exception assessment (Art. 49(2)). The EU database is publicly accessible for transparency purposes (Art. 71).",
     articleReferences: ["Art. 49", "Art. 71"],
-    keywords: ["registration", "EU database", "database", "register", "Art. 49", "public database"],
+    keywords: ["registration", "EU database", "database", "register", "Art. 49", "public database", "annex iii registration", "register high-risk system"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-datenbank-registrierung-ki-systeme",
     category: "registration",
   },

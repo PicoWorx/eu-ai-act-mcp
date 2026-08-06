@@ -11,6 +11,11 @@
  * monitor, not a build step: it exits 1 when it cannot determine the newest
  * consolidation (throttle, page change) and 2 when the law has moved.
  *
+ * KNOWN LIMIT: the post-validation swap renames files per document pair, not
+ * atomically across the corpus; a crash mid-swap can leave a mixed state. The
+ * offline `verify` (hash + derivation) detects any such partial state before
+ * the corpus is used, and `seal` restores canonical txt from html.
+ *
  * The corpus is an evidence snapshot of the consolidated text, which EUR-Lex
  * labels a documentation tool without legal effect; authentic OJ acts are the
  * legal authority. PINNED_CONSOLIDATED is bumped deliberately, never implicitly.

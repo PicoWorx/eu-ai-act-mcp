@@ -180,24 +180,48 @@ function isGenericAggregatedCrimeAnalytics(text: string): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * Sole-purpose 1:1 biometric verification is expressly excluded from Annex
- * III(1)(a). When that is established (by signal or by the description) and no
- * other risk signal fires, the honest answer is "minimal" with pointers to the
- * checks that remain — not "insufficient_information".
+ * Identification/watchlist wording that contradicts a verification claim.
+ * Kept in sync with the exclusion guard in isSolePurposeBiometricVerification.
  */
-function verificationExclusionMinimal(params: {
+function textIndicatesIdentification(text: string): boolean {
+  const normalized = text.toLowerCase();
+  return includesAny(normalized, [
+    /\bremote biometric identification\b/, /\bbiometric categoris/, /\bbiometric categoriz/,
+    /\bemotion recognition\b/, /\bwatchlist\b/, /\bidentif(?:y|ying|ication)\b/,
+  ]);
+}
+
+/** True when the free text triggers any prohibited / Annex III / Art. 50 engine hit. */
+function textIndicatesRisk(text: string): boolean {
+  return (
+    bestStrongHit(text, prohibitedPractices) !== null ||
+    bestStrongHit(text, annexIIICategories) !== null ||
+    bestStrongHit(text, transparencyTriggers) !== null
+  );
+}
+
+/**
+ * Sole-purpose 1:1 biometric verification is expressly excluded from Annex
+ * III(1)(a). The exclusion answers exactly ONE question — this system is not
+ * high-risk on the Annex III(1)(a) ground — and does not establish an overall
+ * risk level, so the classification stays insufficient_information with the
+ * exclusion stated first and the remaining checks named. (An earlier 1.4.4
+ * draft returned "minimal" here; cross-model review correctly rejected that
+ * as overclaiming.)
+ */
+function verificationExclusionResult(params: {
   matched: string[];
   missing: string[];
   role: "provider" | "deployer" | "uncertain";
 }): ClassifyOutput {
   return {
     ...buildBase({
-      risk_classification: "minimal",
+      risk_classification: "insufficient_information",
       confidence: "medium",
       relevant_articles: ["Annex III(1)(a)", "Art. 6(2)", "Art. 6(1)", "Art. 50"],
       role_determination: params.role,
       obligations_summary:
-        "Sole-purpose biometric verification (1:1 confirmation that a person is who they claim to be) is expressly excluded from Annex III(1)(a) and is not high-risk on that ground. Verify separately: the Art. 6(1)/Annex I safety-component path, any other Annex III use, and Art. 50 transparency duties if the system interacts with natural persons or performs biometric categorisation. Art. 4 AI literacy measures apply to all providers and deployers.",
+        "Not high-risk under Annex III(1)(a): sole-purpose biometric verification (1:1 confirmation that a person is who they claim to be) is expressly excluded. The overall risk level is not established by the exclusion alone — verify separately: the Art. 6(1)/Annex I safety-component path, any other Annex III use, and Art. 50 transparency duties if the system interacts with natural persons or performs biometric categorisation. Art. 4 AI literacy measures apply to all providers and deployers.",
       caveat:
         "Automated pre-assessment. The exclusion covers only verification of a claimed identity; remote biometric identification, biometric categorisation and emotion recognition are separate analyses.",
     }),
@@ -284,9 +308,29 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
     const hasNonBiometricAnnexDomain = !!(s.domain && DOMAIN_TO_ANNEX_III[s.domain] !== undefined);
 
     if (s.biometric_sole_purpose_verification) {
+      // A verification signal combined with identification/watchlist wording in
+      // the description is a contradiction, not an exclusion: surface it instead
+      // of letting the signal silently win.
+      if (combined && textIndicatesIdentification(combined)) {
+        matched.push("biometric_sole_purpose_verification CONTRADICTED by identification/watchlist wording in the description");
+        return insufficientFromSignals({
+          matched,
+          missing,
+          role,
+          relevantArticles: ["Annex III(1)", "Annex III(1)(a)", "Art. 6(2)"],
+          obligationsSummary:
+            "The signals state sole-purpose verification, but the description contains identification, watchlist, categorisation or emotion-recognition wording. These are mutually exclusive: the Annex III(1)(a) exclusion covers only 1:1 verification of a claimed identity. Resolve the contradiction before classification — remote biometric identification is high-risk under Annex III(1)(a) and may be prohibited under Art. 5(1)(h) in real-time law-enforcement settings.",
+          caveat: "Contradictory inputs. Do not rely on the verification exclusion until the actual biometric purpose is established.",
+          nextQuestions: [
+            SIGNAL_QUESTIONS.biometric_remote_identification,
+            SIGNAL_QUESTIONS.biometric_law_enforcement,
+            SIGNAL_QUESTIONS.biometric_realtime,
+          ],
+        });
+      }
       matched.push("uses_biometrics + biometric_sole_purpose_verification → Annex III(1)(a) verification exclusion");
       if (!hasNonBiometricAnnexDomain) {
-        return verificationExclusionMinimal({ matched, missing, role });
+        return verificationExclusionResult({ matched, missing, role });
       }
     }
 
@@ -297,7 +341,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
       // are present, so the exclusion must be applied here.
       if (!hasNonBiometricAnnexDomain && combined && isSolePurposeBiometricVerification(combined)) {
         matched.push("uses_biometrics + description indicates sole-purpose 1:1 verification → Annex III(1)(a) verification exclusion");
-        return verificationExclusionMinimal({ matched, missing, role });
+        return verificationExclusionResult({ matched, missing, role });
       }
       matched.push("uses_biometrics → biometric use needs Annex III(1) purpose check");
       if (!hasNonBiometricAnnexDomain) {
@@ -443,6 +487,14 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
   const providedKeys = ALL_SIGNAL_KEYS.filter((k) => s[k] !== undefined);
   const anyRiskSignalTrue = providedKeys.some((k) => s[k] === true);
   const domainMapsToAnnexIII = s.domain !== undefined && DOMAIN_TO_ANNEX_III[s.domain] !== undefined;
+  // Signals must be reconciled with the text: negative signals cannot override
+  // a description that names a prohibited practice, an Annex III use or an
+  // Art. 50 trigger. On any text hit, fall through to the text path instead of
+  // answering minimal. (Cross-model blocker: "8 false signals + recruitment
+  // ranking description" returned minimal.)
+  if (!anyRiskSignalTrue && !domainMapsToAnnexIII && providedKeys.length >= 8 && combined && textIndicatesRisk(combined)) {
+    return null;
+  }
   if (!anyRiskSignalTrue && !domainMapsToAnnexIII && providedKeys.length >= 8) {
     matched.push(`all ${providedKeys.length} provided risk signals negative → no Art. 5 / Annex III / Annex I / Art. 50 trigger`);
     return {

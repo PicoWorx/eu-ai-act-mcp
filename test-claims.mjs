@@ -28,6 +28,31 @@ const norm = (s) => s.replace(/\s+/g, " ");
 const CONSOLIDATED = norm(readFileSync("law/celex-02024R1689-20260727-consolidated.txt", "utf8"));
 const OMNIBUS = norm(readFileSync("law/celex-32026R1744-omnibus.txt", "utf8"));
 const inLaw = (needle, corpus = CONSOLIDATED) => corpus.includes(norm(needle));
+// Article-bounded slice: needles must hold WITHIN the article they claim, not
+// anywhere in the corpus (cross-model round 3: global includes() let unrelated
+// passages satisfy a claim while the claimed passage changed meaning).
+const sliceBetween = (start, end, corpus = CONSOLIDATED) => {
+  const i = corpus.indexOf(start);
+  if (i < 0) return "";
+  const j = corpus.indexOf(end, i + start.length);
+  return j < 0 ? corpus.slice(i) : corpus.slice(i, j);
+};
+// Two needles within `span` chars of each other inside a slice.
+const nearAnchor = (hay, anchor, needle, span = 400) => {
+  let i = hay.indexOf(anchor);
+  while (i >= 0) {
+    if (hay.slice(Math.max(0, i - span), i + anchor.length + span).includes(needle)) return true;
+    i = hay.indexOf(anchor, i + 1);
+  }
+  return false;
+};
+const ART99 = sliceBetween("Article 99 Penalties", "Article 100 Administrative fines");
+const ART100 = sliceBetween("Article 100 Administrative fines", "Article 101 Fines");
+const ART101 = sliceBetween("Article 101 Fines for providers", "Article 102");
+const ART73 = sliceBetween("Article 73 Reporting of serious incidents", "Article 74");
+const ART111 = sliceBetween("Article 111 AI systems already placed", "Article 112 Evaluation");
+const ART10 = sliceBetween("Article 10 Data and data governance", "Article 11");
+const ART51 = sliceBetween("Article 51 Classification of general-purpose AI models", "Article 52");
 
 // Served-side sources
 const { getMilestonesWithDaysRemaining, getOperativeHighRiskDates } = await import("./dist/knowledge/deadlines.js");
@@ -87,7 +112,7 @@ check("D9 Arts. 102-110 from 27 July 2026 (Art. 113(3)(d))", "law",
   inLaw("Articles 102 to 110 shall apply from 27 July 2026"));
 
 check("D10 legacy GPAI until 2 Aug 2027 (Art. 111(3))", "law",
-  inLaw("by 2 August 2027"));
+  nearAnchor(ART111, "general-purpose AI models", "2 August 2027", 500));
 check("D10", "served", dates.legacyGpaiCompliance === "2027-08-02" && milestone("2027-08-02") !== undefined);
 
 check("D11 legacy synthetic-content Art. 50(2) by 2 Dec 2026 (Art. 111(4))", "law",
@@ -95,14 +120,14 @@ check("D11 legacy synthetic-content Art. 50(2) by 2 Dec 2026 (Art. 111(4))", "la
 check("D11", "served", milestone("2026-12-02")?.articles.includes("Art. 111(4)"));
 
 check("D12 Omnibus entry into force: third day after publication (Art. 4)", "law",
-  inLaw("third day following", OMNIBUS));
+  inLaw("shall enter into force on the third day following that of its publication in the Official Journal", OMNIBUS));
 check("D12 served enactment record", "served",
   omnibusEnactment.celex === "32026R1744" && omnibusEnactment.ojPublicationDate === "2026-07-24" && omnibusEnactment.entryIntoForce === "2026-07-27");
 
 // ── Thresholds and amounts ───────────────────────────────────────────────────
 
 check("T1 GPAI systemic-risk presumption: strictly greater than 10^25 FLOPs", "law",
-  inLaw("greater than 10"));
+  ART51.includes("measured in floating point operations is greater than 10") && nearAnchor(ART51, "greater than 10", "25", 12));
 {
   const h = toolHandler((await import("./dist/tools/gpai-systemic.js")).registerGpaiSystemicTool);
   const at = (await h({ training_flops: 1e25 })).structuredContent;
@@ -111,15 +136,15 @@ check("T1 GPAI systemic-risk presumption: strictly greater than 10^25 FLOPs", "l
 }
 
 check("P1 Art. 99(3): EUR 35 000 000 / 7 %, whichever higher", "law",
-  inLaw("35 000 000") && inLaw("7 % of its total worldwide annual turnover"));
+  nearAnchor(ART99, "35 000 000", "7 %", 400) && nearAnchor(ART99, "35 000 000", "whichever is higher", 400));
 check("P1", "served", (() => { const t = getPenaltyTier("prohibited"); return t.maxFineEUR === 35000000 && t.globalTurnoverPercentage === 7; })());
 
 check("P2 Art. 99(4): EUR 15 000 000 / 3 %, incl. new point (da)", "law",
-  inLaw("15 000 000") && inLaw("obligations of providers and operators pursuant to Article 25(2) and (4)"));
+  nearAnchor(ART99, "15 000 000", "3 %", 400) && nearAnchor(ART99, "(da)", "Article 25(2) and (4)", 200));
 check("P2", "served", (() => { const t = getPenaltyTier("high_risk"); return t.maxFineEUR === 15000000 && t.globalTurnoverPercentage === 3; })());
 
 check("P3 Art. 99(5): EUR 7 500 000 / 1 %", "law",
-  inLaw("7 500 000") && inLaw("up to 1 %"));
+  nearAnchor(ART99, "7 500 000", "1 %", 400) && nearAnchor(ART99, "7 500 000", "incorrect, incomplete or misleading information", 400));
 check("P3", "served", (() => { const t = getPenaltyTier("false_info"); return t.maxFineEUR === 7500000 && t.globalTurnoverPercentage === 1; })());
 
 check("P4 Art. 99(6) SME lower-of covers paragraphs 3, 4 and 5", "law",
@@ -136,11 +161,11 @@ check("P5 Art. 99(6a) SMC lower-of covers paragraphs 4 and 5 ONLY", "law",
 }
 
 check("P6 Art. 101: 3 % or EUR 15 000 000, whichever higher, no SME rule", "law",
-  inLaw("3 % of their annual total worldwide turnover") || inLaw("3 % of its annual total worldwide turnover"));
+  ART101.includes("15 000 000") && ART101.includes("3 %") && ART101.includes("whichever is higher") && !ART101.includes("SMC") && !ART101.includes("SMEs"));
 check("P6", "served", (() => { const t = getPenaltyTier("gpai"); return t.maxFineEUR === 15000000 && t.smeLowerApplies === false; })());
 
 check("P7 Art. 100 EDPS: EUR 1 500 000 (Art. 5) / EUR 750 000", "law",
-  inLaw("1 500 000") && inLaw("750 000"));
+  ART100.includes("1 500 000") && ART100.includes("750 000"));
 check("P7", "served", /1,500,000|1\.5 million|EUR 1,500,000/.test(art("100")?.summary ?? "") || /1 500 000/.test(art("100")?.summary ?? ""));
 
 check("N1 Art. 52(1): notify without delay, within two weeks", "law",
@@ -151,19 +176,24 @@ check("N1", "served", /two weeks/.test(JSON.stringify((await (toolHandler((await
 
 check("E1 Annex III(1)(a) verification exclusion", "law",
   inLaw("verification the sole purpose of which is to confirm that a specific natural person is the person he or she claims to be"));
-check("E1", "served", /confirm|claims? to be|claimed identity/i.test(annexIIICategories.find((c) => c.number === 1)?.description ?? "") || /verification/.test(annexIIICategories.find((c) => c.number === 1)?.description ?? ""));
+check("E1", "served", (() => {
+  const d = annexIIICategories.find((c) => c.number === 1)?.description ?? "";
+  // Semantic, not lexical: the exclusion must be STATED as an exclusion.
+  return /verification/i.test(d) && /exclu/i.test(d) && !/verification[^.]{0,80}(is|are)[^.]{0,40}high-risk/i.test(d);
+})());
 
 check("E2 Annex III(5)(b) financial-fraud carve-out", "law",
   inLaw("with the exception of AI systems used for the purpose of detecting financial fraud"));
 check("E2", "served", /detecting financial fraud/.test(annexIIICategories.find((c) => c.number === 5)?.description ?? ""));
 
 check("E3 Annex III(7)(d) travel-document verification scope", "law",
-  inLaw("verification of the authenticity of travel documents") || inLaw("travel documents"));
+  inLaw("with the exception of the verification of travel documents"));
+check("E3", "served", /travel[- ]document/i.test(annexIIICategories.find((c) => c.number === 7)?.description ?? "") || /travel documents/i.test(JSON.stringify(annexIIICategories.find((c) => c.number === 7) ?? {})));
 
 check("E4 Art. 6(3) profiling override sits in the THIRD subparagraph", "law",
   // Art. 6(6) empowers amending "paragraph 3, second subparagraph" = the conditions list,
   // so the profiling sentence is the third. Both facts must be in the corpus.
-  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling"));
+  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling") && inLaw("paragraph 3, second subparagraph"));
 {
   const h = toolHandler((await import("./dist/tools/art6-exception.js")).registerArt6ExceptionTool);
   const r = (await h({ performs_profiling: true, narrow_procedural_task: true, no_significant_risk_to_health_safety_fundamental_rights: true })).structuredContent;
@@ -179,27 +209,36 @@ check("E6 Art. 6(1c) radio-spectrum conformity does not fulfil 6(1)(b)", "law",
 check("E6", "served", /radio spectrum/.test(art("6")?.summary ?? ""));
 
 check("E7 Art. 10(5) deleted; special-category processing moved to Art. 4a", "law",
-  inLaw("Processing of special categories of personal data for bias detection and correction"));
+  inLaw("Processing of special categories of personal data for bias detection and correction") && ART10.includes("—————"));
 check("E7", "served", /deleted/.test(art("10")?.summary ?? "") && art("4a") !== undefined);
 
-check("E8 Art. 4a safeguards: synthetic/anonymised, no transfer, deletion", "law",
-  inLaw("including synthetic or anonymised data") && inLaw("deleted once the bias has been corrected"));
-check("E8", "served", /synthetic or anonymised/.test(art("4a")?.summary ?? "") && /delet/i.test(art("4a")?.summary ?? ""));
+check("E8 Art. 4a safeguards + paragraph 2 + no-obligation sentence", "law",
+  inLaw("including synthetic or anonymised data") && inLaw("deleted once the bias has been corrected") && inLaw("Providers and deployers of other AI systems and models") && inLaw("does not create any obligation to conduct such bias detection"));
+check("E8", "served", /synthetic or anonymised/.test(art("4a")?.summary ?? "") && /delet/i.test(art("4a")?.summary ?? "") && /other AI systems and models/i.test(art("4a")?.summary ?? "") && /does not create any obligation/.test(art("4a")?.summary ?? ""));
 
 check("E9 Art. 5(1)(ba) consent standard", "law",
   inLaw("freely-given, specific, informed, unambiguous and explicit consent"));
-check("E9", "served", /freely given, specific, informed, unambiguous and explicit consent/.test(art("5")?.summary ?? "") || /\(ba\)/.test(art("5")?.summary ?? ""));
+check("E9", "served", /freely[- ]given, specific, informed, unambiguous and explicit consent/.test(art("5")?.summary ?? ""));
 
-check("E10 Art. 5(1)(bb) CSAM via Directive 2011/93/EU Art. 2(c),(e)", "law",
-  inLaw("Directive 2011/93"));
-check("E10", "served", /2011\/93/.test(art("5")?.summary ?? ""));
+check("E10 Art. 5(1)(bb) CSAM full clause incl. the without-right defence", "law",
+  inLaw("within the meaning of Article 2, points (c) and (e), of Directive 2011/93/EU, except where a \u2018without right\u2019 defence applies under national law"));
+check("E10", "served", /2011\/93/.test(art("5")?.summary ?? "") && /without right.{0,15}defence applies under national law/.test(art("5")?.summary ?? ""));
+check("E10b Art. 5(1b) qualifies point (ba) only", "law",
+  inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material in a way that does not increase the exposure"));
+check("E10b", "served", /\(1b\) qualifies point \(ba\) ONLY/i.test(art("5")?.summary ?? ""));
 
 check("E11 Art. 49(1) registration: Annex III except point 2", "law",
   inLaw("with the exception of high-risk AI systems referred to in point 2 of Annex III"));
 
 check("E12 Art. 73 windows: 15 days / 2 days / 10 days", "law",
-  inLaw("not later than 15 days") && inLaw("not later than two days") && inLaw("not later than 10 days"));
-check("E12", "served", /15\b/.test(art("73")?.summary ?? "") && /10\b/.test(art("73")?.summary ?? ""));
+  ART73.includes("not later than 15 days") && ART73.includes("not later than two days") && ART73.includes("not later than 10 days"));
+check("E12", "served", /15 days/.test(art("73")?.summary ?? "") && /10 days/.test(art("73")?.summary ?? "") && /(2|two) days/.test(art("73")?.summary ?? ""));
+
+check("E13 verification exclusion served as SCOPED, never minimal/high-risk", "served", await (async () => {
+  const h = toolHandler((await import("./dist/tools/classify.js")).registerClassifyTool);
+  const r = (await h({ signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } })).structuredContent;
+  return /Not high-risk under Annex III\(1\)\(a\)/.test(r.obligations_summary) && r.risk_classification !== "minimal" && r.risk_classification !== "high-risk";
+})());
 
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log(`\nCLAIM MATRIX RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} checks`);

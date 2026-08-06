@@ -88,7 +88,11 @@ export function registerObligationsTool(server: McpServer): void {
                 ...obl,
                 deadline: operativeDeadline,
                 details: downstreamTriggered.has(obl.article)
-                  ? `${obl.details} Practical compliance date ${operativeDeadline} for ${sourceLabel}: this article formally applies since 2 August 2026 (Art. 113, second paragraph), and is triggered by the ${classificationArt} classification, which applies from ${operativeDeadline} under ${pointCite} as amended by the Digital Omnibus on AI.`
+                  ? `${obl.details} Practical compliance date ${operativeDeadline} for ${sourceLabel}: this article formally applies since 2 August 2026 (Art. 113, second paragraph), and is triggered by the ${classificationArt} classification, which applies from ${operativeDeadline} under ${pointCite} as amended by the Digital Omnibus on AI.${
+                      obl.article === "Art. 49"
+                        ? " Independently of that trigger, Art. 5(2) has conditioned permitted real-time remote biometric identification on Art. 27 and Art. 49 registration since 2 February 2025, so Art. 49 is not wholly dormant before that date."
+                        : ""
+                    }`
                   : `${obl.details} Application date ${operativeDeadline} for ${sourceLabel}, per ${pointCite} as amended by the Digital Omnibus on AI.`,
               }
             : obl,

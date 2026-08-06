@@ -335,9 +335,9 @@ test(
 );
 test(
   "sole-purpose biometric verification signal does not auto-classify Annex III(1)",
-  // 1.4.4: the exclusion now yields an explicit "minimal" (with the remaining
-  // checks named) instead of insufficient_information; still never high-risk.
-  structured(classifyResults.signalsBiometricVerification).risk_classification === "minimal" &&
+  // 1.4.4 final: scoped exclusion (not-high-risk under III(1)(a)) without an
+  // overall risk claim; never high-risk, never an overclaimed minimal.
+  structured(classifyResults.signalsBiometricVerification).risk_classification === "insufficient_information" &&
     structured(classifyResults.signalsBiometricVerification).relevant_articles.includes("Annex III(1)(a)"),
 );
 test(
@@ -1038,11 +1038,22 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
 
   // e-gate canonical case: 1:1 verification excluded from Annex III(1)(a)
   const rGateSig = structured(await callTool("euaiact_classify_system", { signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }));
-  test("classify: verification-exclusion signal returns minimal", rGateSig.risk_classification === "minimal" && rGateSig.relevant_articles.includes("Annex III(1)(a)"));
+  // Cross-model round 3: the exclusion answers ONE question and must not
+  // overclaim an overall "minimal"; it states not-high-risk-under-III(1)(a).
+  test("classify: verification exclusion is scoped, not minimal", rGateSig.risk_classification === "insufficient_information" && rGateSig.relevant_articles.includes("Annex III(1)(a)") && /Not high-risk under Annex III\(1\)\(a\)/.test(rGateSig.obligations_summary));
   const rGateTxt = structured(await callTool("euaiact_classify_system", { description: "airport e-gate that matches a traveller face against their passport photo to verify the claimed identity", signals: { uses_biometrics: true } }));
-  test("classify: e-gate description alone reaches the exclusion", rGateTxt.risk_classification === "minimal");
+  test("classify: e-gate description alone reaches the exclusion", /Not high-risk under Annex III\(1\)\(a\)/.test(rGateTxt.obligations_summary) && rGateTxt.risk_classification !== "high-risk");
   const rWatch = structured(await callTool("euaiact_classify_system", { description: "camera system that scans faces in the terminal to identify persons on a watchlist", signals: { uses_biometrics: true } }));
   test("classify: watchlist identification is NOT excluded as verification", rWatch.risk_classification !== "minimal");
+
+  // Cross-model round 3 blockers, pinned as regressions:
+  const P8 = { uses_biometrics: false, performs_social_scoring: false, generates_synthetic_content: false, interacts_with_natural_persons: false, is_safety_component_of_regulated_product: false, affects_fundamental_rights: false, targets_children_or_vulnerable: false, performs_emotion_recognition_workplace_or_school: false };
+  const rB1 = structured(await callTool("euaiact_classify_system", { description: "AI system that ranks and shortlists job applicants for recruitment", signals: P8 }));
+  test("blocker: negative signals cannot override risky text (recruitment)", rB1.risk_classification === "high-risk" && rB1.basis === "text");
+  const rB2 = structured(await callTool("euaiact_classify_system", { description: "system deciding eligibility for essential public assistance benefits", signals: ALL_FALSE }));
+  test("blocker: all-false signals cannot override risky text (benefits)", rB2.risk_classification === "high-risk");
+  const rB3 = structured(await callTool("euaiact_classify_system", { description: "scans faces in the terminal to identify persons on a watchlist", signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }));
+  test("blocker: verification signal contradicted by identification text", rB3.risk_classification === "insufficient_information" && /CONTRADICTED|contradiction|mutually exclusive/i.test(JSON.stringify(rB3)));
 
   // Citation hygiene: no duplicates in any classify output
   const rCv = structured(await callTool("euaiact_classify_system", { description: "AI system that screens and ranks CVs for recruitment shortlisting", signals: { domain: "employment" } }));
@@ -1067,6 +1078,15 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   test("faq: deadline question gets a dated answer", /2 December 2027|2027/.test(fDl.answer));
   const fNone = structured(await callTool("euaiact_answer_question", { question: "completely unrelated question about bananas" }));
   test("faq: unrelated question abstains with tool pointers", fNone.confidence === "low" && /euaiact_check_deadlines/.test(fNone.answer));
+  // Cross-model round 3 routing regressions, pinned:
+  const fTier = structured(await callTool("euaiact_answer_question", { question: "Which risk tier is an image generation model?" }));
+  test("faq: image-model tier question reaches classification", fTier.matched_question?.includes("classify") && fTier.confidence !== "low");
+  const fCop = structured(await callTool("euaiact_answer_question", { question: "What does the AI Act mean for our employees using Copilot?" }));
+  test("faq: employees-copilot question reaches faq-09", /ChatGPT\/Copilot/.test(fCop.matched_question ?? "") && fCop.confidence !== "low");
+  const fReg = structured(await callTool("euaiact_answer_question", { question: "Do I need to register my Annex III system in the EU database?" }));
+  test("faq: registration question reaches faq-19", /register/.test(fReg.matched_question ?? "") && fReg.confidence !== "low");
+  const fPost = structured(await callTool("euaiact_answer_question", { question: "Is the AI Act postponed by the Digital Omnibus?" }));
+  test("faq: postponement question reaches the Omnibus entry", /Omnibus/.test(fPost.matched_question ?? "") && fPost.confidence !== "low");
 
   // Penalties: input guards live in the schema (the SDK validates before the
   // handler runs; the test harness bypasses it, so assert at schema level).
@@ -1157,7 +1177,7 @@ console.log("\n🧭 AGENT JOURNEYS");
 
   // J6: airport e-gate (canonical Annex III(1)(a) exclusion)
   const j6 = structured(await callTool("euaiact_classify_system", { description: "airport e-gate that matches a traveller face against their passport photo to verify the claimed identity", signals: { uses_biometrics: true } }));
-  test("J6 e-gate: minimal via the verification exclusion", j6.risk_classification === "minimal" && j6.relevant_articles.includes("Annex III(1)(a)"));
+  test("J6 e-gate: scoped exclusion, never high-risk", /Not high-risk under Annex III\(1\)\(a\)/.test(j6.obligations_summary) && j6.risk_classification !== "high-risk" && j6.risk_classification !== "minimal" && j6.relevant_articles.includes("Annex III(1)(a)"));
 
   // J7: when do Annex III obligations apply (asked naturally, via FAQ)
   const j7 = structured(await callTool("euaiact_answer_question", { question: "When do the high-risk obligations for Annex III systems apply?" }));
