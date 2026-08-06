@@ -168,6 +168,8 @@ export function findBestMatch<T extends Record<string, any>>(
 
   let bestItem: T | null = null;
   let bestScore = 0;
+  let bestMatchCount = 0;
+  let secondScore = 0;
 
   for (const item of items) {
     const itemWords = meaningfulWords(String(item[keywordField] ?? ""));
@@ -181,13 +183,26 @@ export function findBestMatch<T extends Record<string, any>>(
     const denominator = Math.min(queryWords.length, itemWords.length);
     const score = matchCount / denominator;
 
-    if (score > bestScore) {
+    // Ties break on absolute match count, so an entry matching more of the
+    // query beats an equal-ratio entry that matched fewer words. Without this,
+    // the first array entry won every tie and became a magnet for loosely
+    // related queries.
+    if (score > bestScore || (score === bestScore && matchCount > bestMatchCount)) {
+      if (bestItem && bestItem !== item) secondScore = bestScore;
       bestScore = score;
+      bestMatchCount = matchCount;
       bestItem = item;
+    } else if (score > secondScore) {
+      secondScore = score;
     }
   }
 
-  const confidence = bestScore >= 0.6 ? "high" : bestScore >= 0.3 ? "medium" : "low";
+  // A near-tie between different entries is ambiguity, not confidence: cap at
+  // medium so a wrong-but-plausible match can never be served as "high".
+  const margin = bestScore - secondScore;
+  let confidence: "high" | "medium" | "low" =
+    bestScore >= 0.6 ? "high" : bestScore >= 0.3 ? "medium" : "low";
+  if (confidence === "high" && margin < 0.15) confidence = "medium";
   return { item: bestItem, confidence, score: bestScore };
 }
 
@@ -198,6 +213,10 @@ function meaningfulWords(text: string): string[] {
     "what", "who", "why", "how", "this", "that", "when", "where", "does",
     "can", "will", "have", "has", "was", "were", "been", "about", "into",
     "a", "an", "i", "is", "it", "to", "in", "on", "of", "or", "be", "my", "do", "we",
+    // Corpus-generic tokens: they appear in nearly every EU AI Act question, so
+    // they carry no topical weight and let connective overlap beat the topic
+    // word ("deadlines under the EU AI Act" must match on "deadlines", not "under act").
+    "under", "act", "need",
   ]);
   return normalizeText(text)
     .split(" ")

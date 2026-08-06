@@ -5,7 +5,10 @@ export const faqInputSchema = z.object({
 });
 
 export const faqOutputSchema = z.object({
+  /** Always the caller's own question, echoed verbatim. */
   question: z.string(),
+  /** The FAQ entry the answer comes from, so a substitution is visible to the caller. */
+  matched_question: z.string().optional(),
   answer: z.string(),
   confidence: z.enum(["high", "medium", "low"]),
   article_references: z.array(z.string()),

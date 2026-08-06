@@ -44,7 +44,7 @@ export const faqDatabase: FAQEntry[] = [
     answer:
       "Providers and deployers of high-risk AI systems under Annex III must comply by 2 December 2027, as deferred by the Digital Omnibus on AI. Providers need risk management systems (Art. 9), technical documentation (Art. 11), conformity assessments (Art. 43), and EU database registration where Art. 49 applies (Annex III systems except point 2, plus Art. 6(3) registrations). Deployers need human oversight processes (Art. 26), and a FRIA where Art. 27 applies, including public-law/public-service deployers and deployers of Annex III(5)(b)/(c) credit and life/health-insurance systems. Note: Art. 5 prohibited practices and Art. 4 AI literacy are already enforceable since February 2025. This changed with the Digital Omnibus on AI (Regulation (EU) 2026/1744, OJ of 24 July 2026, in force 27 July 2026): the Annex III high-risk application date is deferred to 2 December 2027 and the Annex I date to 2 August 2028. Not deferred: Art. 50 transparency and the Commission's GPAI enforcement powers and fines still apply from 2 August 2026. Check euaiact_check_deadlines for the operative dates.",
     articleReferences: ["Art. 4", "Art. 5", "Art. 9", "Art. 11", "Art. 26", "Art. 27", "Art. 43", "Art. 49", "Art. 113"],
-    keywords: ["deadline", "2026", "compliance", "preparation", "timeline", "roadmap"],
+    keywords: ["deadline", "deadlines", "2026", "compliance", "preparation", "timeline", "roadmap", "high-risk annex iii apply", "when obligations apply", "december 2027", "dates"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-august-2026-vorbereitung",
     category: "deadlines",
   },
@@ -184,7 +184,7 @@ export const faqDatabase: FAQEntry[] = [
     answer:
       "Penalties are tiered by severity. Prohibited practice violations (Art. 5): up to EUR 35 million or 7% of global annual turnover, whichever is higher. High-risk and other obligation violations: up to EUR 15 million or 3%. Providing false information to authorities: up to EUR 7.5 million or 1%. For SMEs and startups, the applicable fine is whichever amount is lower (not higher), providing proportionate protection. Member States enforce via national market surveillance authorities.",
     articleReferences: ["Art. 99(3)", "Art. 99(4)", "Art. 99(5)", "Art. 99(6)"],
-    keywords: ["penalties", "fines", "sanctions", "enforcement", "non-compliance", "punishment", "EUR 35 million"],
+    keywords: ["penalties", "fines", "fined", "sanctions", "enforcement", "non-compliance", "punishment", "EUR 35 million", "company fined", "maximum fine"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/strafen-bussgeld-eu-ai-act",
     category: "enforcement",
   },

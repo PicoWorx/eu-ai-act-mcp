@@ -402,7 +402,7 @@ export const digitalOmnibusPack: DigitalOmnibusPack = {
     {
       article: "Art. 95(4) / Art. 96(1) / Art. 99",
       change:
-        "SME and SMC treatment (items 35, 36 and 38): voluntary support tools and Commission guidance take small mid-caps into account alongside SMEs, and new Art. 99(6a) caps fines for SMCs at the lower of the percentage or the fixed amount, matching the SME privilege.",
+        "SME and SMC treatment (items 35, 36 and 38): voluntary support tools and Commission guidance take small mid-caps into account alongside SMEs, and new Art. 99(6a) caps fines for SMCs at the lower of the percentage or the fixed amount for the Art. 99(4) and 99(5) tiers only. It is narrower than the Art. 99(6) SME rule, which also covers the Art. 99(3) prohibited-practice tier; an SMC gets no lower cap on an Art. 5 fine.",
       sourceStatus: "enacted_oj",
       sourceId: "omnibus_oj",
       effectiveDate: "2026-07-27",

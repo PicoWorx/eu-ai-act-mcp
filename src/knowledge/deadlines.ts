@@ -167,7 +167,7 @@ export interface OperativeHighRiskDates {
   annexIHighRisk: string;
   /** Art. 50 transparency: NOT deferred by the Omnibus, stays 2 Aug 2026. */
   art50Transparency: string;
-  /** Commission enforcement powers and fines for GPAI: NOT deferred, stays 2 Aug 2026. */
+  /** Commission GPAI supervision (Arts. 88-94) and Art. 101 fines: NOT deferred, stays 2 Aug 2026. Arts. 99-100 apply since 2 Aug 2025 (Art. 113(3)(b)). */
   gpaiEnforcementFines: string;
   /** Legacy GPAI (models placed before 2 Aug 2025, Art. 111(3)): NOT deferred, stays 2 Aug 2027. */
   legacyGpaiCompliance: string;
@@ -213,12 +213,12 @@ function buildEnactedMilestones(enactment: OmnibusEnactment): Milestone[] {
       date: dates.art50Transparency,
       name: "Art. 50 transparency and GPAI enforcement (not deferred)",
       description:
-        "Art. 50 transparency obligations and the Commission's enforcement powers and fines for GPAI providers (Arts. 99-101) apply from 2 August 2026. The Digital Omnibus did NOT defer these; only the Annex III and Annex I high-risk application dates moved.",
+        "Art. 50 transparency obligations, the Commission's supervisory and enforcement powers over general-purpose AI models (Arts. 88-94), and the Art. 101 GPAI fines apply from 2 August 2026. Arts. 99 and 100, the general penalties framework and EDPS fines, have applied since 2 August 2025 under Art. 113, third paragraph, point (b), which excepts only Art. 101 from that earlier date. The Digital Omnibus did NOT defer any of these; only the Annex III and Annex I high-risk application dates moved.",
       status: "upcoming",
-      articles: ["Art. 50", "Art. 99", "Art. 100", "Art. 101", "Art. 113"],
+      articles: ["Art. 50", "Art. 88-94", "Art. 101", "Art. 113"],
       keyObligations: [
         "Limited-risk transparency obligations (Art. 50), including informing persons they interact with AI",
-        "Commission enforcement powers and fines for GPAI providers begin (Arts. 99-101)",
+        "Commission supervisory and enforcement powers over GPAI providers begin (Arts. 88-94)",
         "Art. 101 GPAI fines apply from this date",
       ],
     },
@@ -249,12 +249,11 @@ function buildEnactedMilestones(enactment: OmnibusEnactment): Milestone[] {
       date: dates.annexIiiHighRisk,
       name: "High-risk Annex III obligations (deferred by the Digital Omnibus)",
       description:
-        `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). This is a fixed date, not a backstop: Art. 113(3)(c)(i) as amended sets it unconditionally, and the Commission proposal's trigger that would have brought the obligations forward six months after a decision on the availability of support measures was deleted before adoption. Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026.`,
+        `The full set of obligations for high-risk AI systems listed in Annex III applies from 2 December 2027, as deferred by the Digital Omnibus on AI (CELEX ${enactment.celex}, published in the Official Journal on ${enactment.ojPublicationDate}, in force since ${enactment.entryIntoForce}). This is a fixed date, not a backstop: Art. 113(3)(c)(i) as amended sets it unconditionally, and the Commission proposal's trigger that would have brought the obligations forward six months after a decision on the availability of support measures was deleted before adoption. Art. 50 transparency and the Commission's GPAI enforcement powers were NOT deferred and apply since 2 August 2026. Conformity assessment (Art. 43), the EU declaration of conformity (Art. 47), registration (Art. 49), post-market monitoring (Art. 72) and serious-incident reporting (Art. 73) formally apply since 2 August 2026 under Art. 113, second paragraph; for Annex III systems they are practically triggered by the Art. 6(2) classification, which applies from this date.`,
       status: "upcoming",
       articles: [
         "Art. 6", "Art. 9", "Art. 10", "Art. 11", "Art. 12", "Art. 13",
         "Art. 14", "Art. 15", "Art. 16", "Art. 17", "Art. 26", "Art. 27",
-        "Art. 43", "Art. 47", "Art. 49", "Art. 72", "Art. 73",
       ],
       keyObligations: [
         "Risk management systems for high-risk AI",
@@ -305,18 +304,22 @@ export function getMilestonesWithDaysRemaining(
   enactment: OmnibusEnactment = omnibusEnactment,
 ): MilestoneWithDaysRemaining[] {
   const now = new Date();
-  // Normalise to start of day in UTC for consistent calculation
-  const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  // UTC getters throughout: the boundary day must not depend on the host timezone.
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
   return getOperativeMilestones(enactment).map((milestone) => {
     const milestoneDate = new Date(milestone.date + "T00:00:00Z");
     const diffMs = milestoneDate.getTime() - today.getTime();
     const daysRemaining = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    const isPast = daysRemaining <= 0;
 
     return {
       ...milestone,
+      // status is DERIVED from the clock, never served from the stored literal,
+      // so a milestone can no longer be reported "upcoming" after its date.
+      status: milestone.status === "proposal_only" ? milestone.status : isPast ? "in_effect" : "upcoming",
       daysRemaining,
-      isPast: daysRemaining <= 0,
+      isPast,
     };
   });
 }

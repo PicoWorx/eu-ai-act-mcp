@@ -25,10 +25,14 @@ export function registerFaqTool(server: McpServer): void {
       "_search" as any,
     );
 
-    if (!match.item) {
+    // Abstain below the match threshold instead of serving the least-bad entry:
+    // a wrong answer to a different question is worse than no answer.
+    if (!match.item || match.score < 0.34) {
       const output: FaqOutput = {
         question: input.question,
-        answer: "No matching FAQ found. Please consult the full regulation text or contact Lexbeam for specific guidance.",
+        matched_question: match.item?.question,
+        answer:
+          "No sufficiently matching FAQ found. Try euaiact_check_deadlines for dates, euaiact_classify_system for risk classification, euaiact_get_obligations for duties, or euaiact_get_article for a specific article. Consult the regulation text for anything else.",
         confidence: "low",
         article_references: [],
         lexbeam_url: `${BRANDING.baseUrl}/kontakt`,
@@ -40,7 +44,10 @@ export function registerFaqTool(server: McpServer): void {
     }
 
     const output: FaqOutput = {
-      question: match.item.question,
+      // The caller's question is echoed verbatim; the matched entry is named
+      // separately so a substitution can never be silent.
+      question: input.question,
+      matched_question: match.item.question,
       answer: match.item.answer,
       confidence: match.confidence,
       article_references: match.item.articleReferences,

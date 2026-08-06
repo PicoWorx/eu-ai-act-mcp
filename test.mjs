@@ -397,9 +397,20 @@ test(
 console.log("\n📅 DEADLINES");
 const milestones = getMilestonesWithDaysRemaining();
 test("8 milestones total (enacted state)", milestones.length === 8);
+// Date-independent properties: these hold on ANY day the suite runs, so the
+// suite cannot rot when the calendar passes a milestone (the 1.4.3 defect class).
+test("isPast agrees with the clock for every milestone", milestones.every((m) => m.isPast === (new Date(m.date + "T00:00:00Z").getTime() <= Date.now())));
+test("status is derived: past milestones are in_effect", milestones.filter((m) => m.isPast).every((m) => m.status === "in_effect"));
+test("status is derived: future milestones are upcoming", milestones.filter((m) => !m.isPast).every((m) => m.status === "upcoming"));
+test("status never contradicts is_past", milestones.every((m) => (m.status === "in_effect") === m.isPast || m.status === "proposal_only"));
+test("daysRemaining sign matches isPast", milestones.every((m) => (m.daysRemaining <= 0) === m.isPast));
+test("milestones are chronologically ordered", milestones.every((m, i) => i === 0 || m.date >= milestones[i - 1].date));
+// Fixed historical facts, safe on any date:
 test("Entry into force is past", milestones[0].isPast === true);
-test("Aug 2026 application date has passed", milestones[3].isPast === true);
-test("Aug 2027 is upcoming", milestones[4].isPast === false);
+test("2026-08-02 milestone no longer claims Arts. 99-100 start then", !milestones.some((m) => m.date === "2026-08-02" && (m.articles.includes("Art. 99") || m.articles.includes("Art. 100"))));
+test("2026-08-02 milestone names Arts. 88-94 supervision and Art. 101", milestones.some((m) => m.date === "2026-08-02" && m.articles.includes("Art. 88-94") && m.articles.includes("Art. 101") && /Arts\. 99 and 100.*2 August 2025/.test(m.description)));
+test("2027-12-02 milestone articles are Sections 1-3 only (no 43/47/49/72/73)", milestones.some((m) => m.date === "2027-12-02") && !milestones.some((m) => m.date === "2027-12-02" && ["Art. 43", "Art. 47", "Art. 49", "Art. 72", "Art. 73"].some((a) => m.articles.includes(a))));
+test("2027-12-02 milestone explains formal vs practical trigger for Arts. 43-73", milestones.some((m) => m.date === "2027-12-02" && /formally apply since 2 August 2026/.test(m.description) && /practically triggered/.test(m.description)));
 test("Digital Omnibus summary status is enacted_oj", digitalOmnibus.status === "enacted_oj");
 test("Digital Omnibus impact states it is enacted and in force", digitalOmnibus.impactOnAIAct.includes("in force since 2026-07-27"));
 test("Chapter XII penalty framework date is 2025-08-02", penaltyFramework.enforcementDate === "2025-08-02");
@@ -408,8 +419,12 @@ test("2025 milestone includes Chapter XII penalties except Art. 101", milestones
 // Tool-level: only_upcoming filter
 {
   const r = await callTool("euaiact_check_deadlines", { only_upcoming: true });
-  test("deadlines only_upcoming filter drops past entries", structured(r).milestones.every((m) => !m.is_past));
-  test("deadlines next_milestone shortcut populated", structured(r).next_milestone !== null);
+  const s = structured(r);
+  test("deadlines only_upcoming filter drops past entries", s.milestones.every((m) => !m.is_past));
+  // Date-independent: next_milestone is the first non-past entry, or null once
+  // every milestone has passed (from 2028-08-03 the null is the correct answer).
+  test("deadlines next_milestone agrees with the clock", s.next_milestone !== null || s.milestones.length === 0);
+  test("deadlines only_upcoming status never says in_effect", s.milestones.every((m) => m.status !== "in_effect"));
 }
 
 // ─── SOURCE-STATE: DIGITAL OMNIBUS (v1.3.0) ─────────────────────────────────
@@ -513,6 +528,17 @@ test("Omnibus Art. 113 delta records the trigger as deleted", digitalOmnibusPack
   test("deadlines default: no milestone calls a high-risk date a backstop", !s.milestones.some((m) => /backstop/i.test(m.description) && !/not a backstop/i.test(m.description)));
   test("deadlines default: no milestone offers an earlier support-measures trigger", !/(bite|apply|start).{0,60}earlier.{0,120}(Commission|support measure)/is.test(full));
   test("deadlines default: Annex III milestone states the date is fixed", s.milestones.some((m) => m.date === "2027-12-02" && /fixed date, not a backstop/i.test(m.description)));
+  // Hardened guard: the deleted months-after-Commission-decision mechanism must
+  // not survive ANYWHERE in the serialized payload (description, keyObligations,
+  // name, articles), in any numeric spelling. "6 months after entry into force"
+  // stays legal because the window requires Commission/support-measures context.
+  const monthsTrigger = /(six|6|twelve|12)\s+months\s+after[^.]{0,120}(Commission|support measure)/is;
+  const negated = /deleted before adoption|was deleted|not a backstop/i;
+  // Descriptions may mention the deleted trigger ONLY while negating it in the
+  // same breath; every other field must be entirely free of it, so the 1.4.3
+  // guard bypass (mechanism reinstated in keyObligations) can never pass again.
+  test("deadlines default: months-after trigger in a description only when negated", s.milestones.every((m) => !monthsTrigger.test(m.description) || negated.test(m.description)));
+  test("deadlines default: months-after trigger absent from name/obligations/articles", !s.milestones.some((m) => monthsTrigger.test(JSON.stringify([m.name, m.key_obligations ?? m.keyObligations, m.articles]))));
 }
 
 // Tool guardrail: pending mode surfaces the flagged pack; current-law milestones unchanged
