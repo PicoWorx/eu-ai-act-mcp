@@ -25,22 +25,32 @@ export function registerGpaiSystemicTool(server: McpServer): void {
       outputSchema: gpaiSystemicOutputSchema,
     },
     async (input: GpaiSystemicInput): Promise<{ content: any[]; structuredContent: GpaiSystemicOutput }> => {
-      const crossesFlops = typeof input.training_flops === "number" && input.training_flops > FLOPS_THRESHOLD;
+      const flopsProvided = typeof input.training_flops === "number";
       const designated = input.commission_designated === true;
-      const isSystemic = crossesFlops || designated;
+      // ABSTENTION: with neither the training compute nor a designation, the
+      // status cannot be determined. Pre-1.4.4 a no-args call returned a
+      // confident negative (crosses=false, designation "none"), which an agent
+      // that could not find the FLOPs figure read as "not systemic risk".
+      const undetermined = !flopsProvided && !designated;
+      const crossesFlops = flopsProvided ? input.training_flops! > FLOPS_THRESHOLD : null;
+      const isSystemic = undetermined ? null : crossesFlops === true || designated;
 
       const designation: GpaiSystemicOutput["systemic_risk_designation"] = designated
         ? "commission_designated"
-        : crossesFlops
-          ? "threshold_met"
-          : "none";
+        : undetermined
+          ? "undetermined"
+          : crossesFlops
+            ? "threshold_met"
+            : "none";
 
       const baseline = providerGPAIObligations.filter((o) => o.article.startsWith("Art. 53"));
       const systemic = providerGPAIObligations.filter((o) => o.article.startsWith("Art. 55"));
 
-      const notification = crossesFlops
-        ? "Art. 52(1): Providers must notify the Commission without delay and in any event within two weeks of when the model meets — or it becomes known that it will meet — the systemic-risk threshold. The provider may present arguments that the model does not present systemic risks; the Commission assesses the arguments."
-        : "No notification duty under Art. 52 on the basis of the current inputs. Re-evaluate when training compute approaches 10^25 FLOPs or Commission designation criteria may apply.";
+      const notification = undetermined
+        ? "UNDETERMINED: supply the cumulative training compute (training_flops) or state whether the Commission has designated the model (commission_designated). Without either, systemic-risk status cannot be assessed — do not treat this response as a negative finding. Baseline Art. 53 obligations apply to every GPAI model regardless."
+        : crossesFlops
+          ? "Art. 52(1): Providers must notify the Commission without delay and in any event within two weeks of when the model meets — or it becomes known that it will meet — the systemic-risk threshold. The provider may present arguments that the model does not present systemic risks; the Commission assesses the arguments."
+          : "No notification duty under Art. 52 on the basis of the current inputs. Re-evaluate when training compute approaches 10^25 FLOPs or Commission designation criteria may apply.";
 
       const output: GpaiSystemicOutput = {
         model_name: input.model_name ?? null,
@@ -55,7 +65,7 @@ export function registerGpaiSystemicTool(server: McpServer): void {
           details: o.details,
           category: o.category,
         })),
-        systemic_risk_obligations_art_55: isSystemic
+        systemic_risk_obligations_art_55: isSystemic === true
           ? systemic.map((o) => ({
               obligation: o.obligation,
               article: o.article,

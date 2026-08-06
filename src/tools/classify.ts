@@ -87,6 +87,8 @@ function buildBase(partial: Partial<BaseResult> & Pick<BaseResult, "risk_classif
     caveat: null,
     lexbeam_url: `${BRANDING.baseUrl}/tools/mcp`,
     ...partial,
+    // Single choke point for citation hygiene: no duplicate articles in any output.
+    relevant_articles: [...new Set(partial.relevant_articles)],
   };
 }
 
@@ -140,8 +142,8 @@ function includesAny(text: string, patterns: RegExp[]): boolean {
 function isSolePurposeBiometricVerification(text: string): boolean {
   const normalized = text.toLowerCase();
   const biometric = includesAny(normalized, [/\bbiometric\b/, /\bfingerprint\b/, /\biris\b/, /\bface\b/, /\bfacial\b/, /\bvoice\b/, /\bgait\b/]);
-  const verification = includesAny(normalized, [/\bverification\b/, /\bauthentication\b/, /\blogin\b/, /\baccess control\b/, /\bconfirm(?:ing)? identity\b/, /\bperson they claim to be\b/]);
-  const highRiskBiometricUse = includesAny(normalized, [/\bremote biometric identification\b/, /\bbiometric categorisation\b/, /\bbiometric categorization\b/, /\bemotion recognition\b/]);
+  const verification = includesAny(normalized, [/\bverification\b/, /\bverify(?:ing)?\b/, /\bauthentication\b/, /\blogin\b/, /\baccess control\b/, /\bconfirm(?:ing)? identity\b/, /\bclaimed identity\b/, /\bperson they claim to be\b/, /\b1:1\b/, /\bone-to-one\b/]);
+  const highRiskBiometricUse = includesAny(normalized, [/\bremote biometric identification\b/, /\bbiometric categorisation\b/, /\bbiometric categorization\b/, /\bemotion recognition\b/, /\bwatchlist\b/, /\bidentif(?:y|ying|ication)\b/]);
   return biometric && verification && !highRiskBiometricUse;
 }
 
@@ -177,6 +179,39 @@ function isGenericAggregatedCrimeAnalytics(text: string): boolean {
 // Step 0 — Structured signals → deterministic classification
 // ---------------------------------------------------------------------------
 
+/**
+ * Sole-purpose 1:1 biometric verification is expressly excluded from Annex
+ * III(1)(a). When that is established (by signal or by the description) and no
+ * other risk signal fires, the honest answer is "minimal" with pointers to the
+ * checks that remain — not "insufficient_information".
+ */
+function verificationExclusionMinimal(params: {
+  matched: string[];
+  missing: string[];
+  role: "provider" | "deployer" | "uncertain";
+}): ClassifyOutput {
+  return {
+    ...buildBase({
+      risk_classification: "minimal",
+      confidence: "medium",
+      relevant_articles: ["Annex III(1)(a)", "Art. 6(2)", "Art. 6(1)", "Art. 50"],
+      role_determination: params.role,
+      obligations_summary:
+        "Sole-purpose biometric verification (1:1 confirmation that a person is who they claim to be) is expressly excluded from Annex III(1)(a) and is not high-risk on that ground. Verify separately: the Art. 6(1)/Annex I safety-component path, any other Annex III use, and Art. 50 transparency duties if the system interacts with natural persons or performs biometric categorisation. Art. 4 AI literacy measures apply to all providers and deployers.",
+      caveat:
+        "Automated pre-assessment. The exclusion covers only verification of a claimed identity; remote biometric identification, biometric categorisation and emotion recognition are separate analyses.",
+    }),
+    matched_signals: params.matched,
+    missing_signals: params.missing,
+    next_questions: [
+      SIGNAL_QUESTIONS.biometric_remote_identification,
+      "Does the system perform biometric categorisation according to sensitive or protected attributes?",
+      "Does the system perform emotion recognition?",
+    ],
+    basis: "signals",
+  };
+}
+
 function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
   const s = input.signals;
   if (!s) return null;
@@ -184,6 +219,7 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
   const role = roleOrUncertain(input.role);
   const matched: string[] = [];
   const missing = missingFromSignals(s).map(String);
+  const combined = `${input.description ?? ""} ${input.use_case ?? ""}`.trim();
 
   // Prohibited practices (Art. 5) — highest priority
   if (s.performs_social_scoring || s.performs_social_scoring_by_public_authority) {
@@ -250,23 +286,19 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
     if (s.biometric_sole_purpose_verification) {
       matched.push("uses_biometrics + biometric_sole_purpose_verification → Annex III(1)(a) verification exclusion");
       if (!hasNonBiometricAnnexDomain) {
-        return insufficientFromSignals({
-          matched,
-          missing,
-          role,
-          relevantArticles: ["Annex III(1)(a)", "Art. 6(2)"],
-          obligationsSummary: "Sole-purpose biometric verification that only confirms a specific natural person is who they claim to be is excluded from Annex III(1)(a). Check separately for other Annex III uses, Art. 5 prohibitions, and Art. 50 transparency duties.",
-          caveat: "Automated pre-assessment based on signals. The exclusion applies only to sole-purpose biometric verification; remote biometric identification, biometric categorisation, and emotion recognition require separate analysis.",
-          nextQuestions: [
-            SIGNAL_QUESTIONS.biometric_remote_identification,
-            "Does the system perform biometric categorisation according to sensitive or protected attributes?",
-            "Does the system perform emotion recognition?",
-          ],
-        });
+        return verificationExclusionMinimal({ matched, missing, role });
       }
     }
 
     if (!s.biometric_sole_purpose_verification && !s.biometric_remote_identification && !s.biometric_law_enforcement && !s.biometric_realtime) {
+      // The signal was not set, but the description may still establish 1:1
+      // verification (the canonical e-gate case: match a face against the
+      // holder's own passport). The text path never gets a chance when signals
+      // are present, so the exclusion must be applied here.
+      if (!hasNonBiometricAnnexDomain && combined && isSolePurposeBiometricVerification(combined)) {
+        matched.push("uses_biometrics + description indicates sole-purpose 1:1 verification → Annex III(1)(a) verification exclusion");
+        return verificationExclusionMinimal({ matched, missing, role });
+      }
       matched.push("uses_biometrics → biometric use needs Annex III(1) purpose check");
       if (!hasNonBiometricAnnexDomain) {
         return insufficientFromSignals({
@@ -404,6 +436,35 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
     };
   }
 
+  // Comprehensively negative signal set → minimal. A caller who answered the
+  // signal questionnaire and denied every risk indicator has earned a real
+  // answer, not "insufficient_information" with a false limited-information
+  // caveat (the pre-1.4.4 behaviour, unreachable "minimal" included).
+  const providedKeys = ALL_SIGNAL_KEYS.filter((k) => s[k] !== undefined);
+  const anyRiskSignalTrue = providedKeys.some((k) => s[k] === true);
+  const domainMapsToAnnexIII = s.domain !== undefined && DOMAIN_TO_ANNEX_III[s.domain] !== undefined;
+  if (!anyRiskSignalTrue && !domainMapsToAnnexIII && providedKeys.length >= 8) {
+    matched.push(`all ${providedKeys.length} provided risk signals negative → no Art. 5 / Annex III / Annex I / Art. 50 trigger`);
+    return {
+      ...buildBase({
+        risk_classification: "minimal",
+        confidence: missing.length === 0 ? "high" : "medium",
+        relevant_articles: ["Art. 95", "Art. 4"],
+        role_determination: role,
+        obligations_summary:
+          "No Art. 5 prohibition, Annex III or Annex I high-risk category, or Art. 50 transparency trigger applies on the signals provided. Minimal-risk systems carry no mandatory AI Act obligations; voluntary codes of conduct are encouraged (Art. 95) and Art. 4 AI literacy measures apply to all providers and deployers.",
+        caveat:
+          missing.length === 0
+            ? "Automated pre-assessment based on the complete signal set. The classification is only as accurate as the signals supplied."
+            : `Automated pre-assessment based on ${providedKeys.length} of ${ALL_SIGNAL_KEYS.length} signals, all negative. Answer the remaining questions to raise confidence.`,
+      }),
+      matched_signals: matched,
+      missing_signals: missing,
+      next_questions: missing.length === 0 ? [] : questionsFor(missingFromSignals(s)),
+      basis: "signals",
+    };
+  }
+
   // Signals given but no rule fired → fall through to text classification
   return null;
 }
@@ -456,7 +517,9 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
         relevant_articles: ["Art. 6(1)"],
         role_determination: role,
         obligations_summary: "Unable to classify based on provided information. Please provide a system description or structured signals.",
-        caveat: "No description or signals provided.",
+        caveat: input.signals
+          ? "No description provided, and the supplied signals were insufficient to classify. Answer the follow-up questions or add a description."
+          : "No description or signals provided.",
       }),
       matched_signals: [],
       missing_signals: missing,
@@ -546,7 +609,7 @@ function classifyFromText(input: ClassifyInput): ClassifyOutput {
       relevant_articles: ["Art. 6(1)"],
       role_determination: role,
       obligations_summary: "Unable to determine risk classification from the provided description. The system may be minimal risk, but further analysis is recommended.",
-      caveat: "Classification based on limited information. A detailed assessment may reveal higher risk. All providers and deployers must take measures to support the development of AI literacy (Art. 4, applicable since 2 February 2025 and replaced with effect from 27 July 2026).",
+      caveat: "No prohibited-practice, Annex III, Annex I or Art. 50 indicators matched the provided description. A detailed assessment may reveal higher risk; supplying structured signals gives a deterministic answer. All providers and deployers must take measures to support the development of AI literacy (Art. 4, applicable since 2 February 2025 and replaced with effect from 27 July 2026).",
     }),
     matched_signals: [],
     missing_signals: missing,

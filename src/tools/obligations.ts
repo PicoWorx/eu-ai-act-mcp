@@ -72,12 +72,24 @@ export function registerObligationsTool(server: McpServer): void {
           ? "Art. 6(2) and Annex III"
           : "Art. 6(2) and Annex III (assumed: no high_risk_source given; this is the earlier of the two dates)";
       if (operativeDeadline !== AUTHORED_HIGH_RISK_DEADLINE) {
+        // Art. 113(3)(c) as amended defers Chapter III Sections 1-3 only.
+        // Arts. 43/47/49 (Section 5) and Arts. 72/73/86 (Chapter IX) formally
+        // apply since 2 August 2026 under Art. 113 second paragraph; their
+        // PRACTICAL date moves because the Art. 6 classification that gives
+        // them an addressee is what point (c) defers. The citation must say
+        // which mechanism carries the date, or a reader checking the pinpoint
+        // finds it does not support the claim.
+        const downstreamTriggered = new Set(["Art. 43", "Art. 47", "Art. 49", "Art. 72", "Art. 73", "Art. 86"]);
+        const pointCite = isAnnexI ? "Art. 113(3)(c)(ii)" : "Art. 113(3)(c)(i)";
+        const classificationArt = isAnnexI ? "Art. 6(1)" : "Art. 6(2)";
         baseObligations = baseObligations.map((obl: any) =>
           obl.deadline === AUTHORED_HIGH_RISK_DEADLINE
             ? {
                 ...obl,
                 deadline: operativeDeadline,
-                details: `${obl.details} Application date ${operativeDeadline} for ${sourceLabel}, per Art. 113(3)(c) as amended by the Digital Omnibus on AI.`,
+                details: downstreamTriggered.has(obl.article)
+                  ? `${obl.details} Practical compliance date ${operativeDeadline} for ${sourceLabel}: this article formally applies since 2 August 2026 (Art. 113, second paragraph), and is triggered by the ${classificationArt} classification, which applies from ${operativeDeadline} under ${pointCite} as amended by the Digital Omnibus on AI.`
+                  : `${obl.details} Application date ${operativeDeadline} for ${sourceLabel}, per ${pointCite} as amended by the Digital Omnibus on AI.`,
               }
             : obl,
         );

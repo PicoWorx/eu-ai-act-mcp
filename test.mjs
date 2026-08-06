@@ -335,7 +335,9 @@ test(
 );
 test(
   "sole-purpose biometric verification signal does not auto-classify Annex III(1)",
-  structured(classifyResults.signalsBiometricVerification).risk_classification === "insufficient_information" &&
+  // 1.4.4: the exclusion now yields an explicit "minimal" (with the remaining
+  // checks named) instead of insufficient_information; still never high-risk.
+  structured(classifyResults.signalsBiometricVerification).risk_classification === "minimal" &&
     structured(classifyResults.signalsBiometricVerification).relevant_articles.includes("Annex III(1)(a)"),
 );
 test(
@@ -1007,6 +1009,85 @@ console.log("\n🔌 SERVER WIRING");
 {
   const srv = createServer();
   test("createServer returns an McpServer instance", typeof srv === "object");
+}
+
+// ─── 1.4.4 REGRESSIONS (batch 2: classifier, GPAI, FAQ, penalties, obligations)
+console.log("\n🩹 1.4.4 REGRESSIONS");
+{
+  // Classifier: "minimal" is reachable, and a complete negative signal set earns it.
+  const ALL_FALSE = {
+    domain: "other", uses_biometrics: false, biometric_sole_purpose_verification: false,
+    biometric_remote_identification: false, biometric_realtime: false, biometric_law_enforcement: false,
+    biometric_publicly_accessible_space: false, is_safety_component_of_regulated_product: false,
+    requires_third_party_conformity_assessment: false, affects_fundamental_rights: false,
+    targets_children_or_vulnerable: false, generates_synthetic_content: false,
+    interacts_with_natural_persons: false, performs_emotion_recognition_workplace_or_school: false,
+    performs_social_scoring: false, performs_social_scoring_by_public_authority: false,
+  };
+  const rMin = structured(await callTool("euaiact_classify_system", { description: "email spam filter", signals: ALL_FALSE }));
+  test("classify: complete negative signal set returns minimal", rMin.risk_classification === "minimal");
+  test("classify: complete negative signal set is high confidence", rMin.confidence === "high");
+  test("classify: minimal cites Art. 95 codes of conduct", rMin.relevant_articles.includes("Art. 95"));
+  test("classify: minimal caveat does not claim limited information", !/limited information/i.test(rMin.caveat ?? ""));
+
+  const rTwo = structured(await callTool("euaiact_classify_system", { signals: { uses_biometrics: false, performs_social_scoring: false } }));
+  test("classify: two negatives alone are NOT minimal", rTwo.risk_classification !== "minimal");
+  test("classify: signals-present empty-input caveat is honest", !/No description or signals provided/.test(rTwo.caveat ?? ""));
+
+  // e-gate canonical case: 1:1 verification excluded from Annex III(1)(a)
+  const rGateSig = structured(await callTool("euaiact_classify_system", { signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }));
+  test("classify: verification-exclusion signal returns minimal", rGateSig.risk_classification === "minimal" && rGateSig.relevant_articles.includes("Annex III(1)(a)"));
+  const rGateTxt = structured(await callTool("euaiact_classify_system", { description: "airport e-gate that matches a traveller face against their passport photo to verify the claimed identity", signals: { uses_biometrics: true } }));
+  test("classify: e-gate description alone reaches the exclusion", rGateTxt.risk_classification === "minimal");
+  const rWatch = structured(await callTool("euaiact_classify_system", { description: "camera system that scans faces in the terminal to identify persons on a watchlist", signals: { uses_biometrics: true } }));
+  test("classify: watchlist identification is NOT excluded as verification", rWatch.risk_classification !== "minimal");
+
+  // Citation hygiene: no duplicates in any classify output
+  const rCv = structured(await callTool("euaiact_classify_system", { description: "AI system that screens and ranks CVs for recruitment shortlisting", signals: { domain: "employment" } }));
+  test("classify: relevant_articles carries no duplicates", new Set(rCv.relevant_articles).size === rCv.relevant_articles.length);
+  test("classify: CV screening still high-risk high confidence", rCv.risk_classification === "high-risk" && rCv.confidence === "high");
+
+  // GPAI: abstention instead of a confident false negative
+  const gNone = structured(await callTool("euaiact_check_gpai_systemic_risk", {}));
+  test("gpai: no inputs -> undetermined, not a negative", gNone.systemic_risk_designation === "undetermined" && gNone.is_gpai_with_systemic_risk === null && gNone.crosses_flops_threshold === null);
+  test("gpai: undetermined says do-not-treat-as-negative", /not.*negative finding/i.test(gNone.notification_duty));
+  const gOver = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 3e25 }));
+  test("gpai: 3e25 crosses", gOver.is_gpai_with_systemic_risk === true);
+  const gAt = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 1e25 }));
+  test("gpai: exactly 1e25 does not cross (strict greater-than)", gAt.crosses_flops_threshold === false && gAt.is_gpai_with_systemic_risk === false);
+  const gDesig = structured(await callTool("euaiact_check_gpai_systemic_risk", { commission_designated: true }));
+  test("gpai: designation alone establishes systemic risk", gDesig.is_gpai_with_systemic_risk === true && gDesig.systemic_risk_designation === "commission_designated");
+
+  // FAQ: verbatim echo, visible match, correct routing, abstention
+  const fDl = structured(await callTool("euaiact_answer_question", { question: "What are the deadlines under the EU AI Act?" }));
+  test("faq: echoes the caller's question verbatim", fDl.question === "What are the deadlines under the EU AI Act?");
+  test("faq: names the matched entry separately", typeof fDl.matched_question === "string" && fDl.matched_question.length > 0);
+  test("faq: deadline question gets a dated answer", /2 December 2027|2027/.test(fDl.answer));
+  const fNone = structured(await callTool("euaiact_answer_question", { question: "completely unrelated question about bananas" }));
+  test("faq: unrelated question abstains with tool pointers", fNone.confidence === "low" && /euaiact_check_deadlines/.test(fNone.answer));
+
+  // Penalties: input guards live in the schema (the SDK validates before the
+  // handler runs; the test harness bypasses it, so assert at schema level).
+  test("penalty: negative turnover is rejected", !penaltiesInputSchema.safeParse({ violation_type: "prohibited", annual_turnover_eur: -1000000000, is_sme: true }).success);
+  test("penalty: non-finite turnover is rejected", !penaltiesInputSchema.safeParse({ violation_type: "prohibited", annual_turnover_eur: 1e999 }).success);
+  test("penalty: is_smc input parses", penaltiesInputSchema.safeParse({ violation_type: "high_risk", annual_turnover_eur: 1e9, is_smc: true }).success);
+  const pSmcHr = structured(await callTool("euaiact_calculate_penalty", { violation_type: "high_risk", annual_turnover_eur: 1e9, is_smc: true }));
+  test("penalty: SMC gets lower-of on the 99(4) tier", pSmcHr.max_fine.applicable_fine_eur === 15000000);
+  const pSmcPro = structured(await callTool("euaiact_calculate_penalty", { violation_type: "prohibited", annual_turnover_eur: 1e9, is_smc: true }));
+  test("penalty: SMC gets NO cap on the 99(3) prohibited tier", pSmcPro.max_fine.applicable_fine_eur === 70000000 && /99\(6a\)/.test(pSmcPro.max_fine.explanation));
+  const pSme = structured(await callTool("euaiact_calculate_penalty", { violation_type: "prohibited", annual_turnover_eur: 1e9, is_sme: true }));
+  test("penalty: SME still capped on 99(3)", pSme.max_fine.applicable_fine_eur === 35000000);
+
+  // Obligations: citation carries the correct mechanism per article class
+  const ob = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "provider", high_risk_source: "annex_iii" }));
+  const ob43 = ob.obligations.find((o) => o.article === "Art. 43");
+  const ob9 = ob.obligations.find((o) => o.article === "Art. 9");
+  test("obligations: Art. 43 states formal date + practical trigger", !!ob43 && /formally applies since 2 August 2026/.test(ob43.details) && /Art\. 113\(3\)\(c\)\(i\)/.test(ob43.details));
+  test("obligations: Art. 43 no longer claims direct 113(3)(c) deferral", !!ob43 && !/per Art\. 113\(3\)\(c\) as amended/.test(ob43.details));
+  test("obligations: Art. 9 cites 113(3)(c)(i) directly (Sections 1-3)", !!ob9 && /per Art\. 113\(3\)\(c\)\(i\) as amended/.test(ob9.details));
+  const obDep = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "deployer", high_risk_source: "annex_iii" }));
+  const ob86 = obDep.obligations.find((o) => o.article === "Art. 86");
+  test("obligations: deployer Art. 86 (if present) uses the practical-trigger wording", !ob86 || /formally applies since 2 August 2026/.test(ob86.details));
 }
 
 // ─── SUMMARY ────────────────────────────────────────────────────────────────
