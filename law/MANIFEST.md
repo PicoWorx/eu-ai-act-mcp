@@ -1,6 +1,6 @@
 # Legal corpus manifest (human view; manifest.json is the machine record)
 
-Pinned consolidation date: **20260727**. Sealed: 2026-08-06T06:16:44.606Z.
+Pinned consolidation date: **20260727**. Sealed: 2026-08-06T07:15:50.834Z.
 Commands: `verify` (offline gate), `fetch [CELEX]` (atomic re-download), `seal`, `freshness` (network monitor, fails closed).
 
 | CELEX | File | sha256(html) | sha256(txt) | bytes html/txt |
