@@ -203,7 +203,7 @@ export const faqDatabase: FAQEntry[] = [
     question: "What is the Digital Omnibus and how does it affect the AI Act?",
     answer: omnibusFaqAnswer,
     articleReferences: ["Art. 5", "Art. 6", "Art. 50", "Art. 113"],
-    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus", "adopted", "Official Journal", "deferral", "postponement", "postponed", "delayed", "delay", "pushed back"],
+    keywords: ["Digital Omnibus", "simplification", "proposal", "reform", "compliance reduction", "Omnibus", "adopted", "Official Journal", "deferral", "postponement", "postponed", "postpone", "delayed", "delay", "pushed back", "high-risk dates", "postpone high-risk"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/digital-omnibus-ai-act-auswirkungen",
     category: "legislative_updates",
   },

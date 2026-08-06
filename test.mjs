@@ -1087,6 +1087,9 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   test("faq: registration question reaches faq-19", /register/.test(fReg.matched_question ?? "") && fReg.confidence !== "low");
   const fPost = structured(await callTool("euaiact_answer_question", { question: "Is the AI Act postponed by the Digital Omnibus?" }));
   test("faq: postponement question reaches the Omnibus entry", /Omnibus/.test(fPost.matched_question ?? "") && fPost.confidence !== "low");
+  // Codex prompt-D exact remaining probe, pinned verbatim:
+  const fPostD = structured(await callTool("euaiact_answer_question", { question: "Did the Digital Omnibus postpone the high-risk dates?" }));
+  test("faq: omnibus-postponed-high-risk-dates reaches faq-18, not faq-02", /Omnibus/.test(fPostD.matched_question ?? "") && !/by when/.test(fPostD.matched_question ?? "") && fPostD.confidence !== "low");
 
   // Penalties: input guards live in the schema (the SDK validates before the
   // handler runs; the test harness bypasses it, so assert at schema level).
