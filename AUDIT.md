@@ -136,7 +136,7 @@ Agent-grounding gaps surfaced during the same probe session:
   threshold). Unblocks GPAI-specific conversations.
 - `euaiact_assess_art6_3_exception` — walks through the Art. 6(3) "no
   significant risk" exception, with explicit handling of the profiling block
-  (Art. 6(3) second subparagraph). Critical: the exception does NOT apply if
+  (Art. 6(3), third subparagraph; corrected 2026-08-06, the conditions list is the second). Critical: the exception does NOT apply if
   the system performs profiling of natural persons, regardless of whether one
   of the four conditions would otherwise be met. Also reminds about the
   Art. 6(4) documentation duty and the Art. 49(2) EU database registration.

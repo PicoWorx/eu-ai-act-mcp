@@ -64,7 +64,7 @@ Built by [Lexbeam Software](https://lexbeam.com) — an agentic AI implementatio
 | `euaiact_get_obligations` | Specific compliance obligations by role (provider/deployer) and risk level, including GPAI (Art. 51-56) and universal AI literacy (Art. 4). |
 | `euaiact_answer_question` | Semantic FAQ search across 24 curated EU AI Act questions with article references. |
 | `euaiact_calculate_penalty` | Calculate maximum fines by violation type, turnover, and SME status (Art. 99) with a comparative non-SME vs SME block. |
-| `euaiact_get_article` | Retrieve an operational summary and EUR-Lex URL for a specific article. Covers 27 curated articles between Art. 3 and Art. 113, not the full act. |
+| `euaiact_get_article` | Retrieve an operational summary and EUR-Lex URL for a specific article. Covers 28 curated articles between Art. 3 and Art. 113 (including the new Art. 4a), not the full act. |
 | `euaiact_check_gpai_systemic_risk` | Check whether a GPAI model crosses the 10²⁵ FLOPs threshold and return Art. 53 + Art. 55 obligations plus the Art. 52 notification duty. |
 | `euaiact_assess_art6_3_exception` | Walk through the Art. 6(3) "no significant risk" exception with explicit profiling block and Art. 6(4) / Art. 49(2) reminders. |
 | `euaiact_annex_iv_checklist` | Return all nine Annex IV technical-documentation items, optionally as a markdown checklist. |
@@ -146,7 +146,7 @@ Curated, structured data covering:
 - **Universal AI literacy** (Art. 4)
 - **Penalty framework** with SME protection logic (Art. 99)
 - **24 FAQ entries** with article references and Lexbeam knowledge-base links
-- **27 article summaries** with EUR-Lex URLs *(new in 1.1.0)*
+- **28 article summaries** with EUR-Lex URLs to the consolidated text
 - **Annex IV (9 documentation items)** *(new in 1.1.0)*
 
 All dates, articles, and obligations verified against the regulation text.
@@ -180,7 +180,7 @@ This MCP server is a structured information tool that returns references to and 
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Regulation text summarised in `src/knowledge/articles.ts` and `src/knowledge/annex-iv.ts` is derived from Regulation (EU) 2024/1689, which is public-domain under Commission Decision 2011/833/EU.
+MIT. See [LICENSE](LICENSE). Regulation text summarised in `src/knowledge/articles.ts` and `src/knowledge/annex-iv.ts` is derived from Regulation (EU) 2024/1689 as amended; EUR-Lex content is reused under the conditions of Commission Decision 2011/833/EU (preserve attribution, do not distort the meaning of the source).
 
 ## About Lexbeam
 

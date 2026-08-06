@@ -913,7 +913,9 @@ test("findArticle('99') does not place GPAI fines under Art. 99(4)", !/GPAI obli
   const r = await callTool("euaiact_get_article", { article: "5" });
   const p = structured(r);
   test("get_article(5): available=true", p.available === true);
-  test("get_article(5): has EUR-Lex URL", p.eurlex_url.includes("CELEX:32024R1689"));
+  // 1.4.4: links point at the consolidated version, so following the citation
+  // shows the amended law rather than the superseded original text.
+  test("get_article(5): links the consolidated text", p.eurlex_url.includes("CELEX:02024R1689-20260727"));
   test("get_article(5): title mentions prohibited", /prohibit/i.test(p.article.title));
 }
 {
@@ -1088,6 +1090,41 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   const obDep = structured(await callTool("euaiact_get_obligations", { risk_level: "high-risk", role: "deployer", high_risk_source: "annex_iii" }));
   const ob86 = obDep.obligations.find((o) => o.article === "Art. 86");
   test("obligations: deployer Art. 86 (if present) uses the practical-trigger wording", !ob86 || /formally applies since 2 August 2026/.test(ob86.details));
+}
+
+// ─── 1.4.4 REGRESSIONS (batch 3: article corpus, links, carve-outs, reuse wording)
+console.log("\n📖 1.4.4 REGRESSIONS: ARTICLE CORPUS");
+{
+  const { articles } = await import("./dist/knowledge/articles.js");
+  test("corpus: 28 article summaries including Art. 4a", articles.length === 28 && articles.some((a) => a.number === "4a"));
+  test("corpus: every link points at the consolidated text", articles.every((a) => a.eurlex_url.includes("CELEX:02024R1689-20260727")));
+
+  const a4a = structured(await callTool("euaiact_get_article", { article: "4a" }));
+  test("get_article(4a): available with bias-detection content", a4a.available === true && /bias detection/i.test(a4a.article.summary));
+  test("get_article(4a): names the deleted Art. 10(5) origin", /Art\. 10\(5\)/.test(a4a.article.summary));
+
+  const a5 = structured(await callTool("euaiact_get_article", { article: "5" }));
+  test("get_article(5): carries (ba) and (bb) with the 2 Dec 2026 date", /\(ba\)/.test(a5.article.summary) && /\(bb\)/.test(a5.article.summary) && /2 December 2026/.test(a5.article.summary));
+  test("get_article(5): carries the Art. 5(1a)/(1b) qualifications", /5\(1a\)/.test(a5.article.summary) && /5\(1b\)/.test(a5.article.summary));
+
+  const a6 = structured(await callTool("euaiact_get_article", { article: "6" }));
+  test("get_article(6): carries the Art. 6(1a)-(1c) narrowing", /6\(1a\)/.test(a6.article.summary) && /6\(1c\)/.test(a6.article.summary) && /radio spectrum/.test(a6.article.summary));
+
+  const a10 = structured(await callTool("euaiact_get_article", { article: "10" }));
+  test("get_article(10): states the Art. 10(5) deletion and Art. 4a move", /deleted/.test(a10.article.summary) && /Art\. 4a/.test(a10.article.summary));
+
+  const a99 = structured(await callTool("euaiact_get_article", { article: "99" }));
+  test("get_article(99): includes point (da) and the 99(6a) SMC rule", /\(da\)/.test(a99.article.summary) && /99\(6a\)/.test(a99.article.summary));
+
+  const exc = structured(await callTool("euaiact_assess_art6_3_exception", { performs_profiling: true, narrow_procedural_task: true, no_significant_risk_to_health_safety_fundamental_rights: true }));
+  test("art6-exception: profiling refusal cites the THIRD subparagraph", /third subparagraph/.test(JSON.stringify(exc)) && !/second subparagraph/.test(JSON.stringify(exc)));
+
+  const { annexIIICategories } = await import("./dist/knowledge/annex-iii.js");
+  const cat5 = annexIIICategories.find((c) => c.number === 5);
+  test("annex III(5): financial-fraud carve-out present", /detecting financial fraud/.test(cat5.description));
+
+  const { SERVER_INSTRUCTIONS } = await import("./dist/constants.js");
+  test("reuse wording: no bare public-domain claim in server instructions", !/public.domain/i.test(SERVER_INSTRUCTIONS) && /2011\/833\/EU/.test(SERVER_INSTRUCTIONS));
 }
 
 // ─── SUMMARY ────────────────────────────────────────────────────────────────

@@ -15,7 +15,7 @@ export const art6ExceptionInputSchema = z.object({
   performs_profiling: z
     .boolean()
     .describe(
-      "Does the system perform profiling of natural persons? If true, Art. 6(3) exception is UNAVAILABLE regardless of other conditions (Art. 6(3) second subparagraph).",
+      "Does the system perform profiling of natural persons? If true, Art. 6(3) exception is UNAVAILABLE regardless of other conditions (Art. 6(3), third subparagraph).",
     ),
   narrow_procedural_task: z
     .boolean()

@@ -1,7 +1,7 @@
 /**
  * EU AI Act — Annex IV: Technical Documentation requirements.
  *
- * Source: Regulation (EU) 2024/1689, Annex IV. Public-domain EU text under
+ * Source: Regulation (EU) 2024/1689, Annex IV. EUR-Lex content reused under the conditions of
  * Commission Decision 2011/833/EU.
  *
  * Nine items define the minimum technical documentation a provider of a

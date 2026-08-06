@@ -12,7 +12,7 @@ export function registerArt6ExceptionTool(server: McpServer): void {
     {
       title: "Assess Art. 6(3) 'No Significant Risk' Exception",
       description:
-        "Walk through the Art. 6(3) exception for Annex III high-risk AI systems. An Annex III system is NOT high-risk only if the provider affirmatively assesses no significant risk to health, safety, or fundamental rights, AND the system falls under one of the four conditions: (a) narrow procedural task, (b) improves prior human activity, (c) detects patterns without replacing human assessment, (d) preparatory task. Set no_significant_risk_to_health_safety_fundamental_rights=true only when that threshold has been assessed. CRITICAL: The exception does NOT apply if the system performs profiling of natural persons (Art. 6(3) second subparagraph). Providers invoking the exception must document the assessment (Art. 6(4)) and still register in the EU database (Art. 49(2)).",
+        "Walk through the Art. 6(3) exception for Annex III high-risk AI systems. An Annex III system is NOT high-risk only if the provider affirmatively assesses no significant risk to health, safety, or fundamental rights, AND the system falls under one of the four conditions: (a) narrow procedural task, (b) improves prior human activity, (c) detects patterns without replacing human assessment, (d) preparatory task. Set no_significant_risk_to_health_safety_fundamental_rights=true only when that threshold has been assessed. CRITICAL: The exception does NOT apply if the system performs profiling of natural persons (Art. 6(3), third subparagraph). Providers invoking the exception must document the assessment (Art. 6(4)) and still register in the EU database (Art. 49(2)).",
       annotations: {
         readOnlyHint: true,
         idempotentHint: true,
@@ -56,7 +56,7 @@ export function registerArt6ExceptionTool(server: McpServer): void {
       if (profilingBlocks) {
         exceptionAvailable = false;
         reasoning =
-          "Art. 6(3) exception is NOT available. Art. 6(3) second subparagraph: the exception does not apply to AI systems that perform profiling of natural persons — regardless of whether one of the four conditions would otherwise be met. The system remains high-risk under Art. 6(2) and must comply with Chapter III Section 2.";
+          "Art. 6(3) exception is NOT available. Art. 6(3), third subparagraph: the exception does not apply to AI systems that perform profiling of natural persons — regardless of whether one of the four conditions would otherwise be met. The system remains high-risk under Art. 6(2) and must comply with Chapter III Section 2.";
       } else if (!noSignificantRiskAssessed) {
         exceptionAvailable = false;
         reasoning =

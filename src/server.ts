@@ -98,7 +98,7 @@ export function createServer(): McpServer {
         mimeType: "application/json",
         text: JSON.stringify({
           risk_levels: [
-            { level: "prohibited", description: "Banned outright (Art. 5): social scoring, real-time biometrics (with exceptions), manipulation of vulnerable groups, emotion recognition in workplace/education.", articles: ["Art. 5"] },
+            { level: "prohibited", description: "Banned outright (Art. 5), including: social scoring, real-time remote biometric identification for law enforcement (with exceptions), manipulation of vulnerable groups, emotion recognition in workplace/education, untargeted facial scraping; from 2 December 2026 also the generation of non-consensual intimate imagery (Art. 5(1)(ba)) and CSAM (Art. 5(1)(bb)), added by the Digital Omnibus.", articles: ["Art. 5"] },
             { level: "high-risk", description: "Strict obligations (Art. 6, Annex III): biometrics, critical infrastructure, education, employment, essential services, law enforcement, migration, justice.", articles: ["Art. 6", "Annex III"] },
             { level: "limited_risk", description: "Transparency obligations (Art. 50): chatbots, emotion recognition, deepfakes, AI-generated content must be disclosed.", articles: ["Art. 50"] },
             { level: "minimal", description: "No specific obligations. Voluntary codes of conduct encouraged (Art. 95).", articles: ["Art. 95"] },
@@ -113,7 +113,7 @@ export function createServer(): McpServer {
     "EU AI Act Annex III — High-Risk Categories",
     "euaiact://annex/iii",
     {
-      description: "Full Annex III high-risk AI system categories (1-8) with descriptions, examples, and relevant articles. Source: Regulation (EU) 2024/1689, Annex III (public domain).",
+      description: "Full Annex III high-risk AI system categories (1-8) with descriptions, examples, and relevant articles. Source: Regulation (EU) 2024/1689 as amended, Annex III; reused under Commission Decision 2011/833/EU conditions.",
       mimeType: "application/json",
     },
     async () => ({
@@ -147,7 +147,7 @@ export function createServer(): McpServer {
     "EU AI Act Annex IV — Technical Documentation",
     "euaiact://annex/iv",
     {
-      description: "Full Annex IV technical documentation requirements (items 1-9) that providers of high-risk AI systems must prepare under Art. 11. Public-domain EU text.",
+      description: "Full Annex IV technical documentation requirements (items 1-9) that providers of high-risk AI systems must prepare under Art. 11. EUR-Lex content reused under Commission Decision 2011/833/EU conditions.",
       mimeType: "application/json",
     },
     async () => ({

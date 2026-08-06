@@ -123,7 +123,7 @@ export const annexIIICategories: HighRiskCategory[] = [
     number: 5,
     name: "Access to essential private and public services and benefits",
     description:
-      "AI systems intended for the specific essential-service use cases listed in Annex III(5): public-authority eligibility decisions for essential public assistance benefits and services, creditworthiness or credit scoring of natural persons, risk assessment and pricing for life and health insurance, and emergency-call classification, dispatch, prioritisation, or emergency healthcare triage.",
+      "AI systems intended for the specific essential-service use cases listed in Annex III(5): public-authority eligibility decisions for essential public assistance benefits and services, creditworthiness or credit scoring of natural persons (with the exception of AI systems used for the purpose of detecting financial fraud, Annex III(5)(b)), risk assessment and pricing for life and health insurance, and emergency-call classification, dispatch, prioritisation, or emergency healthcare triage.",
     examples: [
       "AI credit scoring systems determining loan eligibility",
       "AI systems assessing eligibility for social benefits or public assistance",

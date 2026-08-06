@@ -21,10 +21,15 @@ export interface ArticleEntry {
   related_annexes: string[];
 }
 
-const CELEX = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689";
+// Deep links point at the CONSOLIDATED text as amended by Reg. (EU) 2026/1744,
+// not the original act: following a citation must show the same law the summary
+// states (the original act still reads "2 August 2027" at Art. 113). The
+// consolidated version is a documentation tool without legal effect; authentic
+// OJ acts are the legal authority.
+const CELEX = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727";
 
 function anchor(article: string): string {
-  // Best-effort EUR-Lex anchor. The consolidated HTML uses art_N as anchor IDs.
+  // The consolidated HTML uses art_N (incl. letter suffixes like art_4a) as anchor IDs.
   return `${CELEX}#art_${article.replace(/\./g, "_")}`;
 }
 
@@ -46,10 +51,18 @@ export const articles: ArticleEntry[] = [
     related_annexes: [],
   },
   {
+    number: "4a",
+    title: "Processing of special categories of personal data for bias detection and correction",
+    summary:
+      "Inserted by the Digital Omnibus (Reg. (EU) 2026/1744, in force 27 July 2026), replacing the deleted Art. 10(5). To the extent strictly necessary to ensure bias detection and correction in high-risk AI systems in accordance with Art. 10(2)(f) and (g), providers may exceptionally process special categories of personal data, subject to appropriate safeguards for the fundamental rights and freedoms of natural persons. The safeguards sit on top of Regulations (EU) 2016/679 and (EU) 2018/1725 and Directive (EU) 2016/680 and include conditions on necessity (bias detection cannot be effectively fulfilled with synthetic or anonymised data), technical limits on re-use, security and documentation, and deletion once the bias is corrected or the data reaches the end of its retention period.",
+    eurlex_url: anchor("4a"),
+    related_annexes: [],
+  },
+  {
     number: "5",
     title: "Prohibited AI practices",
     summary:
-      "Prohibits the placing on the market, putting into service, and use of AI systems that: (a) deploy subliminal, manipulative, or deceptive techniques materially distorting behaviour and causing significant harm; (b) exploit vulnerabilities due to age, disability, or social/economic situation; (c) perform social scoring of natural persons or groups leading to detrimental treatment in unrelated contexts or unjustified/disproportionate treatment; (d) assess risk of criminal offences based solely on profiling or personality traits; (e) create or expand facial recognition databases via untargeted scraping of internet or CCTV images; (f) infer emotions in workplaces or educational institutions (except medical or safety exceptions); (g) use biometric categorisation to infer race, political opinions, trade union membership, religion, sex life, or sexual orientation; (h) use real-time remote biometric identification in publicly accessible spaces for law enforcement (with narrow exceptions under Art. 5(2)-(4)). Applicable since 2 February 2025.",
+      "Prohibits the placing on the market, putting into service, and use of AI systems that: (a) deploy subliminal, manipulative, or deceptive techniques materially distorting behaviour and causing significant harm; (b) exploit vulnerabilities due to age, disability, or social/economic situation; (c) perform social scoring of natural persons or groups leading to detrimental treatment in unrelated contexts or unjustified/disproportionate treatment; (d) assess risk of criminal offences based solely on profiling or personality traits; (e) create or expand facial recognition databases via untargeted scraping of internet or CCTV images; (f) infer emotions in workplaces or educational institutions (except medical or safety exceptions); (g) use biometric categorisation to infer race, political opinions, trade union membership, religion, sex life, or sexual orientation; (h) use real-time remote biometric identification in publicly accessible spaces for law enforcement (with narrow exceptions under Art. 5(2)-(4)). Points (a)-(h) applicable since 2 February 2025. The Digital Omnibus (Reg. (EU) 2026/1744) added two prohibitions applying from 2 December 2026: (ba) generating or manipulating realistic intimate or sexually explicit material of an identifiable person without their freely given, specific, informed, unambiguous and explicit consent; and (bb) generating or manipulating child sexual abuse material within the meaning of Art. 2(c) and (e) of Directive 2011/93/EU. Both are qualified by Art. 5(1a) (placing on the market or putting into service is prohibited only where the generation is the intended purpose or a reasonably foreseeable, reproducible outcome) and Art. 5(1b) (a 'without right' condition for (bb) covering legitimate law-enforcement, judicial and research handling).",
     eurlex_url: anchor("5"),
     related_annexes: [],
   },
@@ -57,7 +70,7 @@ export const articles: ArticleEntry[] = [
     number: "6",
     title: "Classification rules for high-risk AI systems",
     summary:
-      "Art. 6(1): AI systems are high-risk if they are intended to be used as a safety component of a product, or are themselves such a product, covered by EU harmonisation legislation listed in Annex I, and are required to undergo a third-party conformity assessment. Art. 6(2): AI systems referred to in Annex III are also high-risk. Art. 6(3): An Annex III AI system is NOT high-risk if it does not pose a significant risk of harm to health, safety, or fundamental rights, including by not materially influencing the outcome of decision-making. This exception applies when the system: (a) performs a narrow procedural task; (b) improves the result of a previously completed human activity; (c) detects decision-making patterns without replacing or influencing human assessment without proper review; or (d) performs a preparatory task. The exception does NOT apply if the system performs profiling of natural persons. Art. 6(4): Providers relying on Art. 6(3) must document the assessment and register in the EU database under Art. 49(2).",
+      "Art. 6(1): AI systems are high-risk if they are intended to be used as a safety component of a product, or are themselves such a product, covered by EU harmonisation legislation listed in Annex I, and are required to undergo a third-party conformity assessment. The Digital Omnibus narrowed this: Art. 6(1a) excludes systems solely used for non-safety aspects of user assistance, performance optimisation, service efficiency, automation, convenience or quality control from qualifying as safety components; Art. 6(1b) pulls systems back in where failure or malfunctioning would endanger health and safety; and Art. 6(1c) provides that a third-party conformity assessment required solely for risks other than health and safety (e.g. radio spectrum or electromagnetic interference) does not fulfil the Art. 6(1)(b) condition. Art. 6(2): AI systems referred to in Annex III are also high-risk. Art. 6(3): An Annex III AI system is NOT high-risk if it does not pose a significant risk of harm to health, safety, or fundamental rights, including by not materially influencing the outcome of decision-making. This exception applies when the system: (a) performs a narrow procedural task; (b) improves the result of a previously completed human activity; (c) detects decision-making patterns without replacing or influencing human assessment without proper review; or (d) performs a preparatory task. The exception does NOT apply if the system performs profiling of natural persons. Art. 6(4): Providers relying on Art. 6(3) must document the assessment and register in the EU database under Art. 49(2).",
     eurlex_url: anchor("6"),
     related_annexes: ["Annex I", "Annex III"],
   },
@@ -73,7 +86,7 @@ export const articles: ArticleEntry[] = [
     number: "10",
     title: "Data and data governance",
     summary:
-      "High-risk AI systems that make use of techniques involving the training of AI models with data must be developed on the basis of training, validation, and testing datasets that meet quality criteria. Datasets must be subject to appropriate data governance and management practices, be relevant, sufficiently representative, and to the best extent possible, free of errors and complete in view of the intended purpose. Possible biases must be considered and mitigated. Special categories of personal data may be processed only where strictly necessary for bias detection and correction, subject to safeguards.",
+      "High-risk AI systems that make use of techniques involving the training of AI models with data must be developed on the basis of training, validation, and testing datasets that meet quality criteria. Datasets must be subject to appropriate data governance and management practices, be relevant, sufficiently representative, and to the best extent possible, free of errors and complete in view of the intended purpose. Possible biases must be considered and mitigated (Art. 10(2)(f)-(g)). The former Art. 10(5), which conditioned the processing of special categories of personal data for bias detection and correction, was deleted by the Digital Omnibus (Reg. (EU) 2026/1744); those conditions now live in Art. 4a, which Art. 10 cross-references.",
     eurlex_url: anchor("10"),
     related_annexes: [],
   },
@@ -225,7 +238,7 @@ export const articles: ArticleEntry[] = [
     number: "99",
     title: "Penalties",
     summary:
-      "Art. 99(3): Non-compliance with the prohibition of the AI practices referred to in Art. 5 is subject to administrative fines of up to EUR 35,000,000 or, if the offender is an undertaking, up to 7% of total worldwide annual turnover for the preceding financial year, whichever is higher. Art. 99(4): Non-compliance with the listed operator, notified-body, and Art. 50 transparency obligations is subject to fines of up to EUR 15,000,000 or 3% of total worldwide annual turnover, whichever is higher. Art. 99(5): The supply of incorrect, incomplete, or misleading information to notified bodies and national competent authorities is subject to fines of up to EUR 7,500,000 or 1% of turnover, whichever is higher. Art. 99(6): For SMEs, including start-ups, each fine referred to in Art. 99 is up to the percentages or amount referred to, whichever is lower. Fines for providers of general-purpose AI models are governed separately by Art. 101.",
+      "Art. 99(3): Non-compliance with the prohibition of the AI practices referred to in Art. 5 is subject to administrative fines of up to EUR 35,000,000 or, if the offender is an undertaking, up to 7% of total worldwide annual turnover for the preceding financial year, whichever is higher. Art. 99(4): Non-compliance with the listed operator, notified-body, and Art. 50 transparency obligations is subject to fines of up to EUR 15,000,000 or 3% of total worldwide annual turnover, whichever is higher. Art. 99(5): The supply of incorrect, incomplete, or misleading information to notified bodies and national competent authorities is subject to fines of up to EUR 7,500,000 or 1% of turnover, whichever is higher. The Art. 99(4) list includes the new point (da), obligations of providers and operators under Art. 25(2) and (4), added by the Digital Omnibus. Art. 99(6): For SMEs, including start-ups, each fine referred to in paragraphs 3, 4 and 5 is up to the percentages or amount referred to, whichever is lower. Art. 99(6a): For SMCs (small mid-caps), the same lower-of rule applies to the paragraph 4 and 5 fines only, not to paragraph 3. Fines for providers of general-purpose AI models are governed separately by Art. 101.",
     eurlex_url: anchor("99"),
     related_annexes: [],
   },

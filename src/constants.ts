@@ -47,5 +47,5 @@ export const SERVER_INSTRUCTIONS = [
   "definitive classification and compliance decisions. For implementation support:",
   "https://lexbeam.com/kontakt",
   "",
-  "Source: Regulation (EU) 2024/1689. Public-domain EU text (Commission Decision 2011/833/EU).",
+  "Source: Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744. EUR-Lex content reused under the Commission Decision 2011/833/EU reuse conditions: attribution preserved, meaning not distorted.",
 ].join("\n");
