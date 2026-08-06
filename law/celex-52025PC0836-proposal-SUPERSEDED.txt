@@ -1,0 +1,2641 @@
+ 
+
+ IMMC.COM%282025%29836%20final.ENG.xhtml.1_EN_ACT_part1_v7.docx 
+
+ EUROPEAN COMMISSION
+
+ Brussels, 19.11.2025
+
+ COM(2025) 836 final
+
+ 2025/0359(COD)
+
+ Proposal for a
+
+ REGULATION OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL
+
+ amending Regulations (EU) 2024/1689 and (EU) 2018/1139 as regards the simplification of the implementation of harmonised rules on artificial intelligence (Digital Omnibus on AI)
+
+ (Text with EEA relevance)
+
+ {SWD(2025) 836 final}
+
+ EXPLANATORY MEMORANDUM 
+
+ 1. CONTEXT OF THE PROPOSAL 
+
+ • Reasons for and objectives of the proposal 
+
+ In its Communication on a Simpler and Faster Europe ( 
+ 1 
+ ) , t he Commission announced its commitment to an ambitious programme to promote forward-looking, innovative policies that strengthen the European Union’s (EU) competitiveness and lighten the regulatory burdens on people, businesses and administrations, while maintaining the highest standard in promoting its values. 
+
+ Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence (‘AI Act’), which entered into force on 1 August 2024, establishes a single market for trustworthy and human-centric artificial intelligence (‘AI’) across the EU. Its purpose is to promote innovation and the uptake of AI while ensuring a high level of protection for health, safety, and fundamental rights, including democracy and the rule of law. 
+
+ The AI Act’s entry into application occurs in stages, with all rules entering into application by 2 August 2027. The prohibitions on AI practices with unacceptable risks and the obligations for general-purpose AI models are already applicable. However, most provisions – in particular those governing high-risk AI systems – will only start to apply from 2 August 2026 or 2 August 2027. These provisions include detailed requirements for data governance, transparency, documentation, human oversight, and robustness, so as to ensure that AI systems placed on the EU market are safe, transparent, and reliable. 
+
+ The Commission is committed to a clear, simple, and innovation-friendly implementation of the AI Act, as set out in the AI Continent Action Plan ( 
+ 2 
+ ) and the Apply AI Strategy ( 
+ 3 
+ ) . Initiatives such as the General-Purpose AI Code of Practice, Commission guidelines and template s , the AI Pact and the launch of the AI Act Service Desk build clarity regarding the applicable rules and support for their application. In particular, the website through which the AI Act Service Desk is provided offers a single information platform ( 
+ 4 
+ ) o n all resources available to stakeholders to navigate the AI Act , including guidelines, national authorities and support initiatives, webinars, and harmonised standards . These efforts will continue, with further guidance and digital tools under preparation. 
+
+ Building on experience gained from the implementation of already applicable provisions, the Commission held a series of consultations, including a public consultation to identify potential challenges with implementing the AI Act’s provisions, a call for evidence in preparation of the Digital Omnibus, a reality check allowing stakeholders to directly share their implementation experiences and an SME panel to identify their particular needs in the implementation of the AI Act. 
+
+ These consultations reveal implementation challenges that could jeopardise the effective entry into application of key provisions of the AI Act. These include delays in designating national competent authorities and conformity assessment bodies, as well as a lack of harmonised standards for the AI Act’s high-risk requirements, guidance, and compliance tools. Such delays risk significantly increasing the compliance costs for businesses and public authorities and slowing down innovation. 
+
+ To address these challenges, the Commission is proposing targeted simplification measures to ensure timely, smooth, and proportionate implementation of certain of the AI Act’s provisions. These include: 
+
+ · linking the implementation timeline of high-risk rules to the availability of standards or other support tools ; 
+
+ · extending regulatory simplifications granted to small and medium-sized enterprises ( SMEs ) to small mid-caps (SMCs) , including simplified technical documentation requirements and special consideration in the application of penal ties; 
+
+ · requiring the Commission and the Member States to foster AI literacy instead enforcing unspecified obligation on providers and deployers of AI systems in this respect , while training obligations for high-risk deployers remain ; 
+
+ · offering more flexibility in the post-market monitoring by removing a prescription of a harmonised post-market monitoring plan; 
+
+ · reducing the registration burden for providers of AI systems that are used in high-risk areas but for which the provider has concluded that they are not high-risk as they are only used for narrow or procedural tasks; 
+
+ · Centralising oversight over a large number of AI systems built on general-purpose AI models or embedded in very large online platforms and very large search engines with the AI Office; 
+
+ · facilitating compliance with the data protection laws by allowing providers and deployers of all AI systems and models to process special categories of personal data for ensuring bias detection and correction, with the appropriate safeguards ; 
+
+ · a broader use of AI regulatory sandboxes and real-world testing , that will benefit Europe an key industries such as the automotive industry , and facilitating an EU-level AI regulatory sandbox which the AI Office will set up as from 2028; 
+
+ · targeted changes clarifying the interplay between the AI Act and other EU legislation and adjusting the AI Act’s procedures to improve its overall implementation and operation . 
+
+ Beyond the legislative measures, the Commission is taking further measures to facilitate compliance with the AI Act and address the concerns raised by stakeholders. Further guidance is under preparation, focusing on offering clear and practical instructions to apply the AI Act in parallel with other EU legislation. This includes: 
+
+ · Guidelines on the practical application of the high-risk classification ; 
+
+ · Guidelines on the practical application of the transparency requirements under Article 50 AI Act ; 
+
+ · Guidance on the reporting of serious incidents by providers of high-risk AI systems ; 
+
+ · Guidelines on the practical application of the high-risk requirements ; 
+
+ · Guidelines on the practical application of the obligations for providers and deployers of high-risk AI systems ; 
+
+ · Guidelines with a template for the fundamental rights impact assessment ; 
+
+ · Guidelines on the practical application of rules for responsibilities along the AI value chain ; 
+
+ · Guidelines on the practical application of the provisions related to substantial modification ; 
+
+ · Guidelines on the post-market monitoring of high-risk AI systems ; 
+
+ · Gudelines on the elements of the quality management system which SMEs and SMCs may comply with in a simplified manner ; 
+
+ · Guidelines o n the AI Act’s interplay with other Union legislation, for example joint guidelines of the Commission and European Data Protection Board on the interplay of the AI Act and EU data protection law , guidelines on the interplay between the AI Act and the Cyber Resilience Act , and guidelines on the interplay between the AI Act and the Machinery Regulation ; 
+
+ · Guidelines on the competences and designation procedure for conformity assessment bodies to be designated under the AI Act . 
+
+ In particular, stakeholder consultations reveal the need to offer guidance on the practical application of the AI Act’s research exemptions under Article 2(6) and (8), including how they apply in sectoral contexts like in the pre-clinical research and product development in the field of medicinal products or medical devices, which the Commission will work on with priority. 
+
+ These simplification efforts will help to ensure that the implementation of the AI Act is smooth, predictable, and innovation-friendly, enabling Europe to strengthen its position as the AI continent and to pursue an AI-first approach safely. 
+
+ • Consistency with existing policy provisions in the policy area 
+
+ The proposal is part of a broader Digital Package on Simplification composed of measures to reduce the administrative costs of compliance for businesses and administrations in the EU, which applies to several regulations of the EU’s digital acquis without compromising the objectives of the underlying rules. The proposal builds on Regulation (EU) 2024/1689 and is aligned with existing policies to make the EU a global leader in AI, to make the EU an AI continent and to promote the uptake of human-centric and trustworthy a AI. 
+
+ • Consistency with other Union policies 
+
+ The proposal is part of a series of simplification packages. 
+
+ 2. LEGAL BASIS, SUBSIDIARITY AND PROPORTIONALITY 
+
+ • Legal basis 
+
+ The legal basis for this proposal is Article 114 of the Treaty on the Functioning of the European Union (TFEU) in line with the original legal basis for the adoption of the legal acts which this proposal aims to amend. 
+
+ • Subsidiarity (for non-exclusive competence) 
+
+ Regulation (EU) 2024/1689 was adopted at EU level. Accordingly, amendments to that Regulation need to be made at EU level. 
+
+ • Proportionality 
+
+ The initiative does not go beyond what is necessary to achieve the objectives of simplification and burden reduction without lowering the protection of health, safety and fundamental rights. 
+
+ • Choice of the instrument 
+
+ The proposal amends Regulation (EU) 2024/1689 adopted by ordinary legislative procedure. Therefore, the amendments to that Regulation also must be adopted by regulation in accordance with the ordinary legislative procedure. 
+
+ 3. RESULTS OF EX-POST EVALUATIONS, STAKEHOLDER CONSULTATIONS AND IMPACT ASSESSMENTS 
+
+ • Ex-post evaluations/fitness checks of existing legislation 
+
+ The proposal is accompanied by a Commission staff working document that provides a detailed overview of the impact of the proposed amendments to certain provisions of Regulation (EU) 2024/1689. It also provides an analysis of the positive impacts of the proposed measures. The analysis is based on existing data, information gathered through consultations and during a reality check and through written stakeholder feedback through a call for evidence. 
+
+ • Stakeholder consultations 
+
+ Several consultations were carried out in the context of the proposal. They all complemented one another, addressing either different topical issues or stakeholder groups concerned by the initiative. 
+
+ In the initial scoping phase of the Digital Package on Simplification , three public consultations and calls for evidence were published on the key strands of the proposal in the spring of 2025. A consultation was held on the Apply AI Strategy from 9 April to 4 June 2025 ( 
+ 5 
+ ) , another on the revision of the Cybersecurity Act from 11 April to 20 June 2025 ( 
+ 6 
+ ) , and finally another on the European Data Union Strategy from 23 May to 20 July 2025 ( 
+ 7 
+ ) . Each consultation included a questionnaire with a section (or at times multiple) on implementation and simplification concerns, directly related to the reflections on the Digital Package on Simplification . Taken together, 718 responses were received as part of this first consultation exercise . 
+
+ From 16 September to 14 October 2025, a call for evidence on the Digital Package on Simplification was further published ( 
+ 8 
+ ) . Its aim was to cover the whole scope of the initiative and give an opportunity to stakeholders to comment on a more targeted set of proposals in one go . A total of 513 responses were received, by a wide range of stakeholder s . 
+
+ With a view to raising awareness on the Digital Package on Simplification among small and medium-sized enterprises (SMEs), and collecting their feedback, a dedicated SME Panel was organised through the Enterprise Europe Network (EEN) between 4 September and 16 October 2025. The EEN is the world’s largest support network for SMEs and is implemented by the Commission’s European Innovation Council and SMEs Executive Agency (EISMEA). SME Panels are a way to consult stakeholders falling under this framework. SMEs have the opportunity to contribute their views to upcoming policy initiatives. In addition to the online written consultation (where 106 SMEs’ responses were received), the Commission also presented the Digital Package on Simplification to SME associations part of the EEN, in a meeting that took place on 1 October 2025. 
+
+ A large number of bilateral meetings were organised by the Commission services with stakeholders in 2025, to address specific concerns. Discussions were also held with Member States. In addition to bilateral exchanges, specific agenda points on the Digital Simplification Package were discussed at Council Working Parties in June and September 2025, where the Commission presented the current situation and asked Member States’ to express their views. 
+
+ Overall, stakeholder feedback converged on the need for a simplified application of some of the digital rules. Better coherence, and a focus on optimisation of compliance costs, was largely supported by a cross-section of stakeholders. Some differences in opinion were expressed regarding some of the more tailored measures. A more detailed overview of these stakeholder consultations, and how they were reflected in the proposal can be found in the staff working document accompanying the Digital Package on Simplification. 
+
+ • Collection and use of expertise 
+
+ In addition to the consultation outlined above, the Commission mainly relied on its own internal analysis for the purpose of this proposal. 
+
+ • Impact assessment 
+
+ The amendments put forward in the proposal are technical in nature. They are designed to ensure a more efficient implementation of rules that were already agreed at political level. There are no policy options that could meaningfully be tested and compared in an impact assessment report. 
+
+ The accompanying staff working document examines the reasoning behind the amendments and outlines the views of stakeholders on the different measures. It also presents the costs savings and other types of impacts the proposal may entail. In many cases, it builds on the impact assessments that was originally carried out for the Regulation (EU) 2024/1689. 
+
+ The staff working document therefore serves as a reference point to inform the European Parliament and the Council’s debate on the proposal, as well as the public, in a clear and engaged way. 
+
+ • Regulatory fitness and simplification 
+
+ The proposal aims to produce a significant reduction in administrative burden for businesses, national administrations, and the public at large. Initial estimates project possible savings of ≈ EUR 297.2 to 433.2 million . Non-quantifiable benefits are also expected, notably due to a streamlined set of rules which will ease compliance and enforcement thereof. 
+
+ SMEs already benefit from regulatory privileges under Regulation (EU) 2024/1689. Some regulatory privileges already afforded to SMEs are extended to small mid-caps (SMCs). Since SMEs and SMCs are disproportionality more impacted by the compliance burden, it is expected that they will particularly benefit from these simplification measures. 
+
+ The proposal is consistent with the Commission’s ‘Digital Fitness Check for the digital rulebook’, which aims to ensure properly aligned policy proposals with real-world digital environments (see Chapter 4 on Legislative and Financial Digital Statement). 
+
+ • Fundamental rights 
+
+ Regulation (EU) 2024/1689 is expected to promote the protection of a number of fundamental rights and freedoms set out in the EU Charter of Fundamental Rights ( 
+ 9 
+ ) , as well as positively impacting the rights of a number of special groups ( 
+ 10 
+ ). At the same time, the Regulation (EU) 2024/1689 impose s some restrictions on certain rights and freedoms ( 
+ 11 
+ ) , which are proportionate and limited to the minimum necessary. The proposal is not expected to modify the impact o f the Regulation (EU) 2024/1689 on fundamental rights since the targeted nature of envisaged amendments do not affect the scope of the regulated AI systems or on the substantive requ irements applicable to those systems . 
+
+ 4. BUDGETARY IMPLICATIONS 
+
+ The proposal amends the supervision and enforcement system of Regulation (EU) 2024/1689, whereby oversight over certain AI systems will be transferred to the Commission’s AI Office. In addition, to facilitate compliance by operators, the AI Office should set up an EU-level AI regulatory sandbox. To implement these new tasks, to the Commission will need the appropriate resources, which is estimated to stand at 53 FTE, of which 15 FTE can be covered by internal redeployment. These implications have to be considered against the backdrop of reduced budgetary implications for the Member States which no longer have to ensure the oversight for those certain AI systems. A detailed overview of the costs involved in this transfer of competences is provided in the ‘Legislative and Financial Digital Statement’ accompanying this proposal. 
+
+ 5. OTHER ELEMENTS 
+
+ • Implementation plans and monitoring, evaluation and reporting arrangements 
+
+ The Commission will monitor the implementation, application, and compliance with the new provisions. Furthermore, the Regulation that is amended by this proposal is regularly evaluated for its efficiency, effectiveness in reaching its objectives, relevance, coherence and value added in line with the EU’s better regulation principles. This proposal does not require an implementation plan. 
+
+ • Explanatory documents (for directives) 
+
+ Not applicable. 
+
+ • Detailed explanation of the specific provisions of the proposal 
+
+ Article 1 amends Regulation (EU) 2024/1689 (‘AI Act’). In particular, 
+
+ · Paragraph 1 adds a reference to SMCs in the subject matter of the AI Act. 
+
+ · Paragraph 2 is a technical change that is necessary to enable extending the real-world testing to high-risk AI systems embedded in products covered under Section B of Annex I AI Act . 
+
+ · Paragraph 3 adds legal definitions for SME and SMC to the definitions in Article 3 of the AI Act . 
+
+ · Paragraph 4 transforms the obligation for providers and deployers of AI systems with regards to AI literacy in Article 4 AI Act to an obligation on the Commission and the Member States to foster AI literacy . 
+
+ · Paragraph 5 introduces a new Article 4a, replacing Article 10(5) AI Act, which provides a legal basis for providers and deployers of AI systems and AI models to exceptionally process special categories of personal data for the purpose of ensuring bias detection and correction under certain conditions. 
+
+ · Paragraphs 6 , 1 4 and 32 refer to the deletion of the obligation for providers to register AI systems in the EU database for high-risk systems under Annex III , where they have been exempted from classification as high-risk under Article 6(3) AI Act , because they are for instance only used for preparatory tasks . 
+
+ · Paragraph 7 contain s editorial follow - up changes to amendments made by paragraph 4. 
+
+ · Paragraphs 8 and 9 extend existing regulatory privileges of the AI Act for SME s to SMC s on technical documentation and putting in place a quality management system that takes into account their size . 
+
+ · Paragraph 10 introduces a new procedure in Article 28 AI Act , whereby Member States are required to ensure that a conformity assessment body that applies for designation both under this Regulation and Union harmonization legislation listed in Section A of Annex I AI Act shall be provided with the possibility to submit a single application and undergo a single assessment procedure to be designated. 
+
+ · Paragraph 11 proposes to replace paragraph 4 of Article 29 AI Act which requires conformity assessment bodies to submit a single application in the cases to which reference is made in that paragraph . 
+
+ · Paragraph 12 amends Article 30 AI Act by requiring conformity assessment bodies which apply to be designated as notified bodies to make that application in accordance with the codes, categories, and corresponding types of AI systems referred to in a new Annex XIV for the Commission’s New Approach Notified and Designated Organisations ( ‘ NANDO ’ ) information system, and empowers the Commission to amend these codes, categories , and corresponding types in light of technological developments . 
+
+ · Paragraph 1 3 clarifies the conformity assessment procedure laid down in Article 43 AI A ct where a high-risk AI system is covered by Union harmonisation legislation listed under Section A of Annex I to the AI Act and where a n AI system is classified as high-risk both under Annex I and Annex III to the AI Act . 
+
+ · Paragraphs 1 5 and 1 6 remove the Commission empowerments in Article s 50 and 56 AI Act to adopt implementing acts to give code s of practice for general purpose AI models and transparency obligations for certain AI systems general validity in the Union . 
+
+ · Paragraph 1 7 introduces amendments to the rules on AI regulatory sandboxes in Article 57 AI Act , inter alia , by providing the legal basis for the AI Office to introduce a n AI regulatory sand box on EU level for certain AI systems within its exclusive competence of supervision and require Member States to strengthen cross-border cooperation of their sandboxes. 
+
+ · Paragraph 18 specifies the empowerment of the Commission to adopt implementing acts specifying the detailed arrangements for the establishment, development, implementation, operation, governance and supervision of AI regulatory sandboxes. 
+
+ · Paragraph 19 introduces changes to the testing of high-risk AI systems in real world conditions outside AI regulatory sandboxes as governed by Article 60 AI Act , inter alia extending this opportunity to high-risk AI systems covered by Section A of Annex I . 
+
+ · Paragraph 2 0 creates an additional legal basis for interested Member States and the Commission, on voluntary basis, to enter into written agreement s to test high-risk AI systems referred to in Section B of Annex I in real world-conditions . 
+
+ · Paragraph 2 1 extends the derogation from micro-enterprises to SMEs to comply with certain elements of the quality management system required by Article 17 AI Act in a simplified manner . 
+
+ · Paragraph 2 2 removes an empowerment of the Commission in Article 69 AI Act to adopt an implementing act in relation to the reimbursement of experts of the scientific panel when called upon by Member States, to simplify the procedure. 
+
+ · Paragraph 2 3 extends the focus of guidance which national authorities may provide from SMEs to SMCs. 
+
+ · Paragraph 24 replaces the empowerment of the Commission in Article 72 AI Act to adopt an implementing act with regard to the post-market monitoring plan. 
+
+ · Paragraph 25 makes amendments to the supervision and enforcement of certain AI systems in Article 75 AI Act : 
+
+ · Point (a) changes the heading. 
+
+ · Point (b) reinforces the competence of the AI Office for the supervision and enforcement of certain AI systems, that are based on a general-purpose AI model, where the model and the system are provided by the same provider. At the same time, the provision clarifies that AI systems related to products covered under Annex I are not included in that supervision. Moreover, it is clarified that the supervision and enforcement of the compliance of AI systems embedded in designated very large online platforms or very large online search engines should fall under the competence of the AI Office. 
+
+ · Point ( c ) introduces several new paragraphs, empower ing the Commission to adopt implementing act s to define the enforcement powers and the procedures for the exercise of those powers of the AI Office , introducing a reference to Regulation (EU) 2019/1020 ensuring certain procedural safeguards apply to providers covered and empowering the Commission to carry out conformity assessments of AI systems within the scope of Article 75 . 
+
+ · Paragraph 26 amends Article 77 AI Act as regards the powers of authorities or bodies protecting fundamental rights and cooperation with market surveillance authorities. 
+
+ · Paragraphs 27 and 28 extends provisions in Articles 95 and 96 that require that voluntary support tools should take into account the needs of SMEs to SMCs. 
+
+ · Paragraph 29 extends existing regulatory privileges in Article 99 AI Act on penalties for SME s to SMC s . 
+
+ · Paragraph 30 contains amendments to Article 111 AI Act which result from amendments made in paragrap h 30 and introduces a transitional period of 6 months for providers who need to retroactively include technical solutions in their generative AI systems , to make them machine readable and detectable as artificially generated or manipulated. 
+
+ · Paragraph 31 introduces changes to the entry into application of certain provisions of the AI Act : 
+
+ · For the obligations for high-risk AI systems in Chapter III, a mechanism is introduced that links the entry into application to the availability of measures in support of compliance with the AI Act’s high-risk rules , such as harmonised standards, common specifications, and Commission guidelines. This availability will be confirmed by the Commission by decision, following which the rules for high-risk AI systems start to apply after an appropriate transition period. However, this flexibility should apply only for a limited time and a definite date by which the rules apply in any case should be set. Moreover, it is appropriate to distinguish between the two types of AI systems that classify as high-risk and extend a longer transition period to AI systems that classify as high-risk pursuant to Article 6(1) and Annex I to the AI Act . 
+
+ · It is clarified that the amendments necessary to integrate the high-risk requirements into sectoral law listed in Section B of Annex I apply with the Digital Omnibus’ entry into force. 
+
+ · Paragraph 33 is related to the change in paragraph 11 and introduces a new Annex XIV setting out codes, categories, and corresponding types of AI systems referred to in a new Annex XIV for the Commission’s New Approach Notified and Designated Organisations ( ‘ NANDO ’ ) information system. 
+
+ Article 2 makes amendments with regards to Regulation (EU) 2018/1139, to allow a smooth integration of the AI Act’s high-risk requirements into that Regulation. 
+
+ Article 3 provides the rule of entry into force and the binding nature of this Regulation. 
+
+ 2025/0359 (COD) 
+
+ Proposal for a 
+
+ REGULATION OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL 
+
+ amending Regulations (EU) 2024/1689 and (EU) 2018/1139 as regards the simplification of the implementation of harmonised rules on artificial intelligence (Digital Omnibus on AI) 
+
+ (Text with EEA relevance) 
+
+ THE EUROPEAN PARLIAMENT AND THE COUNCIL OF THE EUROPEAN UNION, 
+
+ Having regard to the Treaty on the Functioning of the European Union, and in particular Article 114 thereof, 
+
+ Having regard to the proposal from the European Commission, 
+
+ After transmission of the draft legislative act to the national parliaments, 
+
+ Having regard to the opinion of the European Economic and Social Committee 
+ 12 
+ , 
+
+ Having regard to the opinion of the Committee of the Regions 
+ 13 
+ , 
+
+ Acting in accordance with the ordinary legislative procedure, 
+
+ Whereas: 
+
+ (1) Regulation (EU) 2024/1689 of the European Parliament and of the Council 
+ 14 
+ lays down harmonised rules on artificial intelligence (AI) and aims to improve the functioning of the internal market, to promote the uptake of human-centric and trustworthy artificial intelligence, while ensuring a high level of protection of health, safety and fundamental rights, and support ing innovation. Regulation (EU) 2024/1689 entered into force on 1 August 2024. Its provisions enter into application in a staggered manner, with all rules entering into application by 2 August 2027. 
+
+ (2) T he experience gathered in implementing the parts of Regulation (EU) 2024/1689 that have already entered into application can inform the implementation of those parts that are yet to apply. In this context, the delayed preparation of standards , which should provide technical solutions for providers of high-risk AI systems to ensure compliance with their obligations under that regulation , and the delayed establishment of the governance and the conformity assessment frameworks at national level result in a compliance burden that is heavier than expected . In addition, consultation s of stakeholders have revealed the need for additional measures that facilitate and provide clarification on the implementation and compliance, without reducing the level of protection for health, safety and fundamental rights from AI-related risks that the rules of Regulation (EU) 2024/1689 seek to achieve. 
+
+ (3) Consequently , targeted amendments to Regulation (EU) 2024/1689 are necessary to address certain implementation challenges, with a view to the effective application of the relevant rules . 
+
+ (4) Enterprises outgrowing the micro, small and medium-sized enterprises (‘ SME ’) definition – the ‘small mid-cap enterprises’ (‘SMCs’) – play a vital role in the Union’s economy. Compared to SMEs, SMCs tend to demonstrate a higher pace of growth, and level of innovation and digitisation. Nevertheless, they face challenges similar to SMEs in relation to administrative burden , leading to a need for proportionality in the implementation of Regulation (EU) 2024/1689 and for targeted support. To enable the smooth transition of enterprises from SMEs into SMCs, it is important to address in a coherent manner the effect that regulation may have on their activity once those enterprises outgrow the segment of SMEs and are faced with rules that apply to large enterprises. Regulation (EU) 2024/1689 provides for several measures for small-scale providers, which should be extended to SMCs. In order to clarify the treatment of SME s and SMCs in Regulation (EU) 2024/1689, it is necessary to introduce definitions for SME s and SMC s , which should correspond to the definition set out in the Annex to Commission Recommendation 2003/361/EC 
+ 15 
+ and Annex to Commission Recommendation 2025/3500/EC 
+ 16 
+ . 
+
+ (5) Article 4 of Regulation (EU) 2024/1689 currently imposes an obligation on all providers and deployers of AI systems to ensure AI literacy of their staff. AI literacy development starting from education and training and continuing in a lifelong learning manner is crucial to equip providers, deployers and other affected persons with the necessary notions to make informed decisions regarding AI systems deployment . However, experience shared by stakeholders reveals that a one-size-fits-all solution is not suitable for all types of providers and deployers in relation to the promotion of AI literacy , rendering such a horizontal obligation ineffective in achieving the objective pursued by this provision . Moreover, data indicate that imposing such an obligation create s an additional compliance burden, particularly for small er enterprises , whereas AI literacy should be a strategic priority, regardless of regulatory obligations and potential sanctions. In light of that , Article 4 of Regulation (EU) 2024/1689 should be amended to require the Member States and the Commission, without prejudice to their respective competence s , to individually, collectively and in cooperation with relevant stakeholders encourage providers and deployers to provide a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf, including through offering training opportunities, providing informational resources, and allowing exchange of good practices and other non-legally binding initiatives. The European Artificial Intelligence Board (‘Board’) will ensure recurrent exchange between the Commission and Member States on the topic, while the Apply AI Alliance will allow discussion with the wider community. This amendment is without prejudice to the broader measures taken by the Commission and the Member States to promote AI literacy and competences for the wider population, including learners, students, and citizens at different ages and in particular through education and training systems. 
+
+ (6) Bias detection and correction constitute a substantial public interest because they protect natural persons from biases’ adverse effects, including discrimination. Discrimination might result from the bias in AI models and AI systems other than high-risk AI systems for which of Regulation (EU) 2024/1689 already provides a legal basis authorising the processing of special categories of personal data under Article 9(2), point (g) , of Regulation (EU) 2016/679 of the European Parliament and of the Council 
+ 17 
+ . Given that discrimination might result also from those other AI systems and models, it is therefore appropriate that Regulation (EU) 2024/1689 should provide for a legal basis for the processing of special categories of personal data also by providers and deployers of other AI systems and AI models as well as deployers of high-risk AI systems. The legal basis is established in compliance with Article 9(2), point (g) of Regulation (EU) 2016/679 Article 10(2), point (g) of Regulation (EU) 2018/1725 of the European Parliament and of the Council 
+ 18 
+ and Article 10 , point (a) of Directive (EU) 2016/680 of the European Parliament and of the Council 
+ 19 
+ provides a legal basis allow ing , where necessary for the detection and removal of bias , the processing of special categories of personal data by providers and deployers of all AI systems and models, subject to appropriate safeguards that complement Regulation s (EU) 2016/679 , Regulation (EU) 2018/1725 and Directive (EU) 2016/680 , as applicable . 
+
+ (7) In order to ensure consistency, avoid duplication and minimise administrative burden s in relation to the procedure for designating notified bodies under Regulation (EU) 2024/1689, while maintaining the same level of scrutiny, a single application and a single assessment procedure should be available for new conformity assessment bodies and notified bodies which are designated under the Union harmonisation legislation listed in Section A of Annex I to Regulation (EU) 2024/1689 , such as under Regulations (EU) 2017/745 
+ 20 
+ and (EU) 2017/746 
+ 21 
+ of the European Parliament and of the Council , where such a procedure is established under that Union harmonisation legislation. The single application and assessment procedure aims at facilitat ing , support ing and expedit ing the designation procedure under Regulation (EU) 2024/1689, while ensuring compliance with the requirements applicable to notified bodies under that Regulation and the Union harmonisation legislation listed in Section A of Annex I thereto . 
+
+ (8) With a view to ensuring the smooth application and consistency of Regulation (EU) 2024/1689, amendments should be made to it . A technical correction to Article 43 (3) , first subparagraph, of Regulation (EU) 2024/1689 should be added to align the conformity assessment requirements with the requirements of providers of high-risk AI systems in Article 16 of that Regulation . Moreover, it should be clarified that w here a provider of a high-risk AI system is subject to the conformity assessment procedure under Union harmonisation legislation listed in Section A of Annex I to Regulation (EU) 2024/1689 , and the conformity assessment extends to compliance of the quality management system of that Regulation and of such Union harmonisation legislation, the provider should be able to include aspects related to quality management systems under that Regulation as part of the quality management systems under such Union harmonisation legislation , in line with Article 17(3) of Regulation (EU) 2024/1689 . Article 43 (3), second subparagraph, should be amended to clarify that notified bodies which have been notified under the Union harmonisation legislation listed in Sec tion A of Annex I to Regulation (EU) 2024/1689 and which aim to assess high-risk AI systems covered by the Union har monisation legislation listed in Section A of Annex I to that Regulation , should apply for the designation as a notified body under that Regulation within 18 months from [the entry into application of this Regulation ] . This amendment is without prejudice to Article 28 of Regulation (EU) 2024/1689. Moreover, Regulation (EU) 2024/1689 should be amended to clarify that where a high-risk AI system is both covered by the Union harmonisation legislation listed in Section A of Annex I to Regulation (EU) 2024/1689 and falls within one of the use-cases listed in Annex III to that Regulation, the provider should follow the relevant conformity assessment procedure as required under that relevant harmonisation legislation. 
+
+ (9) To streamline compliance and reduce the associated costs, providers of AI systems should not be required to register AI systems referred to in Article 6(3) of Regulation (EU) 2024/1689 in the EU database pursuant to Article 49(2) of that Regulation . Given that such systems are not considered high-risk under certain conditions where they do not pose significant risk of harm to the health, safety or fundamental rights of persons, imposing registration requirements would constitute a disproportionate compliance burden. Nevertheless, a provider who considers that an AI system falls under Article 6(3) remains obligated to document its assessment before that system is placed on the market or put into service. This assessment may be requested by national competent authorities. 
+
+ (10) Articles 57 , 58 and 60 of Regulation (EU) 2024/1689 should be amended to strengthen further cooperation at Union level of AI regulatory sandboxes , foster clarity and consistency in the governance of AI regulatory sandboxes, and to extend the scope of real-world testing outside AI regulatory sandboxes to high-risk AI systems covered by the Union harmonisation legislation listed in Annex I to that Regulation . In particular, to allow procedural simplification, where applicable, in the projects supervised in the AI regulatory sandboxes that include also real - world testing, the real-world testing plan should be integrated in the sandbox plan agreed by the providers or prospective providers and th e competent authority in a single document. In addition, it is appropriate to provide for the possibility of the AI Office to establish an AI regulatory sandbox at Union level for AI systems that are covered by Article 75(1) of Regulation (EU) 2024/1689. By leveraging these infrastructures and facilitating cross-border collaboration, coordination would be better streamlined and resources optimally utilised . 
+
+ (11) To foster innovation , it is also appropriate to extend the scope of real-world testing outside AI regulatory sandboxes in Article 60 of Regulation (EU) 2024/1689 , currently applicable to high-risk AI systems listed in Annex III to that Regulation, and allow providers and prospective providers of high-risk AI systems covered by the Union harmonisation legislation listed in Annex I to that Regulation to also test such systems in real-world conditions. This is without prejudice to other Union or national law on the testing in real-world conditions of high-risk AI systems related to products covered by that Union harmonisation legislation. To address the specific situation of high-risk AI systems covered the Union harmonisation legislation listed in Section B of Annex I to that Regulation, it is necessary to allow the conclusion of voluntary agreements between the Commission and Member States to enable testing of such high-risk AI systems in real-world conditions. 
+
+ (12) Article 63 of Regulation (EU) 2024/1689 offers microenterprises who are providers of high-risk AI systems the possibility to benefit from a simplified way to comply with the obligation to establish a quality management system. With a view to facilitat ing compliance for more innovators , th at possibility should be extended to all SMEs , including start-ups . 
+
+ (13) Article 69 of Regulation (EU) 2024/1689 should be amended t o simplify the fee structure of the scientific panel . I f Member States call upon the panel’s expertise, the fees they may be required to pay the experts should be equivalent to the remuneration the Commission is obliged to pay in similar circumstances . Furthermore, to reduce the procedural complexity, Member States should be able to consult the experts of the scientific panel directly, without involvement of the Commission. 
+
+ (14) I n order to strengthen the governance system for AI systems based on general-purpose AI models , it is necessary to clarify the role of the AI Office in monitoring and supervising compliance of such AI systems with Regulation (EU) 2024/1689, while excluding AI systems related to products covered by the Union harmonisation legislation listed in Annex I to that Regulation. While sectoral authorities continue to remain responsible for the supervision of AI systems related to products covered by that Union harmonisation legislation, Article 75(1) Regulation (EU) 2024/1689 should be modified to bring all AI systems based on general-purpose AI models developed by the same provider within the scope of the AI Office's supervision. This does not include AI systems placed on the market, put into service or used by Union institutions, bodies, offices or agencies, which are under the supervision of the European Data Protection Supervisor pursuant to Article 74(9) of Regulation (EU) 2024/1689. To ensure effective supervision for those AI systems in accordance with the tasks and responsibilities assigned to market surveillance authorities under Regulation (EU) 2024/1689, the AI Office should be empowered to take the appropriate measures and decisions to adequately exercise its powers provided for in that Section and Regulation (EU) 2019/1020 of the European Parliament and of the Council 
+ 22 
+ . Article 14 of Regulation (EU) 2019/1020 should apply mutatis mutandis. Furthermore, to ensure effective enforcement, the authorities involved in the application of Regulation (EU) 2024/1689 should cooperate actively in the exercise of those powers, in particular where enforcement actions need to be taken in the territory of a Member State. 
+
+ (15) Considering the existing supervisory and enforcement system under Regulation (EU) 2022/2065 of the European Parliament and of the Council 
+ 23 
+ , it is appropriate to grant the Commission the powers of a competent market surveillance authority under Regulation (EU) 2024/1689 where an AI system qualifies as a very large online platform or a very large online search engine within the meaning of Regulation (EU) 2022/2065, or where it is embedded in such a platform or search engine . This should contribute to ensuring that the exercise of the Commission’s supervision and enforcement powers under Regulation (EU) 2024/1689 and Regulation (EU) 2022/2065, as well as those applicable to general-purpose AI models integrated into such platforms or search engines, are carried out in a coherent manner. In the case of AI systems embedded in or qualifying as a very large online platform or search engine, the first point of entry for the assessment of the AI systems are the risk assessment, mitigating measures and audit obligations prescribed by Articles 34, 35 and 37 of Regulation (EU) 2022/2065 , without prejudice to the AI Office’s powers to investigate and enforce ex post non-compliance with the rules of this Regulation. In the context of the analysis of this risk assessment, mitigating measures and audits, the Commission services responsible for the enforcement of Regulation (EU) 2022/2065 may seek the opinion of the AI Office on the outcome of a potential earlier or parallel risk assessment carried out under this Regulation and the applicability of prohibitions under this Regulation. In addition, the AI Office and the competent national authorities under (EU) 2024/1689 should coordinate their enforcement efforts with the authorities competent for the supervision and enforcement of Regulation (EU) 2022/2065, including the Commission, in order to ensure that the principles of loyal cooperation, proportionality and non bis in idem are respected , while information obtained under the respective other Regulation would be used for the purposes of supervision and enforcement of the other only provided the undertaking agrees . In particular, those authorities should exchange views regularly and take into account, in their respective areas of competence, any fines and penalties imposed on the same provider for the same conduct through a final decision in proceedings relating to an infringement of other Union or national rules, so as to ensure that the overall fines and penalties imposed are proportionate and correspond to the seriousness of the infringements committed. 
+
+ (16) To further operationalise the AI Office’s supervision and enforcement set out in Article 75(1) of Regulation (EU) 2024/1689 , it is necessary to further define the which of the powers listed in Article 14 of Regulation (EU) 2019/1020 should be conferred upon the AI Office. The Commission should therefore be empowered to adopt implementing act s to specify th os e powers, including the ability to impose penalties, such as fines or other administrative sanctions, in accordance with the conditions and ceilings referred to in Article 99, and applicable procedures. This should ensure that the AI Office has the necessary tools to effectively monitor and supervise compliance with Regulation (EU) 2024/1689 . 
+
+ (17) Additionally, it is essential to ensure that effective procedural safeguards apply to providers of AI systems subject to monitoring and supervision by the AI Office. To that end, the procedural rights provided for in Article 18 of Regulation (EU) 2019/1020 should apply mutatis mutandis to providers of AI systems, without prejudice to more specific procedural rights provided for in Regulation (EU) 2024/1689. 
+
+ (18) To enable access to Union market for AI systems which are under the supervision by the AI Office pursuant to Article 75 of Regulation (EU) 2024 /1689 and subject to third party conformity assessment, the Commission should be enabled to carry out pre-market conformity assessments of those systems. 
+
+ (19) Article 77 and related provisions of Regulation (EU) 2024 /1689 constitute an important governance mechanism, as they aim to enable authorities or bodies responsible for enforc ing or supervis ing Union law intended to protect fundamental rights to fulfil their mandate under specific conditions and to foster cooperation with market surveillance authorities responsible for the supervision and enforcement of that Regulation. It is necessary to clarify the scope of such cooperation, as well as to clarify which public authorities or bodies benefit from it . With a view to reinforc ing the cooperation, it should be clarified that request s to access information and documentation should be made to the competent market surveillance authority, which should respond to such requests, and that the involved authorities or bodies should have a mutual obligation to cooperate. 
+
+ (20) To allow sufficient time for providers of generative AI systems subject to the marking obligations laid down in Article 50(2) of Regulation (EU) 2024/1689 to adapt their practices within a reasonable time without disrupting the market, it is appropriate to introduce a transitional period of 6 months for providers who have already placed their systems on the market before the 2 August 2026. 
+
+ (21) To provide sufficient time for providers of high-risk AI systems and to clarify applicable rules to the AI systems already placed on the market or put into service before the entry into application of relevant provision s of the Regulation (EU) 2024 /1689, it is appropriate to clarify the application of a grace period provided in Article 111(2) of that Regulation . The grace period , for the purpose of Article 111(2), should apply to a type and model of AI systems already placed in the market . This means that if at least one individual unit of the high-risk AI system has been lawfully placed on the market or put into service before the date specified in Article 111 (2) , other individual units of the same type and model of high-risk AI system are subject to the grace period provided in Article 111(2) and thus may continue to be placed on the market, made available or put into service on the Union market without any additional obligations, requirements or the need for additional certification, as long as the design of that high-risk AI system remains unchanged. For the purposes of application of the grace period provided in Article 111 (2) , the decisive factor is the date on which the first unit of that type and model of high-risk AI system was placed on the market or put into service on the Union market for the first time. Any significant change to the design of that AI system after the date specified in Article 111 (2) should trigger the obligation of the provider to comply fully with all relevant provisions of this Regulation applicable to high-risk AI systems, including the conformity assessment requirements. 
+
+ (22) Article 113 of Regulation (EU) 20 2 4/1689 establishes the dates of entry into force and application of that Regulation, notably that the general date of application is 2 August 2026 . For the obligations related to high-risk AI systems laid down in Sections 1, 2 and 3 of Chapter III of Regulation (EU) 2024/1689, the delayed availability of standards, common specifications, and alternative guidance and the delayed establishment of national competent authorities lead to challenges that jeopardise those obligation’s effective entry into application and that risk to significantly increase implementation costs in a way that does not justify maintaining their initial date of application, namely 2 August 2026. Building on experience, it is appropriate to put in place a mechanism that links the entry into application to the availability of measures in support of compliance with Chapter III, which may include harmonised standards, common specifications , and Commission guidelines. This should be confirmed by the Commission by decision, following which the rules obligations for high-risk AI systems should apply after 6 months as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III and after 12 months as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I to Regulation (EU) 2024/1689 . However, this flexibility should only be extended until 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III and until 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I to that Regulation , by which dates those rules should enter into application in any case. The distinction between the entry into application of the rules as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III and Article 6(1) and Annex I to that Regulation is consistent with the difference between the initial dates of application envisaged in Regulation (EU) 2024/1689 and aims to provide the necessary time for adaptation and implementation of the corresponding obligations . 
+
+ (23) In light of the objective to reduce implementation challenges for citizens, businesses and public administrations, it is essential that harmonised conditions for the implementation of certain rules are adopted only where strictly necessary. For that purpose, it is appropriate to remove certain empowerments bestowed on the Commission to adopt such harmonised conditions by means of implementing acts in cases where those conditions are not met . Regulation (EU) 2024/1689 should therefore be amended to remove the empowerments conferred on the Commission in Article 50(7), Article 56(6), and Article 72(3) thereof to adopt implementing acts . The removal of the empowerment to adopt a harmonised template for a post-market monitoring plan in Article 72(3) of Regulation (EU) 2024/1689 has as an additional benefit that it will offer more flexibility for providers of high-risk AI systems to put in place a system for post-market monitoring that is tailored to their organisation. At the same time, recognising the need to offer clarity how providers of high-risk AI systems are required to comply, the Commission should be required to publish guidance . 
+
+ (24) Conformity assessment of high-risk AI systems under Regulation (EU) 2024/1689 may require involvement of conformity assessment bodies. Only conformity assessment bodies that have been designated under that Regulation may carry out conformity assessments and only for the activities related to the categories and types of AI systems concerned. To enable the specification of the scope of the designation of conformity assessment bodies notified under Article 30 of Regulation (EU) 2024/1689, it is necessary to draw up a list of codes, categories, and corresponding types of AI systems. The list of codes should take into account whether the AI system is a component of a product or itself a product covered by the Union harmonisation legislation listed in Annex I ( referred to as ‘ AIP codes ’ , for AI systems covered by product legislation ) or a system referred in Annex III of Regulation (EU) 2024/1689 , which currently concerns only biometric AI systems referred to in point (1) of Annex III ( referred to as ‘ AIB codes ’ , for biometric AI systems ). Both AIP codes and AI B codes are vertical codes. The AIP codes are reference codes to provide a link to the Union harmonisation legislation listed in Section A of Annex I of Regulation (EU) 2024/1689. The AIB codes are new codes specific to Regulation (EU) 2024/1689 to identify biometric AI systems referred in paragraph 1 of Annex III of that Regulation . The list of codes should also take into account specific types and underlying technologies of AI systems ( referred to as ‘ AIH codes ’ , for horizontal AI system codes ). The AIH codes are new AI technology- specific codes and can be applied in conjunction with AIP or AIB vertical codes. The AIH codes cover AI systems’ underlying types and technologies. The list of codes, including three categories, should provide for a multi-dimensional typology of AI systems which ensures that conformity assessment bodies designated as notified bodies are fully competent for the AI systems they are required to assess. 
+
+ (25) Regulation (EU) 2018/1139 of the European Parliament and the Council 
+ 24 
+ lays down common rules in the field of civil aviation. Article 108 of Regulation (EU) 2024/1689 sets out amend ments to Regulation (EU) 2018/1139 to ensure that the Commission takes into account, on the basis of the technical and regulatory specificities of the civil aviation sector , and without interfering with existing governance, conformity assessment and enforcement mechanisms and authorities established therein, the mandatory requirements for high-risk AI systems laid down in Regulation (EU) 2024/1689 when adopting any relevant delegated or implementing acts on the basis of that act . A technical correction extending specific articles of Regulation (EU) 2018/1139 is necessary to ensure that those mandatory requirements for high-risk AI systems laid down in Regulation (EU) 2024/1689 are fully covered when adopting relevant delegated or implementing acts on the basis of Regulation (EU) 2018/1139. 
+
+ (26) In order to ensure legal certainty as soon as possible, with a view to the imminent general application of Regulation (EU) 2024/1689, this Regulation should enter into force as a matter of urgency , 
+
+ HAVE ADOPTED THIS REGULATION: 
+
+ Article 1 
+
+ Amendments to Regulation (EU) 2024/1689 
+
+ Regulation (EU) 2024/1689 is amended as follows: 
+
+ (1) in Article 1(2), point (g) is replaced by the following: 
+
+ ’(g) measures to support innovation, with a particular focus on small mid-cap enterprises (SMCs) and small and medium-sized enterprises (SMEs), including start-ups.’; 
+
+ (2) in Article 2 , paragraph 2 is replaced by the following: 
+
+ ‘2. For AI systems classified as high-risk AI systems in accordance with Article 6(1) related to products covered by the Union harmonisation legislation listed in Section B of Annex I, only Article 6(1), Article 60a, Articles 102 to 109 and Articles 111 and 112 shall apply. Article 57 shall apply only in so far as the requirements for high-risk AI systems under this Regulation have been integrated in that Union harmonisation legislation.; 
+
+ (3) in Article 3, the following points (14a) and (14b) are inserted : 
+
+ ‘(14a) micro, small and medium-sized enterprise (‘SME’) means a micro, small or medium-sized enterprise as defined in Article 2 of the Annex to Commission Recommendation 2003/361/EC; 
+
+ (14b) small mid-cap enterprise (‘SMC’) means a small mid-cap enterprise as defined in point (2) of the Annex to Commission Recommendation (EU) 2025/1099’; 
+
+ (4) Article 4 is replaced by the following: 
+
+ ‘ Article 4 
+
+ AI literacy 
+
+ ‘The Commission and Member States shall encourage providers and deployers of AI systems to take measures to ensure a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf, taking into account their technical knowledge, experience, level of education and training and the context the AI systems are to be used in, and considering the persons or groups of persons on whom the AI systems are to be used.’; 
+
+ (5) the following Article 4a is inserted in Chapter I : 
+
+ ‘ Article 4a 
+
+ Processing of special categories of personal data for bias detection and mitigation 
+
+ 1. To the extent necessary to ensure bias detection and correction in relation to high-risk AI systems in accordance with Article 10 (2), points (f) and (g), of this Regulation, providers of such systems may exceptionally process special categories of personal data, subject to appropriate safeguards for the fundamental rights and freedoms of natural persons. In addition to the safeguards set out in Regulations (EU) 2016/679 and (EU) 2018/1725 and Directive (EU) 2016/680 , as applicable, all the following conditions shall be met in order for such processing to occur: 
+
+ (a) the bias detection and correction cannot be effectively fulfilled by processing other data, including synthetic or anonymised data; 
+
+ (b) the special categories of personal data are subject to technical limitations on the re-use of the personal data, and state-of-the-art security and privacy-preserving measures, including pseudonymisation; 
+
+ (c) the special categories of personal data are subject to measures to ensure that the personal data processed are secured, protected, subject to suitable safeguards, including strict controls and documentation of the access, to avoid misuse and ensure that only authorised persons have access to those personal data with appropriate confidentiality obligations; 
+
+ (d) the special categories of personal data are not transmitted, transferred or otherwise accessed by other parties; 
+
+ (e) the special categories of personal data are deleted once the bias has been corrected or the personal data has reached the end of its retention period, whichever comes first; 
+
+ (f) the records of processing activities pursuant to Regulations (EU) 2016/679 and (EU) 2018/1725 and Directive (EU) 2016/680 include the reasons why the processing of special categories of personal data was necessary to detect and correct biases, and why that objective could not be achieved by processing other data. 
+
+ 2. Paragraph 1 may apply to providers and deployers of other AI systems and models and deployers of high-risk AI systems where necessary and proportionate if the processing occurs for the purposes set out therein and provided that the conditions set out under the safeguards set out in this paragraph.; 
+
+ (6) in Article 6(4), paragraph 4 is replaced by the following: 
+
+ ‘4. A provider who considers that an AI system referred to in Annex III is not high-risk shall document its assessment before that system is placed on the market or put into service. Upon request of national competent authorities, the provider shall provide the documentation of the assessment.’; 
+
+ (7) Article 10 is amended as follows : 
+
+ (a) paragraph 1 is replaced by the following: 
+
+ ‘1. High-risk AI systems which make use of techniques involving the training of AI models with data shall be developed on the basis of training, validation and testing data sets that meet the quality criteria referred to in paragraphs 2, 3 and 4 of this Article and in Article 4a(1) whenever such data sets are used.’; 
+
+ (b) paragraph 5 is deleted ; 
+
+ (c) paragraph 6 is replaced by the following: 
+
+ ‘6. For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2, 3 and 4 of this Article and Article 4a(1) shall apply only to the testing data sets.’; 
+
+ (8) in Article 11(1), the second subparagraph is replaced by the following: 
+
+ ‘That technical documentation shall be drawn up in such a way as to demonstrate that the high-risk AI system complies with the requirements set out in this Section and to provide national competent authorities and notified bodies with the necessary information in a clear and comprehensive form to assess the compliance of the AI system with those requirements. It shall contain, at a minimum, the elements set out in Annex IV. SMCs and SMEs, including start-ups, may provide the elements of the technical documentation specified in Annex IV in a simplified manner. To that end, the Commission shall establish a simplified technical documentation form targeted at the needs of SMCs and SMEs, including start-ups. Where an SMC or SME, including a start-up, opts to provide the information required in Annex IV in a simplified manner, it shall use the form referred to in this paragraph. Notified bodies shall accept the form for the purposes of the conformity assessment.’; 
+
+ (9) i n Article 17, paragraph 2 is replaced by the following: 
+
+ ‘2. The implementation of the aspects referred to in paragraph 1 shall be proportionate to the size of the provider’s organisation, in particular, if the provider is an SMC or an SME, including a start-up. Providers shall, in any event, respect the degree of rigour and the level of protection required to ensure the compliance of their high-risk AI systems with this Regulation.’; 
+
+ (10) in Article 28, the following paragraph 8 is added : 
+
+ ‘8. Notifying authorities designated under this Regulation responsible for AI systems covered by the Union harmonisation legislation listed in Section A of Annex I shall be established, organised and operated in such a way that ensures that the conformity assessment body that applies for designation both under this Regulation and the Union harmonisation legislation listed in Section A of Annex I shall be provided with the possibility to submit a single application and undergo a single assessment procedure to be designated under this Regulation and Union harmonisation legislation listed in Section A of Annex I, where the relevant Union harmonisation legislation provides for such single application and single assessment procedure. 
+
+ The single application and single assessment procedure referred to in this paragraph shall also be made available to notified bodies already designated under the Union harmonisation legislation listed in Section A of Annex I, when those notified bodies apply for designation under this Regulation, provided that the relevant Union harmonisation legislation provides for such a procedure. 
+
+ The single application and single assessment procedure shall avoid any unnecessary duplications, build on the existing procedures for designation under the Union harmonisation legislation listed in Section A of Annex I and ensure compliance with the requirements both relating to notified bodies under this Regulation and the relevant Union harmonisation legislation.’; 
+
+ (11) i n Article 29, paragraph 4 is replaced by the following: 
+
+ ‘4. For notified bodies which are designated under any other Union harmonisation legislation, all documents and certificates linked to those designations may be used to support and expedite their designation procedure under this Regulation, as appropriate. 
+
+ Notified bodies, which are designated under any of the Union harmonisation legislation listed in Section A of Annex I and which apply for the single assessment referred to in Article 28(8), shall submit the single application for assessment to the notifying authority designated in accordance with that Union harmonisation legislation. 
+
+ The notified body shall update the documentation referred to in paragraphs 2 and 3 of this Article whenever relevant changes occur, in order to enable the authority responsible for notified bodies to monitor and verify continuous compliance with all the requirements laid down in Article 31.’; 
+
+ (12) in Article 30, paragraph 2 is replaced by the following : 
+
+ ‘2. Notifying authorities shall notify the Commission and the other Member States, based on the list of codes, categories, and corresponding types of AI systems referred to in Annex XIV, and using the electronic notification tool developed and managed by the Commission, of each conformity assessment body referred to in paragraph 1. 
+
+ The Commission is empowered to adopt delegated acts in accordance with Article 97 to amend Annex XIV, in the light of technical progress, advances in knowledge or new scientific evidence by adding to the list of codes, categories, and corresponding types of AI systems a new code, a category or a type of AI system, withdrawing an existing code, category or a type of AI system from that list or moving a code or type of AI system from one category to another.’; 
+
+ (13) in Article 43 , paragraph 3 is replaced by the following : 
+
+ ‘For high-risk AI systems covered by the Union harmonisation legislation listed in Section A of Annex I, the provider of the system shall follow the relevant conformity assessment procedure as required under the relevant Union harmonisation legislation. The requirements set out in Section 2 of this Chapter shall apply to those high-risk AI systems and shall be part of that assessment. Assessment of the quality management system set out in Article 17 and Annex VII shall also apply. 
+
+ For the purposes of that conformity assessment, notified bodies which have been notified under the Union harmonisation legislation listed in Section A of Annex I shall have the power to assess the conformity of high-risk AI systems with the requirements set out in Section 2, provided that the compliance of those notified bodies with the requirements laid down in Article 31(4), (5), (10) and (11) has been assessed in the context of the notification procedure under the relevant Union harmonisation legislation. Without prejudice to Article 28, such notified bodies which have been notified under the Union harmonisation legislation in Section A of Annex I, shall apply for designation in accordance with Section 4 at the latest [18 months from the entry into application of this Regulation]. 
+
+ Where Union harmonisation legislation listed in Section A of Annex I provides the product manufacturer with an option to opt out from a third-party conformity assessment, provided that that manufacturer has applied harmonised standards covering all the relevant requirements, that manufacturer may use that option only if it has also applied harmonised standards or, where applicable, common specifications referred to in Article 41, covering all requirements set out in Section 2 of this Chapter. 
+
+ Where a high-risk AI system is both covered by the Union harmonisation legislation listed in Section A of Annex I and it falls within one of the categories listed in Annex III, the provider of the system shall follow the relevant conformity assessment procedure as required under the relevant Union harmonisation legislation listed in Section A of Annex I.’; 
+
+ (14) in Article 49, paragraph 2 is deleted ; 
+
+ (15) in Article 50, paragraph 7 is replaced by the following: 
+
+ ‘7. The AI Office shall encourage and facilitate the drawing up of codes of practice at Union level to facilitate the effective implementation of the obligations regarding the detection, marking and labelling of artificially generated or manipulated content. The Commission may assess whether adherence to those codes of practice is adequate to ensure compliance with the obligation laid down in paragraph 2, in accordance with the procedure laid down in Article 56(6), first subparagraph. If it deems the code is not adequate, the Commission may adopt an implementing act specifying common rules for the implementation of those obligations in accordance with the examination procedure laid down in Article 98(2).’; 
+
+ (16) in Article 56 ( 6 ), the first subparagraph is replaced by the following: 
+
+ ‘6. The Commission and the Board shall regularly monitor and evaluate the achievement of the objectives of the codes of practice by the participants and their contribution to the proper application of this Regulation. The Commission, taking utmost account of the opinion of the Board, shall assess whether the codes of practice cover the obligations provided for in Articles 53 and 55, and shall regularly monitor and evaluate the achievement of their objectives. The Commission shall publish its assessment of the adequacy of the codes of practice.’; 
+
+ (17) Article 57 is amended as follows: 
+
+ (a) the following paragraph 3a is inserted: 
+
+ ‘The AI Office may also establish an AI regulatory sandbox at Union level for AI systems covered by Article 75(1). Such an AI regulatory sandbox shall be implemented in close cooperation with relevant competent authorities, in particular when Union legislation other than this Regulation is supervised in the AI regulatory sandbox, and shall provide priority access to SMEs.’; 
+
+ (b) paragraph 5 is replaced by the following: 
+
+ ‘5. AI regulatory sandboxes established under this Article shall provide for a controlled environment that fosters innovation and facilitates the development, training, testing and validation of innovative AI systems for a limited time before their being placed on the market or put into service pursuant to a specific sandbox plan agreed between the providers or prospective providers and the competent authority, ensuring that appropriate safeguards are in place. Such sandboxes may include testing in real world conditions supervised therein. When applicable, the sandbox plan shall incorporate in a single document the real-world testing plan.’; 
+
+ (c) paragraph 9, point (e) is replaced by the following: 
+
+ ‘(e) facilitating and accelerating access to the Union market for AI systems, in particular when provided by SMCs and SMEs, including start-ups.’; 
+
+ (d) paragraph 13 is replaced by the following: 
+
+ ’13. The AI regulatory sandboxes shall be designed and implemented in such a way that they facilitate cross-border cooperation between national competent authorities.’; 
+
+ (e) paragraph 14 is replaced by the following: 
+
+ ’14. National competent authorities shall coordinate their activities and cooperate within the framework of the Board. They shall support the joint establishment and operation of AI regulatory sandboxes, including in different sectors.’; 
+
+ (18) Article 58, paragraph 1, is replaced by the following: 
+
+ ‘1. In order to avoid fragmentation across the Union, the Commission shall adopt implementing acts specifying the detailed arrangements for the establishment, development, implementation, operation, governance, and supervision of the AI regulatory sandboxes. The implementing acts shall include common principles on the following issues: 
+
+ (a) eligibility and selection criteria for participation in the AI regulatory sandbox; 
+
+ (b) procedures for the application, participation, monitoring, exiting from and termination of the AI regulatory sandbox, including the sandbox plan and the exit report; 
+
+ (c) the terms and conditions applicable to the participants; 
+
+ (d) the detailed rules applicable to the governance of AI regulatory sandboxes covered under Article 57, including as regards the exercise of the tasks of the competent authorities and the coordination and cooperation at national and EU level.’; 
+
+ (19) Article 60 is amended as follows: 
+
+ (a) in paragraph 1, the first subparagraph is replaced by the following: 
+
+ ‘Testing of high-risk AI systems in real world conditions outside AI regulatory sandboxes may be conducted by providers or prospective providers of high-risk AI systems listed in Annex III or covered by Union harmonisation legislation listed in Section A of Annex I, in accordance with this Article and the real-world testing plan referred to in this Article, without prejudice to the prohibitions under Article 5.’; 
+
+ (b) paragraph 2 is replaced by the following: 
+
+ ‘2. Providers or prospective providers may conduct testing of high-risk AI systems referred to in Annex III or covered by Union harmonisation legislation listed in Section A of Annex I in real world conditions at any time before the placing on the market or the putting into service of the AI system on their own or in partnership with one or more deployers or prospective deployers.’; 
+
+ (20) the following Article 60a is inserted : 
+
+ ‘ Article 60a 
+
+ Testing of high-risk AI systems covered by Union harmonisation legislation listed in Section B of Annex I in real-world conditions outside AI regulatory sandboxes 
+
+ 1. Testing of high-risk AI systems in real world conditions outside AI regulatory sandboxes may be conducted by providers or prospective providers of AI enabled products covered by Union harmonisation legislation listed in Section B of Annex I , in accordance with this Article and a voluntary real-world testing agreement , without prejudice to the prohibitions under Article 5. 
+
+ 2. The voluntary real-world testing agreement referred to in paragraph 1 shall be concluded in writing between interested Member States and the Commission. It shall set the requirements for the testing of those AI- enabled products covered by Union harmonisation legislation listed in Section B of Annex I in real- world conditions. 
+
+ 3. Member States, the Commission, market surveillance authorities and public authorities responsible for the management and operation of infrastructure and products covered by Union harmonisation legislation listed in Section B of Annex I shall cooperate closely with each other and in good faith, and shall remove any practical obstacles, including on procedural rules providing access to physical public infrastructure, where this is necessary, to successfully implement the voluntary real-world testing agreement and test AI- enabled products covered by Union harmonisation legislation listed in Section B of Annex . 
+
+ 4. The signatories of the voluntary real-world testing agreement, shall specify conditions of the testing in real world conditions and establish detailed elements of the real-world testing plan for AI systems covered by Union harmonisation legislation listed in Section B of Annex I. 
+
+ 5. Article 60 ( 2 ) , ( 5 ) and ( 9 ) shall apply.’; 
+
+ (21) Article 63( 1 ) is replaced by the following: 
+
+ ‘1. SMEs, including start-ups, may comply with certain elements of the quality management system required by Article 17 in a simplified manner. For that purpose, the Commission shall develop guidelines on the elements of the quality management system which may be complied with in a simplified manner considering the needs of SMEs, without affecting the level of protection or the need for compliance with the requirements in respect of high-risk AI systems.’; 
+
+ (22) Article 69 is amended as follows: 
+
+ (a) paragraph 2 is replaced by the following: 
+
+ ‘2. The Member States may be required to pay fees for the advice and support provided by the experts at a rate equivalent to the remuneration fees applicable to the Commission pursuant to the implementing act referred to in Article 68(1).’; 
+
+ (b) paragraph 3 is deleted. 
+
+ (23) in Article 70, paragraph 8 is replaced by the following: 
+
+ ‘8. National competent authorities may provide guidance and advice on the implementation of this Regulation, in particular to SMCs and SMEs, including start-ups, taking into account the guidance and advice of the Board and the Commission, as appropriate. Whenever national competent authorities intend to provide guidance and advice with regard to an AI system in areas covered by other Union law, the national competent authorities under that Union law shall be consulted, as appropriate.’; 
+
+ (24) in Article 72, paragraph 3 is replaced by the following: 
+
+ ‘3. The post-market monitoring system shall be based on a post-market monitoring plan. The post-market monitoring plan shall be part of the technical documentation referred to in Annex IV. The Commission shall adopt guidance on the post-market monitoring plan.’; 
+
+ (25) Article 75 is amended as follows: 
+
+ (a) the heading of Article 75 is replaced by the following: 
+
+ ‘ Market surveillance and control of AI systems and mutual assistance ’; 
+
+ (b) paragraph 1 is replaced by the following: 
+
+ ‘1. Where an AI system is based on a general-purpose AI model, with the exclusion of AI systems related to products covered by the Union harmonisation legislation listed in Annex I, and that model and that system are developed by the same provider, the AI Office shall be exclusively competent for the supervision and enforcement of that system with the obligations of this Regulation in accordance with the tasks and responsibilities assigned by it to market surveillance authorities. The AI Office shall also be exclusively competent for the supervision and enforcement of the obligations under this Regulation in relation to AI system that constitute or that are integrated into a designated very large online platform or very large online search engine within the meaning of Regulation (EU) 2022/2065. 
+
+ When exercising its tasks of supervision and enforcement under the first subparagraph, the AI Office shall have all the powers of a market surveillance authority provided for in this Section and in Regulation (EU) 2019/1020. The AI Office shall be empowered to take appropriate measures and decisions to adequately exercise its supervisory and enforcement powers. Article 14 of Regulation (EU) 2019/1020 shall apply mutatis mutandis. 
+
+ The authorities involved in the application of this Regulation shall cooperate actively in the exercise of these powers, in particular where enforcement actions need to be taken in the territory of a Member State.’; 
+
+ (c) the following paragraph s 1a to 1 c are inserted: 
+
+ ‘1a. The Commission shall adopt an implementing act to define the enforcement powers and the procedures for the exercise of those powers of the AI Office, including its ability to impose penalties, such as fines or other administrative sanctions, in accordance with the conditions and ceilings identified in Article 99, in relation to AI systems referenced to in paragraphs 1 and 1a of this Article that are found to be non-compliant with this Regulation, in the context of its monitoring and supervision tasks under this Article.’ 
+
+ ‘1b. Article 18 of Regulation (EU) 2019/1020 shall apply mutatis mutandis to providers of AI systems referred to in paragraph 1, without prejudice to more specific procedural rights provided for in this Regulation.’ 
+
+ ‘1c. The Commission shall organise and carry out pre-market conformity assessments and tests of AI systems referred to in paragraph 1 that are classified as high-risk and subject to third-party conformity assessment under Article 43 before such AI systems are placed on the market or put into service. These tests and assessments shall verify that the systems comply with the relevant requirements of this Regulation and may be placed on the market or put into service in the Union in accordance with this Regulation. The Commission may entrust the performance of these tests or assessments to notified bodies designated under this Regulation, in which case the notified body shall act on behalf of the Commission. Article 34(1) and (2) shall apply mutatis mutandis to the Commission when exercising its powers under this paragraph. 
+
+ The fees for testing and assessment activities shall be levied on the provider of a high-risk AI system who has applied for third-party conformity assessment to the Commission. The costs related to the services entrusted by the Commission to the notified bodies in accordance with this Article shall be directly paid by the provider to the notified body.’; 
+
+ (26) Article 77 is amended as follows: 
+
+ (a) the heading is replaced by the following: 
+
+ ‘ Powers of authorities protecting fundamental rights and cooperation with market surveillance authorities ’ 
+
+ (b) paragraph 1 is replaced by the following: 
+
+ ‘1. National public authorities or bodies which supervise or enforce the respect of obligations under Union law protecting fundamental rights, including the right to non-discrimination, shall have the power to make a request and access any information or documentation created or maintained from the relevant market surveillance authority under this Regulation in accessible language and format where access to that information or documentation is necessary for effectively fulfilling their mandates within the limits of their jurisdiction.’; 
+
+ (c) the following paragraph 1a and 1b are inserted: 
+
+ ‘1a. Subject to the conditions specified in this Article, the market surveillance authority shall grant the relevant public authority or body referred to in paragraph 1 access to such information or documentation, including by requesting such information or documentation from the provider or the deployer, where necessary.’ 
+
+ ‘1b. Market surveillance authorities and public authorities or bodies referred to in paragraph 1 shall cooperate closely and provide each other with mutual assistance necessary for fulfilling their respective mandates, with a view to ensuring coherent application of this Regulation and Union law protecting fundamental rights and streamlining procedures. This shall include, in particular, exchange of information where necessary for the effective supervision or enforcement of this Regulation and the respective other Union legislation.’; 
+
+ (27) Article 95, paragraph 4 is replaced by the following: 
+
+ ‘4. The AI Office and the Member States shall take into account the specific interests and needs of SMCs and SMEs, including start-ups, when encouraging and facilitating the drawing up of codes of conduct.’; 
+
+ (28) in Article 96(1), the second subparagraph is replaced by the following: 
+
+ ‘When issuing such guidelines, the Commission shall pay particular attention to the needs of SMCs and SMEs including start-ups, of local public authorities and of the sectors most likely to be affected by this Regulation.’; 
+
+ (29) Article 99 is amended as follows: 
+
+ (a) paragraph 1 is replaced by the following: 
+
+ ‘1. In accordance with the terms and conditions laid down in this Regulation, Member States shall lay down the rules on penalties and other enforcement measures, which may also include warnings and non-monetary measures, applicable to infringements of this Regulation by operators, and shall take all measures necessary to ensure that they are properly and effectively implemented, thereby taking into account the guidelines issued by the Commission pursuant to Article 96. The penalties provided for shall be effective, proportionate and dissuasive. The Member States shall take into account the interests of SMCs and SMEs, including start-ups, and their economic viability when imposing penalties.’; 
+
+ (b) paragraph 6 is replaced by the following: 
+
+ ‘6. In the case of SMCs and SMEs, including start-ups, each fine referred to in this Article shall be up to the percentages or amount referred to in paragraphs 3, 4 and 5, whichever thereof is lower.’; 
+
+ (30) Article 111 is amended as follows: 
+
+ (a) paragraph 2 is replaced by the following: 
+
+ ‘2. Without prejudice to the application of Article 5 as referred to in Article 113(3), third paragraph, point (a), this Regulation shall apply to operators of high-risk AI systems, other than the systems referred to in paragraph 1 of this Article, that have been placed on the market or put into service before the date of application of Chapter III and corresponding obligations referred to in Article 113, only if, as from that date, those systems are subject to significant changes in their designs. In any case, the providers and deployers of high-risk AI systems intended to be used by public authorities shall take the necessary steps to comply with the requirements and obligations laid down in this Regulation by 2 August 2030.’; 
+
+ (b) the following paragraph 4 is added: 
+
+ ‘4. Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2 February 2027.’; 
+
+ (31) Article 113 is amended as follows: 
+
+ (a) in the third paragraph, point (d) is added: 
+
+ ‘(d) Chapter III, Sections 1, 2, and 3, shall apply following the adoption of a decision of the Commission confirming that adequate measures in support of compliance with Chapter III are available, from the following dates: 
+
+ (i) 6 months after the adoption of that decision as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III, and 
+
+ (ii) 12 months after the adoption of the decision as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I. 
+
+ In the absence of the adoption of the decision within the meaning of subparagraph 1, or where the dates below are earlier than those that follow the adoption of that decision, Chapter III, Sections 1, 2, and 3, shall apply: 
+
+ (i) on 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III, and 
+
+ (ii) on 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I.’; 
+
+ (b) in the third paragraph, point (e) is added : 
+
+ ‘ 3. Articles 102 to 110 shall apply from [the date of entry into application of this Regulation].’; 
+
+ (32) in Annex VIII, section B is deleted ; 
+
+ (33) the following Annex XIV is added: 
+
+ ‘Annex XIV 
+
+ The list of codes, categories and corresponding types of AI systems for the purpose of the notification procedure referred to in Article 30 specifying the scope of the designation as notified bodies 
+
+ 1. Introduction 
+
+ Conformity assessment of high-risk AI systems under this Regulation may require involvement of conformity assessment bodies. Only conformity assessment bodies that have been designated in accordance with this Regulation may carry out conformity assessments and only for the activities related to the types of AI systems concerned. The list of codes, categories, and corresponding types of AI systems sets the scope of the designation of conformity assessment bodies notified under Article 30 of this Regulation. 
+
+ 2. List of Codes, categories, and corresponding AI systems 
+
+ 1. AI systems subject to Annex I of the AI Act 
+
+ AIA Code 
+
+ AIP 0101 
+
+ AI systems subject to Annex I.A.1. of the AI Act. 
+
+ AIP 0102 
+
+ AI systems subject to Annex I.A.2. of the AI Act. 
+
+ AIP 0103 
+
+ AI systems subject to Annex I.A.3. of the AI Act. 
+
+ AIP 0104 
+
+ AI systems subject to Annex I.A.4. of the AI Act. 
+
+ AIP 0105 
+
+ AI systems subject to Annex I.A.5. of the AI Act. 
+
+ AIP 0106 
+
+ AI systems subject to Annex I.A.6. of the AI Act. 
+
+ AIP 0107 
+
+ AI systems subject to Annex I.A.7. of the AI Act. 
+
+ AIP 0108 
+
+ AI systems subject to Annex I.A.8. of the AI Act. 
+
+ AIP 0109 
+
+ AI systems subject to Annex I.A.9. of the AI Act. 
+
+ AIP 0110 
+
+ AI systems subject to Annex I.A.10. of the AI Act. 
+
+ AIP 0111 
+
+ AI systems subject to Annex I.A.11. of the AI Act. 
+
+ AIP 0112 
+
+ AI systems subject to Annex I.A.12. of the AI Act. 
+
+ 2. AI systems subject to Annex III.1 of the AI Act 
+
+ AIA Code 
+
+ AIB 0201 
+
+ Remote biometric identification systems under Annex III.1.a. of the AI Act intended to be put into service by Union institutions, bodies, offices or agencies. 
+
+ AIB 0202 
+
+ Biometric categorisation AI systems under Annex III.1.b. of the AI Act intended to be put into service by Union institutions, bodies, offices or agencies. 
+
+ AIB 0203 
+
+ Emotion recognition AI systems under Annex III.1.c. of the AI Act intended to be put into service by Union institutions, bodies, offices or agencies. 
+
+ AIB 0204 
+
+ Remote biometric identification systems under Annex III.1.a. of the AI Act intended to be put into service by law enforcement, immigration or asylum authorities. 
+
+ AIB 0205 
+
+ Biometric categorisation AI systems under Annex III.1.b. of the AI Act intended to be put into service by law enforcement, immigration or asylum authorities. 
+
+ AIB 0206 
+
+ Emotion recognition AI systems under Annex III.1.c. of the AI Act intended to be put into service by law enforcement, immigration or asylum authorities. 
+
+ AIB 0207 
+
+ Remote biometric identification systems under Annex III.1.a. of the AI Act (general). 
+
+ AIB 0208 
+
+ Biometric categorisation AI systems under Annex III.1.b. of the AI Act (general). 
+
+ AIB 0209 
+
+ Emotion recognition AI systems under Annex III.1.c. of the AI Act (general). 
+
+ 3. AI technology-specific codes 
+
+ a) Symbolic AI, expert systems and mathematical optimization 
+
+ AIA Code 
+
+ AIH 0101 
+
+ Logic- and knowledge-based AI systems that infer from encoded knowledge or symbolic representation, expert systems 
+
+ AIH 0102 
+
+ Logic-based AI systems, excluding basic data processing 
+
+ b) Machine learning, excluding GPAI and single modality generative AI 
+
+ AIA Code 
+
+ AIH 0201 
+
+ AI systems that process structured data 
+
+ AIH 0202 
+
+ AI systems that process signal and audio data 
+
+ AIH 0203 
+
+ AI systems that process text data 
+
+ AIH 0204 
+
+ AI systems that process image and video 
+
+ AIH 0205 
+
+ AI systems that learn from their environment, excluding agentic AI 
+
+ c) AI systems based on GPAI or single modality generative AI 
+
+ AIA Code 
+
+ AIH 0301 
+
+ Single modality generative AI systems 
+
+ AIH 0302 
+
+ Multimodal generative AI systems, including AI systems based on GPAI models 
+
+ d) Agentic AI 
+
+ AIA Code 
+
+ AIH 0401 
+
+ Agentic AI 
+
+ 3. Application for designation 
+
+ Conformity assessment bodies shall use the lists of codes, categories and corresponding types of AI systems set out in this Annex when specifying the types of AI systems in the application for designation referred to in Article 29 of this Regulation.’. 
+
+ Article 2 
+
+ Amendments to Regulation (EU) 2018/1139 
+
+ Regulation (EU) 2018/1139 is amended as follows: 
+
+ (1) i n Article 27, the following paragraph is added: 
+
+ 25 
+ ‘3. Without prejudice to paragraph 2, when adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council , the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’ ; 
+
+ (2) in Article 31, the following paragraph is added: 
+
+ ‘3. Without prejudice to paragraph 2, when adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’; 
+
+ (3) in Article 32, the following paragraph is added: 
+
+ ‘3. When adopting delegated acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council (*), the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’; 
+
+ (4) in Article 36, the following paragraph is added: 
+
+ ‘3. Without prejudice to paragraph 2, when adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’; 
+
+ (5) in Article 39 the following paragraph is added: 
+
+ ‘3. When adopting delegated acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’; 
+
+ (6) in Article 50, the following paragraph is added: 
+
+ ‘3. Without prejudice to paragraph 2, when adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’; 
+
+ (7) in Article 53, the following paragraph is added: 
+
+ ‘3. Without prejudice to paragraph 2, when adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.’. 
+
+ Article 3 
+
+ Entry into force and application 
+
+ This Regulation shall enter into force on the third day following that of its publication in the Official Journal of the European Union . 
+
+ This Regulation shall be binding in its entirety and directly applicable in all Member States. 
+
+ Done at Brussels, 
+
+ For the European Parliament 
+ For the Council 
+
+ The President 
+ The President 
+
+ LEGISLATIVE FINANCIAL AND DIGITAL STATEMENT 
+
+ 1. FRAMEWORK OF THE PROPOSAL/INITIATIVE 3 
+
+ 1.1. Title of the proposal/initiative 3 
+
+ 1.2. Policy area(s) concerned 3 
+
+ 1.3. Objective(s) 3 
+
+ 1.3.1. General objective(s) 3 
+
+ 1.3.2. Specific objective(s) 3 
+
+ 1.3.3. Expected result(s) and impact 3 
+
+ 1.3.4. Indicators of performance 3 
+
+ 1.4. The proposal/initiative relates to: 4 
+
+ 1.5. Grounds for the proposal/initiative 4 
+
+ 1.5.1. Requirement(s) to be met in the short or long term including a detailed timeline for roll-out of the implementation of the initiative 4 
+
+ 1.5.2. Added value of EU involvement (it may result from different factors, e.g. coordination gains, legal certainty, greater effectiveness or complementarities). For the purposes of this section ‘ added value of EU involvement ’ is the value resulting from EU action, that is additional to the value that would have been otherwise created by Member States alone. 4 
+
+ 1.5.3. Lessons learned from similar experiences in the past 4 
+
+ 1.5.4. Compatibility with the multiannual financial framework and possible synergies with other appropriate instruments 5 
+
+ 1.5.5. Assessment of the different available financing options, including scope for redeployment 5 
+
+ 1.6. Duration of the proposal/initiative and of its financial impact 6 
+
+ 1.7. Method(s) of budget implementation planned 6 
+
+ 2. MANAGEMENT MEASURES 8 
+
+ 2.1. Monitoring and reporting rules 8 
+
+ 2.2. Management and control system(s) 8 
+
+ 2.2.1. Justification of the budget implementation method(s), the funding implementation mechanism(s), the payment modalities and the control strategy proposed 8 
+
+ 2.2.2. Information concerning the risks identified and the internal control system(s) set up to mitigate them 8 
+
+ 2.2.3. Estimation and justification of the cost-effectiveness of the controls (ratio between the control costs and the value of the related funds managed), and assessment of the expected levels of risk of error (at payment & at closure) 8 
+
+ 2.3. Measures to prevent fraud and irregularities 9 
+
+ 3. ESTIMATED FINANCIAL IMPACT OF THE PROPOSAL/INITIATIVE 10 
+
+ 3.1. Heading(s) of the multiannual financial framework and expenditure budget line(s) affected 10 
+
+ 3.2. Estimated financial impact of the proposal on appropriations 12 
+
+ 3.2.1. Summary of estimated impact on operational appropriations 12 
+
+ 3.2.1.1. Appropriations from voted budget 12 
+
+ 3.2.1.2. Appropriations from external assigned revenues 17 
+
+ 3.2.2. Estimated output funded from operational appropriations 22 
+
+ 3.2.3. Summary of estimated impact on administrative appropriations 24 
+
+ 3.2.3.1. Appropriations from voted budget 24 
+
+ 3.2.3.2. Appropriations from external assigned revenues 24 
+
+ 3.2.3.3. Total appropriations 24 
+
+ 3.2.4. Estimated requirements of human resources 25 
+
+ 3.2.4.1. Financed from voted budget 25 
+
+ 3.2.4.2. Financed from external assigned revenues 26 
+
+ 3.2.4.3. Total requirements of human resources 26 
+
+ 3.2.5. Overview of estimated impact on digital technology-related investments 28 
+
+ 3.2.6. Compatibility with the current multiannual financial framework 28 
+
+ 3.2.7. Third-party contributions 28 
+
+ 3.3. Estimated impact on revenue 29 
+
+ 4. Digital dimensions 29 
+
+ 4.1. Requirements of digital relevance 30 
+
+ 4.2. Data 30 
+
+ 4.3. Digital solutions 31 
+
+ 4.4. Interoperability assessment 31 
+
+ 4.5. Measures to support digital implementation 32 
+
+ 1. FRAMEWORK OF THE PROPOSAL/INITIATIVE 
+
+ 1.1. Title of the proposal/initiative 
+
+ Proposal for a Regulation of the European Parliament and of the Council amending Regulations (EU) 2024/1689 and (EU) 2018/1139 as regards the simplification of the implementation of harmonised rules on artificial intelligence (Digital Omnibus on AI) 
+
+ 1.2. Policy area(s) concerned 
+
+ Communications Networks, Content and Technology; 
+
+ Internal Market, Industry, Entrepreneurship and SMEs 
+
+ The budgetary impact concerns the new tasks entrusted with the AI Office. 
+
+ 1.3. Objective(s) 
+
+ 1.3.1. General objective(s) 
+
+ 1. To strengthen the monitoring and supervision of certain categories of AI systems by the AI Office. 
+
+ 2. To facilitate the development and testing at EU level of innovative AI systems under strict regulatory oversight before these systems are placed on the market or otherwise put into service. 
+
+ 1.3.2. Specific objective(s) 
+
+ Specific objective No 1 
+
+ To enhance governance and effective enforcement of the AI Act rules related to AI systems by reinforcing the powers and procedures applicable as well as by providing for new resources for the AI Office in charge of the enforcement. 
+
+ Specific objective No 2 
+
+ To provide for the establishment of a sandbox at EU level, enabling cross border activities and testing. 
+
+ 1.3.3. Expected result(s) and impact 
+
+ Specify the effects which the proposal/initiative should have on the beneficiaries/groups targeted. 
+
+ AI providers should benefit from a centralised level of governance and the access to an EU-level sandbox for certain categories of AI systems, avoiding duplication of procedures and costs. 
+
+ 1.3.4. Indicators of performance 
+
+ Specify the indicators for monitoring progress and achievements. 
+
+ Indicator 1 
+
+ Number of AI systems falling under the scope of the monitoring and supervision tasks to be carried out by the AI Office. 
+
+ Indicator 2 
+
+ Number of providers and prospective providers requesting access to the sandbox at EU level. 
+
+ 1.4. The proposal/initiative relates to: 
+
+  a new action 
+
+  a new action following a pilot project / preparatory action 
+ 26 
+
+  the extension of an existing action 
+
+  a merger or redirection of one or more actions towards another/a new action 
+
+ 1.5. Grounds for the proposal/initiative 
+
+ 1.5.1. Requirement(s) to be met in the short or long term including a detailed timeline for roll-out of the implementation of the initiative 
+
+ The additional elements relevant for the enhancement of the governance structure of the AI Office should be in place before the entry into application of the provisions applicable to AI systems. 
+
+ The first EU sandbox is expected to be operational in 2028, although some key setting details should be established beforehand. 
+
+ 1.5.2. Added value of EU involvement (it may result from different factors, e.g. coordination gains, legal certainty, greater effectiveness or complementarities). For the purposes of this section 'added value of EU involvement' is the value resulting from EU action, that is additional to the value that would have been otherwise created by Member States alone. 
+
+ The AI Office will have the power to monitor and supervise the compliance of all AI systems based on general-purpose AI (GPAI) models, where the model and the system are developed by the same provider, as well as all AI systems embedded in or constituting very large online platforms or search engines, even if the system and GPAI model provider are different. The tasks that the AI Office would need to carry out for this vast range of AI systems include requesting full access to documentation, training/validation/testing datasets, and, when necessary, the source code of high-risk AI systems, supervising real-world testing, identifying and evaluating risks, dealing with serious incidents, taking preventive and corrective measures while ensuring cooperation with national market surveillance authorities, dealing with AI systems classified as not high-risk by the provider, dealing with complaints of non-compliance, and imposing penalties. Moreover, to allow market access for AI systems in the scope of this provision which are also subject to pre-market third-party conformity assessment under the AI Act, the AI Office will be the responsible body to carry out conformity assessments. All these actions require resources and a set of enforcement procedures to be developed and implemented, as well as the appropriate technical support to assess and evaluate systems. 
+
+ The AI Office’s role in ensuring compliance would also involve ensuring synergies with the evaluation of the GPAI models, which would strengthen the overall evaluations of models and systems provided by the same provider. This would enable a more comprehensive understanding of the AI systems and their associated risks, allowing for more effective monitoring and enforcement. The AI Office will also need to consider the unique challenges posed by agentic AI, which can operate autonomously and make decisions that may have significant consequences, and develop strategies to address these risks in line with Commission policies. 
+
+ The enhancement of the AI Office’s governance would bring numerous benefits to the regulation of AI systems in the EU. One of the primary advantages is the consistency and coherence it would ensure in the application of the AI Act across the EU. By having a single authority overseeing the implementation of the AI Act in relation to certain categories of AI systems, the risk of conflicting interpretations and decisions would be significantly reduced, providing clarity and certainty for companies operating in the EU. 
+
+ Furthermore, this would simplify the regulatory landscape for companies, as they would only need to deal with one regulator, rather than multiple national authorities. This would reduce the complexity and administrative burden associated with navigating different regulatory frameworks, allowing companies to focus on innovation and growth. The centralised approach would also enable the development within the Commission of specialised expertise in AI systems and GPAI models, enabling more effective monitoring and enforcement of the AI Act. 
+
+ This approach would avoid diverging national enforcement actions on the AI systems concerned that may lead to the fragmentation of the internal market and decrease legal certainty for operators. This would also address the challenges faced by Member States in securing specialised resources to staff their authorities responsible for implementing the AI Act and overseeing AI systems within their territories. By centralizing market surveillance authorities’ powers within the AI Office, this scenario would enable the AI Office to assume responsibility for evaluating and monitoring complex AI systems provided by the same model provider, as well as AI systems constituting or embedded into platforms, thereby alleviating the burden on national authorities. This would leverage the AI Office's existing expertise in evaluating GPAI models and monitoring their compliance, creating a unique concentration of specialized knowledge and capabilities. As a result, the AI Office would be well-positioned to provide consistent and effective oversight, while also supporting Member States in their efforts to implement the AI Act and ensure a harmonized regulatory environment across the EU. With the AI Office handling these additional tasks, national authorities could focus more on their enforcement actions under the AI Act, allowing for a more efficient allocation of resources and a more effective implementation of the AI Act across the EU. 
+
+ 1.5.3. Lessons learned from similar experiences in the past 
+
+ The European Commission's experience in enforcing the Digital Services Act (DSA) provides valuable lessons that can be applied to the enforcement of the AI Act. In particular, the establishment of a robust and transparent enforcement framework, which sets out clear procedures for investigating and addressing breaches of the DSA and the close cooperation with national authorities, to ensure that enforcement actions are coordinated and effective, represent relevant elements in this context. 
+
+ The Commission’s experience with DSA enforcement has shown that this approach can be effective in promoting compliance and protecting users' rights. For example, the Commission has already taken action against several online platforms for breaches of the DSA, and has worked with national authorities to develop guidance and best practices for compliance. 
+
+ By building on the lessons learned from DSA enforcement, the Commission can develop an effective enforcement framework for the AI Act that promotes compliance, and supports the development of a trustworthy and innovative AI ecosystem in the EU. This will involve enhancing the AI Office enforcement role to duly monitor and supervision certain categories of AI systems, and working closely with national authorities to ensure that the AI Act is enforced in a consistent and effective manner. 
+
+ The possibility to provide for an EU-level sandbox should be seen as complementing the sandboxes established at national level and should be implemented in a way to facilitate cross-border cooperation between national competent authorities. 
+
+ 1.5.4. Compatibility with the multiannual financial framework and possible synergies with other appropriate instruments 
+
+ The amendments proposed to the AI Act within this initiative would result in a significant increase in the number of AI systems subject to the monitoring and supervision of the AI Office, with a corresponding rise in the number of systems potentially eligible to participate in an EU-level sandbox. To effectively manage this expansion, it is essential to strengthen the European regulatory and coordination function, as proposed in this initiative. This reinforcement would enable the AI Office to efficiently oversee the growing number of AI systems, ensure compliance with the regulatory framework, and provide a supportive environment for innovation and testing through the EU-level sandbox. 
+
+ 1.5.5. Assessment of the different available financing options, including scope for redeployment 
+
+ The AI Office will make an effort in order to redeploy part of the staff allocated but could do it only partially (15 FTEs) as the staff is currently fully allocated to tasks directly linked to ensuring a timely and correct implementation of the AI Act. New resources will be needed (estimated in 38 additional FTEs) to efficiently exercise the new enforcement tasks. 
+
+ In particular, the AI Office plans to identify colleagues with legal and procedural expertise who can take on part of the upcoming new enforcement tasks. At this stage, we estimate that around 5 CAs with relevant profiles can be redeployed for this purpose. 
+
+ In addition, the AI Office will make an effort to redeploy 5 officials. 
+
+ The AI Office envisages to make fully operational the EU-level sandbox for AI systems falling under its monitoring in 2028, which will make possible a redeployment of 3 CAs needed to set up and run the sandbox. This phased approach would enable to ensure the full operational capacity of the sandbox by 2028, and in particular will also give the AI Office the time to identify the most suitable staff to cover this task and ensure proper project management for facilitating the development, training, testing, and validation of innovative AI systems. 
+
+ In addition, the AI Office will explore opportunities to expand the scope of IT tools (currently mostly in development or pre-launch phase) supporting the AI Act to also cover relevant new enforcement activities (i.e. case handling, AI system registry, monitoring and reporting, exchange of information with authorities). 2 FTEs with IT and administrative profiles will be redeployed to manage these IT tools. This would help to partially cover the management needs related to the new tasks. 
+
+ Overall, these redeployment efforts and synergies will help to address some of the staffing needs for the new enforcement tasks, while additional resources will be necessary to ensure the effective implementation of the AI Act. 
+
+ Additional staff will be funded under DEP support, given that the objectives of the proposed amendments contribute directly to one key objective of Digital Europe – accelerating AI development and deployment in Europe. 
+
+ 1.6. Duration of the proposal/initiative and of its financial impact 
+
+  limited duration 
+
+ –  
+ in effect from [DD/MM]YYYY to [DD/MM]YYYY 
+
+ –  
+ financial impact from YYYY to YYYY for commitment appropriations and from YYYY to YYYY for payment appropriations. 
+
+  unlimited duration 
+
+ – Implementation with a start-up period from 2026 to 2027, 
+
+ – followed by full-scale operation. 
+
+ 1.7. Method(s) of budget implementation planned 
+
+  Direct management by the Commission 
+
+ –  by its departments, including by its staff in the Union delegations; 
+
+ –  
+ by the executive agencies 
+
+  Shared management with the Member States 
+
+  Indirect management by entrusting budget implementation tasks to: 
+
+ –  third countries or the bodies they have designated 
+
+ –  international organisations and their agencies (to be specified) 
+
+ –  the European Investment Bank and the European Investment Fund 
+
+ –  bodies referred to in Articles 70 and 71 of the Financial Regulation 
+
+ –  public law bodies 
+
+ –  bodies governed by private law with a public service mission to the extent that they are provided with adequate financial guarantees 
+
+ –  bodies governed by the private law of a Member State that are entrusted with the implementation of a public-private partnership and that are provided with adequate financial guarantees 
+
+ –  bodies or persons entrusted with the implementation of specific actions in the common foreign and security policy pursuant to Title V of the Treaty on European Union, and identified in the relevant basic act 
+
+ –   bodies established in a Member State, governed by the private law of a Member State or Union law and eligible to be entrusted, in accordance with sector-specific rules, with the implementation of Union funds or budgetary guarantees, to the extent that such bodies are controlled by public law bodies or by bodies governed by private law with a public service mission, and are provided with adequate financial guarantees in the form of joint and several liability by the controlling bodies or equivalent financial guarantees and which may be, for each action, limited to the maximum amount of the Union support. 
+
+ 2. MANAGEMENT MEASURES 
+
+ 2.1. Monitoring and reporting rules 
+
+ Specify frequency and conditions. 
+
+ The strengthened dispositions will be reviewed and evaluated with the entire AI Act in August 2029. The Commission will report on the findings of the evaluation to the European Parliament, the Council and the European Economic and Social Committee. 
+
+ 2.2. Management and control system(s) 
+
+ 2.2.1. Justification of the budget implementation method(s), the funding implementation mechanism(s), the payment modalities and the control strategy proposed 
+
+ The regulation reinforces the European policy with regard to harmonised rules for the provision of artificial intelligence systems in the internal market while ensuring the respect of safety and fundamental rights. The simplified single supervision ensures consistency for the cross-border application of the obligations under this Regulation. 
+
+ In order to face these new tasks, it is necessary to appropriately resource the Commission’s services. The enforcement of the new regulation is estimated to require 53 FTE. 
+
+ 2.2.2. Information concerning the risks identified and the internal control system(s) set up to mitigate them 
+
+ The risks correspond to the standard risks of Commission operations and are adequately covered by existing standard risk minimising procedures. 
+
+ 2.2.3. Estimation and justification of the cost-effectiveness of the controls (ratio between the control costs and the value of the related funds managed), and assessment of the expected levels of risk of error (at payment & at closure) 
+
+ For the meeting expenditure, given the low value per transaction (e.g. refunding travel costs for a delegate for a meeting), standard control procedures seem sufficient. 
+
+ 2.3. Measures to prevent fraud and irregularities 
+
+ Specify existing or envisaged prevention and protection measures, e.g. from the anti-fraud strategy. 
+
+ The existing fraud prevention measures applicable to the Commission will cover the additional appropriations necessary for this Regulation. 
+
+ 3. ESTIMATED FINANCIAL IMPACT OF THE PROPOSAL/INITIATIVE 
+
+ 3.1. Heading(s) of the multiannual financial framework and expenditure budget line(s) affected 
+
+ · Existing budget lines 
+
+ In order of multiannual financial framework headings and budget lines. 
+
+ Heading of multiannual financial framework 
+
+ Budget line 
+
+ Type of expenditure 
+
+ Contribution 
+
+ Number 
+
+ Diff./Non-diff. 
+ 27 
+
+ from EFTA countries 
+ 28 
+
+ from candidate countries and potential candidates 
+ 29 
+
+ From other third countries 
+
+ other assigned revenue 
+
+ 7 
+
+ 20 02 06 Administrative expenditure 
+
+ Nondiff 
+
+ No 
+
+ 1 
+
+ 02 04 03 DEP Artificial Intelligence 
+
+ Diff. 
+
+ YES 
+
+ NO 
+
+ yes 
+
+ NO 
+
+ 1 
+
+ 02 01 30 01 Support expenditure for the Digital Europe programme 
+
+ Nondiff 
+
+ yes 
+
+ yes 
+
+ 3.2. Estimated financial impact of the proposal on appropriations 
+
+ 3.2.1. Summary of estimated impact on operational appropriations 
+
+ –  
+ The proposal/initiative does not require the use of operational appropriations 
+
+ –  
+ The proposal/initiative requires the use of operational appropriations, as explained below 
+
+ 3.2.1.1. Appropriations from voted budget 
+
+ [ 
+
+ EUR million (to three decimal places) 
+
+ Heading of multiannual financial framework 
+
+ 1 
+
+ DG: CNECT 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ After 2027 
+
+ TOTAL MFF 2021-2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+ After 2027 
+
+ Budget line 02 04 03 
+
+ Commitments 
+
+ (1a) 
+
+ 0,500 
+ 30 
+
+ 0,500 
+ 31 
+
+ 1,000 
+
+ Payments 
+
+ (2a) 
+
+ 0,500 
+
+ 0,500 
+
+ 1,000 
+
+ Appropriations of an administrative nature financed from the envelope of specific programmes 
+
+ Budget line 02 01 30 01 
+
+ (3) 
+
+ 2,642 
+ 32 
+
+ 6,283 
+ 33 
+
+ 7,283 
+
+ 8,925 
+
+ TOTAL appropriations 
+
+ for DG CNECT 
+
+ Commitments 
+
+ =1a+1b+3 
+
+ 3,142 
+
+ 6,783 
+
+ 7,283 
+
+ 9,925 
+
+ Payments 
+
+ =2a+2b+3 
+
+ 2,642 
+
+ 6,783 
+
+ 7,783 
+
+ 9,925 
+
+ TOTAL 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ After 2027 
+
+ TOTAL MFF 2021-2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+ After 2027 
+
+ Budget line 02 04 03 
+
+ Commitments 
+
+ (1a) 
+
+ 0,500 
+ 34 
+
+ 0,500 
+ 35 
+
+ 1,000 
+
+ Payments 
+
+ (2a) 
+
+ 0,500 
+
+ 0,500 
+
+ 1,000 
+
+ Appropriations of an administrative nature financed from the envelope of specific programmes 
+
+ Budget line 02 01 30 01 
+
+ (3) 
+
+ 2,642 
+ 36 
+
+ 6,283 
+ 37 
+
+ 7,283 
+
+ 8,925 
+
+ TOTAL appropriations 
+
+ for DG CNECT 
+
+ Commitments 
+
+ =1a+1b+3 
+
+ 3,142 
+
+ 6,783 
+
+ 7,283 
+
+ 9,925 
+
+ Payments 
+
+ =2a+2b+3 
+
+ 2,642 
+
+ 6,783 
+
+ 7,783 
+
+ 9,925 
+
+ ] 
+
+ [ 
+
+ Heading of multiannual financial framework 
+
+ 7 
+
+ ‘Administrative expenditure’ 
+
+ DG: CNECT 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ TOTAL MFF 2021-2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+  Human resources 
+
+ 0,940 
+
+ 0,940 
+
+ 1,880 
+
+  Other administrative expenditure 
+
+ 0,025 
+
+ 0,025 
+
+ 0,050 
+
+ TOTAL DG CNECT 
+
+ Appropriations 
+
+ 0,965 
+
+ 0,965 
+
+ 1,930 
+
+ TOTAL appropriations under HEADING 7 of the multiannual financial framework 
+
+ (Total commitments = Total payments) 
+
+ 0,965 
+
+ 0,965 
+
+ 1,930 
+
+ EUR million (to three decimal places) 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ After 2027 
+
+ TOTAL MFF 2021-2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+ TOTAL appropriations under HEADINGS 1 to 7 
+
+ Commitments 
+
+ 4,107 
+
+ 7,748 
+
+ 8,248 
+
+ 11,855 
+
+ of the multiannual financial framework 
+
+ Payments 
+
+ 3,607 
+
+ 7,748 
+
+ 8,748 
+
+ 11,855 
+
+ ] 
+
+ 3.2.2. Estimated output funded from operational appropriations (not to be completed for decentralised agencies) 
+
+ Commitment appropriations in EUR million (to three decimal places) 
+
+ Indicate objectives and outputs 
+
+  
+
+ Year 
+
+ 2024 
+
+ Year 
+
+ 2025 
+
+ Year 
+
+ 2026 
+
+ Year 
+
+ 2027 
+
+ Enter as many years as necessary to show the duration of the impact (see Section1.6) 
+
+ TOTAL 
+
+ OUTPUTS 
+
+ Type 
+ 38 
+
+ Average cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ No 
+
+ Cost 
+
+ Total No 
+
+ Total cost 
+
+ SPECIFIC OBJECTIVE No 1 
+ 39 
+ … 
+
+ - Output 
+
+ - Output 
+
+ - Output 
+
+ Subtotal for specific objective No 1 
+
+ SPECIFIC OBJECTIVE No 2 ... 
+
+ - Output 
+
+ Subtotal for specific objective No 2 
+
+ TOTALS 
+
+ 3.2.3. Summary of estimated impact on administrative appropriations 
+
+ –  
+ The proposal/initiative does not require the use of appropriations of an administrative nature 
+
+ –  
+ The proposal/initiative requires the use of appropriations of an administrative nature, as explained below 
+
+ 3.2.3.1. Appropriations from voted budget 
+
+ [ 
+
+ VOTED APPROPRIATIONS 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ TOTAL 2021 - 2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+ HEADING 7 
+
+ Human resources 
+
+ 0,940 
+
+ 0,940 
+
+ 1,880 
+
+ Other administrative expenditure 
+
+ 0,025 
+
+ 0,025 
+
+ 0,050 
+
+ Subtotal HEADING 7 
+
+ 0,965 
+
+ 0,965 
+
+ 1,930 
+
+ Outside HEADING 7 
+
+ Human resources 
+
+ 2,429 
+
+ 4,858 
+
+ 7,287 
+
+ Other expenditure of an administrative nature 
+
+ 0,213 
+
+ 1,425 
+
+ 1,638 
+
+ Subtotal outside HEADING 7 
+
+ 2,642 
+
+ 6,283 
+
+ 8,925 
+
+ ] 
+
+ The appropriations required for human resources and other expenditure of an administrative nature will be met by appropriations from the DG that are already assigned to management of the action and/or have been redeployed within the DG, together, if necessary, with any additional allocation which may be granted to the managing DG under the annual allocation procedure and in the light of budgetary constraints. 
+
+ 3.2.4. Estimated requirements of human resources 
+
+ –  
+ The proposal/initiative does not require the use of human resources 
+
+ –  
+ The proposal/initiative requires the use of human resources, as explained below 
+
+ 3.2.4.1. Financed from voted budget 
+
+ Estimate to be expressed in full-time equivalent units (FTEs) 
+
+ [ 
+
+ VOTED APPROPRIATIONS 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+  Establishment plan posts (officials and temporary staff) 
+
+ 20 01 02 01 (Headquarters and Commission’s Representation Offices) 
+
+ 0 
+
+ 0 
+
+ 5 
+
+ 5 
+
+ 20 01 02 03 (EU Delegations) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 01 01 01 01 (Indirect research) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 01 01 01 11 (Direct research) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ Other budget lines (specify) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ • External staff (in FTEs) 
+
+ 20 02 01 (AC, END from the ‘global envelope’) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 20 02 03 (AC, AL, END and JPD in the EU Delegations) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ Admin. Support line 
+
+[XX.01.YY.YY] 
+
+ - at Headquarters 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ - in EU Delegations 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 01 01 01 02 (AC, END - Indirect research) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 01 01 01 12 (AC, END - Direct research) 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ Other budget lines (specify) - Heading 7 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ 0 
+
+ Other budget lines (02 01 30 01) - Outside Heading 7 
+
+ 0 
+
+ 0 
+
+ 48 
+
+ 48 
+
+ TOTAL 
+
+ 0 
+
+ 0 
+
+ 53 
+
+ 53 
+
+ ] 
+
+ The staff required to implement the proposal (in FTEs): 
+
+ To be covered by current staff available in the Commission services 
+
+ Exceptional additional staff* 
+
+ To be financed under Heading 7 or Research 
+
+ To be financed from BA line 
+
+ To be financed from fees 
+
+ Establishment plan posts 
+
+ 5 
+
+ N/A 
+
+ External staff (CA, SNEs, INT) 
+
+ 10 
+
+ 38 
+
+ Description of tasks to be carried out by: 
+
+ Officials and temporary staff 
+
+ The strengthening of the central supervision by the AI Office will lead to a significant increase in the number of AI systems. These task cannot be carried out by the current staff levels, which are only sufficient for the current scope of supervision. 
+
+ External staff 
+
+ 3.2.5. Overview of estimated impact on digital technology-related investments 
+
+ Compulsory: the best estimate of the digital technology-related investments entailed by the proposal/initiative should be included in the table below. 
+
+ Exceptionally, when required for the implementation of the proposal/initiative, the appropriations under Heading 7 should be presented in the designated line. 
+
+ The appropriations under Headings 1-6 should be reflected as ‘Policy IT expenditure on operational programmes’. This expenditure refers to the operational budget to be used to re-use/ buy/ develop IT platforms/ tools directly linked to the implementation of the initiative and their associated investments (e.g. licences, studies, data storage etc). The information provided in this table should be consistent with details presented under Section 4 ‘Digital dimensions’. 
+
+ TOTAL Digital and IT appropriations 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ Year 
+
+ TOTAL MFF 2021 - 2027 
+
+ 2024 
+
+ 2025 
+
+ 2026 
+
+ 2027 
+
+ HEADING 7 
+
+ IT expenditure (corporate) 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ Subtotal HEADING 7 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ Outside HEADING 7 
+
+ Policy IT expenditure on operational programmes 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ Subtotal outside HEADING 7 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ TOTAL 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 0.000 
+
+ 3.2.6. Compatibility with the current multiannual financial framework 
+
+ The proposal/initiative: 
+
+ –  
+ can be fully financed through redeployment within the relevant heading of the multiannual financial framework (MFF) 
+
+ The amounts will be redeployed from 02.013001 support expenditure for the Digital Europe Programme for 2026 and from 02.0403 (SO2 artificial intelligence) for 2027. 
+
+ –  
+ requires use of the unallocated margin under the relevant heading of the MFF and/or use of the special instruments as defined in the MFF Regulation 
+
+ –  
+ requires a revision of the MFF 
+
+ 3.2.7. Third-party contributions 
+
+ The proposal/initiative: 
+
+ –  
+ does not provide for co-financing by third parties 
+
+ –  
+ provides for the co-financing by third parties estimated below: 
+
+ Appropriations in EUR million (to three decimal places) 
+
+ Year 
+
+ 2024 
+
+ Year 
+
+ 2025 
+
+ Year 
+
+ 2026 
+
+ Year 
+
+ 2027 
+
+ Total 
+
+ Specify the co-financing body 
+
+ TOTAL appropriations co-financed 
+
+ 3.3. 
+ Estimated impact on revenue 
+
+ –  
+ The proposal/initiative has no financial impact on revenue. 
+
+ –  
+ The proposal/initiative has the following financial impact: 
+
+ –  
+ on own resources 
+
+ –  
+ on other revenue 
+
+ –  
+ please indicate, if the revenue is assigned to expenditure lines 
+
+ EUR million (to three decimal places) 
+
+ Budget revenue line: 
+
+ Appropriations available for the current financial year 
+
+ Impact of the proposal/initiative 
+ 40 
+
+ Year 2024 
+
+ Year 2025 
+
+ Year 2026 
+
+ Year 2027 
+
+ Article …………. 
+
+ For assigned revenue, specify the budget expenditure line(s) affected. 
+
+ Other remarks (e.g. method/formula used for calculating the impact on revenue or any other information). 
+
+ 4. Digital dimensions 
+
+ 4.1. Requirements of digital relevance 
+
+ Reference to the requirement 
+
+ Requirement description 
+
+ Actors affected or concerned by the requirement 
+
+ High-level Processes 
+
+ Categories 
+
+ Article 1(5) 
+
+ Inserting Article 4a : Allowing providers and deployers of AI systems and AI models to exceptionally process special categories of personal data to the extent necessary for the purpose of ensuring bias detection and correction, subject to certain conditions. 
+
+ Providers and deployers of AI systems and AI models 
+
+ Concerned data subjects 
+
+ Data processing 
+
+ Data 
+
+ Article 1(8) 
+
+ Amending Article 11(1), second subparagraph : Relating to the technical documentation of high-risk AI systems that needs to be drawn up before that system is placed on the market or put into service. SMEs and SMCs are given certain regulatory privileges as concerns this provision of information. 
+
+ Providers of high-risk AI systems (including SMCs and SMEs) 
+
+ National competent authorities 
+
+ Notified bodies 
+
+ European Commission 
+
+ Technical documentation 
+
+ Data 
+
+ Article 1(10) 
+
+ Amending Article 28, inserting paragraph (1a) : Conformity assessment bodies that apply for a designation may be offered the possibility to submit a single application and undergo a single assessment procedure. 
+
+ Conformity assessment bodies 
+
+ Notifying authorities 
+
+ Application submission 
+
+ Data 
+
+ Article 1(11) 
+
+ Amending Article 29(4 ): Notified bodies which apply for a single assessment shall submit the single application to the notifying authority. The notified body shall update the documentation if relevant changes occur. 
+
+ Notified bodies 
+
+ Notifying authority 
+
+ Application submission 
+
+ Data 
+
+ Article 1(16) 
+
+ Amending Article 56(6) : The Commission shall publish its assessments on the adequacy of the codes of practice. 
+
+ European Commission 
+
+ Assessment publication 
+
+ Data 
+
+ Article 1(26) 
+
+ Amending Article 77 : 
+
+ · Paragraph 1 : National public authorities/bodies which supervise/enforce EU law obligations protecting fundamental rights may make a reasoned request and access any information/documentation from the relevant market surveillance authority 
+
+ · Paragraph 1a : market surveillance authority shall grant access and, where needed, request the information from the provider/deployer 
+
+ · Paragraph 1b : where necessary, the aforementioned market surveillance authorities and public authorities/bodies shall exchange information. 
+
+ National public authorities/bodies which supervise/enforce EU law obligations protecting fundamental rights 
+
+ Market surveillance authorities 
+
+ Providers/deployers of AI systems 
+
+ Information exchange 
+
+ Data 
+
+ 4.2. Data 
+
+ High-level description of the data in scope 
+
+ Type of data 
+
+ Reference to the requirement(s) 
+
+ Standard and/or specification (if applicable) 
+
+ Special categories of personal data (where the processing is needed for bias detection/correction) 
+
+ Article 1(5) 
+
+ // 
+
+ Technical documentation for high-risk AI systems 
+
+ Article 1(8) 
+
+ Technical documentation shall contain, at a minimum, the elements set out in Annex IV of the AI Act. The Commission shall establish a simplified technical documentation form targeted at SMCs and SMEs. 
+
+ Applications of conformity assessment bodies for designation 
+
+ Article 1(10) 
+
+ // 
+
+ Applications of a conformity assessment bodies for notification 
+
+ Article 1(11) 
+
+ The notified body shall update the relevant documentation whenever relevant changes occur. 
+
+ Commission assessment of the adequacy of the codes of practice 
+
+ Article 1(16) 
+
+ // 
+
+ Request for access to information on AI systems 
+
+ Article 1(26) 
+
+ // 
+
+ Information or documentation requested by national public authorities/bodies which supervise/enforce obligations relating to fundamental rights 
+
+ Article 1(26) 
+
+ To be provided in accessible language and format. 
+
+ Alignment with the European Data Strategy 
+
+ Explanation of how the requirement(s) are aligned with the European Data Strategy 
+
+ Article 1(4) establishes that the processing of special categories of personal data shall be subject to appropriate safeguards for fundamental rights and freedoms of natural persons. This is in alignment with Regulations (EU) 2016/679 (GDPR) and (EU) 2018/1725 (EUDPR). 
+
+ Alignment with the once-only principle 
+
+ Explanation of how the once-only principle has been considered and how the possibility to reuse existing data has been explored 
+
+ Article 1(10) states that conformity assessment bodies may be provided the possibility to submit a single application and undergo a single assessment procedure. 
+
+ Explanation of how newly created data is findable, accessible, interoperable and reusable, and meets high-quality standards 
+
+ Data flows 
+
+ High-level description of the data flows 
+
+ Type of data 
+
+ Reference(s) to the requirement(s) 
+
+ Actors who provide the data 
+
+ Actors who receive the data 
+
+ Trigger for the data exchange 
+
+ Frequency (if applicable) 
+
+ Applications of a conformity assessment bodies for notification 
+
+ Article 1(11) 
+
+ Notified bodies which are designated under Union harmonisation legislation listed in Section A of Annex I 
+
+ Notifying authority designated in accordance with Union harmonisation legislation listed in Section A of Annex I 
+
+ Application being made for single assessment 
+
+ // 
+
+ Commission assessment of the adequacy of the codes of practice 
+
+ Article 1(16) 
+
+ European Commission 
+
+ General Public 
+
+ Performance of an assessment as regards the codes of practice 
+
+ Regularly 
+
+ Request for access to information on AI systems 
+
+ Article 1(26) 
+
+ National public authorities or bodies which supervise or enforce the respect of obligations under Union law protecting fundamental rights 
+
+ Market surveillance authority 
+
+ National public authorities/bodies require the information in order to fulfil their mandates 
+
+ // 
+
+ Information or documentation requested by national public authorities/bodies which supervise/enforce obligations relating to fundamental rights 
+
+ Article 1(26) 
+
+ Market surveillance authority 
+
+ National public authorities or bodies which supervise or enforce the respect of obligations under Union law protecting fundamental rights 
+
+ Submission of a reasoned request to access information 
+
+ // 
+
+ Information or documentation requested by market surveillance authorities 
+
+ Article 1(26) 
+
+ Market surveillance authorities 
+
+ Providers/ deployers of AI systems 
+
+ Market surveillance authority is in need of the information so as to answer to a request from national public authorities/bodies which supervise/enforce obligations relating to fundamental rights) 
+
+ // 
+
+ Information exchanges as part of the cooperation of market surveillance authorities and public authorities/bodies which supervise/enforce obligations relating to fundamental rights 
+
+ Article 1(26) 
+
+ Market surveillance authorities 
+
+ / Public authorities/bodies 
+
+ Market surveillance authorities 
+
+ / Public authorities/bodies 
+
+ Information exchange need identified in the course of cooperation and mutual assistance 
+
+ // 
+
+ 4.3. Digital solutions 
+
+ High-level description of digital solutions 
+
+ Digital solution 
+
+ Reference(s) to the requirement(s) 
+
+ Main mandated functionalities 
+
+ Responsible body 
+
+ How is accessibility catered for? 
+
+ How is reusability considered? 
+
+ Use of AI technologies (if applicable) 
+
+ N.A. (the proposed amendments to the AI Act do not foresee the adoption of new digital solutions) 
+
+ For each digital solution, explanation of how the digital solution complies with applicable digital policies and legislative enactments 
+
+ Digital Solution #1 
+
+ Digital and/or sectorial policy (when these are applicable) 
+
+ Explanation on how it aligns 
+
+ AI Act 
+
+ EU Cybersecurity framework 
+
+ eIDAS 
+
+ Single Digital Gateway and IMI 
+
+ Others 
+
+ 4.4. Interoperability assessment 
+
+ High-level description of the digital public service(s) affected by the requirements 
+
+ Digital public service or category of digital public services 
+
+ Description 
+
+ Reference(s) to the requirement(s) 
+
+ Interoperable Europe Solution(s) 
+
+ (NOT APPLICABLE) 
+
+ Other interoperability solution(s) 
+
+ N.A. (the proposed amendments to the AI Act do not affect digital public services) 
+
+ Impact of the requirement(s) as per digital public service on cross-border interoperability 
+
+ Digital Public Service #1 
+
+ Assessment 
+
+ Measure(s) 
+
+ Potential remaining barriers (if applicable) 
+
+ Alignment with existing digital and sectorial policies 
+
+ Please list the applicable digital and sectorial policies identified 
+
+ Organisational measures for a smooth cross-border digital public services delivery 
+
+ Please list the governance measures foreseen 
+
+ Measures taken to ensure a shared understanding of the data 
+
+ Please list such measures 
+
+ Use of commonly agreed open technical specifications and standards 
+
+ Please list such measures 
+
+ 4.5. Measures to support digital implementation 
+
+ High-level description of measures supporting digital implementation 
+
+ Description of the measure 
+
+ Reference(s) to the requirement(s) 
+
+ Commission role 
+
+ (if applicable) 
+
+ Actors to be involved 
+
+ (if applicable) 
+
+ Expected timeline 
+
+ (if applicable) 
+
+ N.A. 
+
+ (1) 
+
+ COM(2025) 47 final. 
+
+ (2) 
+
+ COM(2025)165 final. 
+
+ (3) 
+
+ COM(2025) 723 final. 
+
+ (4) 
+
+ https://ai-act-service-desk.ec.europa.eu/ 
+
+ (5) 
+
+ European Commission (2025) Call for evidence on the Apply AI Strategy . Available at: 
+ Apply AI Strategy – strengthening the AI continent 
+
+ (6) 
+
+ European Commission (2025) Call for evidence on the revision of the Cybersecurity Act. Available at: 
+ The EU Cybersecurity Act 
+
+ (7) 
+
+ European Commission (2025) Call for evidence on the European Data Union Strategy . Available at: 
+ European Data Union Strategy 
+
+ (8) 
+
+ European Commission (2025) Call for evidence on the digital package and omnibus . Available at: 
+ Simplification – digital package and omnibus 
+
+ (9) 
+
+ In detail: the right to human dignity (Article 1), respect for private life and protection of personal data (Articles 7 and 8), non-discrimination (Article 21) and equality between women and men (Article 23), freedom of expression (Article 11) and freedom of assembly (Article 12), right to an effective remedy and to a fair trial, the rights of defence, and the presumption of innocence (Articles 47 and 48), right to a high level of environmental protection and the improvement of the quality of the environment (Article 37). 
+
+ (10) 
+
+ In detail: workers’ rights to fair and just working conditions (Article 31), a high level of consumer protection (Article 28), the rights of the child (Article 24) and the integration of persons with disabilities (Article 26). 
+
+ (11) 
+
+ In detail: the freedom to conduct business (Article 16) and the freedom of art and science (Article 13). 
+
+ (12) 
+
+ OJ C , , p. . 
+
+ (13) 
+
+ OJ C , , p. . 
+
+ (14) 
+
+ Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence and amending Regulations (EC) No 300/2008, (EU) No 167/2013, (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1139 and (EU) 2019/2144 and Directives 2014/90/EU, (EU) 2016/797 and (EU) 2020/1828 (Artificial Intelligence Act) (OJ L, 2024/1689, 12.7.2024, ELI: http://data.europa.eu/eli/reg/2024/1689/oj). 
+
+ (15) 
+
+ Commission Recommendation of 6 May 2003 concerning the definition of micro, small and medium-sized enterprises (OJ L 124, 20.5.2003, pp. 36–41 , ELI: http://data.europa.eu/eli/reco/2003/361/oj) . 
+
+ (16) 
+
+ Commission Recommendation (EU) 2025/1099 of 21 May 2025 on the definition of small mid-cap enterprises (OJ L, 2025/1099, 28.5.2025, ELI: http://data.europa.eu/eli/reco/2025/1099/oj). 
+
+ (17) 
+
+ Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation) (OJ L 119, 4.5.2016, p. 1, ELI: http://data.europa.eu/eli/reg/2016/679/oj). 
+
+ (18) 
+
+ Regulation (EU) 2018/1725 of the European Parliament and of the Council of 23 October 2018 on the protection of natural persons with regard to the processing of personal data by the Union institutions, bodies, offices and agencies and on the free movement of such data, and repealing Regulation (EC) No 45/2001 and Decision No 1247/2002/EC (OJ L 295, 21.11.2018, p. 39, ELI: http://data.europa.eu/eli/reg/2018/1725/oj). 
+
+ (19) 
+
+ Directive (EU) 2016/680 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data by competent authorities for the purposes of the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, and on the free movement of such data, and repealing Council Framework Decision 2008/977/JHA (OJ L 119, 4.5.2016, pp. 89–131, ELI: http://data.europa.eu/eli/dir/2016/680/oj). 
+
+ (20) 
+
+ Regulation (EU) 2017/745 of the European Parliament and of the Council of 5 April 2017 on medical devices, amending Directive 2001/83/EC, Regulation (EC) No 178/2002 and Regulation (EC) No 1223/2009 and repealing Council Directives 90/385/EEC and 93/42/EEC (OJ L 117, 5.5.2017, p. 1, ELI: http://data.europa.eu/eli/reg/2017/745/oj). 
+
+ (21) 
+
+ Regulation (EU) 2017/746 of the European Parliament and of the Council of 5 April 2017 on in vitro diagnostic medical devices and repealing Directive 98/79/EC and Commission Decision 2010/227/EU (OJ L 117, 5.5.2017, p. 176, ELI: http://data.europa.eu/eli/reg/2017/746/oj). 
+
+ (22) 
+
+ Regulation (EU) 2019/1020 of the European Parliament and of the Council of 20 June 2019 on market surveillance and compliance of products and amending Directive 2004/42/EC and Regulations (EC) No 765/2008 and (EU) No 305/2011 (OJ L 169, 25.6.2019, p. 1, ELI: http://data.europa.eu/eli/reg/2019/1020/oj). 
+
+ (23) 
+
+ Regulation (EU) 2022/2065 of the European Parliament and of the Council of 19 October 2022 on a Single Market For Digital Services and amending Directive 2000/31/EC (Digital Services Act) (OJ L 277, 27.10.2022, p. 1, ELI: http://data.europa.eu/eli/reg/2022/2065/oj). 
+
+ (24) 
+
+ Regulation (EU) 2018/1139 of the European Parliament and of the Council of 4 July 2018 on common rules in the field of civil aviation and establishing a European Union Aviation Safety Agency, and amending Regulations (EC) No 2111/2005, (EC) No 1008/2008, (EU) No 996/2010, (EU) No 376/2014 and Directives 2014/30/EU and 2014/53/EU of the European Parliament and of the Council, and repealing Regulations (EC) No 552/2004 and (EC) No 216/2008 of the European Parliament and of the Council and Council Regulation (EEC) No 3922/91(OJ L 212, 22.8.2018, pp. 1–122, ELI: http://data.europa.eu/eli/reg/2018/1139/oj). 
+
+ (25) 
+
+ Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence and amending Regulations (EC) No 300/2008, (EU) No 167/2013, (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1139 and (EU) 2019/2144 and Directives 2014/90/EU, (EU) 2016/797 and (EU) 2020/1828 (Artificial Intelligence Act) (OJ L, 2024/1689, 12.7.2024, ELI: http://data.europa.eu/eli/reg/2024/1689/oj). 
+
+ (26) 
+
+ As referred to in Article 58(2), point (a) or (b) of the Financial Regulation. 
+
+ (27) 
+
+ Diff. = Differentiated appropriations / Non-diff. = Non-differentiated appropriations. 
+
+ (28) 
+
+ EFTA: European Free Trade Association. 
+
+ (29) 
+
+ Candidate countries and, where applicable, potential candidates from the Western Balkans. 
+
+ (30) 
+
+ This budget is already eamarked in the DEP WP 26-27 for the AI office 
+
+ (31) 
+
+ This budget is already eamarked in the DEP WP 26-27 for the AI office 
+
+ (32) 
+
+ This budget corresponds to [ 48 ] additional FTEs for 6 months [ (43 CAs and 5 SNEs) ] , the baseline being the staffing level agreed in the context of the 2026 budgetary procedure. The budget will be redeployed in the DEP admin envelope to cover the additional costs. 
+
+ (33) 
+
+ The amount will be redeployed from 02.0403 (SO2 artificial intelligence) in 2027, the request will be introduced in the 2027 budgetary procedure. 
+
+ (34) 
+
+ This budget is already ea r marked in the DEP WP 26-27 for the AI O ffice . 
+
+ (35) 
+
+ This budget is already ea r marked in the DEP WP 26-27 for the AI O ffice . 
+
+ (36) 
+
+ This budget corresponds to 48 additional FTEs for 6 months (43 CAs and 5 SNEs), the baseline being the staffing level agreed in the context of the 2026 budgetary procedure. The budget will be redeployed in the DEP admin envelope to cover the additional costs. 
+
+ (37) 
+
+ The amount will be redeployed from 02.0403 (SO2 artificial intelligence) in 2027, the request will be introduced in the 2027 budgetary procedure. 
+
+ (38) 
+
+ Outputs are products and services to be supplied (e.g. number of student exchanges financed, number of km of roads built, etc.). 
+
+ (39) 
+
+ As described in Section 1.3.2. ‘Specific objective(s)’ 
+
+ (40) 
+
+ As regards traditional own resources (customs duties, sugar levies), the amounts indicated must be net amounts, i.e. gross amounts after deduction of 20% for collection costs. 
+
