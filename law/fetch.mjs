@@ -1,44 +1,63 @@
 #!/usr/bin/env node
 /**
- * law/fetch.mjs - CLI over the EUR-Lex Cellar API for this repo's pinned legal corpus.
+ * law/fetch.mjs v2 - CLI for this repo's pinned legal corpus (EUR-Lex).
  *
- *   node law/fetch.mjs fetch      re-download all corpus documents (html + txt)
- *   node law/fetch.mjs verify     offline: check every marker against the local txt files
- *   node law/fetch.mjs freshness  network: warn if EUR-Lex lists a newer consolidated version
+ *   node law/fetch.mjs verify            offline gate: hashes, derivation, titles, markers
+ *   node law/fetch.mjs fetch [CELEX]     re-download (all docs, or one), atomic, paced
+ *   node law/fetch.mjs seal              recompute manifest.json from current files
+ *   node law/fetch.mjs freshness         network monitor: FAILS CLOSED when undeterminable
  *
- * The corpus is the ground truth the test suite compares legal assertions against.
- * PINNED_CONSOLIDATED is the consolidation date this release was verified against;
- * bump it deliberately, never implicitly.
+ * verify is the build/CI gate and needs no network. freshness is a scheduled
+ * monitor, not a build step: it exits 1 when it cannot determine the newest
+ * consolidation (throttle, page change) and 2 when the law has moved.
+ *
+ * The corpus is an evidence snapshot of the consolidated text, which EUR-Lex
+ * labels a documentation tool without legal effect; authentic OJ acts are the
+ * legal authority. PINNED_CONSOLIDATED is bumped deliberately, never implicitly.
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  renameSync,
+  rmSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
+const TMP = join(DIR, ".tmp");
 export const PINNED_CONSOLIDATED = "20260727";
-// EUR-Lex serves an empty 200 to non-browser user agents; a browser UA is required.
-const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
+const TOOL_VERSION = "fetch.mjs@2";
+// EUR-Lex serves an empty 202 to non-browser user agents; a browser UA is required.
+const UA =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
+const PACE_MS = 10_000; // EUR-Lex throttles bursts with an empty 202
+const RETRY_AFTER_MS = 30_000;
 
-// Every document carries markers proving it is the right text. A failed marker
-// means the fetch returned the wrong document, a partial page, or the law moved.
+// titleMustContain pins document identity; markers pin content identity.
 const DOCS = [
   {
     celex: `02024R1689-${PINNED_CONSOLIDATED}`,
     file: `celex-02024R1689-${PINNED_CONSOLIDATED}-consolidated`,
-    role: "operative law: the AI Act as amended by Reg. (EU) 2026/1744",
+    role: "evidence snapshot: the AI Act as amended by Reg. (EU) 2026/1744 (documentation tool, no legal effect)",
+    titleMustContain: ["Consolidated TEXT: 32024R1689", "27.07.2026"],
     markers: [
       ["2 December 2027", 1], // amended Art. 113(3)(c)(i)
       ["2 December 2026", 2], // Art. 111(4) legacy transition + Art. 113(3)(a)
-      ["point (ba)", 1],      // enacted new prohibition, NCII
+      ["point (ba)", 1], // enacted new prohibition, NCII
       ["Annex III", 10],
+      ["Article 75a", 1], // inserted AI Office powers article
     ],
   },
   {
     celex: "32026R1744",
     file: "celex-32026R1744-omnibus",
-    role: "amending act: Digital Omnibus on AI, OJ 2026-07-24, in force 2026-07-27",
+    role: "authentic amending act: Digital Omnibus on AI, OJ 2026-07-24, in force 2026-07-27",
+    titleMustContain: ["L_202601744EN"],
     markers: [
       ["third day following", 1],
       ["Done at Strasbourg", 1],
@@ -47,13 +66,15 @@ const DOCS = [
   {
     celex: "32024R1689",
     file: "celex-32024R1689-original",
-    role: "superseded original act, kept to label pre-amendment text",
+    role: "authentic original act, superseded in parts; kept to label pre-amendment text",
+    titleMustContain: ["L_202401689EN"],
     markers: [["2 August 2027", 1]],
   },
   {
     celex: "52025PC0836",
     file: "celex-52025PC0836-proposal-SUPERSEDED",
     role: "SUPERSEDED Commission proposal; source of the deleted '6 months' trigger. NOT LAW.",
+    titleMustContain: ["COM%282025%29836"],
     markers: [
       ["6 months", 1],
       ["Digital Omnibus", 1],
@@ -61,7 +82,7 @@ const DOCS = [
   },
 ];
 
-const url = (celex) =>
+const srcUrl = (celex) =>
   `https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:${celex}`;
 
 function htmlToText(h) {
@@ -70,102 +91,202 @@ function htmlToText(h) {
   h = h.replace(/<\/(p|div|td|tr|li|h[1-6])>/gi, "\n");
   let t = h.replace(/<[^>]+>/g, " ");
   t = t
-    .replace(/&nbsp;| /g, " ")
-    .replace(/&amp;/g, "&")
+    .replace(/&#x([0-9a-f]+);/gi, (_, x) => String.fromCodePoint(parseInt(x, 16)))
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&nbsp;/g, " ")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/&#8217;|&rsquo;/g, "’")
-    .replace(/&quot;/g, '"');
-  t = t.replace(/[ \t]+/g, " ").replace(/\n\s*\n+/g, "\n\n");
+    .replace(/&quot;/g, '"')
+    .replace(/&rsquo;/g, "’")
+    .replace(/&amp;/g, "&");
+  t = t.replace(/[ \t ]+/g, " ").replace(/\n\s*\n+/g, "\n\n");
   return t;
 }
 
 const sha256 = (buf) => createHash("sha256").update(buf).digest("hex");
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// node fetch gets an empty 200 from EUR-Lex where curl succeeds; use curl as transport.
-function curlGet(u) {
-  return execFileSync("curl", ["-sL", "-A", UA, "--max-time", "90", u], {
-    maxBuffer: 64 * 1024 * 1024,
-    encoding: "utf8",
-  });
+// curl transport (node fetch gets empty 200s from EUR-Lex). --fail turns HTTP
+// errors into exceptions; status+type are captured on stdout, body goes to file.
+function curlToFile(u, outPath) {
+  const meta = execFileSync(
+    "curl",
+    ["-sL", "--fail", "-A", UA, "--max-time", "90", "-o", outPath, "-w", "%{http_code} %{content_type}", u],
+    { encoding: "utf8" }
+  );
+  const [code, ...typeParts] = meta.trim().split(" ");
+  return { code: Number(code), contentType: typeParts.join(" ") };
 }
 
-async function fetchDoc(doc) {
-  const html = curlGet(url(doc.celex));
-  // Never overwrite the corpus with a bad body: validate size and markers first.
+function extractTitle(html) {
+  const m = html.match(/<title>([^<]*)<\/title>/i);
+  return m ? m[1] : "";
+}
+
+// Full validation of a candidate body BEFORE it may replace corpus files.
+function validateBody(doc, html) {
+  const errs = [];
   if (html.length < 100_000)
-    throw new Error(
-      `${doc.celex}: body only ${html.length} bytes, refusing to overwrite. ` +
-      `EUR-Lex answers request bursts with an empty 202; wait a few minutes and retry ` +
-      `with: node law/fetch.mjs fetch ${doc.celex}`
-    );
+    errs.push(`${doc.celex}: body only ${html.length} bytes (EUR-Lex throttle serves empty 202s; retry later)`);
+  const title = extractTitle(html);
+  for (const s of doc.titleMustContain)
+    if (!title.includes(s)) errs.push(`${doc.celex}: title "${title}" lacks required "${s}"`);
   const txt = htmlToText(html);
   for (const [needle, min] of doc.markers) {
     const n = txt.split(needle).length - 1;
-    if (n < min)
-      throw new Error(`${doc.celex}: fetched body fails marker "${needle}" (${n}x < ${min}), refusing to overwrite`);
+    if (n < min) errs.push(`${doc.celex}: marker "${needle}" ${n}x < ${min}`);
   }
-  writeFileSync(join(DIR, `${doc.file}.html`), html);
-  writeFileSync(join(DIR, `${doc.file}.txt`), txt);
+  return { errs, txt };
 }
 
-function verifyDoc(doc) {
-  const p = join(DIR, `${doc.file}.txt`);
-  if (!existsSync(p)) return [`${doc.celex}: MISSING ${doc.file}.txt`];
-  const t = readFileSync(p, "utf8");
-  const fails = [];
-  for (const [needle, min] of doc.markers) {
-    const n = t.split(needle).length - 1;
-    if (n < min) fails.push(`${doc.celex}: marker "${needle}" found ${n}x, expected >=${min}`);
-  }
-  return fails;
+function readManifest() {
+  const p = join(DIR, "manifest.json");
+  if (!existsSync(p)) return null;
+  return JSON.parse(readFileSync(p, "utf8"));
 }
 
-function writeManifest() {
-  const rows = DOCS.map((d) => {
-    const hp = join(DIR, `${d.file}.html`);
-    const tp = join(DIR, `${d.file}.txt`);
-    if (!existsSync(tp) || readFileSync(tp).length === 0)
-      return `| ${d.celex} | ${d.file} | ${d.role} | PENDING (throttled, refetch) | - |`;
-    const html = readFileSync(hp);
-    const txt = readFileSync(tp);
-    return `| ${d.celex} | ${d.file} | ${d.role} | ${sha256(txt).slice(0, 16)} | ${html.length} / ${txt.length} |`;
+function buildManifest(fetchedAt = {}) {
+  const prev = readManifest();
+  const documents = DOCS.map((d) => {
+    const html = readFileSync(join(DIR, `${d.file}.html`));
+    const txt = readFileSync(join(DIR, `${d.file}.txt`));
+    const prevDoc = prev?.documents?.find((x) => x.celex === d.celex);
+    return {
+      celex: d.celex,
+      file: d.file,
+      role: d.role,
+      source_url: srcUrl(d.celex),
+      html_sha256: sha256(html),
+      txt_sha256: sha256(txt),
+      html_bytes: html.length,
+      txt_bytes: txt.length,
+      fetched_at: fetchedAt[d.celex] ?? prevDoc?.fetched_at ?? null,
+    };
   });
+  return {
+    schema: 2,
+    tool_version: TOOL_VERSION,
+    pinned_consolidated: PINNED_CONSOLIDATED,
+    sealed_at: new Date().toISOString(),
+    documents,
+  };
+}
+
+function writeManifests(manifest) {
+  writeFileSync(join(DIR, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+  const rows = manifest.documents.map(
+    (d) => `| ${d.celex} | ${d.file} | ${d.html_sha256.slice(0, 16)} | ${d.txt_sha256.slice(0, 16)} | ${d.html_bytes} / ${d.txt_bytes} |`
+  );
   const md = [
-    "# Legal corpus manifest",
+    "# Legal corpus manifest (human view; manifest.json is the machine record)",
     "",
-    "Fetched from the EUR-Lex Cellar API (`legal-content/EN/TXT/HTML/?uri=CELEX:...`).",
-    `Pinned consolidation date: **${PINNED_CONSOLIDATED}**. Regenerate with \`node law/fetch.mjs fetch\`,`,
-    "verify offline with `node law/fetch.mjs verify`, check for newer law with `node law/fetch.mjs freshness`.",
+    `Pinned consolidation date: **${PINNED_CONSOLIDATED}**. Sealed: ${manifest.sealed_at}.`,
+    "Commands: `verify` (offline gate), `fetch [CELEX]` (atomic re-download), `seal`, `freshness` (network monitor, fails closed).",
     "",
-    `Last fetch: ${new Date().toISOString()}`,
-    "",
-    "| CELEX | File | Role | sha256(txt) prefix | bytes html/txt |",
+    "| CELEX | File | sha256(html) | sha256(txt) | bytes html/txt |",
     "|---|---|---|---|---|",
     ...rows,
     "",
-    "EU legal texts are public domain under Commission Decision 2011/833/EU.",
+    "The consolidated text is an evidence snapshot; EUR-Lex labels it a documentation tool",
+    "without legal effect. Authentic OJ acts are the legal authority.",
+    "",
+    "Reuse of EUR-Lex content is permitted subject to the applicable EUR-Lex and Commission",
+    "reuse conditions (Commission Decision 2011/833/EU): preserve attribution and do not",
+    "distort the meaning of the source.",
   ].join("\n");
   writeFileSync(join(DIR, "MANIFEST.md"), md);
+}
+
+// verify: hashes vs manifest, txt re-derived from html, titles, markers. Offline.
+function verify() {
+  const manifest = readManifest();
+  const errs = [];
+  if (!manifest) errs.push("manifest.json missing; run: node law/fetch.mjs seal");
+  if (manifest && manifest.pinned_consolidated !== PINNED_CONSOLIDATED)
+    errs.push(`manifest pinned ${manifest.pinned_consolidated} != code ${PINNED_CONSOLIDATED}`);
+  for (const d of DOCS) {
+    const hp = join(DIR, `${d.file}.html`);
+    const tp = join(DIR, `${d.file}.txt`);
+    if (!existsSync(hp) || !existsSync(tp)) {
+      errs.push(`${d.celex}: file(s) missing`);
+      continue;
+    }
+    const html = readFileSync(hp, "utf8");
+    const txt = readFileSync(tp, "utf8");
+    const m = manifest?.documents?.find((x) => x.celex === d.celex);
+    if (!m) errs.push(`${d.celex}: not in manifest.json`);
+    if (m && sha256(html) !== m.html_sha256) errs.push(`${d.celex}: html sha256 mismatch vs manifest`);
+    if (m && sha256(txt) !== m.txt_sha256) errs.push(`${d.celex}: txt sha256 mismatch vs manifest`);
+    if (sha256(htmlToText(html)) !== sha256(txt))
+      errs.push(`${d.celex}: txt is not the derivation of html (regenerate with seal)`);
+    const { errs: bodyErrs } = validateBody(d, html);
+    errs.push(...bodyErrs);
+  }
+  return errs;
+}
+
+async function fetchDocs(targets) {
+  mkdirSync(TMP, { recursive: true });
+  const staged = [];
+  const fetchedAt = {};
+  try {
+    for (let i = 0; i < targets.length; i++) {
+      const d = targets[i];
+      const tmpHtml = join(TMP, `${d.file}.html`);
+      let attempt = 0;
+      for (;;) {
+        attempt++;
+        try {
+          const { code, contentType } = curlToFile(srcUrl(d.celex), tmpHtml);
+          if (!/html|xml/.test(contentType))
+            throw new Error(`${d.celex}: unexpected content-type "${contentType}"`);
+          const html = readFileSync(tmpHtml, "utf8");
+          const { errs, txt } = validateBody(d, html);
+          if (errs.length) throw new Error(errs.join("; "));
+          writeFileSync(join(TMP, `${d.file}.txt`), txt);
+          staged.push(d);
+          fetchedAt[d.celex] = new Date().toISOString();
+          console.log(`fetched ${d.celex} (http ${code})`);
+          break;
+        } catch (e) {
+          if (attempt >= 2) throw e;
+          console.log(`retrying ${d.celex} in ${RETRY_AFTER_MS / 1000}s: ${e.message}`);
+          await sleep(RETRY_AFTER_MS);
+        }
+      }
+      if (i < targets.length - 1) await sleep(PACE_MS);
+    }
+    // All targets validated: swap into place together, then reseal.
+    for (const d of staged) {
+      renameSync(join(TMP, `${d.file}.html`), join(DIR, `${d.file}.html`));
+      renameSync(join(TMP, `${d.file}.txt`), join(DIR, `${d.file}.txt`));
+    }
+    writeManifests(buildManifest(fetchedAt));
+  } finally {
+    rmSync(TMP, { recursive: true, force: true });
+  }
 }
 
 async function freshness() {
   let page;
   try {
-    page = curlGet("https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32024R1689");
+    const tmp = join(DIR, ".freshness.html");
+    curlToFile("https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32024R1689", tmp);
+    page = readFileSync(tmp, "utf8");
+    rmSync(tmp, { force: true });
   } catch (e) {
-    console.log(`freshness: could not query EUR-Lex (${e.message})`);
-    return 0;
+    console.error(`freshness: UNDETERMINED - could not query EUR-Lex (${e.message}). Retry later; do not treat as fresh.`);
+    return 1;
   }
   const dates = [...page.matchAll(/02024R1689-(\d{8})/g)].map((m) => m[1]);
   if (!dates.length) {
-    console.log("freshness: no consolidated-version references found; check manually");
-    return 0;
+    console.error("freshness: UNDETERMINED - no consolidated-version references found (throttle or page change). Do not treat as fresh.");
+    return 1;
   }
   const newest = dates.sort().at(-1);
   if (newest > PINNED_CONSOLIDATED) {
-    console.error(`freshness: NEWER consolidated version exists: ${newest} (pinned: ${PINNED_CONSOLIDATED}). The law moved.`);
-    return 1;
+    console.error(`freshness: LAW MOVED - newer consolidated version ${newest} exists (pinned ${PINNED_CONSOLIDATED}).`);
+    return 2;
   }
   console.log(`freshness: pinned ${PINNED_CONSOLIDATED} is the newest consolidated version (${dates.length} refs seen).`);
   return 0;
@@ -173,35 +294,42 @@ async function freshness() {
 
 const cmd = process.argv[2] ?? "verify";
 const only = process.argv[3];
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-if (cmd === "fetch") {
+if (cmd === "verify") {
+  const errs = verify();
+  if (errs.length) {
+    console.error(errs.join("\n"));
+    process.exit(1);
+  }
+  console.log(`corpus verified: ${DOCS.length} documents (hashes, derivation, titles, markers)`);
+} else if (cmd === "fetch") {
   const targets = only ? DOCS.filter((d) => d.celex === only) : DOCS;
-  if (!targets.length) { console.error(`unknown celex: ${only}`); process.exit(2); }
-  for (const d of targets) {
-    await fetchDoc(d);
-    console.log(`fetched ${d.celex}`);
-    await sleep(4000); // stay under the EUR-Lex burst throttle
+  if (!targets.length) {
+    console.error(`unknown celex: ${only}`);
+    process.exit(2);
   }
-  writeManifest();
-  const fails = DOCS.flatMap(verifyDoc);
-  if (fails.length) {
-    console.error(fails.join("\n"));
+  await fetchDocs(targets);
+  const errs = verify();
+  if (errs.length) {
+    console.error(errs.join("\n"));
     process.exit(1);
   }
-  console.log("all markers verified after fetch");
-} else if (cmd === "manifest") {
-  writeManifest();
-  console.log("MANIFEST.md written");
-} else if (cmd === "verify") {
-  const fails = DOCS.flatMap(verifyDoc);
-  if (fails.length) {
-    console.error(fails.join("\n"));
-    process.exit(1);
+  console.log("corpus verified after fetch");
+} else if (cmd === "seal") {
+  // Migration/restore path: trusts current html, regenerates txt, validates, seals.
+  for (const d of DOCS) {
+    const html = readFileSync(join(DIR, `${d.file}.html`), "utf8");
+    const { errs, txt } = validateBody(d, html);
+    if (errs.length) {
+      console.error(errs.join("\n"));
+      process.exit(1);
+    }
+    writeFileSync(join(DIR, `${d.file}.txt`), txt);
   }
-  console.log(`corpus verified: ${DOCS.length} documents, all markers present`);
+  writeManifests(buildManifest());
+  console.log("sealed: txt regenerated from html, manifest.json + MANIFEST.md written");
 } else if (cmd === "freshness") {
   process.exit(await freshness());
 } else {
-  console.error(`unknown command: ${cmd} (use fetch | verify | freshness)`);
+  console.error(`unknown command: ${cmd} (use verify | fetch [CELEX] | seal | freshness)`);
   process.exit(2);
 }

@@ -1,0 +1,52 @@
+{
+  "schema": 2,
+  "tool_version": "fetch.mjs@2",
+  "pinned_consolidated": "20260727",
+  "sealed_at": "2026-08-06T06:16:44.606Z",
+  "documents": [
+    {
+      "celex": "02024R1689-20260727",
+      "file": "celex-02024R1689-20260727-consolidated",
+      "role": "evidence snapshot: the AI Act as amended by Reg. (EU) 2026/1744 (documentation tool, no legal effect)",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727",
+      "html_sha256": "7ba274853b4f32d8cf85ac59e1edee2c308821196d59af48f571f318cdedd60a",
+      "txt_sha256": "3ff8efe64754d394d6ec7a2cc937bca5948229833872bbc68c11c879af1f6e5e",
+      "html_bytes": 853357,
+      "txt_bytes": 398934,
+      "fetched_at": null
+    },
+    {
+      "celex": "32026R1744",
+      "file": "celex-32026R1744-omnibus",
+      "role": "authentic amending act: Digital Omnibus on AI, OJ 2026-07-24, in force 2026-07-27",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32026R1744",
+      "html_sha256": "e88469a1b9e4adf575a90b0adfd7a6738e9c5127cae5e8e42194dfb71139bbb6",
+      "txt_sha256": "6c8c9554c40239064d43121982a055323068f8d7a0ac57c6aae30217b927e9c6",
+      "html_bytes": 352971,
+      "txt_bytes": 149519,
+      "fetched_at": null
+    },
+    {
+      "celex": "32024R1689",
+      "file": "celex-32024R1689-original",
+      "role": "authentic original act, superseded in parts; kept to label pre-amendment text",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32024R1689",
+      "html_sha256": "7b1622f36bf2bac85bbedf4f95cf8a3ee79e116da7d431c20fabe1d4c9a327c1",
+      "txt_sha256": "7901a7159899217f9e701ca9e5ee6746f790b5a8a9dab78493170d3d217366a7",
+      "html_bytes": 1263937,
+      "txt_bytes": 588801,
+      "fetched_at": null
+    },
+    {
+      "celex": "52025PC0836",
+      "file": "celex-52025PC0836-proposal-SUPERSEDED",
+      "role": "SUPERSEDED Commission proposal; source of the deleted '6 months' trigger. NOT LAW.",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025PC0836",
+      "html_sha256": "2e8adcf4fb229758640447b062faafc001fc523a2f07d486a98db618b48ae802",
+      "txt_sha256": "cb685c1b7bf857b34ada05bb6c4ff326649ade68b0fc13e8cfe1d1e0157feef6",
+      "html_bytes": 382964,
+      "txt_bytes": 143533,
+      "fetched_at": null
+    }
+  ]
+}
