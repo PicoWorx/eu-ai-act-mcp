@@ -6,6 +6,7 @@
 - Compiler base: `sprint/b3-compiler` at `64c2aa0`
 - Frozen decision contract: `sprint/l2-decision-contract` at `1ba8b18`
 - Truth corrections cherry-picked before implementation: upstream `0ee01ed`, local `1e3d3c6`
+- Assessment implementation: `507fc25d33691e4ca5c47fbaf0c2d1778eaf9004`
 - Server version: `1.5.0`
 - Assessment contract version: `1.0`
 - Sealed corpus digest: `bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5`
@@ -48,8 +49,9 @@ handlers, and emits three separate result blocks.
 | Golden determinism | built into `test.mjs` | pass, one hash across 10 runs |
 | Existing atomic compatibility | built into `test.mjs` | pass, 9 of 9 exact byte hashes |
 
-These commands are rerun after export from the implementation commit into a fresh
-directory with `npm ci` before handoff.
+The implementation commit was exported with `git archive` to a fresh directory.
+`npm ci` installed 102 packages from the root lockfile, then every command in the
+table was rerun against that export before handoff.
 
 ## Golden matrix
 
