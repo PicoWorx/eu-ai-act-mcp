@@ -1,0 +1,251 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/implementation-readiness.schema.json",
+  "x-generated-from": "schemas/result-blocks.ts#implementationReadinessBlockSchema",
+  "$ref": "#/definitions/ImplementationReadinessBlock",
+  "definitions": {
+    "ImplementationReadinessBlock": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "determined",
+            "undetermined",
+            "not_applicable"
+          ]
+        },
+        "readiness_state": {
+          "type": "string",
+          "enum": [
+            "evidence_complete",
+            "evidence_partial",
+            "evidence_missing",
+            "undetermined",
+            "not_applicable"
+          ]
+        },
+        "applicable_duties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "duty_id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 160,
+                "pattern": "^[a-z][a-z0-9._:-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_roles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "provider",
+                    "deployer",
+                    "importer",
+                    "distributor",
+                    "authorised_representative",
+                    "product_manufacturer",
+                    "gpai_provider",
+                    "unknown"
+                  ]
+                },
+                "minItems": 1
+              },
+              "exact_provision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "operative_date": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  {
+                    "type": "string",
+                    "const": "not_date_bound"
+                  }
+                ]
+              },
+              "evidence_state": {
+                "type": "string",
+                "enum": [
+                  "not_assessed",
+                  "missing",
+                  "partial",
+                  "documented",
+                  "verified"
+                ]
+              },
+              "owner_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+                }
+              },
+              "finding_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "duty_id",
+              "title",
+              "actor_roles",
+              "exact_provision",
+              "operative_date",
+              "evidence_state",
+              "owner_ids",
+              "finding_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evidence_status": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "evidence_id": {
+                "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+              },
+              "duty_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+                }
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "missing",
+                  "provided",
+                  "verified",
+                  "stale",
+                  "not_applicable"
+                ]
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "evidence_id",
+              "duty_ids",
+              "state",
+              "note"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "control_gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "gap_id": {
+                "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+              },
+              "duty_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+                }
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+                }
+              },
+              "target_date": {
+                "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/operative_date"
+              }
+            },
+            "required": [
+              "gap_id",
+              "duty_ids",
+              "description",
+              "owner_ids",
+              "target_date"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "owner_id": {
+                "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "responsibility": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "owner_id",
+              "label",
+              "responsibility"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "finding_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImplementationReadinessBlock/properties/applicable_duties/items/properties/duty_id"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "is_regulatory_approval": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "readiness_state",
+        "applicable_duties",
+        "evidence_status",
+        "control_gaps",
+        "owners",
+        "finding_ids",
+        "limitations",
+        "is_regulatory_approval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

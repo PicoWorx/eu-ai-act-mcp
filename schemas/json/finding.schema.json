@@ -1,0 +1,230 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/finding.schema.json",
+  "x-generated-from": "schemas/finding.ts#findingSchema",
+  "$ref": "#/definitions/Finding",
+  "definitions": {
+    "Finding": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "finding_id": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 160,
+              "pattern": "^[a-z][a-z0-9._:-]*$"
+            },
+            "block": {
+              "type": "string",
+              "enum": [
+                "legal_classification",
+                "impact",
+                "implementation_readiness"
+              ]
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scope": {
+              "type": "object",
+              "properties": {
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "provider",
+                      "deployer",
+                      "importer",
+                      "distributor",
+                      "authorised_representative",
+                      "product_manufacturer",
+                      "gpai_provider",
+                      "unknown"
+                    ]
+                  }
+                },
+                "jurisdictions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "system_scope": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "actors",
+                "jurisdictions",
+                "system_scope"
+              ],
+              "additionalProperties": false
+            },
+            "fact_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+              }
+            },
+            "assumption_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+              }
+            },
+            "missing_fact_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+              }
+            },
+            "provenance": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "instrument_id": {
+                    "type": "string",
+                    "const": "regulation-eu-2024-1689"
+                  },
+                  "exact_provision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_id": {
+                    "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+                  },
+                  "official_url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "operative_date": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                      },
+                      {
+                        "type": "string",
+                        "const": "not_date_bound"
+                      }
+                    ]
+                  },
+                  "source_status": {
+                    "type": "string",
+                    "enum": [
+                      "enacted_oj",
+                      "commission_proposal",
+                      "political_agreement",
+                      "adopted_pending_publication",
+                      "commission_guideline_draft",
+                      "commission_guideline_final",
+                      "commission_study",
+                      "code_under_assessment",
+                      "code_adequate_voluntary_tool"
+                    ]
+                  },
+                  "verification_level": {
+                    "type": "string",
+                    "enum": [
+                      "complete_official_text",
+                      "official_metadata_only",
+                      "curated_summary_only",
+                      "unverified"
+                    ]
+                  }
+                },
+                "required": [
+                  "instrument_id",
+                  "exact_provision",
+                  "source_id",
+                  "official_url",
+                  "operative_date",
+                  "source_status",
+                  "verification_level"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "determination": {
+              "type": "string",
+              "enum": [
+                "applies",
+                "does_not_apply",
+                "not_applicable"
+              ]
+            }
+          },
+          "required": [
+            "finding_id",
+            "block",
+            "summary",
+            "scope",
+            "fact_ids",
+            "assumption_ids",
+            "missing_fact_ids",
+            "provenance",
+            "determination"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "finding_id": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+            },
+            "block": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/block"
+            },
+            "summary": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/summary"
+            },
+            "scope": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/scope"
+            },
+            "fact_ids": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/fact_ids"
+            },
+            "assumption_ids": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/assumption_ids"
+            },
+            "missing_fact_ids": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/missing_fact_ids"
+            },
+            "provenance": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/provenance"
+            },
+            "determination": {
+              "type": "string",
+              "const": "undetermined"
+            },
+            "reason_for_abstention": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "finding_id",
+            "block",
+            "summary",
+            "scope",
+            "fact_ids",
+            "assumption_ids",
+            "missing_fact_ids",
+            "provenance",
+            "determination",
+            "reason_for_abstention"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,295 @@
+{
+  "manifest_version": "0.1",
+  "artifact": {
+    "artifact_id": "artifact.lawpatch.eu-ai-act.article-50",
+    "artifact_version": "0.1.0",
+    "artifact_kind": "lawpatch",
+    "regulation_id": "eu-ai-act"
+  },
+  "compiler": {
+    "name": "lexbeam-regulation-compiler",
+    "version": "0.1.0",
+    "source_commit": "ab322f04e3ecdde51f8a46b5c5c85bc56986b925"
+  },
+  "source_date_epoch": 1786622400,
+  "corpus": {
+    "corpus_id": "eu-ai-act-2026-07-27",
+    "corpus_sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.oj.2024.1689.consolidated.20260727"
+    ]
+  },
+  "domain_payload": {
+    "schema_id": "schema.lawpatch.manifest",
+    "schema_version": "0.1.0",
+    "fields": [
+      "/lawpatch_manifest_version",
+      "/package",
+      "/jurisdiction",
+      "/effective_date",
+      "/transitions",
+      "/sources",
+      "/citations",
+      "/obligation_deltas",
+      "/rules",
+      "/tests",
+      "/affected_selectors",
+      "/migration",
+      "/human_review",
+      "/oscal_component_definition_mapping"
+    ],
+    "sha256": "1dd8f5f3f03ad73743bfb7002d1ccef7189e9a1e96afd05cd123b57ee285973b"
+  },
+  "content_files": [
+    {
+      "path": "citations/article-50.json",
+      "role": "citation_registry",
+      "media_type": "application/json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "bytes": 2048
+    },
+    {
+      "path": "migration/0.1.0.md",
+      "role": "migration_note",
+      "media_type": "text/markdown",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "bytes": 1024
+    },
+    {
+      "path": "oscal/component-definition.json",
+      "role": "oscal_export",
+      "media_type": "application/oscal.component-definition+json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "bytes": 4096
+    },
+    {
+      "path": "rules/article-50.decision-table.json",
+      "role": "rule",
+      "media_type": "application/json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "bytes": 3072
+    },
+    {
+      "path": "schemas/lawpatch-manifest.schema.json",
+      "role": "schema",
+      "media_type": "application/schema+json",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "bytes": 8192
+    },
+    {
+      "path": "sources/celex-02024R1689-20260727.txt",
+      "role": "source_snapshot",
+      "media_type": "text/plain",
+      "sha256": "3ff8efe64754d394d6ec7a2cc937bca5948229833872bbc68c11c879af1f6e5e",
+      "bytes": 398934
+    },
+    {
+      "path": "tests/article-50-legacy-transition.expected.json",
+      "role": "expected_result",
+      "media_type": "application/json",
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "bytes": 512
+    },
+    {
+      "path": "tests/article-50-legacy-transition.input.json",
+      "role": "test",
+      "media_type": "application/json",
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "bytes": 512
+    }
+  ],
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "RFC8785",
+    "manifest_fields": [
+      "/manifest_version",
+      "/artifact",
+      "/compiler",
+      "/source_date_epoch",
+      "/corpus",
+      "/domain_payload",
+      "/content_files",
+      "/digest_contract"
+    ],
+    "volatile_fields": [
+      "/volatile/generated_at",
+      "/volatile/sealed_at",
+      "/volatile/build_id",
+      "/volatile/build_host",
+      "/volatile/build_path",
+      "/volatile/ci_job_url",
+      "/volatile/correlation_id",
+      "/volatile/duration_ms",
+      "/signature"
+    ],
+    "file_order": "path_ascending_unicode_code_point",
+    "file_bytes": "sha256_raw_bytes_then_include_file_record"
+  },
+  "content_digest": {
+    "algorithm": "sha256",
+    "value": "097e2f93a83e9088c13cf706fe21ee16b66c76898c690feb1258b608a20e0675"
+  },
+  "lawpatch_manifest_version": "0.1",
+  "package": {
+    "name": "@lexbeam-lawpatch/eu-ai-act-article-50",
+    "version": "0.1.0",
+    "title": "EU AI Act Article 50 transparency duties",
+    "regulation_family": "EU AI Act",
+    "component": "Article 50 transparency and legacy transition",
+    "dependencies": []
+  },
+  "jurisdiction": {
+    "codes": ["EU"],
+    "territorial_scope": "Regulation (EU) 2024/1689 Article 2 scope"
+  },
+  "effective_date": "2026-08-02",
+  "transitions": [
+    {
+      "transition_id": "transition.article-50.legacy-marking",
+      "from_state": "legacy model placed on the market before 2026-08-02",
+      "to_state": "Article 50(2) marking duty applies",
+      "operative_date": "2026-12-02",
+      "conditions": ["The model was placed on the market before 2026-08-02."],
+      "citation_ids": ["citation.article-111.4"]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source.oj.2024.1689.consolidated.20260727",
+      "title": "Regulation (EU) 2024/1689 consolidated on 27 July 2026",
+      "celex": "02024R1689-20260727",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727",
+      "source_status": "enacted_oj",
+      "publication_date": "2026-07-27",
+      "snapshot_path": "sources/celex-02024R1689-20260727.txt",
+      "content_sha256": "3ff8efe64754d394d6ec7a2cc937bca5948229833872bbc68c11c879af1f6e5e"
+    }
+  ],
+  "citations": [
+    {
+      "citation_id": "citation.article-111.4",
+      "source_id": "source.oj.2024.1689.consolidated.20260727",
+      "exact_provision": "Article 111(4)",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_111",
+      "verification_level": "complete_official_text"
+    },
+    {
+      "citation_id": "citation.article-50.2",
+      "source_id": "source.oj.2024.1689.consolidated.20260727",
+      "exact_provision": "Article 50(2)",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
+      "verification_level": "complete_official_text"
+    }
+  ],
+  "obligation_deltas": [
+    {
+      "delta_id": "delta.article-50.machine-readable-marking",
+      "operation": "add",
+      "obligation_id": "obligation.article-50.2",
+      "actor_roles": ["provider"],
+      "summary": "Provider outputs must be marked in a machine-readable format and detectable as artificially generated or manipulated.",
+      "before": null,
+      "after": "Apply the Article 50(2) machine-readable marking rule, subject to the Article 111(4) legacy transition.",
+      "effective_date": "2026-08-02",
+      "citation_ids": ["citation.article-50.2"],
+      "human_review_required": true
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "rule.article-50.marking",
+      "rule_version": "0.1.0",
+      "rule_kind": "decision_table",
+      "rule_path": "rules/article-50.decision-table.json",
+      "input_selectors": [
+        "/transparency/generates_or_manipulates_synthetic_content",
+        "/gpai/model_placed_on_market_date"
+      ],
+      "outcome_codes": [
+        "outcome.article-50.applies",
+        "outcome.article-50.legacy-transition",
+        "outcome.article-50.undetermined"
+      ],
+      "citation_ids": [
+        "citation.article-111.4",
+        "citation.article-50.2"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "test_id": "test.article-50.legacy-transition",
+      "fixture_path": "tests/article-50-legacy-transition.input.json",
+      "expected_result_path": "tests/article-50-legacy-transition.expected.json",
+      "expected_result": {
+        "status": "determined",
+        "outcome_code": "outcome.article-50.legacy-transition",
+        "finding_ids": ["finding.article-50.legacy-transition"],
+        "required_warning_codes": []
+      },
+      "covered_rule_ids": ["rule.article-50.marking"],
+      "critical": true
+    }
+  ],
+  "affected_selectors": [
+    {
+      "selector_id": "selector.tool.classify-system",
+      "selector_kind": "tool",
+      "selector": "euaiact_classify_system",
+      "effect": "retest",
+      "obligation_delta_ids": ["delta.article-50.machine-readable-marking"]
+    },
+    {
+      "selector_id": "selector.surface.article-50",
+      "selector_kind": "output_surface",
+      "selector": "article-50-transparency",
+      "effect": "change",
+      "obligation_delta_ids": ["delta.article-50.machine-readable-marking"]
+    }
+  ],
+  "migration": {
+    "migration_notes": ["Run in shadow mode and compare all Article 50 outputs before promotion."],
+    "rollback_target": "0.0.0",
+    "rollback_notes": ["Restore the previous pinned component and replay the same fixtures."],
+    "breaking_change": false
+  },
+  "human_review": {
+    "required": true,
+    "flags": ["critical_rule_change", "transition_complexity"],
+    "reviewer_role": "EU AI Act legal reviewer",
+    "promotion_gate": "approve"
+  },
+  "oscal_component_definition_mapping": {
+    "oscal_version": "1.1.2",
+    "export_model": "component-definition",
+    "component_uuid_strategy": "uuid_v5_from_content_digest",
+    "field_mappings": [
+      {
+        "lawpatch_pointer": "/package/title",
+        "oscal_pointer": "/component-definition/metadata/title",
+        "transform": "copy"
+      },
+      {
+        "lawpatch_pointer": "/sources",
+        "oscal_pointer": "/component-definition/back-matter/resources",
+        "transform": "to_source_link"
+      }
+    ],
+    "control_mappings": [
+      {
+        "obligation_delta_id": "delta.article-50.machine-readable-marking",
+        "oscal_control_id": "eu-ai-act.article-50.2",
+        "implementation_status": "planned"
+      }
+    ]
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key_id": "did:key:z6mklawpatchfixture",
+    "signed_digest": "097e2f93a83e9088c13cf706fe21ee16b66c76898c690feb1258b608a20e0675",
+    "signature_base64": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+    "signed_at": "2026-08-13T12:00:00Z"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "contract_version": "1.0",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.oj.2024.1689.consolidated.20260727"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.annex-iii.domain",
+      "profile_path": "/annex_iii/domain",
+      "value": "employment",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-iii.purpose",
+      "profile_path": "/annex_iii/purpose",
+      "value": "Recruitment and selection",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "Changes the order in which recruiters review applicants",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.material-influence",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.affected-job-applicants",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Job applicants",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.provider",
+      "profile_path": "/role_facts/roles/0",
+      "value": "provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.high-risk.employment.001",
+      "block": "legal_classification",
+      "summary": "The recruitment ranking use is within the Annex III employment route.",
+      "scope": {
+        "actors": ["provider"],
+        "jurisdictions": ["EU"],
+        "system_scope": "Recruitment ranking use described in the supplied profile"
+      },
+      "fact_ids": [
+        "fact.annex-iii.domain",
+        "fact.annex-iii.purpose",
+        "fact.decision.material-influence",
+        "fact.role.provider"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 6(2) and Annex III, point 4(a)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#anx_III",
+          "operative_date": "2027-12-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.impact.employment.001",
+      "block": "impact",
+      "summary": "Ranking can affect access to employment for the applicant group.",
+      "scope": {
+        "actors": ["provider"],
+        "jurisdictions": ["EU"],
+        "system_scope": "Applicant-ranking output and recruiter review sequence"
+      },
+      "fact_ids": [
+        "fact.decision.consequence",
+        "fact.geography.affected-job-applicants"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 9(2)(a) and Annex III, point 4(a)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_9",
+          "operative_date": "2027-12-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.risk-management.001",
+      "block": "implementation_readiness",
+      "summary": "No risk-management evidence was supplied for the applicable provider duty.",
+      "scope": {
+        "actors": ["provider"],
+        "jurisdictions": ["EU"],
+        "system_scope": "Recruitment ranking system"
+      },
+      "fact_ids": ["fact.role.provider"],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 9(1)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_9",
+          "operative_date": "2027-12-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.employment.001",
+        "finding.legal.high-risk.employment.001",
+        "finding.readiness.risk-management.001"
+      ]
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_get_obligations",
+      "reason": "Retrieve the provider obligations for the high-risk route.",
+      "input_fact_ids": ["fact.role.provider"]
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "high_risk",
+        "finding_ids": ["finding.legal.high-risk.employment.001"],
+        "actor_roles": ["provider"]
+      }
+    ],
+    "annex_iii_categories": [4],
+    "actor_roles": ["provider"],
+    "finding_ids": ["finding.legal.high-risk.employment.001"],
+    "limitations": []
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "Ranking may affect whether and when an applicant is reviewed for employment.",
+      "categories": ["employment_and_work", "non_discrimination"],
+      "affected_group_ids": ["group.job-applicants"],
+      "fact_ids": [
+        "fact.decision.consequence",
+        "fact.geography.affected-job-applicants"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.job-applicants",
+        "label": "Job applicants",
+        "fact_ids": ["fact.geography.affected-job-applicants"]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "Residual impact is not reduced because no tested controls were supplied.",
+      "categories": ["employment_and_work", "non_discrimination"],
+      "affected_group_ids": ["group.job-applicants"],
+      "fact_ids": ["fact.decision.consequence"]
+    },
+    "finding_ids": ["finding.impact.employment.001"],
+    "limitations": ["No tested-control evidence was supplied."],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.article-9-risk-management",
+        "title": "Risk-management system",
+        "actor_roles": ["provider"],
+        "exact_provision": "Article 9(1)",
+        "operative_date": "2027-12-02",
+        "evidence_state": "missing",
+        "owner_ids": ["owner.ai-governance"],
+        "finding_ids": ["finding.readiness.risk-management.001"]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.risk-management-file",
+        "duty_ids": ["duty.article-9-risk-management"],
+        "state": "missing",
+        "note": "No risk-management file was referenced in the profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.risk-management-file",
+        "duty_ids": ["duty.article-9-risk-management"],
+        "description": "Create and evidence the Article 9 risk-management system.",
+        "owner_ids": ["owner.ai-governance"],
+        "target_date": "2027-12-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.ai-governance",
+        "label": "AI governance owner",
+        "responsibility": "Own the risk-management evidence and review gate."
+      }
+    ],
+    "finding_ids": ["finding.readiness.risk-management.001"],
+    "limitations": ["Evidence state is based only on references supplied in this call."],
+    "is_regulatory_approval": false
+  }
+}

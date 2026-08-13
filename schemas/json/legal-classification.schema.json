@@ -1,0 +1,112 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/legal-classification.schema.json",
+  "x-generated-from": "schemas/result-blocks.ts#legalClassificationBlockSchema",
+  "$ref": "#/definitions/LegalClassificationBlock",
+  "definitions": {
+    "LegalClassificationBlock": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "determined",
+            "undetermined",
+            "not_applicable"
+          ]
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "route": {
+                "type": "string",
+                "enum": [
+                  "prohibited",
+                  "high_risk",
+                  "transparency_duty",
+                  "gpai",
+                  "minimal"
+                ]
+              },
+              "finding_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 160,
+                  "pattern": "^[a-z][a-z0-9._:-]*$"
+                },
+                "minItems": 1
+              },
+              "actor_roles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "provider",
+                    "deployer",
+                    "importer",
+                    "distributor",
+                    "authorised_representative",
+                    "product_manufacturer",
+                    "gpai_provider",
+                    "unknown"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "route",
+              "finding_ids",
+              "actor_roles"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "annex_iii_categories": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          }
+        },
+        "actor_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LegalClassificationBlock/properties/routes/items/properties/actor_roles/items"
+          }
+        },
+        "finding_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LegalClassificationBlock/properties/routes/items/properties/finding_ids/items"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "routes",
+        "annex_iii_categories",
+        "actor_roles",
+        "finding_ids",
+        "limitations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

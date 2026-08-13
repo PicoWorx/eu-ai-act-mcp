@@ -1,0 +1,367 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/artifact-manifest.schema.json",
+  "x-generated-from": "schemas/artifact-manifest.ts#artifactManifestSchema",
+  "$ref": "#/definitions/ArtifactManifest",
+  "definitions": {
+    "ArtifactManifest": {
+      "type": "object",
+      "properties": {
+        "manifest_version": {
+          "type": "string",
+          "const": "0.1"
+        },
+        "artifact": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 160,
+              "pattern": "^[a-z][a-z0-9._:-]*$"
+            },
+            "artifact_version": {
+              "type": "string",
+              "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+            },
+            "artifact_kind": {
+              "type": "string",
+              "enum": [
+                "normalized_regulation",
+                "decision_contract",
+                "lawpatch",
+                "generated_surface_bundle"
+              ]
+            },
+            "regulation_id": {
+              "type": "string",
+              "const": "eu-ai-act"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "artifact_version",
+            "artifact_kind",
+            "regulation_id"
+          ],
+          "additionalProperties": false
+        },
+        "compiler": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "lexbeam-regulation-compiler"
+            },
+            "version": {
+              "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_version"
+            },
+            "source_commit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "source_commit"
+          ],
+          "additionalProperties": false
+        },
+        "source_date_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "corpus": {
+          "type": "object",
+          "properties": {
+            "corpus_id": {
+              "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_id"
+            },
+            "corpus_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "verified_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "current_instrument": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_snapshot_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_id"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "corpus_id",
+            "corpus_sha256",
+            "verified_at",
+            "current_instrument",
+            "source_snapshot_ids"
+          ],
+          "additionalProperties": false
+        },
+        "domain_payload": {
+          "type": "object",
+          "properties": {
+            "schema_id": {
+              "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_id"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_version"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:\\/(?:[^~/]|~[01])*)*$"
+              },
+              "minItems": 1
+            },
+            "sha256": {
+              "$ref": "#/definitions/ArtifactManifest/properties/corpus/properties/corpus_sha256"
+            }
+          },
+          "required": [
+            "schema_id",
+            "schema_version",
+            "fields",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "content_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "source_snapshot",
+                  "normalized_source",
+                  "citation_registry",
+                  "rule",
+                  "test",
+                  "expected_result",
+                  "schema",
+                  "claim_matrix",
+                  "generated_surface",
+                  "oscal_export",
+                  "migration_note"
+                ]
+              },
+              "media_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "$ref": "#/definitions/ArtifactManifest/properties/corpus/properties/corpus_sha256"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "path",
+              "role",
+              "media_type",
+              "sha256",
+              "bytes"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "digest_contract": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "canonicalization": {
+              "type": "string",
+              "const": "RFC8785"
+            },
+            "manifest_fields": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "items": [
+                {
+                  "type": "string",
+                  "const": "/manifest_version"
+                },
+                {
+                  "type": "string",
+                  "const": "/artifact"
+                },
+                {
+                  "type": "string",
+                  "const": "/compiler"
+                },
+                {
+                  "type": "string",
+                  "const": "/source_date_epoch"
+                },
+                {
+                  "type": "string",
+                  "const": "/corpus"
+                },
+                {
+                  "type": "string",
+                  "const": "/domain_payload"
+                },
+                {
+                  "type": "string",
+                  "const": "/content_files"
+                },
+                {
+                  "type": "string",
+                  "const": "/digest_contract"
+                }
+              ]
+            },
+            "volatile_fields": {
+              "type": "array",
+              "minItems": 9,
+              "maxItems": 9,
+              "items": [
+                {
+                  "type": "string",
+                  "const": "/volatile/generated_at"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/sealed_at"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_id"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_host"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_path"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/ci_job_url"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/correlation_id"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/duration_ms"
+                },
+                {
+                  "type": "string",
+                  "const": "/signature"
+                }
+              ]
+            },
+            "file_order": {
+              "type": "string",
+              "const": "path_ascending_unicode_code_point"
+            },
+            "file_bytes": {
+              "type": "string",
+              "const": "sha256_raw_bytes_then_include_file_record"
+            }
+          },
+          "required": [
+            "algorithm",
+            "canonicalization",
+            "manifest_fields",
+            "volatile_fields",
+            "file_order",
+            "file_bytes"
+          ],
+          "additionalProperties": false
+        },
+        "content_digest": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "value": {
+              "$ref": "#/definitions/ArtifactManifest/properties/corpus/properties/corpus_sha256"
+            }
+          },
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "volatile": {
+          "type": "object",
+          "properties": {
+            "generated_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sealed_at": {
+              "$ref": "#/definitions/ArtifactManifest/properties/volatile/properties/generated_at"
+            },
+            "build_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "build_host": {
+              "type": "string",
+              "minLength": 1
+            },
+            "build_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ci_job_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/ArtifactManifest/properties/artifact/properties/artifact_id"
+            },
+            "duration_ms": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "manifest_version",
+        "artifact",
+        "compiler",
+        "source_date_epoch",
+        "corpus",
+        "domain_payload",
+        "content_files",
+        "digest_contract",
+        "content_digest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

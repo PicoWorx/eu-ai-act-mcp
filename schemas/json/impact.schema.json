@@ -1,0 +1,191 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/impact.schema.json",
+  "x-generated-from": "schemas/result-blocks.ts#impactBlockSchema",
+  "$ref": "#/definitions/ImpactBlock",
+  "definitions": {
+    "ImpactBlock": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "determined",
+            "undetermined",
+            "not_applicable"
+          ]
+        },
+        "inherent_impact": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "health",
+                      "safety",
+                      "privacy_and_data_protection",
+                      "non_discrimination",
+                      "employment_and_work",
+                      "education",
+                      "access_to_essential_services",
+                      "freedom_of_expression_and_information",
+                      "due_process_and_effective_remedy",
+                      "other_fundamental_rights"
+                    ]
+                  }
+                },
+                "affected_group_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 160,
+                    "pattern": "^[a-z][a-z0-9._:-]*$"
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+                  }
+                }
+              },
+              "required": [
+                "description",
+                "categories",
+                "affected_group_ids",
+                "fact_ids"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relevant_affected_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "group_id": {
+                "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fact_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+                }
+              }
+            },
+            "required": [
+              "group_id",
+              "label",
+              "fact_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "current_controls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "control_id": {
+                "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "implementation_state": {
+                "type": "string",
+                "enum": [
+                  "planned",
+                  "implemented",
+                  "tested",
+                  "unknown"
+                ]
+              },
+              "evidence_reference_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+                }
+              },
+              "fact_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+                }
+              }
+            },
+            "required": [
+              "control_id",
+              "description",
+              "implementation_state",
+              "evidence_reference_ids",
+              "fact_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "residual_impact": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finding_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImpactBlock/properties/inherent_impact/anyOf/0/properties/affected_group_ids/items"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "does_not_alter_legal_classification": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "inherent_impact",
+        "relevant_affected_groups",
+        "current_controls",
+        "residual_impact",
+        "finding_ids",
+        "limitations",
+        "does_not_alter_legal_classification"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
