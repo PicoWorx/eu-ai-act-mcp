@@ -48,7 +48,7 @@
   "bugs": {
     "url": "https://github.com/lexbeam-software/eu-ai-act-mcp/issues"
   },
-  "homepage": "https://lexbeam.com/tools/mcp",
+  "homepage": "https://github.com/lexbeam-software/eu-ai-act-mcp#readme",
   "engines": {
     "node": ">=20.0.0"
   }
