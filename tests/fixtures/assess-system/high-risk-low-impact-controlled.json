@@ -1,0 +1,153 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.review-ordering.name",
+      "value": "review-ordering",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "owner": {
+      "fact_id": "fact.identity.review-ordering.owner",
+      "value": "AI governance team",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.review-ordering.purpose",
+      "value": "Rank job applications for administrative review ordering",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.review-ordering.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.review-ordering",
+        "value": "Job applicants",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.review-ordering.consequence",
+      "value": "Only changes the order of human review and does not make the hiring decision",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.review-ordering.material",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_iii": {
+    "domain": {
+      "fact_id": "fact.annex-iii.domain",
+      "value": "employment",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "purpose": {
+      "fact_id": "fact.annex-iii.purpose",
+      "value": "Recruitment and selection",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "annex_iii_point": {
+      "fact_id": "fact.annex-iii.point",
+      "value": 4,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "performs_profiling": {
+      "fact_id": "fact.annex-iii.profiling",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "controls_and_evidence": {
+    "controls": [
+      {
+        "control_id": "control.risk-management",
+        "description": {
+          "fact_id": "fact.control.risk-management.description",
+          "value": "Documented and tested risk management system",
+          "origin": "cited_evidence",
+          "verification": "evidence_linked",
+          "evidence_reference_ids": [
+            "evidence.risk-management"
+          ]
+        },
+        "implementation_state": {
+          "fact_id": "fact.control.risk-management.state",
+          "value": "tested",
+          "origin": "cited_evidence",
+          "verification": "evidence_linked",
+          "evidence_reference_ids": [
+            "evidence.risk-management"
+          ]
+        },
+        "evidence_reference_ids": [
+          "evidence.risk-management"
+        ]
+      }
+    ],
+    "evidence_references": [
+      {
+        "evidence_id": "evidence.risk-management",
+        "title": "Risk management test report",
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+        "observed_at": "2026-08-13",
+        "supports_fact_ids": [
+          "fact.control.risk-management.description",
+          "fact.control.risk-management.state"
+        ]
+      }
+    ]
+  }
+}

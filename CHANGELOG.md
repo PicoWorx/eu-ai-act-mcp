@@ -6,6 +6,44 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-13
+
+Decision-contract release. Adds one bounded assessment call without changing the
+input, output, or behavior of the existing nine atomic tools.
+
+### Added
+
+- `euaiact_assess_system`, registered as tool 10, accepts the frozen sparse system
+  profile and returns separate legal-classification, qualitative-impact, and
+  implementation-readiness blocks.
+- Fail-closed decisive missing facts, stable finding and fact IDs, complete finding
+  provenance, sealed corpus identity, and actor-specific follow-up calls to the
+  existing atomic tools.
+- RFC 8785 response hashing with only the three frozen runtime-metadata paths removed.
+- Twelve runnable contract profiles, twelve complete golden outputs, and pinned
+  SHA-256 hashes. The permanent suite verifies golden equality, normative ordering,
+  10-run determinism, the 64 KiB bound, provenance resolution, no numeric confidence,
+  and the summary-only disclosure.
+- A compatibility fixture that hashes the exact serialized result from each of the
+  nine existing tools at a fixed instant.
+
+### Changed
+
+- Package and server version raised to 1.5.0.
+- Server instructions now describe ten tools and the boundary between legal
+  classification, impact, and evidence readiness.
+- The 1.4.5 truth-correction ledger was cherry-picked before the decision layer, so
+  the new assessment is grounded in the corrected Article 5, Article 73, penalty,
+  registration, GPAI, and summary wording.
+
+### Compatibility
+
+- The frozen decision-contract schemas are unchanged. Runtime copies are asserted
+  byte-for-byte against them.
+- Existing nine-tool results are asserted byte-identical for the pinned compatibility
+  inputs. `euaiact_assess_system` is additive and does not wrap or mutate atomic
+  results.
+
 ## [1.4.5] - 2026-08-06
 
 ### Changed

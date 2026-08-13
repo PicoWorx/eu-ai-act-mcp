@@ -2,6 +2,7 @@
 // Run `npm run build` first so dist/ is up to date.
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { classifyInputSchema } from "./dist/schemas/classify.js";
 import { obligationsInputSchema } from "./dist/schemas/obligations.js";
 import { penaltiesInputSchema } from "./dist/schemas/penalties.js";
@@ -41,6 +42,14 @@ import { articles, findArticle } from "./dist/knowledge/articles.js";
 import { annexIVItems } from "./dist/knowledge/annex-iv.js";
 import { BRANDING, SERVER_INSTRUCTIONS } from "./dist/constants.js";
 import { createServer } from "./dist/server.js";
+import {
+  assessSystemResponseSchema,
+  systemProfileSchema,
+} from "./dist/decision-contract/index.js";
+import {
+  canonicalResponseHash,
+  canonicalize,
+} from "./dist/utils/canonical-json.js";
 
 let pass = 0;
 let fail = 0;
@@ -89,6 +98,7 @@ async function callTool(toolName, input) {
   const { registerGpaiSystemicTool } = await import("./dist/tools/gpai-systemic.js");
   const { registerArt6ExceptionTool } = await import("./dist/tools/art6-exception.js");
   const { registerAnnexIvTool } = await import("./dist/tools/annex-iv.js");
+  const { registerAssessSystemTool } = await import("./dist/tools/assess-system.js");
 
   registerClassifyTool(fakeServer);
   registerDeadlinesTool(fakeServer);
@@ -99,6 +109,7 @@ async function callTool(toolName, input) {
   registerGpaiSystemicTool(fakeServer);
   registerArt6ExceptionTool(fakeServer);
   registerAnnexIvTool(fakeServer);
+  registerAssessSystemTool(fakeServer);
 
   const handler = registered[toolName];
   if (!handler) throw new Error(`Tool not registered: ${toolName}`);
@@ -129,6 +140,8 @@ test("art6 input: profiling flag required", art6ExceptionInputSchema.safeParse({
 test("art6 input: missing profiling rejected", !art6ExceptionInputSchema.safeParse({}).success);
 test("annex iv: empty ok", annexIvInputSchema.safeParse({}).success);
 test("annex iv: checklist format", annexIvInputSchema.safeParse({ format: "checklist" }).success);
+test("assess system: sparse frozen profile parses", systemProfileSchema.safeParse({ profile_version: "1.0" }).success);
+test("assess system: caller-selected regulation is rejected", !systemProfileSchema.safeParse({ profile_version: "1.0", regulation_id: "other" }).success);
 
 // ─── DIST / SOURCE CONSISTENCY ─────────────────────────────────────────────
 console.log("\n📦 DIST / SOURCE CONSISTENCY");
@@ -1011,6 +1024,19 @@ console.log("\n🔌 SERVER WIRING");
 {
   const srv = createServer();
   test("createServer returns an McpServer instance", typeof srv === "object");
+  test("assessment is registered as tool 10 after the nine atomic tools",
+    Object.keys(srv._registeredTools).join(",") === [
+      "euaiact_classify_system",
+      "euaiact_check_deadlines",
+      "euaiact_get_obligations",
+      "euaiact_answer_question",
+      "euaiact_calculate_penalty",
+      "euaiact_get_article",
+      "euaiact_check_gpai_systemic_risk",
+      "euaiact_assess_art6_3_exception",
+      "euaiact_annex_iv_checklist",
+      "euaiact_assess_system",
+    ].join(","));
 }
 
 // ─── 1.4.4 REGRESSIONS (batch 2: classifier, GPAI, FAQ, penalties, obligations)
@@ -1250,6 +1276,286 @@ console.log("\n🧭 AGENT JOURNEYS");
   // J10: nudification app (enacted Art. 5(1)(ba))
   const j10 = structured(await callTool("euaiact_classify_system", { description: "app that generates non-consensual intimate images of real people from their photos" }));
   test("J10 nudification: prohibited under Art. 5(1)(ba)", j10.risk_classification === "prohibited" && j10.relevant_articles.includes("Art. 5(1)(ba)"));
+}
+
+// ─── 1.5 ASSESS SYSTEM CONTRACT ────────────────────────────────────────────
+console.log("\n🧩 ASSESS SYSTEM 1.5");
+{
+  const fixtureRoot = "tests/fixtures/assess-system";
+  const goldenRoot = "tests/golden";
+  const loadJson = (path) => JSON.parse(readFileSync(path, "utf8"));
+  const loadProfile = (name) => loadJson(join(fixtureRoot, name));
+  const runAssessment = async (name) =>
+    structured(await callTool("euaiact_assess_system", loadProfile(name)));
+
+  const high = await runAssessment("contract-high-risk.json");
+  test("assess: clear Annex III system is high-risk",
+    high.status === "determined" &&
+    high.legal_classification.routes.some((route) => route.route === "high_risk"));
+  test("assess: classification does not imply readiness",
+    high.implementation_readiness.readiness_state === "evidence_missing" &&
+    high.implementation_readiness.is_regulatory_approval === false);
+
+  const minimal = await runAssessment("minimal-complete.json");
+  test("assess: clear minimal route requires complete negative facts",
+    minimal.status === "determined" &&
+    minimal.legal_classification.routes.length === 1 &&
+    minimal.legal_classification.routes[0].route === "minimal");
+
+  const prohibited = await runAssessment("prohibited-social-scoring.json");
+  test("assess: prohibited-practice hit is preserved",
+    prohibited.status === "determined" &&
+    prohibited.legal_classification.routes.some((route) => route.route === "prohibited"));
+
+  const sparse = await runAssessment("contract-sparse.json");
+  test("assess: decisive missing fact abstains instead of guessing",
+    sparse.status === "undetermined" &&
+    sparse.legal_classification.status === "undetermined" &&
+    sparse.legal_classification.routes.length === 0 &&
+    sparse.missing_facts.some((fact) => fact.missing_fact_id === "missing.intended-purpose" && fact.decisive));
+  test("assess: sparse profile enumerates each affected block",
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("legal_classification")) &&
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("impact")) &&
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("implementation_readiness")));
+  test("assess: omitted jurisdiction is disclosed instead of defaulting to EU",
+    sparse.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction") &&
+    sparse.findings.every((finding) => finding.scope.jurisdictions.join(",") === "unspecified"));
+
+  const nonEuProfile = loadProfile("minimal-complete.json");
+  nonEuProfile.geography.jurisdictions[0].value = "United States";
+  nonEuProfile.geography.used_in_eu.value = false;
+  const nonEu = structured(await callTool("euaiact_assess_system", nonEuProfile));
+  test("assess: non-EU geography without an EU nexus fact fails closed",
+    nonEu.legal_classification.status === "undetermined" &&
+    nonEu.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction"));
+
+  const notApplicable = await runAssessment("contract-not-applicable.json");
+  test("assess: definition-boundary result uses not_date_bound",
+    notApplicable.status === "not_applicable" &&
+    notApplicable.findings[0].provenance[0].operative_date === "not_date_bound");
+
+  const lowImpactHighRisk = await runAssessment("high-risk-low-impact-controlled.json");
+  test("assess: low impact never erases legal high-risk classification",
+    lowImpactHighRisk.impact.inherent_impact.description.includes("limited decision influence") &&
+    lowImpactHighRisk.impact.does_not_alter_legal_classification === true &&
+    lowImpactHighRisk.legal_classification.routes.some((route) => route.route === "high_risk"));
+  test("assess: evidence matching is conservative and duty-category specific",
+    lowImpactHighRisk.implementation_readiness.applicable_duties
+      .filter((duty) => duty.evidence_state === "documented")
+      .map((duty) => duty.duty_id)
+      .join(",") === "duty.provider.art.9.risk.management");
+
+  const multiRoute = await runAssessment("high-risk-plus-transparency.json");
+  test("assess: legal routes are independently retained",
+    multiRoute.legal_classification.routes.map((route) => route.route).join(",") ===
+      "high_risk,transparency_duty");
+  test("assess: Annex III high-risk output discloses the frozen Art. 6(3) limit",
+    multiRoute.legal_classification.limitations.some((limitation) =>
+      limitation.includes("no no-significant-risk predicate")));
+
+  const stackedProfile = loadProfile("high-risk-plus-transparency.json");
+  stackedProfile.role_facts.roles = [];
+  stackedProfile.biometric_and_practices = {
+    social_scoring: {
+      fact_id: "fact.practice.social-scoring",
+      value: true,
+      origin: "explicit_structured_input",
+      verification: "caller_asserted",
+      evidence_reference_ids: [],
+    },
+  };
+  const stacked = structured(await callTool("euaiact_assess_system", stackedProfile));
+  test("assess: prohibited, high-risk, and transparency routes coexist in normative order",
+    stacked.legal_classification.routes.map((route) => route.route).join(",") ===
+      "prohibited,high_risk,transparency_duty");
+  test("assess: a prohibited route cannot hide a missing actor for high-risk readiness",
+    stacked.legal_classification.status === "determined" &&
+    stacked.implementation_readiness.status === "undetermined" &&
+    stacked.status === "undetermined" &&
+    stacked.missing_facts.some((fact) => fact.missing_fact_id === "missing.readiness.actor-role"));
+
+  const deepfakeWithoutPurpose = loadProfile("transparency-deepfake.json");
+  delete deepfakeWithoutPurpose.intended_use;
+  deepfakeWithoutPurpose.transparency.generates_or_manipulates_synthetic_content.value = false;
+  const explicitDeepfake = structured(await callTool("euaiact_assess_system", deepfakeWithoutPurpose));
+  test("assess: an explicit deep-fake predicate does not require inferred purpose text",
+    explicitDeepfake.legal_classification.status === "determined" &&
+    explicitDeepfake.legal_classification.routes.map((route) => route.route).join(",") ===
+      "transparency_duty");
+
+  const freeTextOnly = await runAssessment("free-text-only.json");
+  test("assess: unverified free text cannot satisfy a decisive predicate",
+    freeTextOnly.status === "undetermined" &&
+    freeTextOnly.warnings.some((warning) => warning.code === "UNVERIFIED_FREE_TEXT") &&
+    freeTextOnly.legal_classification.routes.length === 0);
+
+  const duplicateIdProfile = loadProfile("contract-high-risk.json");
+  duplicateIdProfile.identity.lifecycle_stage.fact_id =
+    duplicateIdProfile.identity.system_name.fact_id;
+  let duplicateIdRejected = false;
+  try {
+    await callTool("euaiact_assess_system", duplicateIdProfile);
+  } catch (error) {
+    duplicateIdRejected = /Duplicate fact_id/.test(String(error));
+  }
+  test("assess: duplicate fact IDs are rejected before decisioning", duplicateIdRejected);
+
+  const danglingEvidenceProfile = loadProfile("high-risk-low-impact-controlled.json");
+  danglingEvidenceProfile.controls_and_evidence.controls[0].evidence_reference_ids = [
+    "evidence.unknown",
+  ];
+  let danglingEvidenceRejected = false;
+  try {
+    await callTool("euaiact_assess_system", danglingEvidenceProfile);
+  } catch (error) {
+    danglingEvidenceRejected = /unknown evidence_id/.test(String(error));
+  }
+  test("assess: dangling evidence IDs are rejected before decisioning", danglingEvidenceRejected);
+
+  const allFindingReferencesResolve = (response) => {
+    const facts = new Set(response.facts_used.map((fact) => fact.fact_id));
+    const assumptions = new Set(response.assumptions.map((item) => item.assumption_id));
+    const missing = new Set(response.missing_facts.map((item) => item.missing_fact_id));
+    return response.findings.every((finding) =>
+      finding.fact_ids.every((id) => facts.has(id)) &&
+      finding.assumption_ids.every((id) => assumptions.has(id)) &&
+      finding.missing_fact_ids.every((id) => missing.has(id)) &&
+      finding.provenance.length > 0 &&
+      finding.provenance.every((record) =>
+        record.instrument_id === "regulation-eu-2024-1689" &&
+        record.source_id && record.exact_provision && record.official_url &&
+        record.operative_date && record.source_status && record.verification_level));
+  };
+  test("assess: every finding has resolving fact and full provenance references",
+    allFindingReferencesResolve(high) &&
+    allFindingReferencesResolve(prohibited) &&
+    allFindingReferencesResolve(sparse));
+  test("assess: no numeric or other confidence field is emitted",
+    !JSON.stringify([high, minimal, prohibited, sparse]).includes('"confidence"'));
+  test("assess: curated labels are disclosed as summaries, not statutory text",
+    [high, minimal, prohibited, sparse].every((output) =>
+      output.warnings.some((warning) =>
+        warning.code === "SUMMARY_ONLY" && warning.message.includes("not statutory text"))));
+  test("assess: sealed corpus identity is fixed and complete",
+    high.corpus.sha256 === "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5" &&
+    high.corpus.source_snapshot_ids.length === 4 &&
+    readFileSync("compiler/PROOF-no-regression.md", "utf8").includes(high.corpus.sha256));
+
+  const runtimeSchemaPairs = [
+    ["schemas/shared.ts", "src/decision-contract/shared.ts"],
+    ["schemas/profile.ts", "src/decision-contract/profile.ts"],
+    ["schemas/finding.ts", "src/decision-contract/finding.ts"],
+    ["schemas/result-blocks.ts", "src/decision-contract/result-blocks.ts"],
+    ["schemas/envelope.ts", "src/decision-contract/envelope.ts"],
+  ];
+  test("assess: runtime schemas are byte-identical mirrors of the frozen contract",
+    runtimeSchemaPairs.every(([frozen, runtime]) =>
+      readFileSync(frozen, "utf8") === readFileSync(runtime, "utf8")));
+
+  const index = loadJson(join(fixtureRoot, "fixture-index.json"));
+  const hashes = loadJson(join(goldenRoot, "hashes.json"));
+  test("assess: exactly 12 runnable contract profiles are golden-pinned",
+    index.cases.length === 12 && hashes.goldens.length === 12);
+  const unicodeCompare = (left, right) => {
+    const a = [...left].map((character) => character.codePointAt(0));
+    const b = [...right].map((character) => character.codePointAt(0));
+    for (let index = 0; index < Math.min(a.length, b.length); index++) {
+      if (a[index] !== b[index]) return a[index] - b[index];
+    }
+    return a.length - b.length;
+  };
+  const isSorted = (values, compare = unicodeCompare) =>
+    values.every((value, index) => index === 0 || compare(values[index - 1], value) <= 0);
+  const blockOrder = { legal_classification: 0, impact: 1, implementation_readiness: 2 };
+  const routeOrder = { prohibited: 0, high_risk: 1, transparency_duty: 2, gpai: 3, minimal: 4 };
+  const atomicOrder = [
+    "euaiact_annex_iv_checklist",
+    "euaiact_answer_question",
+    "euaiact_assess_art6_3_exception",
+    "euaiact_calculate_penalty",
+    "euaiact_check_deadlines",
+    "euaiact_check_gpai_systemic_risk",
+    "euaiact_classify_system",
+    "euaiact_get_article",
+    "euaiact_get_obligations",
+  ];
+  const orderingConforms = (output) =>
+    isSorted(output.corpus.source_snapshot_ids) &&
+    isSorted(output.facts_used.map((item) => item.fact_id)) &&
+    output.facts_used.every((item) => isSorted(item.evidence_reference_ids)) &&
+    isSorted(output.assumptions.map((item) => item.assumption_id)) &&
+    output.assumptions.every((item) => isSorted(item.source_fact_ids)) &&
+    isSorted(output.missing_facts.map((item) => `${item.profile_path}\u0000${item.missing_fact_id}`)) &&
+    isSorted(output.findings, (left, right) =>
+      blockOrder[left.block] - blockOrder[right.block] || unicodeCompare(left.finding_id, right.finding_id)) &&
+    output.findings.every((finding) =>
+      isSorted(finding.fact_ids) &&
+      isSorted(finding.assumption_ids) &&
+      isSorted(finding.missing_fact_ids) &&
+      isSorted(finding.provenance, (left, right) =>
+        unicodeCompare(left.source_id, right.source_id) ||
+        unicodeCompare(left.exact_provision, right.exact_provision) ||
+        unicodeCompare(left.operative_date, right.operative_date))) &&
+    isSorted(output.warnings, (left, right) =>
+      unicodeCompare(left.code, right.code) || unicodeCompare(left.warning_id, right.warning_id)) &&
+    output.warnings.every((warning) => isSorted(warning.finding_ids)) &&
+    isSorted(output.recommended_next_calls, (left, right) =>
+      atomicOrder.indexOf(left.tool_name) - atomicOrder.indexOf(right.tool_name)) &&
+    output.recommended_next_calls.every((call) => isSorted(call.input_fact_ids)) &&
+    isSorted(output.legal_classification.routes, (left, right) =>
+      routeOrder[left.route] - routeOrder[right.route]);
+  const goldenOutputs = [];
+  for (const fixture of index.cases) {
+    const output = await runAssessment(fixture.profile);
+    goldenOutputs.push(output);
+    const golden = loadJson(join(goldenRoot, fixture.golden));
+    const expected = hashes.goldens.find((item) => item.case_id === fixture.case_id);
+    test(`assess golden: ${fixture.case_id}`,
+      assessSystemResponseSchema.safeParse(output).success &&
+      canonicalize(output) === canonicalize(golden) &&
+      canonicalResponseHash(output) === expected?.canonical_sha256);
+  }
+  test("assess: all normative response ordering rules hold across the golden set",
+    goldenOutputs.every(orderingConforms));
+  test("assess: every canonical golden response stays within the 64 KiB bound",
+    goldenOutputs.every((output) => Buffer.byteLength(canonicalize(output), "utf8") <= 65_536));
+
+  const permutedProfile = loadProfile("high-risk-low-impact-controlled.json");
+  permutedProfile.controls_and_evidence.evidence_references[0].supports_fact_ids.reverse();
+  const orderedProfileResult = await runAssessment("high-risk-low-impact-controlled.json");
+  const permutedProfileResult = structured(await callTool("euaiact_assess_system", permutedProfile));
+  test("assess: input ID order is normalized before decisioning",
+    canonicalResponseHash(orderedProfileResult) === canonicalResponseHash(permutedProfileResult));
+
+  const determinismHashes = [];
+  for (let run = 0; run < 10; run++) {
+    determinismHashes.push(canonicalResponseHash(await runAssessment("contract-high-risk.json")));
+  }
+  test("assess: same normalized profile has one canonical hash across 10 runs",
+    new Set(determinismHashes).size === 1 &&
+    determinismHashes[0] === hashes.goldens[0].canonical_sha256);
+
+  const compatibility = loadJson("tests/fixtures/compatibility/atomic-tools-1.5-baseline.json");
+  const RealDate = Date;
+  const fixedInstant = compatibility.fixed_instant;
+  globalThis.Date = class FixedDate extends RealDate {
+    constructor(...args) {
+      if (args.length === 0) super(fixedInstant);
+      else super(...args);
+    }
+    static now() { return RealDate.parse(fixedInstant); }
+  };
+  try {
+    for (const fixture of compatibility.fixtures) {
+      const actual = await callTool(fixture.tool_name, fixture.input);
+      const serialized = JSON.stringify(actual);
+      test(`atomic compatibility: ${fixture.tool_name}`,
+        Buffer.byteLength(serialized, "utf8") === fixture.baseline_bytes &&
+        createHash("sha256").update(serialized, "utf8").digest("hex") === fixture.baseline_sha256);
+    }
+  } finally {
+    globalThis.Date = RealDate;
+  }
 }
 
 // ─── SUMMARY ────────────────────────────────────────────────────────────────

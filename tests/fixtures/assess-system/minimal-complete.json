@@ -1,0 +1,148 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.spam-filter.name",
+      "value": "spam-filter",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.spam-filter.purpose",
+      "value": "Filter unsolicited email without making decisions about natural persons",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.spam-filter.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.spam-filter",
+        "value": "Email users",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.spam-filter.consequence",
+      "value": "Moves likely spam to a review folder",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.spam-filter.material",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_i": {
+    "product_or_safety_component": {
+      "fact_id": "fact.annex-i.product",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "annex_i_legislation": []
+  },
+  "annex_iii": {
+    "domain": {
+      "fact_id": "fact.annex-iii.domain",
+      "value": "other",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "purpose": {
+      "fact_id": "fact.annex-iii.purpose",
+      "value": "Email spam filtering",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "biometric_and_practices": {
+    "uses_biometrics": {
+      "fact_id": "fact.practice.uses-biometrics",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "remote_biometric_identification": {
+      "fact_id": "fact.practice.remote-identification",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "emotion_recognition_workplace_or_education": {
+      "fact_id": "fact.practice.emotion-work",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "social_scoring": {
+      "fact_id": "fact.practice.social-scoring",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "transparency": {
+    "interacts_with_natural_persons": {
+      "fact_id": "fact.transparency.interacts",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "generates_or_manipulates_synthetic_content": {
+      "fact_id": "fact.transparency.synthetic",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "profile_version": "1.0",
+  "free_text": {
+    "fact_id": "fact.free-text.description",
+    "value": "We use something that may rank candidates, but no structured facts are confirmed.",
+    "origin": "caller_free_text",
+    "verification": "unverified_extraction"
+  }
+}

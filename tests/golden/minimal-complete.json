@@ -1,0 +1,443 @@
+{
+  "contract_version": "1.0",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.annex-i.product",
+      "profile_path": "/annex_i/product_or_safety_component",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-iii.domain",
+      "profile_path": "/annex_iii/domain",
+      "value": "other",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-iii.purpose",
+      "profile_path": "/annex_iii/purpose",
+      "value": "Email spam filtering",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.spam-filter.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "Moves likely spam to a review folder",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.spam-filter.material",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.eu",
+      "profile_path": "/geography/jurisdictions/0",
+      "value": "EU",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.group.spam-filter",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Email users",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.emotion-work",
+      "profile_path": "/biometric_and_practices/emotion_recognition_workplace_or_education",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.remote-identification",
+      "profile_path": "/biometric_and_practices/remote_biometric_identification",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.social-scoring",
+      "profile_path": "/biometric_and_practices/social_scoring",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.uses-biometrics",
+      "profile_path": "/biometric_and_practices/uses_biometrics",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.provider",
+      "profile_path": "/role_facts/roles/0",
+      "value": "provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.transparency.interacts",
+      "profile_path": "/transparency/interacts_with_natural_persons",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.transparency.synthetic",
+      "profile_path": "/transparency/generates_or_manipulates_synthetic_content",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.use.spam-filter.purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "value": "Filter unsolicited email without making decisions about natural persons",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.minimal.bounded.001",
+      "block": "legal_classification",
+      "summary": "No Article 5, Article 6, Annex I, Annex III, or Article 50 route was identified from the complete supplied exclusion facts. Minimal is a bounded routing label, not statutory text.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "spam-filter"
+      },
+      "fact_ids": [
+        "fact.annex-i.product",
+        "fact.annex-iii.domain",
+        "fact.annex-iii.purpose",
+        "fact.geography.eu",
+        "fact.practice.emotion-work",
+        "fact.practice.remote-identification",
+        "fact.practice.social-scoring",
+        "fact.practice.uses-biometrics",
+        "fact.role.provider",
+        "fact.transparency.interacts",
+        "fact.transparency.synthetic",
+        "fact.use.spam-filter.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Articles 5, 6, 50 and 95, and Annexes I and III",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_95",
+          "operative_date": "not_date_bound",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "does_not_apply"
+    },
+    {
+      "finding_id": "finding.impact.supplied-context.001",
+      "block": "impact",
+      "summary": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "spam-filter"
+      },
+      "fact_ids": [
+        "fact.annex-iii.domain",
+        "fact.decision.spam-filter.consequence",
+        "fact.decision.spam-filter.material",
+        "fact.group.spam-filter",
+        "fact.practice.emotion-work",
+        "fact.practice.remote-identification",
+        "fact.practice.social-scoring",
+        "fact.practice.uses-biometrics"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 1(1)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
+          "operative_date": "not_date_bound",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "block": "implementation_readiness",
+      "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "spam-filter"
+      },
+      "fact_ids": [
+        "fact.annex-i.product",
+        "fact.annex-iii.domain",
+        "fact.annex-iii.purpose",
+        "fact.geography.eu",
+        "fact.practice.emotion-work",
+        "fact.practice.remote-identification",
+        "fact.practice.social-scoring",
+        "fact.practice.uses-biometrics",
+        "fact.role.provider",
+        "fact.transparency.interacts",
+        "fact.transparency.synthetic",
+        "fact.use.spam-filter.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 4",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
+          "operative_date": "2025-02-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.legal-review.negative-conclusion.001",
+      "code": "LEGAL_REVIEW_REQUIRED",
+      "message": "The bounded minimal route is a negative legal conclusion and depends on the completeness and accuracy of supplied facts.",
+      "finding_ids": [
+        "finding.legal.minimal.bounded.001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.minimal.bounded.001",
+        "finding.readiness.duty.provider.art.4.ai.literacy"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.minimal.bounded.001",
+        "finding.readiness.duty.provider.art.4.ai.literacy"
+      ]
+    }
+  ],
+  "recommended_next_calls": [],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "minimal",
+        "finding_ids": [
+          "finding.legal.minimal.bounded.001"
+        ],
+        "actor_roles": [
+          "provider"
+        ]
+      }
+    ],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "provider"
+    ],
+    "finding_ids": [
+      "finding.legal.minimal.bounded.001"
+    ],
+    "limitations": [
+      "Routes are independent. Impact and implementation readiness are reported separately."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
+      "categories": [
+        "other_fundamental_rights"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.spam.filter"
+      ],
+      "fact_ids": [
+        "fact.annex-iii.domain",
+        "fact.decision.spam-filter.consequence",
+        "fact.decision.spam-filter.material",
+        "fact.group.spam-filter",
+        "fact.practice.emotion-work",
+        "fact.practice.remote-identification",
+        "fact.practice.social-scoring",
+        "fact.practice.uses-biometrics"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.fact.group.spam.filter",
+        "label": "Email users",
+        "fact_ids": [
+          "fact.group.spam-filter"
+        ]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "No supplied tested-control evidence reduces the described inherent impact.",
+      "categories": [
+        "other_fundamental_rights"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.spam.filter"
+      ],
+      "fact_ids": [
+        "fact.annex-iii.domain",
+        "fact.decision.spam-filter.consequence",
+        "fact.decision.spam-filter.material",
+        "fact.group.spam-filter",
+        "fact.practice.emotion-work",
+        "fact.practice.remote-identification",
+        "fact.practice.social-scoring",
+        "fact.practice.uses-biometrics"
+      ]
+    },
+    "finding_ids": [
+      "finding.impact.supplied-context.001"
+    ],
+    "limitations": [
+      "Impact is qualitative and contains no aggregate or numeric score.",
+      "Controls cannot alter legal classification."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.provider.art.4.ai.literacy",
+        "title": "Take measures to support the development of AI literacy of staff and operators",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 4",
+        "operative_date": "2025-02-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.provider.art.4.ai.literacy"
+        ]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "description": "Supply documented evidence for Take measures to support the development of AI literacy of staff and operators.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-02-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.unassigned",
+        "label": "Unassigned",
+        "responsibility": "Assign accountable ownership for applicable duties and evidence."
+      }
+    ],
+    "finding_ids": [
+      "finding.readiness.duty.provider.art.4.ai.literacy"
+    ],
+    "limitations": [
+      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "This output is not certification, approval, or regulatory assurance."
+    ],
+    "is_regulatory_approval": false
+  }
+}

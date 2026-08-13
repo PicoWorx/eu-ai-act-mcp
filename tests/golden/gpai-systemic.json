@@ -1,0 +1,919 @@
+{
+  "contract_version": "1.0",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.decision.gpai-model.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "Downstream systems may rely on the model across multiple contexts",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.gpai-model.material",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.eu",
+      "profile_path": "/geography/jurisdictions/0",
+      "value": "EU",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.gpai.designated",
+      "profile_path": "/gpai/commission_designated_systemic_risk",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.gpai.is-model",
+      "profile_path": "/gpai/is_gpai_model",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.gpai.market-date",
+      "profile_path": "/gpai/model_placed_on_market_date",
+      "value": "2026-08-13",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.gpai.name",
+      "profile_path": "/gpai/model_name",
+      "value": "Fixture GPAI model",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.gpai.training-flops",
+      "profile_path": "/gpai/training_flops",
+      "value": 3e+25,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.group.gpai-model",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Downstream users and affected persons",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.gpai_provider",
+      "profile_path": "/role_facts/roles/0",
+      "value": "gpai_provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.use.gpai-model.purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "value": "Provide a general-purpose model for downstream integration",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.gpai.model.001",
+      "block": "legal_classification",
+      "summary": "The supplied fact identifies a general-purpose AI model route. This does not classify a downstream AI system.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.is-model",
+        "fact.role.gpai_provider"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 3(63) and Chapter V",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_51",
+          "operative_date": "not_date_bound",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.impact.supplied-context.001",
+      "block": "impact",
+      "summary": "The supplied consequence is: Downstream systems may rely on the model across multiple contexts.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.decision.gpai-model.consequence",
+        "fact.decision.gpai-model.material",
+        "fact.group.gpai-model"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 1(1)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
+          "operative_date": "not_date_bound",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+      "block": "implementation_readiness",
+      "summary": "Technical documentation for GPAI models is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 53(1)(a)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+      "block": "implementation_readiness",
+      "summary": "Information and documentation for downstream providers is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 53(1)(b)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+      "block": "implementation_readiness",
+      "summary": "Copyright compliance policy is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 53(1)(c)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+      "block": "implementation_readiness",
+      "summary": "Training data summary is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 53(1)(d)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+      "block": "implementation_readiness",
+      "summary": "Systemic risk GPAI - Model evaluation is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 55(1)(a)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+      "block": "implementation_readiness",
+      "summary": "Systemic risk GPAI - Risk assessment and mitigation is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 55(1)(b)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+      "block": "implementation_readiness",
+      "summary": "Systemic risk GPAI - Incident tracking and reporting is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 55(1)(c)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements",
+      "block": "implementation_readiness",
+      "summary": "Systemic risk GPAI - Adequate cybersecurity is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider",
+        "fact.use.gpai-model.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 55(1)(d)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
+          "operative_date": "2025-08-02",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.gpai.model.001",
+        "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+        "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+        "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+        "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.gpai.model.001",
+        "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+        "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+        "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+        "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
+      ]
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_check_gpai_systemic_risk",
+      "reason": "Assess the separate GPAI systemic-risk route from compute or designation facts.",
+      "input_fact_ids": [
+        "fact.gpai.designated",
+        "fact.gpai.is-model",
+        "fact.gpai.market-date",
+        "fact.gpai.name",
+        "fact.gpai.training-flops"
+      ]
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "gpai",
+        "finding_ids": [
+          "finding.legal.gpai.model.001"
+        ],
+        "actor_roles": [
+          "gpai_provider"
+        ]
+      }
+    ],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "gpai_provider"
+    ],
+    "finding_ids": [
+      "finding.legal.gpai.model.001"
+    ],
+    "limitations": [
+      "Routes are independent. Impact and implementation readiness are reported separately."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "The supplied consequence is: Downstream systems may rely on the model across multiple contexts.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.gpai.model"
+      ],
+      "fact_ids": [
+        "fact.decision.gpai-model.consequence",
+        "fact.decision.gpai-model.material",
+        "fact.group.gpai-model"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.fact.group.gpai.model",
+        "label": "Downstream users and affected persons",
+        "fact_ids": [
+          "fact.group.gpai-model"
+        ]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "No supplied tested-control evidence reduces the described inherent impact.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.gpai.model"
+      ],
+      "fact_ids": [
+        "fact.decision.gpai-model.consequence",
+        "fact.decision.gpai-model.material",
+        "fact.group.gpai-model"
+      ]
+    },
+    "finding_ids": [
+      "finding.impact.supplied-context.001"
+    ],
+    "limitations": [
+      "Impact is qualitative and contains no aggregate or numeric score.",
+      "Controls cannot alter legal classification."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.gpai.provider.art.53.1.a.documentation",
+        "title": "Technical documentation for GPAI models",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 53(1)(a)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.53.1.a.documentation"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.53.1.b.documentation",
+        "title": "Information and documentation for downstream providers",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 53(1)(b)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.53.1.b.documentation"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.53.1.c.copyright",
+        "title": "Copyright compliance policy",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 53(1)(c)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.53.1.c.copyright"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.53.1.d.transparency",
+        "title": "Training data summary",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 53(1)(d)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.53.1.d.transparency"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.55.1.a.risk.management",
+        "title": "Systemic risk GPAI - Model evaluation",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 55(1)(a)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.55.1.b.risk.management",
+        "title": "Systemic risk GPAI - Risk assessment and mitigation",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 55(1)(b)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.55.1.c.incident.reporting",
+        "title": "Systemic risk GPAI - Incident tracking and reporting",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 55(1)(c)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting"
+        ]
+      },
+      {
+        "duty_id": "duty.gpai.provider.art.55.1.d.technical.requirements",
+        "title": "Systemic risk GPAI - Adequate cybersecurity",
+        "actor_roles": [
+          "gpai_provider"
+        ],
+        "exact_provision": "Art. 55(1)(d)",
+        "operative_date": "2025-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
+        ]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.53.1.a.documentation",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.a.documentation"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.53.1.b.documentation",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.b.documentation"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.53.1.c.copyright",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.c.copyright"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.53.1.d.transparency",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.d.transparency"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.55.1.a.risk.management",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.a.risk.management"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.55.1.b.risk.management",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.b.risk.management"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.55.1.c.incident.reporting",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.c.incident.reporting"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.gpai.provider.art.55.1.d.technical.requirements",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.d.technical.requirements"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.duty.gpai.provider.art.53.1.a.documentation",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.a.documentation"
+        ],
+        "description": "Supply documented evidence for Technical documentation for GPAI models.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.53.1.b.documentation",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.b.documentation"
+        ],
+        "description": "Supply documented evidence for Information and documentation for downstream providers.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.53.1.c.copyright",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.c.copyright"
+        ],
+        "description": "Supply documented evidence for Copyright compliance policy.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.53.1.d.transparency",
+        "duty_ids": [
+          "duty.gpai.provider.art.53.1.d.transparency"
+        ],
+        "description": "Supply documented evidence for Training data summary.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.55.1.a.risk.management",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.a.risk.management"
+        ],
+        "description": "Supply documented evidence for Systemic risk GPAI - Model evaluation.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.55.1.b.risk.management",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.b.risk.management"
+        ],
+        "description": "Supply documented evidence for Systemic risk GPAI - Risk assessment and mitigation.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.55.1.c.incident.reporting",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.c.incident.reporting"
+        ],
+        "description": "Supply documented evidence for Systemic risk GPAI - Incident tracking and reporting.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      },
+      {
+        "gap_id": "gap.duty.gpai.provider.art.55.1.d.technical.requirements",
+        "duty_ids": [
+          "duty.gpai.provider.art.55.1.d.technical.requirements"
+        ],
+        "description": "Supply documented evidence for Systemic risk GPAI - Adequate cybersecurity.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-08-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.unassigned",
+        "label": "Unassigned",
+        "responsibility": "Assign accountable ownership for applicable duties and evidence."
+      }
+    ],
+    "finding_ids": [
+      "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+      "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+      "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+      "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+      "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+      "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+      "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+      "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
+    ],
+    "limitations": [
+      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "This output is not certification, approval, or regulatory assurance."
+    ],
+    "is_regulatory_approval": false
+  }
+}

@@ -9,22 +9,23 @@ An open-source [Model Context Protocol](https://modelcontextprotocol.io) (MCP) s
 
 Built by [Lexbeam Software](https://lexbeam.com) - an agentic AI implementation boutique for regulated workflows.
 
-## What's new in 1.4.5
+## What's new in 1.5.0
 
-Version 1.4.5 is the npm follow-up to the 1.4.4 correctness release. It includes
-the complete 1.4.4 audit fixes and removes em dashes from documentation and served
-prose without changing legal rules, schemas, or tool behavior.
+Version 1.5.0 adds `euaiact_assess_system`, one bounded decision call over a sparse,
+normalized system profile.
 
-- **Twenty correctness fixes** from a three-artifact audit with cross-model validation
-  (details in CHANGELOG): honest FAQ answers with `matched_question`, a reachable
-  `minimal` classification reconciled against the description text, a scoped
-  Annex III(1)(a) verification exclusion, GPAI abstention instead of false negatives,
-  penalty input guards plus the Art. 99(6a) SMC rule, and an article corpus current
-  with the amended act including the new Art. 4a.
-- **All citation links point at the consolidated text** (CELEX 02024R1689-20260727).
-- **A pinned legal corpus** (`law/`) and two new gates: a 66-check claim matrix
-  against the corpus and a 48-check post-serialization schema gate. The suite is
-  date- and timezone-stable through 2031.
+- **Three independent blocks:** legal classification, qualitative impact, and
+  implementation readiness. Impact cannot change legal classification, and a legal
+  route never implies evidence completeness or approval.
+- **Fail-closed conclusions:** decisive missing facts make only their affected blocks
+  undetermined, with stable IDs and questions. Unverified free text cannot satisfy a
+  decisive legal predicate.
+- **Grounded and reproducible:** every finding resolves to supplied facts or disclosed
+  missing facts and carries complete official-text provenance. Results bind to the
+  sealed four-source corpus and have RFC 8785 golden hashes.
+- **Compatibility pinned:** all nine existing tools retain byte-identical behavior for
+  the same fixed inputs and corpus. The assessment tool is registered additively as
+  tool 10.
 
 Full release history: [CHANGELOG.md](CHANGELOG.md).
 
@@ -85,6 +86,7 @@ npm run start:http  # streamable HTTP (for Smithery/Railway)
 | `euaiact_check_gpai_systemic_risk` | Check whether a GPAI model crosses the 10²⁵ FLOPs threshold and return Art. 53 + Art. 55 obligations plus the Art. 52 notification duty. |
 | `euaiact_assess_art6_3_exception` | Walk through the Art. 6(3) "no significant risk" exception with explicit profiling block and Art. 6(4) / Art. 49(2) reminders. |
 | `euaiact_annex_iv_checklist` | Return all nine Annex IV technical-documentation items, optionally as a markdown checklist. |
+| `euaiact_assess_system` | Assess a normalized system profile with separate legal-classification, qualitative-impact, and evidence-readiness blocks. Sparse decisive facts fail closed; every finding carries fact IDs and official provenance. |
 
 ## Resources
 
@@ -143,8 +145,10 @@ Operative dates as amended:
 npm install
 npm run build        # typescript -> dist/
 node test.mjs         # full suite incl. ten agent journeys
-node test-claims.mjs  # claim matrix: pinned law corpus vs served facts
+node test-claims.mjs  # 92-check matrix: pinned law corpus vs served facts
 node test-schemas.mjs # post-serialization output-schema gate
+node law/fetch.mjs verify # verify all 4 pinned legal documents
+npm --prefix compiler test # deterministic compiler: 6 tests
 npm run dev          # stdio dev server
 npm run dev:http     # HTTP dev server
 ```

@@ -1,0 +1,126 @@
+{
+  "contract_version": "1.0",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "not_applicable",
+  "facts_used": [
+    {
+      "fact_id": "fact.identity.infers-outputs",
+      "profile_path": "/identity/infers_from_inputs_how_to_generate_outputs",
+      "value": false,
+      "origin": "cited_evidence",
+      "verification": "evidence_linked",
+      "evidence_reference_ids": [
+        "evidence.system-specification"
+      ]
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.ai-system-definition.001",
+      "block": "legal_classification",
+      "summary": "The supplied definition fact does not establish an AI system within Article 3(1).",
+      "scope": {
+        "actors": [
+          "unknown"
+        ],
+        "jurisdictions": [
+          "unspecified"
+        ],
+        "system_scope": "Static lookup table"
+      },
+      "fact_ids": [
+        "fact.identity.infers-outputs"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 3(1)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_3",
+          "operative_date": "not_date_bound",
+          "source_status": "enacted_oj",
+          "verification_level": "complete_official_text"
+        }
+      ],
+      "determination": "does_not_apply"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.legal.ai-system-definition.001"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.legal.ai-system-definition.001"
+      ]
+    }
+  ],
+  "recommended_next_calls": [],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "not_applicable",
+    "routes": [],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "unknown"
+    ],
+    "finding_ids": [
+      "finding.legal.ai-system-definition.001"
+    ],
+    "limitations": [
+      "This non-applicability result is bounded to the supplied AI-system definition fact."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "not_applicable",
+    "inherent_impact": null,
+    "relevant_affected_groups": [],
+    "current_controls": [],
+    "residual_impact": null,
+    "finding_ids": [],
+    "limitations": [
+      "No AI Act impact result is produced for the bounded non-applicability conclusion."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "not_applicable",
+    "readiness_state": "not_applicable",
+    "applicable_duties": [],
+    "evidence_status": [],
+    "control_gaps": [],
+    "owners": [],
+    "finding_ids": [],
+    "limitations": [
+      "No AI Act implementation duties are selected from this bounded result."
+    ],
+    "is_regulatory_approval": false
+  }
+}

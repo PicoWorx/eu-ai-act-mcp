@@ -1,0 +1,65 @@
+{
+  "fixture_set": "euaiact-assess-system-1.0",
+  "cases": [
+    {
+      "case_id": "contract-high-risk",
+      "profile": "contract-high-risk.json",
+      "golden": "contract-high-risk.json"
+    },
+    {
+      "case_id": "contract-not-applicable",
+      "profile": "contract-not-applicable.json",
+      "golden": "contract-not-applicable.json"
+    },
+    {
+      "case_id": "contract-sparse",
+      "profile": "contract-sparse.json",
+      "golden": "contract-sparse.json"
+    },
+    {
+      "case_id": "prohibited-social-scoring",
+      "profile": "prohibited-social-scoring.json",
+      "golden": "prohibited-social-scoring.json"
+    },
+    {
+      "case_id": "minimal-complete",
+      "profile": "minimal-complete.json",
+      "golden": "minimal-complete.json"
+    },
+    {
+      "case_id": "transparency-chatbot",
+      "profile": "transparency-chatbot.json",
+      "golden": "transparency-chatbot.json"
+    },
+    {
+      "case_id": "transparency-deepfake",
+      "profile": "transparency-deepfake.json",
+      "golden": "transparency-deepfake.json"
+    },
+    {
+      "case_id": "annex-i-high-risk",
+      "profile": "annex-i-high-risk.json",
+      "golden": "annex-i-high-risk.json"
+    },
+    {
+      "case_id": "gpai-systemic",
+      "profile": "gpai-systemic.json",
+      "golden": "gpai-systemic.json"
+    },
+    {
+      "case_id": "high-risk-plus-transparency",
+      "profile": "high-risk-plus-transparency.json",
+      "golden": "high-risk-plus-transparency.json"
+    },
+    {
+      "case_id": "high-risk-low-impact-controlled",
+      "profile": "high-risk-low-impact-controlled.json",
+      "golden": "high-risk-low-impact-controlled.json"
+    },
+    {
+      "case_id": "free-text-only",
+      "profile": "free-text-only.json",
+      "golden": "free-text-only.json"
+    }
+  ]
+}
