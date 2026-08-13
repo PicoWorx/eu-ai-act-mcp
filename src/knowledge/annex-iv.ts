@@ -4,9 +4,10 @@
  * Source: Regulation (EU) 2024/1689, Annex IV. EUR-Lex content reused under the conditions of
  * Commission Decision 2011/833/EU.
  *
- * Nine items define the minimum technical documentation a provider of a
- * high-risk AI system must prepare before placing the system on the market
- * (Art. 11). SMEs may provide the same information in a simplified form.
+ * The nine titles and descriptions summarise Annex IV. `sub_items` are
+ * non-binding implementation prompts. They are not verbatim Annex IV text and
+ * do not create additional legal requirements. SMEs may provide the statutory
+ * Annex IV elements in a simplified form under Art. 11(1).
  */
 
 export interface AnnexIVItem {

@@ -163,21 +163,21 @@ Verified against the plain text of CELEX 32026R1744 held at `projects/lawvable/_
 ### Changed
 
 - **Digital Omnibus on AI enacted.** The `omnibusEnactment` record now carries CELEX `32026R1744`, OJ publication `2026-07-24` and entry into force `2026-07-27`, verified against the enacted OJ text on 2026-07-26. All derived surfaces (operative dates, milestone timeline, status labels, server instructions, resources) resolve to the enacted state.
-- **Annex III high-risk obligations deferred to 2 December 2027** and **Annex I to 2 August 2028** (Art. 113(3)(c) as amended). Both are backstop dates; a Commission decision on support measures can bring them forward.
+- **Historical defect, corrected in 1.4.3:** Annex III was correctly dated 2 December 2027 and Annex I 2 August 2028, but this release incorrectly called them backstop dates that a Commission decision could bring forward. Enacted Art. 113, third paragraph, point (c), makes both dates unconditional.
 - **Obligation deadlines are derived rather than hardcoded.** `euaiact_get_obligations` now takes its high-risk application dates from the same source as `euaiact_check_deadlines`, split by Annex III and Annex I, so the two tools cannot state different law for the same system. Previously every high-risk obligation carried a fixed `2026-08-02`.
 - **Art. 50(2) transition reconciled and reattributed.** The entry now cites the new Art. 111(4) where the rule sits, carries the enacted date 2 December 2026 and is tagged to the enacted OJ text. The proposal's 2 February 2027 does not appear in the adopted act. `OmnibusDelta.sourceStatus` accepts `enacted_oj` so reconciled items can be labelled honestly.
 - Summary key-changes, the source registry note, the Art. 113 article summary and three FAQ answers rewritten for the enacted state.
 
 ### Added
 
-- **Art. 5(1)(ba) and (bb) prohibited practices** (non-consensual intimate material and child sexual abuse material), with the Art. 5(1a) and (1b) qualifications, applying from 2 December 2026. These are now reachable through classification and prohibited-practice lookups.
+- **Art. 5(1)(ba) and (bb) prohibited practices** (non-consensual intimate material and child sexual abuse material), applying from 2 December 2026. Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only. These are now reachable through classification and prohibited-practice lookups.
 - **Milestone for 2 December 2026** covering the new Art. 5 prohibitions and the Art. 111(4) synthetic-content transition.
 - **Cross-tool consistency tests** asserting that obligation deadlines match the operative deadline dates, and that limited-risk Art. 50 duties stay on 2 August 2026.
 - Reverse-simulation tests proving a pending record still resolves to pre-OJ behaviour after the flip.
 
 ### Fixed
 
-- The Annex III milestone description now states that the deferred date is a backstop and that obligations can apply earlier after a Commission decision.
+- **Historical defect, corrected in 1.4.3:** the Annex III milestone incorrectly described the date as a backstop and said obligations could apply earlier after a Commission decision. The enacted date is unconditional.
 
 ### Known limitations
 
@@ -272,10 +272,10 @@ Legal-accuracy and release-hygiene release following a cross-model audit (Codex)
 - **Matched signals and follow-up questions.** Every classification now returns `matched_signals`, `missing_signals`, and `next_questions` so the calling agent can explain why and ask the user what is still needed.
 - **`euaiact_get_article`** to retrieve operational summaries of the most-cited articles plus stable EUR-Lex URLs for grounded citations.
 - **`euaiact_check_gpai_systemic_risk`** to determine whether a GPAI model crosses the Art. 51(2) 10²⁵ FLOPs threshold and return Art. 53 baseline plus Art. 55 systemic-risk obligations with the Art. 52 notification duty.
-- **`euaiact_assess_art6_3_exception`** to walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3) second subparagraph) and the Art. 6(4) documentation reminder plus Art. 49(2) registration duty.
+- **`euaiact_assess_art6_3_exception`** to walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3), third subparagraph) and the Art. 6(4) documentation reminder plus Art. 49(2) registration duty.
 - **`euaiact_annex_iv_checklist`** to return all nine Annex IV technical-documentation items, optionally as a markdown checklist, with an SME-simplified note.
 - **Resources** `euaiact://annex/iii` (full Annex III categories) and `euaiact://annex/iv` (full Annex IV checklist).
-- **Prompt** `ground-citation` to guide the agent to call `euaiact_get_article` and quote with an EUR-Lex URL.
+- **Prompt** `ground-citation` originally guided the agent to quote after calling `euaiact_get_article`; this was later corrected because the tool returns an operational summary, not statutory text. Agents must follow the EUR-Lex URL and verify official wording before quoting.
 - 5 new FAQ entries covering the FLOPs threshold for systemic-risk GPAI, FRIA for credit scoring, chatbot disclosure under Art. 50(1), minimal-risk spellchecker and recommender examples, and an expanded Art. 6(3) exception entry with the profiling caveat.
 - `comparative` block in `euaiact_calculate_penalty` showing the SME reduction alongside the non-SME amount.
 - `only_upcoming` filter and a `next_milestone` shortcut in `euaiact_check_deadlines`.

@@ -7,8 +7,10 @@ import {
 } from "../schemas/annex-iv.js";
 import { annexIVItems } from "../knowledge/annex-iv.js";
 
+const GUIDANCE_NOTE = "The item titles and descriptions summarise Annex IV. The sub_items are non-binding implementation prompts, not verbatim Annex IV text or additional legal requirements. Verify definitive wording in the linked official source.";
+
 function toChecklistMarkdown(): string {
-  const lines: string[] = ["# Annex IV - Technical Documentation Checklist", ""];
+  const lines: string[] = ["# Annex IV - Technical Documentation Checklist", "", `> ${GUIDANCE_NOTE}`, ""];
   for (const item of annexIVItems) {
     lines.push(`## ${item.number}. ${item.title}`);
     lines.push("");
@@ -30,7 +32,7 @@ export function registerAnnexIvTool(server: McpServer): void {
     {
       title: "Annex IV Technical Documentation Checklist",
       description:
-        "Return the full Annex IV technical documentation requirements that a provider of a high-risk AI system must prepare under Art. 11 before placing the system on the market. Nine items cover: general description, detailed elements and development process, monitoring/functioning/control, performance metrics appropriateness, risk management system, lifecycle changes, harmonised standards applied, EU declaration of conformity, and post-market monitoring plan. Use `format: \"checklist\"` to also receive a markdown checklist suitable for audit prep. SMEs may provide the information in a simplified manner.",
+        "Return the nine Annex IV statutory headings and summaries for technical documentation under Art. 11. The sub_items are separately labelled non-binding implementation prompts and do not create additional legal requirements. Use `format: \"checklist\"` to also receive a markdown checklist suitable for audit preparation. SMEs may provide the statutory information in a simplified manner.",
       annotations: {
         readOnlyHint: true,
         idempotentHint: true,
@@ -50,6 +52,7 @@ export function registerAnnexIvTool(server: McpServer): void {
 
       const output: AnnexIvOutput = {
         items,
+        guidance_note: GUIDANCE_NOTE,
         total_items: items.length,
         relevant_articles: ["Art. 11", "Annex IV"],
         ...(input.format === "checklist" ? { checklist_markdown: toChecklistMarkdown() } : {}),

@@ -199,6 +199,7 @@ const RESOURCE_SCHEMAS = {
     annex: z.literal("IV"),
     title: z.string(),
     items: z.array(z.any()).length(9),
+    guidance_note: z.string().includes("non-binding implementation prompts"),
     relevant_articles: z.array(z.string()),
     eurlex_url: z.string().includes("02024R1689-20260727"),
   }),

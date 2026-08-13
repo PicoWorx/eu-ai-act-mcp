@@ -59,12 +59,18 @@ const { getMilestonesWithDaysRemaining, getOperativeHighRiskDates } = await impo
 const { omnibusEnactment } = await import("./dist/knowledge/digital-omnibus.js");
 const { getPenaltyTier, calculateMaxFine } = await import("./dist/knowledge/penalties.js");
 const { articles } = await import("./dist/knowledge/articles.js");
-const { annexIIICategories } = await import("./dist/knowledge/annex-iii.js");
+const { annexIIICategories, prohibitedPractices } = await import("./dist/knowledge/annex-iii.js");
+const { faqDatabase } = await import("./dist/knowledge/faq-database.js");
+const SERVER_BUNDLE = norm(readFileSync("dist/server.js", "utf8"));
+const ARTICLE_TOOL_BUNDLE = norm(readFileSync("dist/tools/article.js", "utf8"));
+const README = norm(readFileSync("README.md", "utf8"));
+const CHANGELOG = norm(readFileSync("CHANGELOG.md", "utf8"));
 
 const milestones = getMilestonesWithDaysRemaining();
 const dates = getOperativeHighRiskDates();
 const art = (n) => articles.find((a) => a.number === n);
 const milestone = (d) => milestones.find((m) => m.date === d);
+const faq = (id) => faqDatabase.find((entry) => entry.id === id)?.answer ?? "";
 
 function toolHandler(registerFn) {
   let h;
@@ -239,6 +245,134 @@ check("E13 verification exclusion served as SCOPED, never minimal/high-risk", "s
   const r = (await h({ signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } })).structuredContent;
   return /Not high-risk under Annex III\(1\)\(a\)/.test(r.obligations_summary) && r.risk_classification !== "minimal" && r.risk_classification !== "high-risk";
 })());
+
+// ── Audited truth corrections ───────────────────────────────────────────────
+// Every audit row has a corpus assertion and a served-surface assertion.
+
+check("A-M015 Art. 50 duties are paragraph- and actor-specific", "law",
+  inLaw("Providers shall ensure that AI systems intended to interact directly with natural persons") &&
+  inLaw("Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content") &&
+  inLaw("Deployers of an emotion recognition system or a biometric categorisation system") &&
+  inLaw("Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake"));
+check("A-M015", "served",
+  SERVER_BUNDLE.includes("Art. 50 contains paragraph-specific duties") &&
+  SERVER_BUNDLE.includes("Apply the actor, scope, and exceptions in the relevant paragraph") &&
+  !SERVER_BUNDLE.includes("chatbots, emotion recognition, deepfakes, AI-generated content must be disclosed"));
+
+check("A-M016 minimal label does not displace Art. 4 and Art. 95 is voluntary", "law",
+  inLaw("Providers and deployers of AI systems shall take measures to support the development of AI literacy") &&
+  inLaw("voluntary application to AI systems, other than high-risk AI systems"));
+check("A-M016", "served",
+  SERVER_BUNDLE.includes("No higher-tier obligation is identified from this risk label alone") &&
+  SERVER_BUNDLE.includes("Art. 4 and any other independently triggered provisions still require separate review") &&
+  SERVER_BUNDLE.includes("Art. 95 codes of conduct are voluntary"));
+
+check("A-M029 Art. 5(1a) covers ba and bb; 5(1b) covers ba only", "law",
+  inLaw("For the purposes of paragraph 1, first subparagraph, points (ba) and (bb)") &&
+  inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material"));
+check("A-M029", "served", (() => {
+  const description = prohibitedPractices.find((practice) => practice.id === "art5-1bb")?.description ?? "";
+  return description.includes("Art. 5(1a) applies") &&
+    description.includes("Art. 5(1b) does not apply to point (bb)") &&
+    description.includes("it qualifies point (ba) only");
+})());
+
+check("A-M061 penalties attach to the exact Art. 99 tiers", "law",
+  nearAnchor(ART99, "Article 5", "35 000 000", 300) &&
+  nearAnchor(ART99, "obligations of providers pursuant to Article 16", "15 000 000", 700) &&
+  nearAnchor(ART99, "incorrect, incomplete or misleading information", "7 500 000", 300) &&
+  ART99.includes("In the case of SMCs, each fine referred to in paragraphs 4 and 5"));
+check("A-M061", "served", (() => {
+  const answer = faq("faq-16-penalties");
+  return answer.includes("violations enumerated in Art. 99(4)") &&
+    answer.includes("For an undertaking the higher ceiling applies") &&
+    answer.includes("small mid-caps only for paragraphs 4 and 5") &&
+    !answer.includes("High-risk and other obligation violations");
+})());
+
+check("A-M062 Art. 49 registration has three bounded routes", "law",
+  inLaw("high-risk AI system listed in Annex III, with the exception of high-risk AI systems referred to in point 2 of Annex III") &&
+  inLaw("AI system for which the provider has concluded that it is not high-risk according to Article 6(3)") &&
+  inLaw("deployers that are public authorities, Union institutions, bodies, offices or agencies or persons acting on their behalf"));
+check("A-M062", "served", (() => {
+  const answer = faq("faq-19-registration");
+  return answer.includes("Registration applies only where Art. 49 says so") &&
+    answer.includes("except a system in Annex III point 2") &&
+    answer.includes("Art. 6(3) non-high-risk determination") &&
+    answer.includes("not a blanket registration rule for every high-risk system");
+})());
+
+check("A-M063 healthcare high-risk status requires a statutory route", "law",
+  inLaw("is intended to be used as a safety component of a product, or the AI system is itself a product") &&
+  inLaw("is required to undergo a third-party conformity assessment") &&
+  inLaw("emergency healthcare patient triage systems") &&
+  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling"));
+check("A-M063", "served", (() => {
+  const answer = faq("faq-15-healthcare");
+  return answer.includes("Art. 6(1), Annex I, product-law, third-party-conformity") &&
+    answer.includes("Annex III(5)(d)") &&
+    answer.includes("subject to Art. 6(3)") &&
+    answer.includes("not high-risk merely because they are used in healthcare");
+})());
+
+check("A-M064 national legal-services status must be verified", "law",
+  inLaw("This text is meant purely as a documentation tool and has no legal effect") &&
+  inLaw("The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal"));
+check("A-M064", "served",
+  README.includes("must be verified against current official sources") &&
+  README.includes("qualified local counsel") &&
+  !README.includes("not Rechtsberatung im Sinne"));
+
+check("A-M073 deferred high-risk dates are unconditional", "law",
+  inLaw("2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2)") &&
+  inLaw("2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1)"));
+check("A-M073", "served",
+  CHANGELOG.includes("Enacted Art. 113, third paragraph, point (c), makes both dates unconditional") &&
+  !CHANGELOG.includes("Both are backstop dates; a Commission decision on support measures can bring them forward"));
+
+check("A-M074 changelog preserves the Art. 5 qualifier split", "law",
+  inLaw("For the purposes of paragraph 1, first subparagraph, points (ba) and (bb)") &&
+  inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material"));
+check("A-M074", "served",
+  CHANGELOG.includes("Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only") &&
+  !CHANGELOG.includes("with the Art. 5(1a) and (1b) qualifications"));
+
+check("A-M078 profiling override is the Art. 6(3) third subparagraph", "law",
+  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling") &&
+  inLaw("paragraph 3, second subparagraph"));
+check("A-M078", "served",
+  CHANGELOG.includes("profiling block (Art. 6(3), third subparagraph)") &&
+  !CHANGELOG.includes("profiling block (Art. 6(3) second subparagraph)"));
+
+check("A-M080 Annex IV is the statutory minimum as applicable", "law",
+  inLaw("The technical documentation referred to in Article 11(1) shall contain at least the following information, as applicable to the relevant AI system"));
+check("A-M080", "served", await (async () => {
+  const h = toolHandler((await import("./dist/tools/annex-iv.js")).registerAnnexIvTool);
+  const output = (await h({ format: "checklist" })).structuredContent;
+  return output.guidance_note.includes("non-binding implementation prompts") &&
+    output.guidance_note.includes("not verbatim Annex IV text or additional legal requirements") &&
+    output.checklist_markdown.includes(output.guidance_note) &&
+    SERVER_BUNDLE.includes("separately labelled implementation prompts");
+})());
+
+check("A-M082 Art. 73 two-day route incorporates Art. 3(49)(b)", "law",
+  ART73.includes("a serious incident as defined in Article 3, point (49)(b)") &&
+  inLaw("a serious and irreversible disruption of the management or operation of critical infrastructure"));
+check("A-M082", "served",
+  /serious and irreversible disruption of the management or operation of critical infrastructure under Art\. 3\(49\)\(b\).{0,100}(2|two) days/.test(art("73")?.summary ?? "") &&
+  !/incidents involving widespread infringement or affecting critical infrastructure/.test(art("73")?.summary ?? ""));
+
+check("A-GROUND operational summaries are not official statutory text", "law",
+  inLaw("This text is meant purely as a documentation tool and has no legal effect") &&
+  inLaw("authentic versions of the relevant acts"));
+check("A-GROUND", "served",
+  ARTICLE_TOOL_BUNDLE.includes("The summary is not statutory text") &&
+  ARTICLE_TOOL_BUNDLE.includes("verify the official provision before quoting it") &&
+  !ARTICLE_TOOL_BUNDLE.includes("quote article text with a link") &&
+  SERVER_BUNDLE.includes("Do not quote the summary as statutory text") &&
+  SERVER_BUNDLE.includes("quote only wording verified there") &&
+  !SERVER_BUNDLE.includes("fetch the text and EUR-Lex URL") &&
+  README.includes("verify definitive wording in the official source before quoting"));
 
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log(`\nCLAIM MATRIX RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} checks`);

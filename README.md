@@ -101,7 +101,7 @@ npm run start:http  # streamable HTTP (for Smithery/Railway)
 - `classify-my-system` - guided classification using `euaiact_classify_system` with signal inference
 - `compliance-checklist` - risk-level + role obligations checklist, including Annex IV for high-risk
 - `penalty-risk-assessment` - penalty calculation with SME comparative
-- `ground-citation` - retrieve article text + EUR-Lex URL for grounded citations
+- `ground-citation` - retrieve an operational summary + EUR-Lex URL, then verify definitive wording in the official source before quoting
 
 ## Knowledge Base
 
@@ -151,7 +151,7 @@ npm run dev:http     # HTTP dev server
 
 ## Disclaimer
 
-This MCP server is a structured information tool that returns references to and summaries of Regulation (EU) 2024/1689. It is **not Rechtsberatung im Sinne des § 2 RDG** and does not constitute legal advice in any jurisdiction. It cannot replace consultation with a qualified Rechtsanwalt or equivalent licensed professional. Use of this tool does not establish a lawyer-client relationship. For implementation support, visit [lexbeam.com/kontakt](https://lexbeam.com/kontakt).
+This MCP server is a structured information tool that returns references to and summaries of Regulation (EU) 2024/1689. It provides general information only and does not constitute legal advice. Whether a service falls within a national regulated legal-services regime must be verified against current official sources and, where necessary, with qualified local counsel. This tool cannot replace that review, and its use does not establish a lawyer-client relationship. For implementation support, visit [lexbeam.com/kontakt](https://lexbeam.com/kontakt).
 
 ## License
 

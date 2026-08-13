@@ -1,6 +1,6 @@
 // Direct function tests for the EU AI Act MCP server.
 // Run `npm run build` first so dist/ is up to date.
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { classifyInputSchema } from "./dist/schemas/classify.js";
 import { obligationsInputSchema } from "./dist/schemas/obligations.js";
@@ -1148,6 +1148,59 @@ console.log("\n📖 1.4.4 REGRESSIONS: ARTICLE CORPUS");
 
   const { SERVER_INSTRUCTIONS } = await import("./dist/constants.js");
   test("reuse wording: no bare public-domain claim in server instructions", !/public.domain/i.test(SERVER_INSTRUCTIONS) && /2011\/833\/EU/.test(SERVER_INSTRUCTIONS));
+}
+
+// ─── AUDITED TRUTH CORRECTIONS ─────────────────────────────────────────────
+console.log("\n🔒 AUDITED TRUTH CORRECTIONS");
+{
+  const bundle = readFileSync("dist/server.js", "utf8");
+  const readme = readFileSync("README.md", "utf8");
+  const changelog = readFileSync("CHANGELOG.md", "utf8");
+
+  test("truth M015: risk resource scopes Art. 50 by actor and paragraph",
+    bundle.includes("Art. 50 contains paragraph-specific duties") && bundle.includes("Apply the actor, scope, and exceptions in the relevant paragraph"));
+  test("truth M016: minimal label preserves independently triggered duties",
+    bundle.includes("No higher-tier obligation is identified from this risk label alone") && bundle.includes("Art. 4") && bundle.includes("Art. 95 codes of conduct are voluntary"));
+
+  const bb = prohibitedPractices.find((practice) => practice.id === "art5-1bb")?.description ?? "";
+  test("truth M029: Art. 5(1b) is limited to point (ba)",
+    bb.includes("Art. 5(1b) does not apply to point (bb)") && bb.includes("qualifies point (ba) only"));
+
+  const healthcare = faqDatabase.find((entry) => entry.id === "faq-15-healthcare")?.answer ?? "";
+  test("truth M063: healthcare answer requires an Art. 6 or Annex III route",
+    healthcare.includes("third-party-conformity") && healthcare.includes("Annex III(5)(d)") && healthcare.includes("not high-risk merely because"));
+
+  const penalties = faqDatabase.find((entry) => entry.id === "faq-16-penalties")?.answer ?? "";
+  test("truth M061: penalties answer limits the 15M tier to enumerated Art. 99(4) duties",
+    penalties.includes("violations enumerated in Art. 99(4)") && penalties.includes("small mid-caps only for paragraphs 4 and 5"));
+
+  const registration = faqDatabase.find((entry) => entry.id === "faq-19-registration")?.answer ?? "";
+  test("truth M062: registration answer is not a blanket high-risk rule",
+    registration.includes("except a system in Annex III point 2") && registration.includes("not a blanket registration rule"));
+
+  test("truth M064: disclaimer asks for official-source verification",
+    readme.includes("verified against current official sources") && readme.includes("qualified local counsel") && !readme.includes("not Rechtsberatung im Sinne"));
+  test("truth M073: historical backstop wording is corrected",
+    changelog.includes("makes both dates unconditional") && !changelog.includes("Both are backstop dates; a Commission decision"));
+  test("truth M074: changelog preserves the Art. 5 qualifier split",
+    changelog.includes("Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only"));
+  test("truth M078: changelog names the profiling block as the third subparagraph",
+    changelog.includes("profiling block (Art. 6(3), third subparagraph)"));
+
+  const annex = structured(await callTool("euaiact_annex_iv_checklist", { format: "checklist" }));
+  test("truth M080: Annex IV output labels implementation prompts as non-binding",
+    annex.guidance_note.includes("non-binding implementation prompts") && annex.checklist_markdown.includes(annex.guidance_note));
+
+  const a73 = articles.find((entry) => entry.number === "73")?.summary ?? "";
+  test("truth M082: Art. 73 two-day route carries the Art. 3(49)(b) threshold",
+    a73.includes("serious and irreversible disruption of the management or operation of critical infrastructure under Art. 3(49)(b)"));
+
+  const articleTool = readFileSync("dist/tools/article.js", "utf8");
+  test("truth grounding: article summaries cannot be quoted as statutory text",
+    articleTool.includes("The summary is not statutory text") &&
+    bundle.includes("Do not quote the summary as statutory text") &&
+    !articleTool.includes("quote article text with a link") &&
+    !bundle.includes("fetch the text and EUR-Lex URL"));
 }
 
 // ─── AGENT JOURNEYS (the ten end-to-end navigation tasks from 2026-08-06) ──

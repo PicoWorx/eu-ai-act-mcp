@@ -100,8 +100,8 @@ export function createServer(): McpServer {
           risk_levels: [
             { level: "prohibited", description: "Banned outright (Art. 5), including: social scoring, real-time remote biometric identification for law enforcement (with exceptions), manipulation of vulnerable groups, emotion recognition in workplace/education, untargeted facial scraping; from 2 December 2026 also the generation of non-consensual intimate imagery (Art. 5(1)(ba)) and CSAM (Art. 5(1)(bb)), added by the Digital Omnibus.", articles: ["Art. 5"] },
             { level: "high-risk", description: "Strict obligations (Art. 6, Annex III): biometrics, critical infrastructure, education, employment, essential services, law enforcement, migration, justice.", articles: ["Art. 6", "Annex III"] },
-            { level: "limited_risk", description: "Transparency obligations (Art. 50): chatbots, emotion recognition, deepfakes, AI-generated content must be disclosed.", articles: ["Art. 50"] },
-            { level: "minimal", description: "No specific obligations. Voluntary codes of conduct encouraged (Art. 95).", articles: ["Art. 95"] },
+            { level: "limited_risk", description: "Art. 50 contains paragraph-specific duties for providers of systems that interact directly with natural persons, providers marking synthetic audio, image, video, or text output in a machine-readable format, deployers of emotion-recognition or biometric-categorisation systems, and deployers disclosing deepfakes or specified public-interest text. Apply the actor, scope, and exceptions in the relevant paragraph.", articles: ["Art. 50"] },
+            { level: "minimal", description: "No higher-tier obligation is identified from this risk label alone. Art. 4 and any other independently triggered provisions still require separate review. Art. 95 codes of conduct are voluntary.", articles: ["Art. 4", "Art. 95"] },
           ],
           universal: { obligation: "Take measures to support the development of AI literacy (Art. 4 as replaced from 27 July 2026; no guaranteed level of literacy is required)", article: "Art. 4", applies_to: "all providers and deployers", enforceable_since: "2025-02-02" },
         }, null, 2),
@@ -147,7 +147,7 @@ export function createServer(): McpServer {
     "EU AI Act Annex IV - Technical Documentation",
     "euaiact://annex/iv",
     {
-      description: "Full Annex IV technical documentation requirements (items 1-9) that providers of high-risk AI systems must prepare under Art. 11. EUR-Lex content reused under Commission Decision 2011/833/EU conditions.",
+      description: "Nine Annex IV statutory headings and summaries for technical documentation under Art. 11, with separately labelled implementation prompts. The prompts do not create additional legal requirements. EUR-Lex content reused under Commission Decision 2011/833/EU conditions.",
       mimeType: "application/json",
     },
     async () => ({
@@ -160,6 +160,7 @@ export function createServer(): McpServer {
               annex: "IV",
               title: "Technical documentation referred to in Article 11(1)",
               items: annexIVItems,
+              guidance_note: "The item titles and descriptions summarise Annex IV. The sub_items are non-binding implementation prompts, not verbatim Annex IV text or additional legal requirements. Verify definitive wording in the linked official source.",
               relevant_articles: ["Art. 11"],
               eurlex_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#anx_IV",
             },
@@ -253,7 +254,7 @@ export function createServer(): McpServer {
 
   server.prompt(
     "ground-citation",
-    "Ground a citation to a specific EU AI Act article by retrieving the article text and EUR-Lex URL.",
+    "Ground a citation to a specific EU AI Act article by retrieving an operational summary and EUR-Lex URL, then verifying definitive wording in the official source.",
     {
       article: z.string().describe("Article number (e.g. '5', '50', '99')"),
     },
@@ -262,7 +263,7 @@ export function createServer(): McpServer {
         role: "user",
         content: {
           type: "text",
-          text: `Use the euaiact_get_article tool to fetch the text and EUR-Lex URL for Art. ${article}, then quote the relevant part and include the URL so the user can verify on eur-lex.europa.eu.`,
+          text: `Use the euaiact_get_article tool to fetch the operational summary and EUR-Lex URL for Art. ${article}. Do not quote the summary as statutory text. Follow the EUR-Lex URL, read the official provision, and quote only wording verified there. Include the URL so the user can verify it.`,
         },
       }],
     }),

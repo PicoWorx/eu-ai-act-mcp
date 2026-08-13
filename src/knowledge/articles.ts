@@ -230,7 +230,7 @@ export const articles: ArticleEntry[] = [
     number: "73",
     title: "Reporting of serious incidents",
     summary:
-      "Providers of high-risk AI systems placed on the Union market must report any serious incident to the market surveillance authorities of the Member States where that incident occurred. Reporting must be made immediately after the provider has established a causal link between the AI system and the serious incident or the reasonable likelihood of such a link, and, in any event, no later than 15 days after becoming aware. For incidents involving widespread infringement or affecting critical infrastructure, the reporting period is 2 days. For death of a person the period is 10 days. The provider and, where applicable, the deployer must cooperate with competent authorities and the Commission in any investigation.",
+      "Providers of high-risk AI systems placed on the Union market must report any serious incident to the market surveillance authorities of the Member States where that incident occurred. Reporting must be made immediately after the provider has established a causal link between the AI system and the serious incident or the reasonable likelihood of such a link, and, in any event, no later than 15 days after becoming aware. For a widespread infringement or a serious incident involving serious and irreversible disruption of the management or operation of critical infrastructure under Art. 3(49)(b), reporting must occur immediately and no later than 2 days after awareness. For death of a person the period is 10 days. The provider and, where applicable, the deployer must cooperate with competent authorities and the Commission in any investigation.",
     eurlex_url: anchor("73"),
     related_annexes: [],
   },
