@@ -72,6 +72,14 @@ export const classifySignalsSchema = z
       .boolean()
       .optional()
       .describe("System evaluates or classifies natural persons or groups over time based on social behaviour or personal/personality characteristics, leading to detrimental treatment (Art. 5(1)(c))"),
+    social_scoring_unrelated_context: z
+      .boolean()
+      .optional()
+      .describe("Social scoring leads to detrimental or unfavourable treatment in social contexts unrelated to the contexts in which the data was originally generated or collected (Art. 5(1)(c)(i))"),
+    social_scoring_unjustified_or_disproportionate: z
+      .boolean()
+      .optional()
+      .describe("Social scoring leads to detrimental or unfavourable treatment that is unjustified or disproportionate to the social behaviour or its gravity (Art. 5(1)(c)(ii))"),
     performs_social_scoring_by_public_authority: z
       .boolean()
       .optional()

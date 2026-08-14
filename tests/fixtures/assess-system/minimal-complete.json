@@ -127,6 +127,20 @@
       "origin": "explicit_structured_input",
       "verification": "caller_asserted",
       "evidence_reference_ids": []
+    },
+    "social_scoring_unrelated_context": {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "social_scoring_unjustified_or_disproportionate": {
+      "fact_id": "fact.practice.social-scoring.disproportionate",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
     }
   },
   "transparency": {

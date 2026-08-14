@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -65,6 +65,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.abstention.missing-facts.001",
+      "finding_basis": "tool_state_abstention",
       "block": "legal_classification",
       "summary": "Legal classification cannot be determined from the supplied decisive facts.",
       "scope": {
@@ -82,22 +83,20 @@
         "missing.intended-purpose",
         "missing.legal.jurisdiction"
       ],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Articles 5, 6 and 50, and Annexes I and III",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_6",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "undetermined",
       "reason_for_abstention": "One or more decisive legal predicates are missing. Guessing would create an unsupported legal conclusion."
     }
   ],
   "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.abstention.missing-facts.001"
+      ]
+    },
     {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",

@@ -7,8 +7,8 @@
         "format": "checklist",
         "sme_simplified": true
       },
-      "baseline_sha256": "5f9a4eedff102d94ffe97a00c655e69afa8559e16fc61fa513f8efcd5b62431e",
-      "baseline_bytes": 28912
+      "baseline_sha256": "8e2d76bf5c1f89eb15e58657590cb8b9f218da9a485f2ff245d6d41fb311cb1f",
+      "baseline_bytes": 29568
     },
     {
       "tool_name": "euaiact_answer_question",
@@ -68,16 +68,16 @@
           "domain": "employment"
         }
       },
-      "baseline_sha256": "f1a249e453bc71712fdcaad9138cebffe4a71ffce84bd6ff50f4db856d37b8dc",
-      "baseline_bytes": 3744
+      "baseline_sha256": "f8ab20ead5fd531ae9178600cb16373c8d8d4b034c0d61d055a1cab308975fca",
+      "baseline_bytes": 3928
     },
     {
       "tool_name": "euaiact_get_article",
       "input": {
         "article": "73"
       },
-      "baseline_sha256": "ed64dbe496220472988cc62c9a304822c9a10a5302fcad6d56937a7ada23793d",
-      "baseline_bytes": 2271
+      "baseline_sha256": "7b1a8b1e37f48d5ad5b74d92d538c729e822fe8547f325af0fb0ccaef11489f1",
+      "baseline_bytes": 2649
     },
     {
       "tool_name": "euaiact_get_obligations",
@@ -87,8 +87,8 @@
         "high_risk_source": "annex_iii",
         "annex_iii_point": 4
       },
-      "baseline_sha256": "9dc349248dbeba3e9f3e588f3656d59a0b8b9ef9db9cafd798c48487279e4fa3",
-      "baseline_bytes": 22365
+      "baseline_sha256": "987faee71404c1c3be00ff218bf3f123160956ede9e71c4808b0655a04285b18",
+      "baseline_bytes": 23007
     }
   ]
 }

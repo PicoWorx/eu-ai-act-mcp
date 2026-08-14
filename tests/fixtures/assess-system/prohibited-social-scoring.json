@@ -80,6 +80,13 @@
       "origin": "explicit_structured_input",
       "verification": "caller_asserted",
       "evidence_reference_ids": []
+    },
+    "social_scoring_unrelated_context": {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
     }
   }
 }

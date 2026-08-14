@@ -349,10 +349,20 @@ check("A-M080 Annex IV is the statutory minimum as applicable", "law",
 check("A-M080", "served", await (async () => {
   const h = toolHandler((await import("./dist/tools/annex-iv.js")).registerAnnexIvTool);
   const output = (await h({ format: "checklist" })).structuredContent;
-  return output.guidance_note.includes("non-binding implementation prompts") &&
-    output.guidance_note.includes("not verbatim Annex IV text or additional legal requirements") &&
+  return output.guidance_note === "The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph." &&
     output.checklist_markdown.includes(output.guidance_note) &&
-    SERVER_BUNDLE.includes("separately labelled implementation prompts");
+    SERVER_BUNDLE.includes(output.guidance_note);
+})());
+
+check("A-M081 Annex IV simplified form covers SMEs, start-ups and SMCs", "law",
+  inLaw("SMEs, including start-ups, and SMCs, may provide the elements of the technical documentation specified in Annex IV in a simplified manner") &&
+  inLaw("Where an SME, including a start-up, or an SMC, opts to provide the information required in Annex IV in a simplified manner, it shall use the form referred to in this paragraph"));
+check("A-M081", "served", await (async () => {
+  const h = toolHandler((await import("./dist/tools/annex-iv.js")).registerAnnexIvTool);
+  const output = (await h({ format: "checklist", sme_simplified: true })).structuredContent;
+  return output.guidance_note === "The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph." &&
+    output.sme_note === output.guidance_note &&
+    art("11")?.summary.includes("SMEs, including start-ups, and SMCs");
 })());
 
 check("A-M082 Art. 73 two-day route incorporates Art. 3(49)(b)", "law",
@@ -361,6 +371,15 @@ check("A-M082 Art. 73 two-day route incorporates Art. 3(49)(b)", "law",
 check("A-M082", "served",
   /serious and irreversible disruption of the management or operation of critical infrastructure under Art\. 3\(49\)\(b\).{0,100}(2|two) days/.test(art("73")?.summary ?? "") &&
   !/incidents involving widespread infringement or affecting critical infrastructure/.test(art("73")?.summary ?? ""));
+
+check("A-M083 Art. 73 provider investigation and Art. 26 deployer cooperation stay separate", "law",
+  ART73.includes("Following the reporting of a serious incident pursuant to paragraph 1, the provider shall, without delay, perform the necessary investigations") &&
+  ART73.includes("This shall include a risk assessment of the incident, and corrective action") &&
+  ART73.includes("where relevant with the notified body concerned") &&
+  inLaw("Deployers shall cooperate with the relevant competent authorities in any action those authorities take in relation to the high-risk AI system"));
+check("A-M083", "served",
+  art("73")?.summary.endsWith("Following a report, the provider must investigate, take corrective action, and cooperate with the competent authorities and, where relevant, the notified body under Article 73(6). Deployers have the separate Article 26(12) duty to cooperate with relevant competent authorities in actions concerning the high-risk system.") &&
+  !art("73")?.summary.includes("competent authorities and the Commission in any investigation"));
 
 check("A-GROUND operational summaries are not official statutory text", "law",
   inLaw("This text is meant purely as a documentation tool and has no legal effect") &&

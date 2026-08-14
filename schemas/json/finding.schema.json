@@ -14,6 +14,14 @@
               "maxLength": 160,
               "pattern": "^[a-z][a-z0-9._:-]*$"
             },
+            "finding_basis": {
+              "type": "string",
+              "enum": [
+                "legal_proposition",
+                "caller_supplied_impact",
+                "tool_state_abstention"
+              ]
+            },
             "block": {
               "type": "string",
               "enum": [
@@ -95,8 +103,19 @@
                     "type": "string",
                     "minLength": 1
                   },
+                  "instrument_status": {
+                    "type": "string",
+                    "const": "enacted"
+                  },
                   "source_id": {
                     "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+                  },
+                  "authority_source_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+                    },
+                    "minItems": 1
                   },
                   "official_url": {
                     "type": "string",
@@ -118,6 +137,7 @@
                     "type": "string",
                     "enum": [
                       "enacted_oj",
+                      "official_consolidated_snapshot_non_authentic",
                       "commission_proposal",
                       "political_agreement",
                       "adopted_pending_publication",
@@ -132,6 +152,7 @@
                     "type": "string",
                     "enum": [
                       "complete_official_text",
+                      "consolidated_snapshot_integrity_verified",
                       "official_metadata_only",
                       "curated_summary_only",
                       "unverified"
@@ -141,15 +162,16 @@
                 "required": [
                   "instrument_id",
                   "exact_provision",
+                  "instrument_status",
                   "source_id",
+                  "authority_source_ids",
                   "official_url",
                   "operative_date",
                   "source_status",
                   "verification_level"
                 ],
                 "additionalProperties": false
-              },
-              "minItems": 1
+              }
             },
             "determination": {
               "type": "string",
@@ -162,6 +184,7 @@
           },
           "required": [
             "finding_id",
+            "finding_basis",
             "block",
             "summary",
             "scope",
@@ -178,6 +201,9 @@
           "properties": {
             "finding_id": {
               "$ref": "#/definitions/Finding/anyOf/0/properties/finding_id"
+            },
+            "finding_basis": {
+              "$ref": "#/definitions/Finding/anyOf/0/properties/finding_basis"
             },
             "block": {
               "$ref": "#/definitions/Finding/anyOf/0/properties/block"
@@ -211,6 +237,7 @@
           },
           "required": [
             "finding_id",
+            "finding_basis",
             "block",
             "summary",
             "scope",

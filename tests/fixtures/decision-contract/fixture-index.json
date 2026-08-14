@@ -1,77 +1,114 @@
 {
-  "fixture_set": "eu-ai-act-decision-contract-1.0",
+  "fixture_set": "eu-ai-act-decision-contract-1.1",
   "fixtures": [
     {
       "file": "profile-high-risk.json",
       "schema": "schemas/json/system-profile.schema.json",
       "expected": "valid",
-      "covers": ["normalized-profile", "explicit-facts", "high-risk"]
+      "covers": [
+        "normalized-profile",
+        "explicit-facts",
+        "high-risk"
+      ]
     },
     {
       "file": "response-high-risk.json",
       "schema": "schemas/json/assess-system-response.schema.json",
       "expected": "valid",
-      "covers": ["three-blocks", "field-provenance", "readiness-gap"]
+      "covers": [
+        "three-blocks",
+        "field-provenance",
+        "readiness-gap"
+      ]
     },
     {
       "file": "profile-sparse.json",
       "schema": "schemas/json/system-profile.schema.json",
       "expected": "valid",
-      "covers": ["sparse-input"]
+      "covers": [
+        "sparse-input"
+      ]
     },
     {
       "file": "response-decisive-missing-fact.json",
       "schema": "schemas/json/assess-system-response.schema.json",
       "expected": "valid",
-      "covers": ["decisive-missing-fact", "abstention", "undetermined"]
+      "covers": [
+        "decisive-missing-fact",
+        "abstention",
+        "undetermined"
+      ]
     },
     {
       "file": "profile-not-applicable.json",
       "schema": "schemas/json/system-profile.schema.json",
       "expected": "valid",
-      "covers": ["evidence-linked-fact", "definition-boundary"]
+      "covers": [
+        "evidence-linked-fact",
+        "definition-boundary"
+      ]
     },
     {
-      "file": "response-not-date-bound.json",
+      "file": "response-definition-application-date.json",
       "schema": "schemas/json/assess-system-response.schema.json",
       "expected": "valid",
-      "covers": ["not-date-bound", "not-applicable"]
+      "covers": [
+        "definition-application-date",
+        "not-applicable"
+      ]
     },
     {
       "file": "legacy-classify-1.4.5-output.json",
       "schema": "src/schemas/classify.ts#classifyOutputSchema",
       "expected": "valid",
-      "covers": ["legacy-classify-baseline"]
+      "covers": [
+        "legacy-classify-baseline"
+      ]
     },
     {
       "file": "additive-classify-1.5-output.json",
       "schema": "legacy-classify-plus-decision-envelope",
       "expected": "valid",
-      "covers": ["additive-output", "legacy-confidence-string-only"]
+      "covers": [
+        "additive-output",
+        "legacy-confidence-string-only"
+      ]
     },
     {
       "file": "legacy-obligations-1.4.5-output.json",
       "schema": "src/schemas/obligations.ts#obligationsOutputSchema",
       "expected": "valid",
-      "covers": ["legacy-obligations-baseline"]
+      "covers": [
+        "legacy-obligations-baseline"
+      ]
     },
     {
       "file": "additive-obligations-1.5-output.json",
       "schema": "legacy-obligations-plus-decision-envelope",
       "expected": "valid",
-      "covers": ["additive-output", "legacy-field-equality"]
+      "covers": [
+        "additive-output",
+        "legacy-field-equality"
+      ]
     },
     {
       "file": "artifact-manifest.json",
       "schema": "schemas/json/artifact-manifest.schema.json",
       "expected": "valid",
-      "covers": ["b3-reproducibility", "source-date-epoch"]
+      "covers": [
+        "b3-reproducibility",
+        "source-date-epoch"
+      ]
     },
     {
       "file": "lawpatch-manifest.json",
       "schema": "schemas/json/lawpatch-manifest.schema.json",
       "expected": "valid",
-      "covers": ["lawpatch-v0.1", "ed25519", "oscal-mapping"]
+      "covers": [
+        "lawpatch-v0.1",
+        "ed25519",
+        "oscal-mapping"
+      ]
     }
   ]
 }

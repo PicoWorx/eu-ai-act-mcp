@@ -5,15 +5,20 @@
     "number": 4,
     "name": "Employment, workers management and access to self-employment"
   },
-  "relevant_articles": ["Art. 6(2)", "Annex III(4)"],
+  "relevant_articles": [
+    "Art. 6(2)",
+    "Annex III(4)"
+  ],
   "role_determination": "provider",
   "obligations_summary": "Provider obligations for high-risk AI systems may apply.",
   "caveat": null,
-  "matched_signals": ["employment"],
+  "matched_signals": [
+    "employment"
+  ],
   "missing_signals": [],
   "next_questions": [],
   "basis": "signals",
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -21,7 +26,9 @@
     "sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
     "verified_at": "2026-08-06",
     "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
-    "source_snapshot_ids": ["source.oj.2024.1689.consolidated.20260727"]
+    "source_snapshot_ids": [
+      "source.oj.2024.1689.consolidated.20260727"
+    ]
   },
   "status": "determined",
   "facts_used": [
@@ -42,11 +49,17 @@
       "block": "legal_classification",
       "summary": "The supplied employment-domain signal routes to Annex III point 4.",
       "scope": {
-        "actors": ["provider"],
-        "jurisdictions": ["EU"],
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
         "system_scope": "Atomic classifier input"
       },
-      "fact_ids": ["fact.classify.domain"],
+      "fact_ids": [
+        "fact.classify.domain"
+      ],
       "assumption_ids": [],
       "missing_fact_ids": [],
       "provenance": [
@@ -56,26 +69,44 @@
           "source_id": "source.oj.2024.1689.consolidated.20260727",
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#anx_III",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified",
+          "instrument_status": "enacted",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ]
         }
       ],
-      "determination": "applies"
+      "determination": "applies",
+      "finding_basis": "legal_proposition"
     }
   ],
   "warnings": [
     {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.high-risk.employment.legacy-001"
+      ]
+    },
+    {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
       "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
-      "finding_ids": ["finding.legal.high-risk.employment.legacy-001"]
+      "finding_ids": [
+        "finding.legal.high-risk.employment.legacy-001"
+      ]
     }
   ],
   "recommended_next_calls": [
     {
       "tool_name": "euaiact_get_obligations",
       "reason": "Retrieve provider obligations for this atomic classification.",
-      "input_fact_ids": ["fact.classify.domain"]
+      "input_fact_ids": [
+        "fact.classify.domain"
+      ]
     }
   ]
 }

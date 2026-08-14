@@ -4,10 +4,7 @@
  * Source: Regulation (EU) 2024/1689, Annex IV. EUR-Lex content reused under the conditions of
  * Commission Decision 2011/833/EU.
  *
- * The nine titles and descriptions summarise Annex IV. `sub_items` are
- * non-binding implementation prompts. They are not verbatim Annex IV text and
- * do not create additional legal requirements. SMEs may provide the statutory
- * Annex IV elements in a simplified form under Art. 11(1).
+ * The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph.
  */
 
 export interface AnnexIVItem {

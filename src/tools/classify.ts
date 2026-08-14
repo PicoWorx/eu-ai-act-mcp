@@ -34,6 +34,8 @@ const ALL_SIGNAL_KEYS: Array<keyof ClassifySignals> = [
   "interacts_with_natural_persons",
   "performs_emotion_recognition_workplace_or_school",
   "performs_social_scoring",
+  "social_scoring_unrelated_context",
+  "social_scoring_unjustified_or_disproportionate",
   "performs_social_scoring_by_public_authority",
 ];
 
@@ -56,6 +58,8 @@ const ROUTE_DETERMINATIVE_SIGNAL_KEYS: Array<keyof ClassifySignals> = [
   "interacts_with_natural_persons",
   "performs_emotion_recognition_workplace_or_school",
   "performs_social_scoring",
+  "social_scoring_unrelated_context",
+  "social_scoring_unjustified_or_disproportionate",
 ];
 
 const SIGNAL_QUESTIONS: Record<keyof ClassifySignals, string> = {
@@ -74,6 +78,8 @@ const SIGNAL_QUESTIONS: Record<keyof ClassifySignals, string> = {
   interacts_with_natural_persons: "Is the system designed to interact directly with natural persons (e.g., as a chatbot or voice assistant)?",
   performs_emotion_recognition_workplace_or_school: "Does the system infer emotions of natural persons in the workplace or in educational institutions?",
   performs_social_scoring: "Does the system evaluate or classify people over time based on social behaviour or personal/personality traits, leading to detrimental treatment?",
+  social_scoring_unrelated_context: "Does the social score lead to detrimental or unfavourable treatment in a context unrelated to the context in which the data was generated or collected?",
+  social_scoring_unjustified_or_disproportionate: "Does the social score lead to detrimental or unfavourable treatment that is unjustified or disproportionate to the behaviour or its gravity?",
   performs_social_scoring_by_public_authority: "Legacy signal: is the system used by or on behalf of a public authority to score natural persons?",
 };
 
@@ -268,11 +274,46 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
 
   // Prohibited practices (Art. 5) - highest priority
   if (s.performs_social_scoring || s.performs_social_scoring_by_public_authority) {
+    const hasStatutoryTreatmentLimb =
+      s.social_scoring_unrelated_context === true ||
+      s.social_scoring_unjustified_or_disproportionate === true;
+    if (!hasStatutoryTreatmentLimb) {
+      const missingLimbSignals = [
+        s.social_scoring_unrelated_context === undefined
+          ? "social_scoring_unrelated_context"
+          : null,
+        s.social_scoring_unjustified_or_disproportionate === undefined
+          ? "social_scoring_unjustified_or_disproportionate"
+          : null,
+      ].filter((value): value is string => value !== null);
+      return insufficientFromSignals({
+        matched: ["social-scoring predicate supplied without an Article 5(1)(c) treatment limb"],
+        missing: missingLimbSignals,
+        role,
+        relevantArticles: ["Art. 5(1)(c)"],
+        obligationsSummary:
+          "Social scoring alone does not establish the Article 5(1)(c) prohibition. Determine whether the resulting detrimental or unfavourable treatment occurs in an unrelated context under point (i), or is unjustified or disproportionate under point (ii).",
+        caveat:
+          "The Article 5(1)(c) conclusion is withheld until at least one statutory detrimental-treatment limb is supplied as true.",
+        nextQuestions: [
+          SIGNAL_QUESTIONS.social_scoring_unrelated_context,
+          SIGNAL_QUESTIONS.social_scoring_unjustified_or_disproportionate,
+        ],
+      });
+    }
     matched.push(
       s.performs_social_scoring
         ? "performs_social_scoring → Art. 5(1)(c)"
         : "performs_social_scoring_by_public_authority → Art. 5(1)(c)",
     );
+    if (s.social_scoring_unrelated_context) {
+      matched.push("social_scoring_unrelated_context → Art. 5(1)(c)(i)");
+    }
+    if (s.social_scoring_unjustified_or_disproportionate) {
+      matched.push(
+        "social_scoring_unjustified_or_disproportionate → Art. 5(1)(c)(ii)",
+      );
+    }
     return {
       ...buildBase({
         risk_classification: "prohibited",

@@ -19,6 +19,7 @@ import {
   CONSOLIDATED_URL,
   SEALED_CORPUS,
 } from "./corpus.js";
+import { DECISION_CONTRACT_VERSION } from "./shared.js";
 
 type FactUsed = AssessSystemResponse["facts_used"][number];
 type MissingFact = AssessSystemResponse["missing_facts"][number];
@@ -28,8 +29,19 @@ type ActorRole = Finding["scope"]["actors"][number];
 type LegalRoute = AssessSystemResponse["legal_classification"]["routes"][number]["route"];
 type Provenance = Finding["provenance"][number];
 
-const SOURCE_STATUS = "enacted_oj" as const;
-const VERIFICATION_LEVEL = "complete_official_text" as const;
+const SOURCE_STATUS = "official_consolidated_snapshot_non_authentic" as const;
+const VERIFICATION_LEVEL = "consolidated_snapshot_integrity_verified" as const;
+const AUTHORITY_SOURCE_IDS = [
+  "source.oj.2024.1689.original",
+  "source.oj.2026.1744",
+] as const;
+
+const TERRITORIAL_SCOPE_LIMITATION =
+  "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately.";
+const HIGH_RISK_DATE_LIMITATION =
+  "The stated date is the general application date for the statutory route. It does not determine the treatment of a system already placed on the market or put into service. Apply Article 111 to the system's market date, type, model and later design changes.";
+const BOUNDED_NEGATIVE_LIMITATION =
+  "No route was identified among the predicates explicitly supplied and tested. This is a bounded routing result, not a determination that the Regulation is inapplicable or that no other Union or national rule applies. Missing, untested, or inaccurate facts can change the result.";
 
 const BLOCK_ORDER = {
   legal_classification: 0,
@@ -91,7 +103,9 @@ function provenance(
   return {
     instrument_id: "regulation-eu-2024-1689",
     exact_provision: exactProvision,
+    instrument_status: "enacted",
     source_id: CONSOLIDATED_SOURCE_ID,
+    authority_source_ids: [...AUTHORITY_SOURCE_IDS],
     official_url: `${CONSOLIDATED_URL}#${anchor}`,
     operative_date: operativeDate,
     source_status: SOURCE_STATUS,
@@ -262,6 +276,10 @@ function buildClassifierInput(profile: SystemProfile, actors: ActorRole[]) {
       performs_emotion_recognition_workplace_or_school:
         practices?.emotion_recognition_workplace_or_education?.value,
       performs_social_scoring: practices?.social_scoring?.value,
+      social_scoring_unrelated_context:
+        practices?.social_scoring_unrelated_context?.value,
+      social_scoring_unjustified_or_disproportionate:
+        practices?.social_scoring_unjustified_or_disproportionate?.value,
     },
   };
 }
@@ -306,6 +324,7 @@ interface LegalResult {
   route_fact_ids: string[];
   high_risk_source?: "annex_i" | "annex_iii";
   annex_iii_point?: number;
+  gpai_systemic_risk?: boolean;
 }
 
 async function assessLegalClassification(
@@ -321,6 +340,7 @@ async function assessLegalClassification(
     const findingId = "finding.legal.ai-system-definition.001";
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary:
         "The supplied definition fact does not establish an AI system within Article 3(1).",
@@ -332,7 +352,7 @@ async function assessLegalClassification(
       fact_ids: [negativeDefinitionFact.fact_id],
       assumption_ids: [],
       missing_fact_ids: [],
-      provenance: [provenance("Article 3(1)", "not_date_bound", "art_3")],
+      provenance: [provenance("Article 3(1)", "2025-02-02", "art_3")],
       determination: "does_not_apply",
     });
     return {
@@ -347,6 +367,7 @@ async function assessLegalClassification(
         finding_ids: [findingId],
         limitations: [
           "This non-applicability result is bounded to the supplied AI-system definition fact.",
+          TERRITORIAL_SCOPE_LIMITATION,
         ],
       },
     };
@@ -442,6 +463,22 @@ async function assessLegalClassification(
       affected_blocks: ["legal_classification", "implementation_readiness"],
     });
   }
+  if (
+    practices?.social_scoring?.value === true &&
+    practices.social_scoring_unrelated_context?.value !== true &&
+    practices.social_scoring_unjustified_or_disproportionate?.value !== true
+  ) {
+    addMissing(context, {
+      missing_fact_id: "missing.social-scoring.treatment-limb",
+      profile_path: "/biometric_and_practices",
+      question:
+        "Does the social score cause detrimental or unfavourable treatment in an unrelated context, or treatment that is unjustified or disproportionate?",
+      reason:
+        "Article 5(1)(c) requires at least one of its two detrimental-treatment limbs in addition to social scoring.",
+      decisive: true,
+      affected_blocks: ["legal_classification", "implementation_readiness"],
+    });
+  }
   if (!directPositive && purposeFacts.length === 0) {
     addMissing(context, {
       missing_fact_id: "missing.intended-purpose",
@@ -472,6 +509,7 @@ async function assessLegalClassification(
     const findingId = "finding.legal.abstention.missing-facts.001";
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "tool_state_abstention",
       block: "legal_classification",
       summary: "Legal classification cannot be determined from the supplied decisive facts.",
       scope: {
@@ -482,13 +520,7 @@ async function assessLegalClassification(
       fact_ids: abstentionFactIds,
       assumption_ids: [],
       missing_fact_ids: missingIds,
-      provenance: [
-        provenance(
-          "Articles 5, 6 and 50, and Annexes I and III",
-          "not_date_bound",
-          "art_6",
-        ),
-      ],
+      provenance: [],
       determination: "undetermined",
       reason_for_abstention:
         "One or more decisive legal predicates are missing. Guessing would create an unsupported legal conclusion.",
@@ -573,6 +605,7 @@ async function assessLegalClassification(
     const findingId = `finding.legal.prohibited.${slug(exactProvision)}.001`;
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary:
         "The existing Article 5 classifier identifies a prohibited-practice route from the supplied facts.",
@@ -629,6 +662,7 @@ async function assessLegalClassification(
     }.001`;
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary:
         "The existing Article 6 classifier identifies a high-risk route from the supplied facts.",
@@ -646,6 +680,9 @@ async function assessLegalClassification(
           operativeDate,
           highRiskSource === "annex_i" ? "art_6" : "anx_III",
         ),
+        ...(highRiskSource === "annex_i"
+          ? [provenance("Article 6(1a) to (1c)", operativeDate, "art_6")]
+          : []),
       ],
       determination: "applies",
     });
@@ -736,6 +773,7 @@ async function assessLegalClassification(
     )}`;
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary: trigger.summary,
       scope: {
@@ -769,10 +807,12 @@ async function assessLegalClassification(
   }
 
   const gpaiFact = factAt(context.normalized, "/gpai/is_gpai_model");
+  let gpaiSystemicRisk = false;
   if (gpaiFact?.value === true) {
     const findingId = "finding.legal.gpai.model.001";
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary:
         "The supplied fact identifies a general-purpose AI model route. This does not classify a downstream AI system.",
@@ -784,11 +824,54 @@ async function assessLegalClassification(
       fact_ids: sortStrings([gpaiFact.fact_id, ...scopeFactIds(context.normalized)]),
       assumption_ids: [],
       missing_fact_ids: [],
-      provenance: [provenance("Article 3(63) and Chapter V", "not_date_bound", "art_51")],
+      provenance: [provenance("Article 3(63)", "2025-02-02", "art_3")],
       determination: "applies",
     });
-    routes.push({ route: "gpai", finding_ids: [findingId], actor_roles: context.actors });
+    const gpaiFindingIds = [findingId];
     legalFindingIds.push(findingId);
+    const systemic = await invokeGpaiSystemic({
+      model_name: profile.gpai?.model_name?.value,
+      training_flops: profile.gpai?.training_flops?.value,
+      commission_designated: profile.gpai?.commission_designated_systemic_risk?.value,
+    });
+    if (systemic.is_gpai_with_systemic_risk === true) {
+      gpaiSystemicRisk = true;
+      const systemicFindingId = "finding.legal.gpai.systemic-risk.001";
+      const systemicFactIds = factsUnder(context.normalized, "/gpai")
+        .filter(
+          (fact) =>
+            fact.profile_path.endsWith("/training_flops") ||
+            fact.profile_path.endsWith("/commission_designated_systemic_risk"),
+        )
+        .map((fact) => fact.fact_id);
+      const thresholdBasis = systemic.crosses_flops_threshold === true;
+      addFinding(context, {
+        finding_id: systemicFindingId,
+        finding_basis: "legal_proposition",
+        block: "legal_classification",
+        summary: thresholdBasis
+          ? "Training compute above 10^25 FLOPs creates the Article 51(2) presumption of high-impact capabilities. Classification remains subject to the Article 52 procedure, including the provider's exceptional substantiated rebuttal route and the Commission's decision."
+          : "The supplied fact records a Commission designation of the model as a GPAI model with systemic risk under Article 51(1)(b).",
+        scope: {
+          actors: context.actors,
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([...systemicFactIds, ...scopeFactIds(context.normalized)]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: thresholdBasis
+          ? [
+              provenance("Article 51(2)", "2025-08-02", "art_51"),
+              provenance("Article 52(2)", "2025-08-02", "art_52"),
+            ]
+          : [provenance("Article 51(1)(b)", "2025-08-02", "art_51")],
+        determination: "applies",
+      });
+      gpaiFindingIds.push(systemicFindingId);
+      legalFindingIds.push(systemicFindingId);
+    }
+    routes.push({ route: "gpai", finding_ids: gpaiFindingIds, actor_roles: context.actors });
     addRecommendation(context, {
       tool_name: "euaiact_check_gpai_systemic_risk",
       reason: "Assess the separate GPAI systemic-risk route from compute or designation facts.",
@@ -804,9 +887,10 @@ async function assessLegalClassification(
     const findingId = "finding.legal.minimal.bounded.001";
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "legal_classification",
       summary:
-        "No Article 5, Article 6, Annex I, Annex III, or Article 50 route was identified from the complete supplied exclusion facts. Minimal is a bounded routing label, not statutory text.",
+        BOUNDED_NEGATIVE_LIMITATION,
       scope: {
         actors: context.actors,
         jurisdictions: context.jurisdictions,
@@ -816,11 +900,13 @@ async function assessLegalClassification(
       assumption_ids: [],
       missing_fact_ids: [],
       provenance: [
-        provenance(
-          "Articles 5, 6, 50 and 95, and Annexes I and III",
-          "not_date_bound",
-          "art_95",
-        ),
+        provenance("Article 5(1)(c)", "2025-02-02", "art_5"),
+        provenance("Article 5(1)(f)", "2025-02-02", "art_5"),
+        provenance("Article 5(1)(h)", "2025-02-02", "art_5"),
+        provenance("Article 6(1) and Annex I", "2028-08-02", "art_6"),
+        provenance("Article 6(2) and Annex III", "2027-12-02", "art_6"),
+        provenance("Article 50(1)", "2026-08-02", "art_50"),
+        provenance("Article 50(2)", "2026-08-02", "art_50"),
       ],
       determination: "does_not_apply",
     });
@@ -848,6 +934,7 @@ async function assessLegalClassification(
     const findingId = "finding.legal.abstention.classification-context.001";
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "tool_state_abstention",
       block: "legal_classification",
       summary: "The existing classifier did not resolve a legal route.",
       scope: {
@@ -858,13 +945,7 @@ async function assessLegalClassification(
       fact_ids: allLegalFactIds,
       assumption_ids: [],
       missing_fact_ids: ["missing.classification-context"],
-      provenance: [
-        provenance(
-          "Articles 5, 6 and 50, and Annexes I and III",
-          "not_date_bound",
-          "art_6",
-        ),
-      ],
+      provenance: [],
       determination: "undetermined",
       reason_for_abstention:
         "The supplied facts do not satisfy a decisive route and are not complete enough for the bounded minimal route.",
@@ -894,6 +975,7 @@ async function assessLegalClassification(
     route_fact_ids: allLegalFactIds,
     high_risk_source: highRiskSource,
     annex_iii_point: annexPoint,
+    gpai_systemic_risk: gpaiSystemicRisk,
     block: {
       schema_version: "1.0",
       status: "determined",
@@ -903,6 +985,13 @@ async function assessLegalClassification(
       finding_ids: sortStrings(legalFindingIds),
       limitations: [
         "Routes are independent. Impact and implementation readiness are reported separately.",
+        TERRITORIAL_SCOPE_LIMITATION,
+        ...(routes.some((route) => route.route === "high_risk")
+          ? [HIGH_RISK_DATE_LIMITATION]
+          : []),
+        ...(routes.some((route) => route.route === "minimal")
+          ? [BOUNDED_NEGATIVE_LIMITATION]
+          : []),
         ...legalLimitations,
       ],
     },
@@ -1088,6 +1177,7 @@ function assessImpact(
   const findingId = "finding.impact.supplied-context.001";
   addFinding(context, {
     finding_id: findingId,
+    finding_basis: "caller_supplied_impact",
     block: "impact",
     summary: inherentDescription,
     scope: {
@@ -1098,7 +1188,7 @@ function assessImpact(
     fact_ids: impactFactIds,
     assumption_ids: [],
     missing_fact_ids: [],
-    provenance: [provenance("Article 1(1)", "not_date_bound", "art_1")],
+    provenance: [],
     determination: "applies",
   });
 
@@ -1230,6 +1320,17 @@ async function assessReadiness(
     category: string;
   }> = [];
   const routes = routeNames;
+  const triggeredArticle50Paragraphs = new Set(
+    context.findings
+      .filter(
+        (finding) =>
+          finding.block === "legal_classification" &&
+          legal.block.finding_ids.includes(finding.finding_id),
+      )
+      .flatMap((finding) => finding.provenance)
+      .map((entry) => entry.exact_provision.match(/Article 50\((\d)\)/)?.[1])
+      .filter((paragraph): paragraph is string => paragraph !== undefined),
+  );
 
   for (const actor of supportedActors) {
     const atomicRole = actor === "provider" || actor === "deployer" ? actor : null;
@@ -1256,15 +1357,21 @@ async function assessReadiness(
         risk_level: "limited",
         high_risk_source: "unknown",
       });
-      output.obligations.forEach((duty) =>
-        dutyInputs.push({
-          actor,
-          title: duty.obligation,
-          article: duty.article,
-          deadline: duty.deadline,
-          category: duty.category,
-        }),
-      );
+      output.obligations.forEach((duty) => {
+        const paragraph = duty.article.match(/Art\. 50\((\d)\)/)?.[1];
+        if (
+          duty.article === "Art. 4" ||
+          (paragraph && triggeredArticle50Paragraphs.has(paragraph))
+        ) {
+          dutyInputs.push({
+            actor,
+            title: duty.obligation,
+            article: duty.article,
+            deadline: duty.deadline,
+            category: duty.category,
+          });
+        }
+      });
     }
     if (routes.has("minimal") && atomicRole) {
       const output = await invokeObligations({
@@ -1291,17 +1398,11 @@ async function assessReadiness(
         gpai_model_placed_on_market_before_2025_08_02:
           modelDate !== undefined ? modelDate < "2025-08-02" : undefined,
       });
-      const systemic = await invokeGpaiSystemic({
-        model_name: context.normalized.profile.gpai?.model_name?.value,
-        training_flops: context.normalized.profile.gpai?.training_flops?.value,
-        commission_designated:
-          context.normalized.profile.gpai?.commission_designated_systemic_risk?.value,
-      });
       output.obligations
         .filter(
           (duty) =>
             !duty.article.startsWith("Art. 55") ||
-            systemic.is_gpai_with_systemic_risk === true,
+            legal.gpai_systemic_risk === true,
         )
         .forEach((duty) =>
           dutyInputs.push({
@@ -1316,10 +1417,15 @@ async function assessReadiness(
   }
 
   if (hasProhibited) {
+    const exactProhibitedProvision = context.findings
+      .find((finding) => legal.block.routes.some(
+        (route) => route.route === "prohibited" && route.finding_ids.includes(finding.finding_id),
+      ))
+      ?.provenance[0]?.exact_provision ?? "Article 5";
     dutyInputs.push({
       actor: context.actors[0] ?? "unknown",
       title: "Do not deploy or place the prohibited practice on the market",
-      article: "Article 5",
+      article: exactProhibitedProvision,
       deadline: legal.classification?.relevant_articles.some((article) => /\(ba\)|\(bb\)/.test(article))
         ? "2026-12-02"
         : "2025-02-02",
@@ -1398,6 +1504,7 @@ async function assessReadiness(
     const findingFactIds = sortStrings([...legal.route_fact_ids, ...roleFactIds]);
     addFinding(context, {
       finding_id: findingId,
+      finding_basis: "legal_proposition",
       block: "implementation_readiness",
       summary: `${duty.title} is selected from the existing obligations tool; supplied evidence state is ${evidenceState}.`,
       scope: {
@@ -1485,8 +1592,9 @@ async function assessReadiness(
     owners,
     finding_ids: sortStrings(findingIds),
     limitations: [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
       "This output is not certification, approval, or regulatory assurance.",
+      ...(routes.has("high_risk") ? [HIGH_RISK_DATE_LIMITATION] : []),
     ],
     is_regulatory_approval: false,
   };
@@ -1550,6 +1658,13 @@ export async function assessSystem(input: unknown): Promise<AssessSystemResponse
       "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
     finding_ids: sortStrings(context.findings.map((finding) => finding.finding_id)),
   });
+  context.warnings.push({
+    warning_id: "warning.non-binding-source.001",
+    code: "NON_BINDING_SOURCE",
+    message:
+      "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+    finding_ids: sortStrings(context.findings.map((finding) => finding.finding_id)),
+  });
   sortResponse(context);
 
   const missingFacts = [...context.missing.values()].sort(
@@ -1573,7 +1688,7 @@ export async function assessSystem(input: unknown): Promise<AssessSystemResponse
         : "determined";
 
   const response: AssessSystemResponse = {
-    contract_version: "1.0",
+    contract_version: DECISION_CONTRACT_VERSION,
     server_version: SERVER_VERSION,
     corpus: SEALED_CORPUS,
     status,

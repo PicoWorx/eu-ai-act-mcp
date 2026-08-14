@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -57,6 +57,14 @@
       "evidence_reference_ids": []
     },
     {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "profile_path": "/biometric_and_practices/social_scoring_unrelated_context",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
       "fact_id": "fact.role.deployer",
       "profile_path": "/role_facts/roles/0",
       "value": "deployer",
@@ -78,6 +86,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.prohibited.art.5.1.c.001",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "The existing Article 5 classifier identifies a prohibited-practice route from the supplied facts.",
       "scope": {
@@ -92,6 +101,7 @@
       "fact_ids": [
         "fact.geography.eu",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.role.deployer",
         "fact.use.social-scoring.purpose"
       ],
@@ -101,17 +111,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Article 5(1)(c)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
           "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
       "block": "impact",
       "summary": "The supplied consequence is: May restrict access to a public service based on the score.",
       "scope": {
@@ -127,25 +143,17 @@
         "fact.decision.social-scoring.consequence",
         "fact.decision.social-scoring.material",
         "fact.group.social-scoring",
-        "fact.practice.social-scoring"
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
       ],
       "assumption_ids": [],
       "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 1(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "applies"
     },
     {
-      "finding_id": "finding.readiness.duty.deployer.article.5.prohibited.practice",
+      "finding_id": "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Do not deploy or place the prohibited practice on the market is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -160,6 +168,7 @@
       "fact_ids": [
         "fact.geography.eu",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.role.deployer",
         "fact.use.social-scoring.purpose"
       ],
@@ -168,12 +177,17 @@
       "provenance": [
         {
           "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 5",
+          "exact_provision": "Article 5(1)(c)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
           "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
@@ -189,13 +203,23 @@
       ]
     },
     {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.prohibited.art.5.1.c.001",
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+      ]
+    },
+    {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
       "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.prohibited.art.5.1.c.001",
-        "finding.readiness.duty.deployer.article.5.prohibited.practice"
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
       ]
     },
     {
@@ -205,7 +229,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.prohibited.art.5.1.c.001",
-        "finding.readiness.duty.deployer.article.5.prohibited.practice"
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
       ]
     }
   ],
@@ -216,6 +240,7 @@
       "input_fact_ids": [
         "fact.geography.eu",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.role.deployer",
         "fact.use.social-scoring.purpose"
       ]
@@ -243,7 +268,8 @@
       "finding.legal.prohibited.art.5.1.c.001"
     ],
     "limitations": [
-      "Routes are independent. Impact and implementation readiness are reported separately."
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
     ]
   },
   "impact": {
@@ -261,7 +287,8 @@
         "fact.decision.social-scoring.consequence",
         "fact.decision.social-scoring.material",
         "fact.group.social-scoring",
-        "fact.practice.social-scoring"
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
       ]
     },
     "relevant_affected_groups": [
@@ -286,7 +313,8 @@
         "fact.decision.social-scoring.consequence",
         "fact.decision.social-scoring.material",
         "fact.group.social-scoring",
-        "fact.practice.social-scoring"
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
       ]
     },
     "finding_ids": [
@@ -304,27 +332,27 @@
     "readiness_state": "evidence_missing",
     "applicable_duties": [
       {
-        "duty_id": "duty.deployer.article.5.prohibited.practice",
+        "duty_id": "duty.deployer.article.5.1.c.prohibited.practice",
         "title": "Do not deploy or place the prohibited practice on the market",
         "actor_roles": [
           "deployer"
         ],
-        "exact_provision": "Article 5",
+        "exact_provision": "Article 5(1)(c)",
         "operative_date": "2025-02-02",
         "evidence_state": "missing",
         "owner_ids": [
           "owner.unassigned"
         ],
         "finding_ids": [
-          "finding.readiness.duty.deployer.article.5.prohibited.practice"
+          "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
         ]
       }
     ],
     "evidence_status": [
       {
-        "evidence_id": "evidence.missing.duty.deployer.article.5.prohibited.practice",
+        "evidence_id": "evidence.missing.duty.deployer.article.5.1.c.prohibited.practice",
         "duty_ids": [
-          "duty.deployer.article.5.prohibited.practice"
+          "duty.deployer.article.5.1.c.prohibited.practice"
         ],
         "state": "missing",
         "note": "No evidence reference was matched to this duty in the supplied profile."
@@ -332,9 +360,9 @@
     ],
     "control_gaps": [
       {
-        "gap_id": "gap.duty.deployer.article.5.prohibited.practice",
+        "gap_id": "gap.duty.deployer.article.5.1.c.prohibited.practice",
         "duty_ids": [
-          "duty.deployer.article.5.prohibited.practice"
+          "duty.deployer.article.5.1.c.prohibited.practice"
         ],
         "description": "Supply documented evidence for Do not deploy or place the prohibited practice on the market.",
         "owner_ids": [
@@ -351,10 +379,10 @@
       }
     ],
     "finding_ids": [
-      "finding.readiness.duty.deployer.article.5.prohibited.practice"
+      "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
     ],
     "limitations": [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
       "This output is not certification, approval, or regulatory assurance."
     ],
     "is_regulatory_approval": false

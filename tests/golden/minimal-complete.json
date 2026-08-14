@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -97,6 +97,22 @@
       "evidence_reference_ids": []
     },
     {
+      "fact_id": "fact.practice.social-scoring.disproportionate",
+      "profile_path": "/biometric_and_practices/social_scoring_unjustified_or_disproportionate",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "profile_path": "/biometric_and_practices/social_scoring_unrelated_context",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
       "fact_id": "fact.practice.uses-biometrics",
       "profile_path": "/biometric_and_practices/uses_biometrics",
       "value": false,
@@ -142,8 +158,9 @@
   "findings": [
     {
       "finding_id": "finding.legal.minimal.bounded.001",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
-      "summary": "No Article 5, Article 6, Annex I, Annex III, or Article 50 route was identified from the complete supplied exclusion facts. Minimal is a bounded routing label, not statutory text.",
+      "summary": "No route was identified among the predicates explicitly supplied and tested. This is a bounded routing result, not a determination that the Regulation is inapplicable or that no other Union or national rule applies. Missing, untested, or inaccurate facts can change the result.",
       "scope": {
         "actors": [
           "provider"
@@ -161,6 +178,8 @@
         "fact.practice.emotion-work",
         "fact.practice.remote-identification",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.disproportionate",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.practice.uses-biometrics",
         "fact.role.provider",
         "fact.transparency.interacts",
@@ -172,18 +191,108 @@
       "provenance": [
         {
           "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Articles 5, 6, 50 and 95, and Annexes I and III",
+          "exact_provision": "Article 5(1)(c)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_95",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 5(1)(f)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 5(1)(h)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 50(1)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
+          "operative_date": "2026-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 50(2)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
+          "operative_date": "2026-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 6(1) and Annex I",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_6",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 6(2) and Annex III",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_6",
+          "operative_date": "2027-12-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "does_not_apply"
     },
     {
       "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
       "block": "impact",
       "summary": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
       "scope": {
@@ -203,25 +312,18 @@
         "fact.practice.emotion-work",
         "fact.practice.remote-identification",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.disproportionate",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.practice.uses-biometrics"
       ],
       "assumption_ids": [],
       "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 1(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -241,6 +343,8 @@
         "fact.practice.emotion-work",
         "fact.practice.remote-identification",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.disproportionate",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.practice.uses-biometrics",
         "fact.role.provider",
         "fact.transparency.interacts",
@@ -253,11 +357,16 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
-          "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
@@ -270,6 +379,16 @@
       "message": "The bounded minimal route is a negative legal conclusion and depends on the completeness and accuracy of supplied facts.",
       "finding_ids": [
         "finding.legal.minimal.bounded.001"
+      ]
+    },
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.minimal.bounded.001",
+        "finding.readiness.duty.provider.art.4.ai.literacy"
       ]
     },
     {
@@ -316,7 +435,9 @@
       "finding.legal.minimal.bounded.001"
     ],
     "limitations": [
-      "Routes are independent. Impact and implementation readiness are reported separately."
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately.",
+      "No route was identified among the predicates explicitly supplied and tested. This is a bounded routing result, not a determination that the Regulation is inapplicable or that no other Union or national rule applies. Missing, untested, or inaccurate facts can change the result."
     ]
   },
   "impact": {
@@ -338,6 +459,8 @@
         "fact.practice.emotion-work",
         "fact.practice.remote-identification",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.disproportionate",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.practice.uses-biometrics"
       ]
     },
@@ -367,6 +490,8 @@
         "fact.practice.emotion-work",
         "fact.practice.remote-identification",
         "fact.practice.social-scoring",
+        "fact.practice.social-scoring.disproportionate",
+        "fact.practice.social-scoring.unrelated-context",
         "fact.practice.uses-biometrics"
       ]
     },
@@ -391,7 +516,7 @@
           "provider"
         ],
         "exact_provision": "Art. 4",
-        "operative_date": "2025-02-02",
+        "operative_date": "2026-07-27",
         "evidence_state": "missing",
         "owner_ids": [
           "owner.unassigned"
@@ -421,7 +546,7 @@
         "owner_ids": [
           "owner.unassigned"
         ],
-        "target_date": "2025-02-02"
+        "target_date": "2026-07-27"
       }
     ],
     "owners": [
@@ -435,7 +560,7 @@
       "finding.readiness.duty.provider.art.4.ai.literacy"
     ],
     "limitations": [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
       "This output is not certification, approval, or regulatory assurance."
     ],
     "is_regulatory_approval": false

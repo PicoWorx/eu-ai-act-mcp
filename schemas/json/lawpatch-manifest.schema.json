@@ -569,6 +569,7 @@
                 "type": "string",
                 "enum": [
                   "enacted_oj",
+                  "official_consolidated_snapshot_non_authentic",
                   "commission_proposal",
                   "political_agreement",
                   "adopted_pending_publication",
@@ -626,6 +627,7 @@
                 "type": "string",
                 "enum": [
                   "complete_official_text",
+                  "consolidated_snapshot_integrity_verified",
                   "official_metadata_only",
                   "curated_summary_only",
                   "unverified"

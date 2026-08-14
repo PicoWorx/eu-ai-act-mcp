@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -110,6 +110,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.gpai.model.001",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "The supplied fact identifies a general-purpose AI model route. This does not classify a downstream AI system.",
       "scope": {
@@ -131,18 +132,78 @@
       "provenance": [
         {
           "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 3(63) and Chapter V",
+          "exact_provision": "Article 3(63)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_3",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.legal.gpai.systemic-risk.001",
+      "finding_basis": "legal_proposition",
+      "block": "legal_classification",
+      "summary": "Training compute above 10^25 FLOPs creates the Article 51(2) presumption of high-impact capabilities. Classification remains subject to the Article 52 procedure, including the provider's exceptional substantiated rebuttal route and the Commission's decision.",
+      "scope": {
+        "actors": [
+          "gpai_provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "gpai-model"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.gpai.designated",
+        "fact.gpai.training-flops",
+        "fact.role.gpai_provider"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 51(2)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_51",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2025-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 52(2)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_52",
+          "operative_date": "2025-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
       "block": "impact",
       "summary": "The supplied consequence is: Downstream systems may rely on the model across multiple contexts.",
       "scope": {
@@ -161,21 +222,12 @@
       ],
       "assumption_ids": [],
       "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 1(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Technical documentation for GPAI models is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -203,17 +255,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 53(1)(a)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Information and documentation for downstream providers is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -241,17 +299,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 53(1)(b)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Copyright compliance policy is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -279,17 +343,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 53(1)(c)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Training data summary is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -317,17 +387,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 53(1)(d)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_53",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Systemic risk GPAI - Model evaluation is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -355,17 +431,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 55(1)(a)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Systemic risk GPAI - Risk assessment and mitigation is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -393,17 +475,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 55(1)(b)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Systemic risk GPAI - Incident tracking and reporting is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -431,17 +519,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 55(1)(c)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Systemic risk GPAI - Adequate cybersecurity is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -469,11 +563,16 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 55(1)(d)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_55",
           "operative_date": "2025-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
@@ -481,12 +580,31 @@
   ],
   "warnings": [
     {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.gpai.model.001",
+        "finding.legal.gpai.systemic-risk.001",
+        "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
+        "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
+        "finding.readiness.duty.gpai.provider.art.53.1.d.transparency",
+        "finding.readiness.duty.gpai.provider.art.55.1.a.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.b.risk.management",
+        "finding.readiness.duty.gpai.provider.art.55.1.c.incident.reporting",
+        "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
+      ]
+    },
+    {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
       "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.gpai.model.001",
+        "finding.legal.gpai.systemic-risk.001",
         "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
         "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
         "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
@@ -504,6 +622,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.gpai.model.001",
+        "finding.legal.gpai.systemic-risk.001",
         "finding.readiness.duty.gpai.provider.art.53.1.a.documentation",
         "finding.readiness.duty.gpai.provider.art.53.1.b.documentation",
         "finding.readiness.duty.gpai.provider.art.53.1.c.copyright",
@@ -535,7 +654,8 @@
       {
         "route": "gpai",
         "finding_ids": [
-          "finding.legal.gpai.model.001"
+          "finding.legal.gpai.model.001",
+          "finding.legal.gpai.systemic-risk.001"
         ],
         "actor_roles": [
           "gpai_provider"
@@ -547,10 +667,12 @@
       "gpai_provider"
     ],
     "finding_ids": [
-      "finding.legal.gpai.model.001"
+      "finding.legal.gpai.model.001",
+      "finding.legal.gpai.systemic-risk.001"
     ],
     "limitations": [
-      "Routes are independent. Impact and implementation readiness are reported separately."
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
     ]
   },
   "impact": {
@@ -911,7 +1033,7 @@
       "finding.readiness.duty.gpai.provider.art.55.1.d.technical.requirements"
     ],
     "limitations": [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
       "This output is not certification, approval, or regulatory assurance."
     ],
     "is_regulatory_approval": false

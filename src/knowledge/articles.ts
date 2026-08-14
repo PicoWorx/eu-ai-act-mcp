@@ -94,7 +94,7 @@ export const articles: ArticleEntry[] = [
     number: "11",
     title: "Technical documentation",
     summary:
-      "Before a high-risk AI system is placed on the market or put into service, technical documentation must be drawn up and kept up to date. Documentation must demonstrate that the system complies with the requirements set out in Chapter III Section 2 and provide national competent authorities and notified bodies with all information necessary to assess compliance. At minimum, documentation must contain the elements set out in Annex IV. SMEs may provide the elements of Annex IV in a simplified manner - the Commission will establish a simplified template.",
+      "Before a high-risk AI system is placed on the market or put into service, technical documentation must be drawn up and kept up to date. Documentation must demonstrate that the system complies with the requirements set out in Chapter III Section 2 and provide national competent authorities and notified bodies with all information necessary to assess compliance. At minimum, documentation must contain the elements set out in Annex IV. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph.",
     eurlex_url: anchor("11"),
     related_annexes: ["Annex IV"],
   },
@@ -230,7 +230,7 @@ export const articles: ArticleEntry[] = [
     number: "73",
     title: "Reporting of serious incidents",
     summary:
-      "Providers of high-risk AI systems placed on the Union market must report any serious incident to the market surveillance authorities of the Member States where that incident occurred. Reporting must be made immediately after the provider has established a causal link between the AI system and the serious incident or the reasonable likelihood of such a link, and, in any event, no later than 15 days after becoming aware. For a widespread infringement or a serious incident involving serious and irreversible disruption of the management or operation of critical infrastructure under Art. 3(49)(b), reporting must occur immediately and no later than 2 days after awareness. For death of a person the period is 10 days. The provider and, where applicable, the deployer must cooperate with competent authorities and the Commission in any investigation.",
+      "Providers of high-risk AI systems placed on the Union market must report any serious incident to the market surveillance authorities of the Member States where that incident occurred. Reporting must be made immediately after the provider has established a causal link between the AI system and the serious incident or the reasonable likelihood of such a link, and, in any event, no later than 15 days after becoming aware. For a widespread infringement or a serious incident involving serious and irreversible disruption of the management or operation of critical infrastructure under Art. 3(49)(b), reporting must occur immediately and no later than 2 days after awareness. For death of a person the period is 10 days. Following a report, the provider must investigate, take corrective action, and cooperate with the competent authorities and, where relevant, the notified body under Article 73(6). Deployers have the separate Article 26(12) duty to cooperate with relevant competent authorities in actions concerning the high-risk system.",
     eurlex_url: anchor("73"),
     related_annexes: [],
   },

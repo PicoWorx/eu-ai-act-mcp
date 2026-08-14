@@ -141,7 +141,9 @@
     "dependencies": []
   },
   "jurisdiction": {
-    "codes": ["EU"],
+    "codes": [
+      "EU"
+    ],
     "territorial_scope": "Regulation (EU) 2024/1689 Article 2 scope"
   },
   "effective_date": "2026-08-02",
@@ -151,8 +153,12 @@
       "from_state": "legacy model placed on the market before 2026-08-02",
       "to_state": "Article 50(2) marking duty applies",
       "operative_date": "2026-12-02",
-      "conditions": ["The model was placed on the market before 2026-08-02."],
-      "citation_ids": ["citation.article-111.4"]
+      "conditions": [
+        "The model was placed on the market before 2026-08-02."
+      ],
+      "citation_ids": [
+        "citation.article-111.4"
+      ]
     }
   ],
   "sources": [
@@ -161,7 +167,7 @@
       "title": "Regulation (EU) 2024/1689 consolidated on 27 July 2026",
       "celex": "02024R1689-20260727",
       "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727",
-      "source_status": "enacted_oj",
+      "source_status": "official_consolidated_snapshot_non_authentic",
       "publication_date": "2026-07-27",
       "snapshot_path": "sources/celex-02024R1689-20260727.txt",
       "content_sha256": "3ff8efe64754d394d6ec7a2cc937bca5948229833872bbc68c11c879af1f6e5e"
@@ -173,14 +179,14 @@
       "source_id": "source.oj.2024.1689.consolidated.20260727",
       "exact_provision": "Article 111(4)",
       "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_111",
-      "verification_level": "complete_official_text"
+      "verification_level": "consolidated_snapshot_integrity_verified"
     },
     {
       "citation_id": "citation.article-50.2",
       "source_id": "source.oj.2024.1689.consolidated.20260727",
       "exact_provision": "Article 50(2)",
       "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
-      "verification_level": "complete_official_text"
+      "verification_level": "consolidated_snapshot_integrity_verified"
     }
   ],
   "obligation_deltas": [
@@ -188,12 +194,16 @@
       "delta_id": "delta.article-50.machine-readable-marking",
       "operation": "add",
       "obligation_id": "obligation.article-50.2",
-      "actor_roles": ["provider"],
+      "actor_roles": [
+        "provider"
+      ],
       "summary": "Provider outputs must be marked in a machine-readable format and detectable as artificially generated or manipulated.",
       "before": null,
       "after": "Apply the Article 50(2) machine-readable marking rule, subject to the Article 111(4) legacy transition.",
       "effective_date": "2026-08-02",
-      "citation_ids": ["citation.article-50.2"],
+      "citation_ids": [
+        "citation.article-50.2"
+      ],
       "human_review_required": true
     }
   ],
@@ -226,10 +236,14 @@
       "expected_result": {
         "status": "determined",
         "outcome_code": "outcome.article-50.legacy-transition",
-        "finding_ids": ["finding.article-50.legacy-transition"],
+        "finding_ids": [
+          "finding.article-50.legacy-transition"
+        ],
         "required_warning_codes": []
       },
-      "covered_rule_ids": ["rule.article-50.marking"],
+      "covered_rule_ids": [
+        "rule.article-50.marking"
+      ],
       "critical": true
     }
   ],
@@ -239,25 +253,36 @@
       "selector_kind": "tool",
       "selector": "euaiact_classify_system",
       "effect": "retest",
-      "obligation_delta_ids": ["delta.article-50.machine-readable-marking"]
+      "obligation_delta_ids": [
+        "delta.article-50.machine-readable-marking"
+      ]
     },
     {
       "selector_id": "selector.surface.article-50",
       "selector_kind": "output_surface",
       "selector": "article-50-transparency",
       "effect": "change",
-      "obligation_delta_ids": ["delta.article-50.machine-readable-marking"]
+      "obligation_delta_ids": [
+        "delta.article-50.machine-readable-marking"
+      ]
     }
   ],
   "migration": {
-    "migration_notes": ["Run in shadow mode and compare all Article 50 outputs before promotion."],
+    "migration_notes": [
+      "Run in shadow mode and compare all Article 50 outputs before promotion."
+    ],
     "rollback_target": "0.0.0",
-    "rollback_notes": ["Restore the previous pinned component and replay the same fixtures."],
+    "rollback_notes": [
+      "Restore the previous pinned component and replay the same fixtures."
+    ],
     "breaking_change": false
   },
   "human_review": {
     "required": true,
-    "flags": ["critical_rule_change", "transition_complexity"],
+    "flags": [
+      "critical_rule_change",
+      "transition_complexity"
+    ],
     "reviewer_role": "EU AI Act legal reviewer",
     "promotion_gate": "approve"
   },

@@ -68,6 +68,7 @@ export interface LawPatchSource {
   official_url: string;
   source_status:
     | "enacted_oj"
+    | "official_consolidated_snapshot_non_authentic"
     | "commission_proposal"
     | "political_agreement"
     | "adopted_pending_publication"
@@ -88,6 +89,7 @@ export interface LawPatchCitation {
   official_url: string;
   verification_level:
     | "complete_official_text"
+    | "consolidated_snapshot_integrity_verified"
     | "official_metadata_only"
     | "curated_summary_only"
     | "unverified";

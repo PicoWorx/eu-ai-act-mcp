@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const INTERNAL_REGULATION_ID = "eu-ai-act" as const;
-export const DECISION_CONTRACT_VERSION = "1.0" as const;
+export const DECISION_CONTRACT_VERSION = "1.1" as const;
 export const PROFILE_VERSION = "1.0" as const;
 
 export const isoDateSchema = z
@@ -35,6 +35,7 @@ export const jsonPointerSchema = z
 
 export const sourceStatusSchema = z.enum([
   "enacted_oj",
+  "official_consolidated_snapshot_non_authentic",
   "commission_proposal",
   "political_agreement",
   "adopted_pending_publication",
@@ -47,6 +48,7 @@ export const sourceStatusSchema = z.enum([
 
 export const verificationLevelSchema = z.enum([
   "complete_official_text",
+  "consolidated_snapshot_integrity_verified",
   "official_metadata_only",
   "curated_summary_only",
   "unverified",

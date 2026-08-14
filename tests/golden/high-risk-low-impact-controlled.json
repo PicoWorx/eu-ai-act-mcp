@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -130,6 +130,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.high-risk.annex_iii.4.001",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "The existing Article 6 classifier identifies a high-risk route from the supplied facts.",
       "scope": {
@@ -156,17 +157,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Article 6(2) and Annex III, point 4",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#anx_III",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
       "block": "impact",
       "summary": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
       "scope": {
@@ -186,21 +193,12 @@
       ],
       "assumption_ids": [],
       "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 1(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.10.data.governance",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Data governance and management is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -227,17 +225,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 10",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_10",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.11.documentation",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Technical documentation is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -264,17 +268,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 11",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_11",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.12.art.19.documentation",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Logging capability and provider log retention is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -301,17 +311,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 12, Art. 19",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_12",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.13.transparency",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Transparency and provision of information to deployers is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -338,17 +354,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 13",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_13",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.14.human.oversight",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Human oversight measures is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -375,17 +397,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 14",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_14",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.15.technical.requirements",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Accuracy, robustness, and cybersecurity is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -412,17 +440,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 15",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_15",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.17.quality.management",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Quality management system is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -449,17 +483,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 17",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_17",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -486,17 +526,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
-          "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.43.conformity.assessment",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Conformity assessment is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -523,17 +569,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 43",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_43",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.47.conformity.assessment",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "EU Declaration of Conformity is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -560,17 +612,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 47",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_47",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.49.registration",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Registration in the EU database is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -597,17 +655,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 49",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_49",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.72.post.market",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Post-market monitoring is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -634,17 +698,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 72",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_72",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.73.incident.reporting",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Reporting serious incidents is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -671,17 +741,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 73",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_73",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.9.risk.management",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Establish a risk management system is selected from the existing obligations tool; supplied evidence state is documented.",
       "scope": {
@@ -708,17 +784,45 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 9",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_9",
           "operative_date": "2027-12-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     }
   ],
   "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.high-risk.annex_iii.4.001",
+        "finding.readiness.duty.provider.art.10.data.governance",
+        "finding.readiness.duty.provider.art.11.documentation",
+        "finding.readiness.duty.provider.art.12.art.19.documentation",
+        "finding.readiness.duty.provider.art.13.transparency",
+        "finding.readiness.duty.provider.art.14.human.oversight",
+        "finding.readiness.duty.provider.art.15.technical.requirements",
+        "finding.readiness.duty.provider.art.17.quality.management",
+        "finding.readiness.duty.provider.art.4.ai.literacy",
+        "finding.readiness.duty.provider.art.43.conformity.assessment",
+        "finding.readiness.duty.provider.art.47.conformity.assessment",
+        "finding.readiness.duty.provider.art.49.registration",
+        "finding.readiness.duty.provider.art.72.post.market",
+        "finding.readiness.duty.provider.art.73.incident.reporting",
+        "finding.readiness.duty.provider.art.9.risk.management"
+      ]
+    },
     {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
@@ -806,6 +910,8 @@
     ],
     "limitations": [
       "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately.",
+      "The stated date is the general application date for the statutory route. It does not determine the treatment of a system already placed on the market or put into service. Apply Article 111 to the system's market date, type, model and later design changes.",
       "The frozen profile has no no-significant-risk predicate, so the existing Article 6(3) evaluator cannot establish the exception in this call."
     ]
   },
@@ -1000,7 +1106,7 @@
           "provider"
         ],
         "exact_provision": "Art. 4",
-        "operative_date": "2025-02-02",
+        "operative_date": "2026-07-27",
         "evidence_state": "missing",
         "owner_ids": [
           "owner.profile"
@@ -1307,7 +1413,7 @@
         "owner_ids": [
           "owner.profile"
         ],
-        "target_date": "2025-02-02"
+        "target_date": "2026-07-27"
       },
       {
         "gap_id": "gap.duty.provider.art.43.conformity.assessment",
@@ -1389,8 +1495,9 @@
       "finding.readiness.duty.provider.art.9.risk.management"
     ],
     "limitations": [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
-      "This output is not certification, approval, or regulatory assurance."
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
+      "This output is not certification, approval, or regulatory assurance.",
+      "The stated date is the general application date for the statutory route. It does not determine the treatment of a system already placed on the market or put into service. Apply Article 111 to the system's market date, type, model and later design changes."
     ],
     "is_regulatory_approval": false
   }

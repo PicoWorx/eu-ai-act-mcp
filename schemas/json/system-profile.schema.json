@@ -431,6 +431,12 @@
             "social_scoring": {
               "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
             },
+            "social_scoring_unrelated_context": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "social_scoring_unjustified_or_disproportionate": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
             "exploits_vulnerability": {
               "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
             },

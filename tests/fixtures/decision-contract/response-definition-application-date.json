@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -19,7 +19,9 @@
       "value": false,
       "origin": "cited_evidence",
       "verification": "evidence_linked",
-      "evidence_reference_ids": ["evidence.system-specification"]
+      "evidence_reference_ids": [
+        "evidence.system-specification"
+      ]
     }
   ],
   "assumptions": [],
@@ -30,11 +32,17 @@
       "block": "legal_classification",
       "summary": "The described static lookup table does not infer from inputs how to generate outputs and is outside the supplied AI-system definition facts.",
       "scope": {
-        "actors": ["unknown"],
-        "jurisdictions": ["EU"],
+        "actors": [
+          "unknown"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
         "system_scope": "Static lookup table described by the cited specification"
       },
-      "fact_ids": ["fact.identity.infers-outputs"],
+      "fact_ids": [
+        "fact.identity.infers-outputs"
+      ],
       "assumption_ids": [],
       "missing_fact_ids": [],
       "provenance": [
@@ -43,20 +51,36 @@
           "exact_provision": "Article 3(1)",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_3",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified",
+          "instrument_status": "enacted",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ]
         }
       ],
-      "determination": "does_not_apply"
+      "determination": "does_not_apply",
+      "finding_basis": "legal_proposition"
     }
   ],
   "warnings": [
     {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.ai-system-definition.001"
+      ]
+    },
+    {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
       "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
-      "finding_ids": ["finding.legal.ai-system-definition.001"]
+      "finding_ids": [
+        "finding.legal.ai-system-definition.001"
+      ]
     }
   ],
   "recommended_next_calls": [],
@@ -65,9 +89,16 @@
     "status": "not_applicable",
     "routes": [],
     "annex_iii_categories": [],
-    "actor_roles": ["unknown"],
-    "finding_ids": ["finding.legal.ai-system-definition.001"],
-    "limitations": ["Conclusion is bounded to the cited system specification."]
+    "actor_roles": [
+      "unknown"
+    ],
+    "finding_ids": [
+      "finding.legal.ai-system-definition.001"
+    ],
+    "limitations": [
+      "Conclusion is bounded to the cited system specification.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
+    ]
   },
   "impact": {
     "schema_version": "1.0",
@@ -77,7 +108,9 @@
     "current_controls": [],
     "residual_impact": null,
     "finding_ids": [],
-    "limitations": ["No AI Act impact result is produced for this bounded non-applicability conclusion."],
+    "limitations": [
+      "No AI Act impact result is produced for this bounded non-applicability conclusion."
+    ],
     "does_not_alter_legal_classification": true
   },
   "implementation_readiness": {
@@ -89,7 +122,9 @@
     "control_gaps": [],
     "owners": [],
     "finding_ids": [],
-    "limitations": ["No AI Act implementation duties are selected from this bounded result."],
+    "limitations": [
+      "No AI Act implementation duties are selected from this bounded result."
+    ],
     "is_regulatory_approval": false
   }
 }

@@ -165,6 +165,8 @@ const biometricAndPracticeGroupSchema = z
     emotion_recognition: booleanFactSchema.optional(),
     emotion_recognition_workplace_or_education: booleanFactSchema.optional(),
     social_scoring: booleanFactSchema.optional(),
+    social_scoring_unrelated_context: booleanFactSchema.optional(),
+    social_scoring_unjustified_or_disproportionate: booleanFactSchema.optional(),
     exploits_vulnerability: booleanFactSchema.optional(),
     subliminal_or_manipulative_technique: booleanFactSchema.optional(),
   })

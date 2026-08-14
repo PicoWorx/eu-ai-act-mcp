@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -102,6 +102,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.transparency.article.50.2.fact.transparency.synthetic",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "Synthetic content generation triggers the Article 50(2) marking route.",
       "scope": {
@@ -126,17 +127,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Article 50(2)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
           "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.legal.transparency.article.50.4.fact.transparency.deep.fake",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "Deep-fake content triggers the Article 50(4) disclosure route.",
       "scope": {
@@ -161,17 +168,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Article 50(4)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
           "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
       "block": "impact",
       "summary": "The supplied consequence is: Viewers may mistake synthetic media for authentic recordings.",
       "scope": {
@@ -191,21 +204,12 @@
       ],
       "assumption_ids": [],
       "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Article 1(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_1",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
+      "provenance": [],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.deployer.art.4.ai.literacy",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -232,54 +236,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
-          "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.deployer.art.50.3.transparency",
-      "block": "implementation_readiness",
-      "summary": "Inform persons exposed to emotion recognition or biometric categorisation is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "deployer"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "synthetic-video"
-      },
-      "fact_ids": [
-        "fact.geography.eu",
-        "fact.role.deployer",
-        "fact.role.provider",
-        "fact.transparency.deep-fake",
-        "fact.transparency.marked",
-        "fact.transparency.synthetic",
-        "fact.use.synthetic-video.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Art. 50(3)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
-          "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.deployer.art.50.4.transparency",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Label deep fakes and synthetic content is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -306,17 +279,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 50(4)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
           "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -343,54 +322,23 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
-          "operative_date": "2025-02-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.50.1.transparency",
-      "block": "implementation_readiness",
-      "summary": "Disclose AI interaction to users is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "synthetic-video"
-      },
-      "fact_ids": [
-        "fact.geography.eu",
-        "fact.role.deployer",
-        "fact.role.provider",
-        "fact.transparency.deep-fake",
-        "fact.transparency.marked",
-        "fact.transparency.synthetic",
-        "fact.use.synthetic-video.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
-        {
-          "instrument_id": "regulation-eu-2024-1689",
-          "exact_provision": "Art. 50(1)",
-          "source_id": "source.oj.2024.1689.consolidated.20260727",
-          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
-          "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     },
     {
       "finding_id": "finding.readiness.duty.provider.art.50.2.transparency",
+      "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
       "summary": "Machine-readable marking of AI-generated content is selected from the existing obligations tool; supplied evidence state is missing.",
       "scope": {
@@ -417,17 +365,36 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 50(2)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
           "operative_date": "2026-08-02",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "applies"
     }
   ],
   "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.transparency.article.50.2.fact.transparency.synthetic",
+        "finding.legal.transparency.article.50.4.fact.transparency.deep.fake",
+        "finding.readiness.duty.deployer.art.4.ai.literacy",
+        "finding.readiness.duty.deployer.art.50.4.transparency",
+        "finding.readiness.duty.provider.art.4.ai.literacy",
+        "finding.readiness.duty.provider.art.50.2.transparency"
+      ]
+    },
     {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
@@ -437,10 +404,8 @@
         "finding.legal.transparency.article.50.2.fact.transparency.synthetic",
         "finding.legal.transparency.article.50.4.fact.transparency.deep.fake",
         "finding.readiness.duty.deployer.art.4.ai.literacy",
-        "finding.readiness.duty.deployer.art.50.3.transparency",
         "finding.readiness.duty.deployer.art.50.4.transparency",
         "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.50.1.transparency",
         "finding.readiness.duty.provider.art.50.2.transparency"
       ]
     },
@@ -453,10 +418,8 @@
         "finding.legal.transparency.article.50.2.fact.transparency.synthetic",
         "finding.legal.transparency.article.50.4.fact.transparency.deep.fake",
         "finding.readiness.duty.deployer.art.4.ai.literacy",
-        "finding.readiness.duty.deployer.art.50.3.transparency",
         "finding.readiness.duty.deployer.art.50.4.transparency",
         "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.50.1.transparency",
         "finding.readiness.duty.provider.art.50.2.transparency"
       ]
     }
@@ -497,7 +460,8 @@
       "finding.legal.transparency.article.50.4.fact.transparency.deep.fake"
     ],
     "limitations": [
-      "Routes are independent. Impact and implementation readiness are reported separately."
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
     ]
   },
   "impact": {
@@ -562,29 +526,13 @@
           "deployer"
         ],
         "exact_provision": "Art. 4",
-        "operative_date": "2025-02-02",
+        "operative_date": "2026-07-27",
         "evidence_state": "missing",
         "owner_ids": [
           "owner.unassigned"
         ],
         "finding_ids": [
           "finding.readiness.duty.deployer.art.4.ai.literacy"
-        ]
-      },
-      {
-        "duty_id": "duty.deployer.art.50.3.transparency",
-        "title": "Inform persons exposed to emotion recognition or biometric categorisation",
-        "actor_roles": [
-          "deployer"
-        ],
-        "exact_provision": "Art. 50(3)",
-        "operative_date": "2026-08-02",
-        "evidence_state": "missing",
-        "owner_ids": [
-          "owner.unassigned"
-        ],
-        "finding_ids": [
-          "finding.readiness.duty.deployer.art.50.3.transparency"
         ]
       },
       {
@@ -610,29 +558,13 @@
           "provider"
         ],
         "exact_provision": "Art. 4",
-        "operative_date": "2025-02-02",
+        "operative_date": "2026-07-27",
         "evidence_state": "missing",
         "owner_ids": [
           "owner.unassigned"
         ],
         "finding_ids": [
           "finding.readiness.duty.provider.art.4.ai.literacy"
-        ]
-      },
-      {
-        "duty_id": "duty.provider.art.50.1.transparency",
-        "title": "Disclose AI interaction to users",
-        "actor_roles": [
-          "provider"
-        ],
-        "exact_provision": "Art. 50(1)",
-        "operative_date": "2026-08-02",
-        "evidence_state": "missing",
-        "owner_ids": [
-          "owner.unassigned"
-        ],
-        "finding_ids": [
-          "finding.readiness.duty.provider.art.50.1.transparency"
         ]
       },
       {
@@ -662,14 +594,6 @@
         "note": "No evidence reference was matched to this duty in the supplied profile."
       },
       {
-        "evidence_id": "evidence.missing.duty.deployer.art.50.3.transparency",
-        "duty_ids": [
-          "duty.deployer.art.50.3.transparency"
-        ],
-        "state": "missing",
-        "note": "No evidence reference was matched to this duty in the supplied profile."
-      },
-      {
         "evidence_id": "evidence.missing.duty.deployer.art.50.4.transparency",
         "duty_ids": [
           "duty.deployer.art.50.4.transparency"
@@ -681,14 +605,6 @@
         "evidence_id": "evidence.missing.duty.provider.art.4.ai.literacy",
         "duty_ids": [
           "duty.provider.art.4.ai.literacy"
-        ],
-        "state": "missing",
-        "note": "No evidence reference was matched to this duty in the supplied profile."
-      },
-      {
-        "evidence_id": "evidence.missing.duty.provider.art.50.1.transparency",
-        "duty_ids": [
-          "duty.provider.art.50.1.transparency"
         ],
         "state": "missing",
         "note": "No evidence reference was matched to this duty in the supplied profile."
@@ -712,18 +628,7 @@
         "owner_ids": [
           "owner.unassigned"
         ],
-        "target_date": "2025-02-02"
-      },
-      {
-        "gap_id": "gap.duty.deployer.art.50.3.transparency",
-        "duty_ids": [
-          "duty.deployer.art.50.3.transparency"
-        ],
-        "description": "Supply documented evidence for Inform persons exposed to emotion recognition or biometric categorisation.",
-        "owner_ids": [
-          "owner.unassigned"
-        ],
-        "target_date": "2026-08-02"
+        "target_date": "2026-07-27"
       },
       {
         "gap_id": "gap.duty.deployer.art.50.4.transparency",
@@ -745,18 +650,7 @@
         "owner_ids": [
           "owner.unassigned"
         ],
-        "target_date": "2025-02-02"
-      },
-      {
-        "gap_id": "gap.duty.provider.art.50.1.transparency",
-        "duty_ids": [
-          "duty.provider.art.50.1.transparency"
-        ],
-        "description": "Supply documented evidence for Disclose AI interaction to users.",
-        "owner_ids": [
-          "owner.unassigned"
-        ],
-        "target_date": "2026-08-02"
+        "target_date": "2026-07-27"
       },
       {
         "gap_id": "gap.duty.provider.art.50.2.transparency",
@@ -779,14 +673,12 @@
     ],
     "finding_ids": [
       "finding.readiness.duty.deployer.art.4.ai.literacy",
-      "finding.readiness.duty.deployer.art.50.3.transparency",
       "finding.readiness.duty.deployer.art.50.4.transparency",
       "finding.readiness.duty.provider.art.4.ai.literacy",
-      "finding.readiness.duty.provider.art.50.1.transparency",
       "finding.readiness.duty.provider.art.50.2.transparency"
     ],
     "limitations": [
-      "Readiness describes supplied evidence completeness, not legal compliance.",
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
       "This output is not certification, approval, or regulatory assurance."
     ],
     "is_regulatory_approval": false

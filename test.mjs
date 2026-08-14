@@ -229,8 +229,9 @@ for (const [key, input] of Object.entries({
   signalsRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: true } },
   signalsNonPublicRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: false } },
   signalsEmployment: { signals: { domain: "employment" } },
-  signalsSocialScoring: { signals: { performs_social_scoring_by_public_authority: true } },
-  signalsPrivateSocialScoring: { signals: { performs_social_scoring: true } },
+  signalsSocialScoring: { signals: { performs_social_scoring_by_public_authority: true, social_scoring_unrelated_context: true } },
+  signalsPrivateSocialScoring: { signals: { performs_social_scoring: true, social_scoring_unjustified_or_disproportionate: true } },
+  signalsIncompleteSocialScoring: { signals: { performs_social_scoring: true } },
   signalsChatbot: { signals: { interacts_with_natural_persons: true } },
   signalsSynthetic: { signals: { generates_synthetic_content: true } },
   signalsAnnexI: { signals: { is_safety_component_of_regulated_product: true, requires_third_party_conformity_assessment: true } },
@@ -323,6 +324,11 @@ test(
   "signals private social scoring → prohibited Art. 5(1)(c)",
   structured(classifyResults.signalsPrivateSocialScoring).risk_classification === "prohibited" &&
     /public authorities/i.test(structured(classifyResults.signalsPrivateSocialScoring).obligations_summary) === false,
+);
+test(
+  "signals social scoring without a treatment limb → insufficient information",
+  structured(classifyResults.signalsIncompleteSocialScoring).risk_classification === "insufficient_information" &&
+    structured(classifyResults.signalsIncompleteSocialScoring).next_questions.length === 2,
 );
 test(
   "signals interacts_with_natural_persons → limited Art. 50(1)",
@@ -1050,7 +1056,9 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
     requires_third_party_conformity_assessment: false, affects_fundamental_rights: false,
     targets_children_or_vulnerable: false, generates_synthetic_content: false,
     interacts_with_natural_persons: false, performs_emotion_recognition_workplace_or_school: false,
-    performs_social_scoring: false, performs_social_scoring_by_public_authority: false,
+    performs_social_scoring: false, social_scoring_unrelated_context: false,
+    social_scoring_unjustified_or_disproportionate: false,
+    performs_social_scoring_by_public_authority: false,
   };
   const rMin = structured(await callTool("euaiact_classify_system", { description: "email spam filter", signals: ALL_FALSE }));
   test("classify: complete negative signal set returns minimal", rMin.risk_classification === "minimal");
@@ -1086,6 +1094,8 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
     requires_third_party_conformity_assessment: false,
     generates_synthetic_content: false, interacts_with_natural_persons: false,
     performs_emotion_recognition_workplace_or_school: false, performs_social_scoring: false,
+    social_scoring_unrelated_context: false,
+    social_scoring_unjustified_or_disproportionate: false,
   };
   const rStructuredDominance = structured(await callTool("euaiact_classify_system", {
     description: "Format job application documents into a consistent layout without ranking, filtering, scoring, or evaluating candidates",
@@ -1359,9 +1369,9 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     nonEu.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction"));
 
   const notApplicable = await runAssessment("contract-not-applicable.json");
-  test("assess: definition-boundary result uses not_date_bound",
+  test("assess: definition-boundary result uses the Chapter I application date",
     notApplicable.status === "not_applicable" &&
-    notApplicable.findings[0].provenance[0].operative_date === "not_date_bound");
+    notApplicable.findings[0].provenance[0].operative_date === "2025-02-02");
 
   const lowImpactHighRisk = await runAssessment("high-risk-low-impact-controlled.json");
   test("assess: low impact never erases legal high-risk classification",
@@ -1381,12 +1391,34 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
   test("assess: Annex III high-risk output discloses the frozen Art. 6(3) limit",
     multiRoute.legal_classification.limitations.some((limitation) =>
       limitation.includes("no no-significant-risk predicate")));
+  test("assess: provider chatbot readiness does not inherit Article 50(2)",
+    multiRoute.implementation_readiness.applicable_duties.some(
+      (duty) => duty.exact_provision === "Art. 50(1)" && duty.actor_roles.includes("provider"),
+    ) &&
+    !multiRoute.implementation_readiness.applicable_duties.some(
+      (duty) => duty.exact_provision === "Art. 50(2)" && duty.actor_roles.includes("provider"),
+    ));
+
+  const deepfakeReadiness = await runAssessment("transparency-deepfake.json");
+  test("assess: deepfake readiness retains only triggered Article 50 paragraphs per actor",
+    deepfakeReadiness.implementation_readiness.applicable_duties
+      .filter((duty) => duty.exact_provision.startsWith("Art. 50"))
+      .map((duty) => `${duty.actor_roles[0]}:${duty.exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Art. 50(4),provider:Art. 50(2)");
 
   const stackedProfile = loadProfile("high-risk-plus-transparency.json");
   stackedProfile.role_facts.roles = [];
   stackedProfile.biometric_and_practices = {
     social_scoring: {
       fact_id: "fact.practice.social-scoring",
+      value: true,
+      origin: "explicit_structured_input",
+      verification: "caller_asserted",
+      evidence_reference_ids: [],
+    },
+    social_scoring_unrelated_context: {
+      fact_id: "fact.practice.social-scoring.unrelated-context",
       value: true,
       origin: "explicit_structured_input",
       verification: "caller_asserted",
@@ -1449,11 +1481,17 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
       finding.fact_ids.every((id) => facts.has(id)) &&
       finding.assumption_ids.every((id) => assumptions.has(id)) &&
       finding.missing_fact_ids.every((id) => missing.has(id)) &&
-      finding.provenance.length > 0 &&
+      (finding.finding_basis === "legal_proposition"
+        ? finding.provenance.length > 0
+        : finding.provenance.length === 0) &&
       finding.provenance.every((record) =>
         record.instrument_id === "regulation-eu-2024-1689" &&
+        record.instrument_status === "enacted" &&
+        record.authority_source_ids.join(",") === "source.oj.2024.1689.original,source.oj.2026.1744" &&
         record.source_id && record.exact_provision && record.official_url &&
-        record.operative_date && record.source_status && record.verification_level));
+        record.operative_date &&
+        record.source_status === "official_consolidated_snapshot_non_authentic" &&
+        record.verification_level === "consolidated_snapshot_integrity_verified"));
   };
   test("assess: every finding has resolving fact and full provenance references",
     allFindingReferencesResolve(high) &&
@@ -1465,6 +1503,9 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     [high, minimal, prohibited, sparse].every((output) =>
       output.warnings.some((warning) =>
         warning.code === "SUMMARY_ONLY" && warning.message.includes("not statutory text"))));
+  test("assess: consolidated snapshot limitation is disclosed on every output",
+    [high, minimal, prohibited, sparse].every((output) =>
+      output.warnings.some((warning) => warning.code === "NON_BINDING_SOURCE")));
   test("assess: sealed corpus identity is fixed and complete",
     high.corpus.sha256 === "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5" &&
     high.corpus.source_snapshot_ids.length === 4 &&

@@ -8,7 +8,7 @@
       "properties": {
         "contract_version": {
           "type": "string",
-          "const": "1.0"
+          "const": "1.1"
         },
         "server_version": {
           "type": "string",
@@ -236,6 +236,14 @@
                   "finding_id": {
                     "$ref": "#/definitions/DecisionEnvelope/properties/corpus/properties/id"
                   },
+                  "finding_basis": {
+                    "type": "string",
+                    "enum": [
+                      "legal_proposition",
+                      "caller_supplied_impact",
+                      "tool_state_abstention"
+                    ]
+                  },
                   "block": {
                     "$ref": "#/definitions/DecisionEnvelope/properties/assumptions/items/properties/affected_blocks/items"
                   },
@@ -312,8 +320,19 @@
                           "type": "string",
                           "minLength": 1
                         },
+                        "instrument_status": {
+                          "type": "string",
+                          "const": "enacted"
+                        },
                         "source_id": {
                           "$ref": "#/definitions/DecisionEnvelope/properties/corpus/properties/id"
+                        },
+                        "authority_source_ids": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/DecisionEnvelope/properties/corpus/properties/id"
+                          },
+                          "minItems": 1
                         },
                         "official_url": {
                           "type": "string",
@@ -334,6 +353,7 @@
                           "type": "string",
                           "enum": [
                             "enacted_oj",
+                            "official_consolidated_snapshot_non_authentic",
                             "commission_proposal",
                             "political_agreement",
                             "adopted_pending_publication",
@@ -348,6 +368,7 @@
                           "type": "string",
                           "enum": [
                             "complete_official_text",
+                            "consolidated_snapshot_integrity_verified",
                             "official_metadata_only",
                             "curated_summary_only",
                             "unverified"
@@ -357,15 +378,16 @@
                       "required": [
                         "instrument_id",
                         "exact_provision",
+                        "instrument_status",
                         "source_id",
+                        "authority_source_ids",
                         "official_url",
                         "operative_date",
                         "source_status",
                         "verification_level"
                       ],
                       "additionalProperties": false
-                    },
-                    "minItems": 1
+                    }
                   },
                   "determination": {
                     "type": "string",
@@ -378,6 +400,7 @@
                 },
                 "required": [
                   "finding_id",
+                  "finding_basis",
                   "block",
                   "summary",
                   "scope",
@@ -394,6 +417,9 @@
                 "properties": {
                   "finding_id": {
                     "$ref": "#/definitions/DecisionEnvelope/properties/corpus/properties/id"
+                  },
+                  "finding_basis": {
+                    "$ref": "#/definitions/DecisionEnvelope/properties/findings/items/anyOf/0/properties/finding_basis"
                   },
                   "block": {
                     "$ref": "#/definitions/DecisionEnvelope/properties/assumptions/items/properties/affected_blocks/items"
@@ -427,6 +453,7 @@
                 },
                 "required": [
                   "finding_id",
+                  "finding_basis",
                   "block",
                   "summary",
                   "scope",

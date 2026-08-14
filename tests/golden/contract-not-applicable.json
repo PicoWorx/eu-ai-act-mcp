@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "server_version": "1.5.0",
   "corpus": {
     "id": "eu-ai-act-2026-07-27",
@@ -32,6 +32,7 @@
   "findings": [
     {
       "finding_id": "finding.legal.ai-system-definition.001",
+      "finding_basis": "legal_proposition",
       "block": "legal_classification",
       "summary": "The supplied definition fact does not establish an AI system within Article 3(1).",
       "scope": {
@@ -52,17 +53,30 @@
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Article 3(1)",
+          "instrument_status": "enacted",
           "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
           "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_3",
-          "operative_date": "not_date_bound",
-          "source_status": "enacted_oj",
-          "verification_level": "complete_official_text"
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
         }
       ],
       "determination": "does_not_apply"
     }
   ],
   "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.ai-system-definition.001"
+      ]
+    },
     {
       "warning_id": "warning.not-legal-advice.001",
       "code": "OUTPUT_NOT_LEGAL_ADVICE",
@@ -93,7 +107,8 @@
       "finding.legal.ai-system-definition.001"
     ],
     "limitations": [
-      "This non-applicability result is bounded to the supplied AI-system definition fact."
+      "This non-applicability result is bounded to the supplied AI-system definition fact.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
     ]
   },
   "impact": {

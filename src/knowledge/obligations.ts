@@ -121,7 +121,7 @@ export const providerHighRiskObligations: Obligation[] = [
     article: "Art. 73",
     deadline: "2026-08-02",
     details:
-      "Report any serious incident to the market surveillance authorities of the Member States where the incident occurred. Report immediately after establishing a causal link or reasonable likelihood, and no later than 15 days after becoming aware. For widespread infringements or serious and irreversible disruption of critical infrastructure, report no later than 2 days; for death of a person, no later than 10 days. Must include all necessary information for authorities to investigate.",
+      "Report any serious incident to the market surveillance authorities of the Member States where the incident occurred. Report immediately after establishing a causal link or reasonable likelihood, and no later than 15 days after becoming aware. For widespread infringements or serious and irreversible disruption of critical infrastructure, report no later than 2 days; for death of a person, no later than 10 days. Must include all necessary information for authorities to investigate. Following a report, the provider must investigate, take corrective action, and cooperate with the competent authorities and, where relevant, the notified body under Article 73(6). Deployers have the separate Article 26(12) duty to cooperate with relevant competent authorities in actions concerning the high-risk system.",
     category: "incident_reporting",
   },
 ];
@@ -331,7 +331,7 @@ export const universalObligations: Obligation[] = [
   {
     obligation: "Take measures to support the development of AI literacy of staff and operators",
     article: "Art. 4",
-    deadline: "2025-02-02",
+    deadline: "2026-07-27",
     details:
       "Providers and deployers of AI systems must take measures to SUPPORT THE DEVELOPMENT of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf, taking into account their technical knowledge, experience, education and training, the context the AI systems are to be used in, and the persons or groups on whom the AI systems are to be used. Art. 4 was REPLACED by Regulation (EU) 2026/1744 with effect from 27 July 2026: the duty is one of supporting development and it expressly does NOT require providers or deployers to guarantee any specific level of AI literacy of any individual. New Art. 4(2) obliges the Commission and the Member States to support and facilitate that effort, in particular for SMEs, with practical compliance examples to be published on the single information platform. Applicable since 2 February 2025 in its original form.",
     category: "ai_literacy",

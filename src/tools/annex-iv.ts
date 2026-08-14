@@ -7,7 +7,7 @@ import {
 } from "../schemas/annex-iv.js";
 import { annexIVItems } from "../knowledge/annex-iv.js";
 
-const GUIDANCE_NOTE = "The item titles and descriptions summarise Annex IV. The sub_items are non-binding implementation prompts, not verbatim Annex IV text or additional legal requirements. Verify definitive wording in the linked official source.";
+const GUIDANCE_NOTE = "The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph.";
 
 function toChecklistMarkdown(): string {
   const lines: string[] = ["# Annex IV - Technical Documentation Checklist", "", `> ${GUIDANCE_NOTE}`, ""];
@@ -32,7 +32,7 @@ export function registerAnnexIvTool(server: McpServer): void {
     {
       title: "Annex IV Technical Documentation Checklist",
       description:
-        "Return the nine Annex IV statutory headings and summaries for technical documentation under Art. 11. The sub_items are separately labelled non-binding implementation prompts and do not create additional legal requirements. Use `format: \"checklist\"` to also receive a markdown checklist suitable for audit preparation. SMEs may provide the statutory information in a simplified manner.",
+        GUIDANCE_NOTE,
       annotations: {
         readOnlyHint: true,
         idempotentHint: true,
@@ -59,7 +59,7 @@ export function registerAnnexIvTool(server: McpServer): void {
         ...(input.sme_simplified
           ? {
               sme_note:
-                "Art. 11(1) second subparagraph: SMEs, including start-ups, may provide the elements of the technical documentation specified in Annex IV in a simplified manner. The Commission will establish a simplified technical documentation form targeted at the needs of small and micro enterprises, which SMEs may choose to use.",
+                GUIDANCE_NOTE,
             }
           : {}),
       };
