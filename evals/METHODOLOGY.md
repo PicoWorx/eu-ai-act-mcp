@@ -8,7 +8,7 @@ The benchmark does not assign numeric legal confidence. Its pass rates are softw
 
 ## Scope
 
-The evaluated subject is the registered `euaiact_assess_system` handler in package version 1.5.0, decision contract version 1.1. The grader invokes that real handler after building the repository. It does not mock the assessment or its calls to existing atomic tools.
+The evaluated subject is the registered `euaiact_assess_system` handler in package version 1.5.0, decision contract version 1.2. The grader invokes that real handler after building the repository. It does not mock the assessment or its calls to existing atomic tools.
 
 This lane evaluates the deterministic assessment tool only. It does not evaluate how an unfamiliar language model selects or calls the tool. Model-family tests, prompts, and agent traces belong to the separate agent-behavior lane and must report results by model and version.
 
@@ -83,7 +83,7 @@ Safety metrics require 100 percent. A single failure keeps the overall evaluatio
 
 | Metric | Pass condition | Threshold |
 |---|---|---:|
-| Response schema | Every response parses against contract version 1.1 | 100% |
+| Response schema | Every response parses against contract version 1.2 | 100% |
 | Abstention correctness | Required decisive gaps are exact, and every affected block is `undetermined` | 100% |
 | Citation integrity | Every legal proposition has the migrated consolidated-snapshot status, integrity-only verification, authentic OJ authority IDs, official EUR-Lex URL, exact provision, and operative date; non-legal findings carry no legal provenance | 100% |
 | Summary disclosure | Required warnings exist, cover every finding, distinguish summaries from statutory text, and contain no legal-confidence field | 100% |
@@ -110,7 +110,7 @@ From the repository root:
 
 ```sh
 npm run build
-node evals/grader.mjs --label day-2-baseline --check evals/results/day-2-baseline.json
+node evals/grader.mjs --label day-3-baseline --check evals/results/day-3-baseline.json
 ```
 
 `Baseline reproduction: MATCH` means the current grader, corpus, and tool output reproduce the committed JSON byte for byte. The process still exits with status 1 when the reproduced baseline is below a threshold. A baseline mismatch or invalid corpus is a separate reproduction failure and must be investigated before interpreting rates.
@@ -133,7 +133,7 @@ The Day-0 corpus reveals three awkward behaviors:
 - Case 19 correctly abstains on the global legal route for one-to-one verification and remains a useful bounded result. An atomic follow-up call is optional because the missing-fact question itself is actionable.
 - Case 20 routes a formatting-only recruitment utility to Annex III point 4 from recruitment vocabulary despite complete structured negative signals. The public expectation remains minimal, and the baseline remains red.
 
-Day 0 and Day 1 remain unchanged historical artifacts. MIGRATION-001 publishes corpus version 1.1.0 and Day 2. The captain-authorized SPRINT-LOG M6b correction changes only case 15's expected impact status from `determined` to `undetermined`; the intended-purpose fact was already declared decisive for impact. All other expectation changes are direct consequences of the source-status, exact-provision, operative-date, or statutory-predicate migration recorded in MIGRATION-001.
+Day 0, Day 1, and Day 2 remain unchanged historical artifacts. MIGRATION-001 published corpus version 1.1.0 and Day 2. MIGRATION-002 publishes contract and corpus version 1.2 with Day 3. The public profiles and expected legal properties remain unchanged; only their case contract versions advance. The Day 3 response changes record the approved product fixes, actor-specific Article 50 scoping, canonical GPAI labels, and added Article 51 and 52 grounding.
 
 ## Independent sealed evaluation protocol
 

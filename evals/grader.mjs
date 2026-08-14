@@ -21,7 +21,7 @@ import {
 
 const RUNS_PER_CASE = 10;
 const MAX_CANONICAL_BYTES = 65_536;
-const GRADER_VERSION = "1.1.0";
+const GRADER_VERSION = "1.2.0";
 const GRADER_FILE = fileURLToPath(import.meta.url);
 const EVALS_ROOT = dirname(GRADER_FILE);
 const REPO_ROOT = dirname(EVALS_ROOT);
@@ -55,6 +55,10 @@ function sortUnique(values) {
 
 function sameValues(left, right) {
   return JSON.stringify(sortUnique(left)) === JSON.stringify(sortUnique(right));
+}
+
+function canonicalProvisionLabel(value) {
+  return String(value).replace(/^Art\.\s*/i, "Article ");
 }
 
 function metric(evaluated = true) {
@@ -174,9 +178,10 @@ function legalProvenance(output) {
 }
 
 function readinessExpectedDate(provision, expected) {
-  if (/^Art\. 4(?:$|\()/.test(provision)) return "2026-07-27";
-  if (/^Art\. 50(?:$|\()/.test(provision)) return "2026-08-02";
-  if (/^Art\. (?:53|55)(?:$|\()/.test(provision)) {
+  const canonical = canonicalProvisionLabel(provision);
+  if (/^Article 4(?:$|\()/.test(canonical)) return "2026-07-27";
+  if (/^Article 50(?:$|\()/.test(canonical)) return "2026-08-02";
+  if (/^Article (?:52|53|55)(?:$|\()/.test(canonical)) {
     return "2025-08-02";
   }
   if (/^Article 5(?:$|\()/.test(provision)) {
@@ -358,12 +363,16 @@ function assessSpecialBoundaries(output, expected, result) {
     (duty) => duty.exact_provision,
   );
   for (const prefix of expected.required_readiness_provision_prefixes ?? []) {
-    if (!readinessProvisions.some((provision) => provision.startsWith(prefix))) {
+    const canonicalPrefix = canonicalProvisionLabel(prefix);
+    if (!readinessProvisions.some((provision) =>
+      canonicalProvisionLabel(provision).startsWith(canonicalPrefix))) {
       result.fail(`missing readiness provision family ${prefix}`);
     }
   }
   for (const prefix of expected.forbidden_readiness_provision_prefixes ?? []) {
-    if (readinessProvisions.some((provision) => provision.startsWith(prefix))) {
+    const canonicalPrefix = canonicalProvisionLabel(prefix);
+    if (readinessProvisions.some((provision) =>
+      canonicalProvisionLabel(provision).startsWith(canonicalPrefix))) {
       result.fail(`forbidden readiness provision family emitted: ${prefix}`);
     }
   }
@@ -626,7 +635,7 @@ async function grade(runLabel) {
       tool: "euaiact_assess_system",
       package: packageMetadata.name,
       package_version: packageMetadata.version,
-      decision_contract_version: "1.1",
+      decision_contract_version: "1.2",
       law_corpus_id: cases[0].actual.law_corpus_id,
     },
     public_corpus: {
