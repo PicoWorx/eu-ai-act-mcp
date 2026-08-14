@@ -247,7 +247,7 @@ export const prohibitedPractices: ProhibitedPractice[] = [
     id: "art5-1bb",
     name: "Child sexual abuse material",
     description:
-      "AI systems that generate or manipulate material or performance within the meaning of Article 2, points (c) and (e), of Directive 2011/93/EU, except where a 'without right' defence applies under national law. Added by the Digital Omnibus on AI (Regulation (EU) 2026/1744); applies from 2 December 2026. The same Art. 5(1a) and (1b) qualifications apply.",
+      "AI systems that generate or manipulate material or performance within the meaning of Article 2, points (c) and (e), of Directive 2011/93/EU, except where a 'without right' defence applies under national law. Added by the Digital Omnibus on AI (Regulation (EU) 2026/1744); applies from 2 December 2026. Art. 5(1a) applies. Art. 5(1b) does not apply to point (bb); it qualifies point (ba) only.",
     examples: [
       "Generative systems whose intended purpose is producing child sexual abuse material",
       "Image models offered with the reasonably foreseeable and reproducible capability to produce such material absent adequate safeguards",

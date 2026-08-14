@@ -2,9 +2,7 @@ name: Test
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   test:
@@ -27,14 +25,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
-      - name: Run tests
-        run: node test.mjs
-      - name: Claim matrix (corpus vs served facts)
-        run: node test-claims.mjs
-      - name: Post-serialization schema gate
-        run: node test-schemas.mjs
-      - name: Corpus integrity
-        run: node law/fetch.mjs verify
+      - name: Canonical verification
+        run: npm run verify

@@ -1,0 +1,109 @@
+{
+  "role": "provider",
+  "risk_level": "high-risk",
+  "obligations": [
+    {
+      "obligation": "Risk management system",
+      "article": "Art. 9",
+      "deadline": "2027-12-02",
+      "details": "Establish, implement, document and maintain a risk management system.",
+      "category": "risk_management"
+    }
+  ],
+  "penalties": {
+    "max_fine": "Up to EUR 15,000,000 or 3% of worldwide annual turnover",
+    "basis": "Art. 99(4)"
+  },
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.oj.2024.1689.consolidated.20260727"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.obligations.risk-level",
+      "profile_path": "/risk_level",
+      "value": "high-risk",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.obligations.role",
+      "profile_path": "/role",
+      "value": "provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.readiness.risk-management.legacy-001",
+      "block": "implementation_readiness",
+      "summary": "Article 9 is an applicable provider obligation for the supplied high-risk route.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "Atomic obligations request"
+      },
+      "fact_ids": [
+        "fact.obligations.risk-level",
+        "fact.obligations.role"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 9(1)",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_9",
+          "operative_date": "2027-12-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified",
+          "instrument_status": "enacted",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ]
+        }
+      ],
+      "determination": "applies",
+      "finding_basis": "legal_proposition"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.readiness.risk-management.legacy-001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.readiness.risk-management.legacy-001"
+      ]
+    }
+  ],
+  "recommended_next_calls": []
+}

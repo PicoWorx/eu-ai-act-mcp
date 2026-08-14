@@ -172,7 +172,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-15-healthcare",
     question: "How does the EU AI Act apply to healthcare?",
     answer:
-      "Healthcare AI is affected in two ways. First, AI systems that are safety components of medical devices (Annex I, referencing MDR and IVDR) become high-risk under Art. 6(1), with full obligations from 2 August 2028 as deferred by the Digital Omnibus on AI. Second, AI systems evaluating healthcare access or emergency dispatch fall under Annex III(5), with obligations from 2 December 2027. AI-assisted diagnostic tools, triage systems, and treatment recommendation engines are likely high-risk. Conformity assessment may require notified body involvement depending on the medical device classification.",
+      "Healthcare AI can reach high-risk status through different routes. An AI system that is a regulated product or safety component must satisfy the Art. 6(1), Annex I, product-law, third-party-conformity, and current Art. 6(1a) to (1c) conditions; that route applies from 2 August 2028. An emergency healthcare patient-triage system matching Annex III(5)(d) is high-risk from 2 December 2027, subject to Art. 6(3). Diagnostic and treatment-recommendation tools require the Art. 6(1) and intended-purpose analysis and are not high-risk merely because they are used in healthcare.",
     articleReferences: ["Art. 6(1)", "Art. 6(2)", "Annex I", "Annex III(5)"],
     keywords: ["healthcare", "medical", "medical device", "MDR", "diagnostic", "clinical", "health AI", "patient"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-ai-act-gesundheitswesen",
@@ -182,7 +182,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-16-penalties",
     question: "What are the penalties for non-compliance with the EU AI Act?",
     answer:
-      "Penalties are tiered by severity. Prohibited practice violations (Art. 5): up to EUR 35 million or 7% of global annual turnover, whichever is higher. High-risk and other obligation violations: up to EUR 15 million or 3%. Providing false information to authorities: up to EUR 7.5 million or 1%. For SMEs and startups, the applicable fine is whichever amount is lower (not higher), providing proportionate protection. Member States enforce via national market surveillance authorities.",
+      "Penalties are tiered by the exact violation. Art. 5 prohibited-practice violations under Art. 99(3): up to EUR 35 million or 7% of global annual turnover. The violations enumerated in Art. 99(4), including its listed operator, notified-body, and Art. 50 duties: up to EUR 15 million or 3%. Incorrect, incomplete, or misleading information under Art. 99(5): up to EUR 7.5 million or 1%. For an undertaking the higher ceiling applies, except that Art. 99(6) applies the lower ceiling to SMEs, including start-ups. Art. 99(6a) applies the lower ceiling to small mid-caps only for paragraphs 4 and 5.",
     articleReferences: ["Art. 99(3)", "Art. 99(4)", "Art. 99(5)", "Art. 99(6)"],
     keywords: ["penalties", "fines", "fined", "sanctions", "enforcement", "non-compliance", "punishment", "EUR 35 million", "company fined", "maximum fine"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/strafen-bussgeld-eu-ai-act",
@@ -211,7 +211,7 @@ export const faqDatabase: FAQEntry[] = [
     id: "faq-19-registration",
     question: "Do I need to register my AI system in the EU database?",
     answer:
-      "Yes, if you are a provider of a high-risk AI system. Art. 49(1) requires providers (or their authorised representatives) to register themselves and the system in the EU database before placing it on the market or putting it into service. Deployers who are public-law bodies or act on behalf of public authorities must also register (Art. 49(3)). Providers relying on the Art. 6(3) exception must still register and document their exception assessment (Art. 49(2)). The EU database is publicly accessible for transparency purposes (Art. 71).",
+      "Registration applies only where Art. 49 says so. Under Art. 49(1), before market placement or putting into service, providers or authorised representatives register themselves and an Annex III high-risk system, except a system in Annex III point 2. Under Art. 49(2), providers relying on an Art. 6(3) non-high-risk determination still register themselves and the system. The public-authority and Union-institution deployers listed in Art. 49(3), and persons acting on their behalf, register themselves, select the system, and register its use. Art. 49 is not a blanket registration rule for every high-risk system.",
     articleReferences: ["Art. 49", "Art. 71"],
     keywords: ["registration", "EU database", "database", "register", "Art. 49", "public database", "annex iii registration", "register high-risk system"],
     lexbeamUrl: "https://lexbeam.com/de/wissen/eu-datenbank-registrierung-ki-systeme",

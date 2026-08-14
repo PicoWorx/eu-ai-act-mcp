@@ -1,0 +1,33 @@
+{
+  "case_version": "1.2",
+  "case_id": "18-non-eu-no-nexus",
+  "categories": [
+    "abstention",
+    "territorial_scope",
+    "non_eu_nexus"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic spam filter is described only for the United States and explicitly has no supplied EU-use fact. Even though the higher-tier predicates are otherwise complete and negative, the assessment must not silently assume EU territorial scope or emit a minimal conclusion.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "undetermined",
+    "block_statuses": {
+      "legal_classification": "undetermined",
+      "impact": "determined",
+      "implementation_readiness": "undetermined"
+    },
+    "routes": [],
+    "annex_iii_categories": [],
+    "abstention": true,
+    "required_missing_fact_ids": [
+      "missing.legal.jurisdiction"
+    ],
+    "required_legal_anchors": [],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

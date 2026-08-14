@@ -1,0 +1,17 @@
+{
+  "role": "provider",
+  "risk_level": "high-risk",
+  "obligations": [
+    {
+      "obligation": "Risk management system",
+      "article": "Art. 9",
+      "deadline": "2027-12-02",
+      "details": "Establish, implement, document and maintain a risk management system.",
+      "category": "risk_management"
+    }
+  ],
+  "penalties": {
+    "max_fine": "Up to EUR 15,000,000 or 3% of worldwide annual turnover",
+    "basis": "Art. 99(4)"
+  }
+}

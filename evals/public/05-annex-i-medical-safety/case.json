@@ -1,0 +1,38 @@
+{
+  "case_version": "1.2",
+  "case_id": "05-annex-i-medical-safety",
+  "categories": [
+    "annex_i",
+    "clear_high_risk",
+    "medical_device"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic AI component controls a safety function in a regulated medical device and the applicable product law requires third-party conformity assessment. Both cumulative Article 6(1) facts are supplied, so the expected route is Annex I high-risk with the amended 2028 application date.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "high_risk"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 6(1) and Annex I",
+        "operative_date": "2028-08-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

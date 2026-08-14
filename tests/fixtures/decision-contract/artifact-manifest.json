@@ -1,0 +1,68 @@
+{
+  "manifest_version": "0.1",
+  "artifact": {
+    "artifact_id": "artifact.eu-ai-act.decision-contract",
+    "artifact_version": "1.0.0",
+    "artifact_kind": "decision_contract",
+    "regulation_id": "eu-ai-act"
+  },
+  "compiler": {
+    "name": "lexbeam-regulation-compiler",
+    "version": "0.1.0",
+    "source_commit": "ab322f04e3ecdde51f8a46b5c5c85bc56986b925"
+  },
+  "source_date_epoch": 1786622400,
+  "corpus": {
+    "corpus_id": "eu-ai-act-2026-07-27",
+    "corpus_sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": ["source.oj.2024.1689.consolidated.20260727"]
+  },
+  "domain_payload": {
+    "schema_id": "schema.eu-ai-act.decision-contract",
+    "schema_version": "1.0.0",
+    "fields": ["/contract_version"],
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "content_files": [
+    {
+      "path": "schemas/json/assess-system-response.schema.json",
+      "role": "schema",
+      "media_type": "application/schema+json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "bytes": 16384
+    }
+  ],
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "RFC8785",
+    "manifest_fields": [
+      "/manifest_version",
+      "/artifact",
+      "/compiler",
+      "/source_date_epoch",
+      "/corpus",
+      "/domain_payload",
+      "/content_files",
+      "/digest_contract"
+    ],
+    "volatile_fields": [
+      "/volatile/generated_at",
+      "/volatile/sealed_at",
+      "/volatile/build_id",
+      "/volatile/build_host",
+      "/volatile/build_path",
+      "/volatile/ci_job_url",
+      "/volatile/correlation_id",
+      "/volatile/duration_ms",
+      "/signature"
+    ],
+    "file_order": "path_ascending_unicode_code_point",
+    "file_bytes": "sha256_raw_bytes_then_include_file_record"
+  },
+  "content_digest": {
+    "algorithm": "sha256",
+    "value": "e53f9252a5ec7106941e089364551af5775efe2b0be3073a0b02ad0f664bdc59"
+  }
+}

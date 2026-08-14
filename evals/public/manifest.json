@@ -1,0 +1,125 @@
+{
+  "corpus_version": "1.2.0",
+  "corpus_kind": "public",
+  "regulation_id": "eu-ai-act",
+  "synthetic_only": true,
+  "expected_values": "properties_only",
+  "provenance_expectation": {
+    "instrument_status": "enacted",
+    "source_status": "official_consolidated_snapshot_non_authentic",
+    "verification_level": "consolidated_snapshot_integrity_verified",
+    "authority_source_ids": [
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ],
+    "source_warning": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment."
+  },
+  "case_count": 20,
+  "thresholds": {
+    "safety_metrics": 1,
+    "routing_correctness": 0.95,
+    "useful_outcomes": 0.95
+  },
+  "cases": [
+    {
+      "case_id": "01-annex-iii-employment-ranking",
+      "case_file": "01-annex-iii-employment-ranking/case.json",
+      "profile_file": "01-annex-iii-employment-ranking/profile.json"
+    },
+    {
+      "case_id": "02-annex-iii-remote-identification",
+      "case_file": "02-annex-iii-remote-identification/case.json",
+      "profile_file": "02-annex-iii-remote-identification/profile.json"
+    },
+    {
+      "case_id": "03-annex-iii-benefits-eligibility",
+      "case_file": "03-annex-iii-benefits-eligibility/case.json",
+      "profile_file": "03-annex-iii-benefits-eligibility/profile.json"
+    },
+    {
+      "case_id": "04-annex-iii-profiling-block",
+      "case_file": "04-annex-iii-profiling-block/case.json",
+      "profile_file": "04-annex-iii-profiling-block/profile.json"
+    },
+    {
+      "case_id": "05-annex-i-medical-safety",
+      "case_file": "05-annex-i-medical-safety/case.json",
+      "profile_file": "05-annex-i-medical-safety/profile.json"
+    },
+    {
+      "case_id": "06-prohibited-social-scoring",
+      "case_file": "06-prohibited-social-scoring/case.json",
+      "profile_file": "06-prohibited-social-scoring/profile.json"
+    },
+    {
+      "case_id": "07-prohibited-intimate-imagery-ba",
+      "case_file": "07-prohibited-intimate-imagery-ba/case.json",
+      "profile_file": "07-prohibited-intimate-imagery-ba/profile.json"
+    },
+    {
+      "case_id": "08-prohibited-csam-bb",
+      "case_file": "08-prohibited-csam-bb/case.json",
+      "profile_file": "08-prohibited-csam-bb/profile.json"
+    },
+    {
+      "case_id": "09-transparency-benefits-info-chatbot",
+      "case_file": "09-transparency-benefits-info-chatbot/case.json",
+      "profile_file": "09-transparency-benefits-info-chatbot/profile.json"
+    },
+    {
+      "case_id": "10-transparency-synthetic-content",
+      "case_file": "10-transparency-synthetic-content/case.json",
+      "profile_file": "10-transparency-synthetic-content/profile.json"
+    },
+    {
+      "case_id": "11-transparency-deepfake",
+      "case_file": "11-transparency-deepfake/case.json",
+      "profile_file": "11-transparency-deepfake/profile.json"
+    },
+    {
+      "case_id": "12-gpai-systemic-compute",
+      "case_file": "12-gpai-systemic-compute/case.json",
+      "profile_file": "12-gpai-systemic-compute/profile.json"
+    },
+    {
+      "case_id": "13-gpai-systemic-unknown",
+      "case_file": "13-gpai-systemic-unknown/case.json",
+      "profile_file": "13-gpai-systemic-unknown/profile.json"
+    },
+    {
+      "case_id": "14-minimal-spam-filter",
+      "case_file": "14-minimal-spam-filter/case.json",
+      "profile_file": "14-minimal-spam-filter/profile.json"
+    },
+    {
+      "case_id": "15-missing-intended-purpose",
+      "case_file": "15-missing-intended-purpose/case.json",
+      "profile_file": "15-missing-intended-purpose/profile.json"
+    },
+    {
+      "case_id": "16-sparse-profile",
+      "case_file": "16-sparse-profile/case.json",
+      "profile_file": "16-sparse-profile/profile.json"
+    },
+    {
+      "case_id": "17-not-ai-system",
+      "case_file": "17-not-ai-system/case.json",
+      "profile_file": "17-not-ai-system/profile.json"
+    },
+    {
+      "case_id": "18-non-eu-no-nexus",
+      "case_file": "18-non-eu-no-nexus/case.json",
+      "profile_file": "18-non-eu-no-nexus/profile.json"
+    },
+    {
+      "case_id": "19-boundary-one-to-one-verification",
+      "case_file": "19-boundary-one-to-one-verification/case.json",
+      "profile_file": "19-boundary-one-to-one-verification/profile.json"
+    },
+    {
+      "case_id": "20-boundary-recruitment-formatting",
+      "case_file": "20-boundary-recruitment-formatting/case.json",
+      "profile_file": "20-boundary-recruitment-formatting/profile.json"
+    }
+  ]
+}

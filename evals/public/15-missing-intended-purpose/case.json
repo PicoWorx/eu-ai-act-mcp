@@ -1,0 +1,33 @@
+{
+  "case_version": "1.2",
+  "case_id": "15-missing-intended-purpose",
+  "categories": [
+    "abstention",
+    "decisive_missing_fact"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic profile supplies EU nexus, actor, affected group, and consequence but omits the intended purpose. Because intended purpose is declared decisive for impact, legal classification, impact, and readiness must abstain and enumerate the decisive fact instead of guessing a route or impact result.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "undetermined",
+    "block_statuses": {
+      "legal_classification": "undetermined",
+      "impact": "undetermined",
+      "implementation_readiness": "undetermined"
+    },
+    "routes": [],
+    "annex_iii_categories": [],
+    "abstention": true,
+    "required_missing_fact_ids": [
+      "missing.intended-purpose"
+    ],
+    "required_legal_anchors": [],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  },
+  "authorization_comment": "Captain-authorized correction recorded in SPRINT-LOG M6b on 14.08.2026: expected impact status changed from determined to undetermined because intended purpose is marked decisive for impact."
+}

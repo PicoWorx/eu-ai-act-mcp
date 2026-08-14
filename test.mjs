@@ -1,7 +1,8 @@
 // Direct function tests for the EU AI Act MCP server.
 // Run `npm run build` first so dist/ is up to date.
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { classifyInputSchema } from "./dist/schemas/classify.js";
 import { obligationsInputSchema } from "./dist/schemas/obligations.js";
 import { penaltiesInputSchema } from "./dist/schemas/penalties.js";
@@ -41,6 +42,14 @@ import { articles, findArticle } from "./dist/knowledge/articles.js";
 import { annexIVItems } from "./dist/knowledge/annex-iv.js";
 import { BRANDING, SERVER_INSTRUCTIONS } from "./dist/constants.js";
 import { createServer } from "./dist/server.js";
+import {
+  assessSystemResponseSchema,
+  systemProfileSchema,
+} from "./dist/decision-contract/index.js";
+import {
+  canonicalResponseHash,
+  canonicalize,
+} from "./dist/utils/canonical-json.js";
 
 let pass = 0;
 let fail = 0;
@@ -89,6 +98,7 @@ async function callTool(toolName, input) {
   const { registerGpaiSystemicTool } = await import("./dist/tools/gpai-systemic.js");
   const { registerArt6ExceptionTool } = await import("./dist/tools/art6-exception.js");
   const { registerAnnexIvTool } = await import("./dist/tools/annex-iv.js");
+  const { registerAssessSystemTool } = await import("./dist/tools/assess-system.js");
 
   registerClassifyTool(fakeServer);
   registerDeadlinesTool(fakeServer);
@@ -99,6 +109,7 @@ async function callTool(toolName, input) {
   registerGpaiSystemicTool(fakeServer);
   registerArt6ExceptionTool(fakeServer);
   registerAnnexIvTool(fakeServer);
+  registerAssessSystemTool(fakeServer);
 
   const handler = registered[toolName];
   if (!handler) throw new Error(`Tool not registered: ${toolName}`);
@@ -129,6 +140,8 @@ test("art6 input: profiling flag required", art6ExceptionInputSchema.safeParse({
 test("art6 input: missing profiling rejected", !art6ExceptionInputSchema.safeParse({}).success);
 test("annex iv: empty ok", annexIvInputSchema.safeParse({}).success);
 test("annex iv: checklist format", annexIvInputSchema.safeParse({ format: "checklist" }).success);
+test("assess system: sparse frozen profile parses", systemProfileSchema.safeParse({ profile_version: "1.0" }).success);
+test("assess system: caller-selected regulation is rejected", !systemProfileSchema.safeParse({ profile_version: "1.0", regulation_id: "other" }).success);
 
 // ─── DIST / SOURCE CONSISTENCY ─────────────────────────────────────────────
 console.log("\n📦 DIST / SOURCE CONSISTENCY");
@@ -216,8 +229,9 @@ for (const [key, input] of Object.entries({
   signalsRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: true } },
   signalsNonPublicRbi: { signals: { uses_biometrics: true, biometric_realtime: true, biometric_law_enforcement: true, biometric_publicly_accessible_space: false } },
   signalsEmployment: { signals: { domain: "employment" } },
-  signalsSocialScoring: { signals: { performs_social_scoring_by_public_authority: true } },
-  signalsPrivateSocialScoring: { signals: { performs_social_scoring: true } },
+  signalsSocialScoring: { signals: { performs_social_scoring_by_public_authority: true, social_scoring_unrelated_context: true } },
+  signalsPrivateSocialScoring: { signals: { performs_social_scoring: true, social_scoring_unjustified_or_disproportionate: true } },
+  signalsIncompleteSocialScoring: { signals: { performs_social_scoring: true } },
   signalsChatbot: { signals: { interacts_with_natural_persons: true } },
   signalsSynthetic: { signals: { generates_synthetic_content: true } },
   signalsAnnexI: { signals: { is_safety_component_of_regulated_product: true, requires_third_party_conformity_assessment: true } },
@@ -310,6 +324,11 @@ test(
   "signals private social scoring → prohibited Art. 5(1)(c)",
   structured(classifyResults.signalsPrivateSocialScoring).risk_classification === "prohibited" &&
     /public authorities/i.test(structured(classifyResults.signalsPrivateSocialScoring).obligations_summary) === false,
+);
+test(
+  "signals social scoring without a treatment limb → insufficient information",
+  structured(classifyResults.signalsIncompleteSocialScoring).risk_classification === "insufficient_information" &&
+    structured(classifyResults.signalsIncompleteSocialScoring).next_questions.length === 2,
 );
 test(
   "signals interacts_with_natural_persons → limited Art. 50(1)",
@@ -1011,6 +1030,19 @@ console.log("\n🔌 SERVER WIRING");
 {
   const srv = createServer();
   test("createServer returns an McpServer instance", typeof srv === "object");
+  test("assessment is registered as tool 10 after the nine atomic tools",
+    Object.keys(srv._registeredTools).join(",") === [
+      "euaiact_classify_system",
+      "euaiact_check_deadlines",
+      "euaiact_get_obligations",
+      "euaiact_answer_question",
+      "euaiact_calculate_penalty",
+      "euaiact_get_article",
+      "euaiact_check_gpai_systemic_risk",
+      "euaiact_assess_art6_3_exception",
+      "euaiact_annex_iv_checklist",
+      "euaiact_assess_system",
+    ].join(","));
 }
 
 // ─── 1.4.4 REGRESSIONS (batch 2: classifier, GPAI, FAQ, penalties, obligations)
@@ -1024,7 +1056,9 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
     requires_third_party_conformity_assessment: false, affects_fundamental_rights: false,
     targets_children_or_vulnerable: false, generates_synthetic_content: false,
     interacts_with_natural_persons: false, performs_emotion_recognition_workplace_or_school: false,
-    performs_social_scoring: false, performs_social_scoring_by_public_authority: false,
+    performs_social_scoring: false, social_scoring_unrelated_context: false,
+    social_scoring_unjustified_or_disproportionate: false,
+    performs_social_scoring_by_public_authority: false,
   };
   const rMin = structured(await callTool("euaiact_classify_system", { description: "email spam filter", signals: ALL_FALSE }));
   test("classify: complete negative signal set returns minimal", rMin.risk_classification === "minimal");
@@ -1049,9 +1083,28 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   // Cross-model round 3 blockers, pinned as regressions:
   const P8 = { uses_biometrics: false, performs_social_scoring: false, generates_synthetic_content: false, interacts_with_natural_persons: false, is_safety_component_of_regulated_product: false, affects_fundamental_rights: false, targets_children_or_vulnerable: false, performs_emotion_recognition_workplace_or_school: false };
   const rB1 = structured(await callTool("euaiact_classify_system", { description: "AI system that ranks and shortlists job applicants for recruitment", signals: P8 }));
-  test("blocker: negative signals cannot override risky text (recruitment)", rB1.risk_classification === "high-risk" && rB1.basis === "text");
-  const rB2 = structured(await callTool("euaiact_classify_system", { description: "system deciding eligibility for essential public assistance benefits", signals: ALL_FALSE }));
-  test("blocker: all-false signals cannot override risky text (benefits)", rB2.risk_classification === "high-risk");
+  test("blocker: partial negative signals cannot override risky text (recruitment)", rB1.risk_classification === "high-risk" && rB1.basis === "text");
+  const rB2 = structured(await callTool("euaiact_classify_system", { description: "system deciding eligibility for essential public assistance benefits", signals: P8 }));
+  test("blocker: partial negative signals cannot override risky text (benefits)", rB2.risk_classification === "high-risk");
+  const COMPLETE_ROUTE_NEGATIVES = {
+    domain: "other", uses_biometrics: false, biometric_sole_purpose_verification: false,
+    biometric_remote_identification: false, biometric_realtime: false,
+    biometric_law_enforcement: false, biometric_publicly_accessible_space: false,
+    is_safety_component_of_regulated_product: false,
+    requires_third_party_conformity_assessment: false,
+    generates_synthetic_content: false, interacts_with_natural_persons: false,
+    performs_emotion_recognition_workplace_or_school: false, performs_social_scoring: false,
+    social_scoring_unrelated_context: false,
+    social_scoring_unjustified_or_disproportionate: false,
+  };
+  const rStructuredDominance = structured(await callTool("euaiact_classify_system", {
+    description: "Format job application documents into a consistent layout without ranking, filtering, scoring, or evaluating candidates",
+    use_case: "Document formatting for job application files without candidate evaluation",
+    signals: COMPLETE_ROUTE_NEGATIVES,
+  }));
+  test("classify: complete structured negatives dominate recruitment vocabulary",
+    rStructuredDominance.risk_classification === "minimal" &&
+    rStructuredDominance.basis === "signals");
   const rB3 = structured(await callTool("euaiact_classify_system", { description: "scans faces in the terminal to identify persons on a watchlist", signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }));
   test("blocker: verification signal contradicted by identification text", rB3.risk_classification === "insufficient_information" && /CONTRADICTED|contradiction|mutually exclusive/i.test(JSON.stringify(rB3)));
 
@@ -1067,7 +1120,7 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   const gOver = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 3e25 }));
   test("gpai: 3e25 crosses", gOver.is_gpai_with_systemic_risk === true);
   const gAt = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 1e25 }));
-  test("gpai: exactly 1e25 does not cross (strict greater-than)", gAt.crosses_flops_threshold === false && gAt.is_gpai_with_systemic_risk === false);
+  test("gpai: adjudicated boundary treats exactly 1e25 as threshold met", gAt.crosses_flops_threshold === true && gAt.is_gpai_with_systemic_risk === true);
   const gDesig = structured(await callTool("euaiact_check_gpai_systemic_risk", { commission_designated: true }));
   test("gpai: designation alone establishes systemic risk", gDesig.is_gpai_with_systemic_risk === true && gDesig.systemic_risk_designation === "commission_designated");
 
@@ -1150,6 +1203,59 @@ console.log("\n📖 1.4.4 REGRESSIONS: ARTICLE CORPUS");
   test("reuse wording: no bare public-domain claim in server instructions", !/public.domain/i.test(SERVER_INSTRUCTIONS) && /2011\/833\/EU/.test(SERVER_INSTRUCTIONS));
 }
 
+// ─── AUDITED TRUTH CORRECTIONS ─────────────────────────────────────────────
+console.log("\n🔒 AUDITED TRUTH CORRECTIONS");
+{
+  const bundle = readFileSync("dist/server.js", "utf8");
+  const readme = readFileSync("README.md", "utf8");
+  const changelog = readFileSync("CHANGELOG.md", "utf8");
+
+  test("truth M015: risk resource scopes Art. 50 by actor and paragraph",
+    bundle.includes("Art. 50 contains paragraph-specific duties") && bundle.includes("Apply the actor, scope, and exceptions in the relevant paragraph"));
+  test("truth M016: minimal label preserves independently triggered duties",
+    bundle.includes("No higher-tier obligation is identified from this risk label alone") && bundle.includes("Art. 4") && bundle.includes("Art. 95 codes of conduct are voluntary"));
+
+  const bb = prohibitedPractices.find((practice) => practice.id === "art5-1bb")?.description ?? "";
+  test("truth M029: Art. 5(1b) is limited to point (ba)",
+    bb.includes("Art. 5(1b) does not apply to point (bb)") && bb.includes("qualifies point (ba) only"));
+
+  const healthcare = faqDatabase.find((entry) => entry.id === "faq-15-healthcare")?.answer ?? "";
+  test("truth M063: healthcare answer requires an Art. 6 or Annex III route",
+    healthcare.includes("third-party-conformity") && healthcare.includes("Annex III(5)(d)") && healthcare.includes("not high-risk merely because"));
+
+  const penalties = faqDatabase.find((entry) => entry.id === "faq-16-penalties")?.answer ?? "";
+  test("truth M061: penalties answer limits the 15M tier to enumerated Art. 99(4) duties",
+    penalties.includes("violations enumerated in Art. 99(4)") && penalties.includes("small mid-caps only for paragraphs 4 and 5"));
+
+  const registration = faqDatabase.find((entry) => entry.id === "faq-19-registration")?.answer ?? "";
+  test("truth M062: registration answer is not a blanket high-risk rule",
+    registration.includes("except a system in Annex III point 2") && registration.includes("not a blanket registration rule"));
+
+  test("truth M064: disclaimer asks for official-source verification",
+    readme.includes("verified against current official sources") && readme.includes("qualified local counsel") && !readme.includes("not Rechtsberatung im Sinne"));
+  test("truth M073: historical backstop wording is corrected",
+    changelog.includes("makes both dates unconditional") && !changelog.includes("Both are backstop dates; a Commission decision"));
+  test("truth M074: changelog preserves the Art. 5 qualifier split",
+    changelog.includes("Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only"));
+  test("truth M078: changelog names the profiling block as the third subparagraph",
+    changelog.includes("profiling block (Art. 6(3), third subparagraph)"));
+
+  const annex = structured(await callTool("euaiact_annex_iv_checklist", { format: "checklist" }));
+  test("truth M080: Annex IV output labels implementation prompts as non-binding",
+    annex.guidance_note.includes("non-binding implementation prompts") && annex.checklist_markdown.includes(annex.guidance_note));
+
+  const a73 = articles.find((entry) => entry.number === "73")?.summary ?? "";
+  test("truth M082: Art. 73 two-day route carries the Art. 3(49)(b) threshold",
+    a73.includes("serious and irreversible disruption of the management or operation of critical infrastructure under Art. 3(49)(b)"));
+
+  const articleTool = readFileSync("dist/tools/article.js", "utf8");
+  test("truth grounding: article summaries cannot be quoted as statutory text",
+    articleTool.includes("The summary is not statutory text") &&
+    bundle.includes("Do not quote the summary as statutory text") &&
+    !articleTool.includes("quote article text with a link") &&
+    !bundle.includes("fetch the text and EUR-Lex URL"));
+}
+
 // ─── AGENT JOURNEYS (the ten end-to-end navigation tasks from 2026-08-06) ──
 // Each journey is what a consuming agent actually does: a question, one or two
 // chained tool calls, and an answer it can act on. These caught 4 failures the
@@ -1197,6 +1303,781 @@ console.log("\n🧭 AGENT JOURNEYS");
   // J10: nudification app (enacted Art. 5(1)(ba))
   const j10 = structured(await callTool("euaiact_classify_system", { description: "app that generates non-consensual intimate images of real people from their photos" }));
   test("J10 nudification: prohibited under Art. 5(1)(ba)", j10.risk_classification === "prohibited" && j10.relevant_articles.includes("Art. 5(1)(ba)"));
+}
+
+// ─── 1.5 ASSESS SYSTEM CONTRACT ────────────────────────────────────────────
+console.log("\n🧩 ASSESS SYSTEM 1.5");
+{
+  const fixtureRoot = "tests/fixtures/assess-system";
+  const goldenRoot = "tests/golden";
+  const loadJson = (path) => JSON.parse(readFileSync(path, "utf8"));
+  const loadProfile = (name) => loadJson(join(fixtureRoot, name));
+  const runAssessment = async (name) =>
+    structured(await callTool("euaiact_assess_system", loadProfile(name)));
+  const profileFact = (fact_id, value, verification = "caller_asserted") => ({
+    fact_id,
+    value,
+    origin: verification === "evidence_linked"
+      ? "cited_evidence"
+      : "explicit_structured_input",
+    verification,
+    evidence_reference_ids: [],
+  });
+
+  const high = await runAssessment("contract-high-risk.json");
+  test("assess: clear Annex III system is high-risk",
+    high.status === "determined" &&
+    high.legal_classification.routes.some((route) => route.route === "high_risk"));
+  test("assess: classification does not imply readiness",
+    high.implementation_readiness.readiness_state === "evidence_missing" &&
+    high.implementation_readiness.is_regulatory_approval === false);
+
+  const minimal = await runAssessment("minimal-complete.json");
+  test("assess: clear minimal route requires complete negative facts",
+    minimal.status === "determined" &&
+    minimal.legal_classification.routes.length === 1 &&
+    minimal.legal_classification.routes[0].route === "minimal");
+
+  const prohibited = await runAssessment("prohibited-social-scoring.json");
+  test("assess: prohibited-practice hit is preserved",
+    prohibited.status === "determined" &&
+    prohibited.legal_classification.routes.some((route) => route.route === "prohibited"));
+
+  const sparse = await runAssessment("contract-sparse.json");
+  test("assess: decisive missing fact abstains instead of guessing",
+    sparse.status === "undetermined" &&
+    sparse.legal_classification.status === "undetermined" &&
+    sparse.legal_classification.routes.length === 0 &&
+    sparse.missing_facts.some((fact) => fact.missing_fact_id === "missing.intended-purpose" && fact.decisive));
+  test("assess: sparse profile enumerates each affected block",
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("legal_classification")) &&
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("impact")) &&
+    sparse.missing_facts.some((fact) => fact.affected_blocks.includes("implementation_readiness")));
+  const missingPurposeProfile = loadProfile("minimal-complete.json");
+  delete missingPurposeProfile.intended_use;
+  delete missingPurposeProfile.annex_iii.purpose;
+  const missingPurpose = structured(await callTool("euaiact_assess_system", missingPurposeProfile));
+  test("assess: decisive missing fact propagates to every named block",
+    missingPurpose.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose" &&
+      fact.decisive &&
+      fact.affected_blocks.includes("impact")) &&
+    missingPurpose.impact.status === "undetermined" &&
+    missingPurpose.impact.inherent_impact === null &&
+    missingPurpose.impact.residual_impact === null);
+  test("assess: omitted jurisdiction is disclosed instead of defaulting to EU",
+    sparse.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction") &&
+    sparse.findings.every((finding) => finding.scope.jurisdictions.join(",") === "unspecified"));
+
+  const nonEuProfile = loadProfile("minimal-complete.json");
+  nonEuProfile.geography.jurisdictions[0].value = "United States";
+  nonEuProfile.geography.used_in_eu.value = false;
+  const nonEu = structured(await callTool("euaiact_assess_system", nonEuProfile));
+  test("assess: non-EU geography without an EU nexus fact fails closed",
+    nonEu.legal_classification.status === "undetermined" &&
+    nonEu.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction"));
+
+  const notApplicable = await runAssessment("contract-not-applicable.json");
+  test("assess: definition-boundary result uses the Chapter I application date",
+    notApplicable.status === "not_applicable" &&
+    notApplicable.findings[0].provenance[0].operative_date === "2025-02-02");
+
+  const lowImpactHighRisk = await runAssessment("high-risk-low-impact-controlled.json");
+  test("assess: low impact never erases legal high-risk classification",
+    lowImpactHighRisk.impact.inherent_impact.description.includes("limited decision influence") &&
+    lowImpactHighRisk.impact.does_not_alter_legal_classification === true &&
+    lowImpactHighRisk.legal_classification.routes.some((route) => route.route === "high_risk"));
+  test("assess: evidence matching is conservative and duty-category specific",
+    lowImpactHighRisk.implementation_readiness.applicable_duties
+      .filter((duty) => duty.evidence_state === "documented")
+      .map((duty) => duty.duty_id)
+      .join(",") === "duty.provider.art.9.risk.management");
+
+  const multiRoute = await runAssessment("high-risk-plus-transparency.json");
+  test("assess: legal routes are independently retained",
+    multiRoute.legal_classification.routes.map((route) => route.route).join(",") ===
+      "high_risk,transparency_duty");
+  test("assess: Annex III high-risk output discloses the frozen Art. 6(3) limit",
+    multiRoute.legal_classification.limitations.some((limitation) =>
+      limitation.includes("no no-significant-risk predicate")));
+  test("assess: provider chatbot readiness does not inherit Article 50(2)",
+    multiRoute.implementation_readiness.applicable_duties.some(
+      (duty) => duty.exact_provision === "Art. 50(1)" && duty.actor_roles.includes("provider"),
+    ) &&
+    !multiRoute.implementation_readiness.applicable_duties.some(
+      (duty) => duty.exact_provision === "Art. 50(2)" && duty.actor_roles.includes("provider"),
+    ));
+
+  const deepfakeReadiness = await runAssessment("transparency-deepfake.json");
+  test("assess: deepfake readiness retains only triggered Article 50 paragraphs per actor",
+    deepfakeReadiness.implementation_readiness.applicable_duties
+      .filter((duty) => duty.exact_provision.startsWith("Art. 50"))
+      .map((duty) => `${duty.actor_roles[0]}:${duty.exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Art. 50(4),provider:Art. 50(2)");
+
+  const baProfile = loadProfile("transparency-deepfake.json");
+  baProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.ba.operation", "generation"),
+    ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person:
+      profileFact("fact.article5.ba.material", true),
+    ba_required_consent_present: profileFact("fact.article5.ba.consent", false),
+    ba_manipulation_increases_intimate_exposure:
+      profileFact("fact.article5.ba.increased-exposure", true),
+    ba_manipulation_alters_sexually_explicit_activity:
+      profileFact("fact.article5.ba.alters-activity", false),
+    provider_generation_or_manipulation_is_intended_purpose:
+      profileFact("fact.article5.provider.intended", true),
+    provider_foreseeable_and_reproducible_outcome_without_significant_modification:
+      profileFact("fact.article5.provider.foreseeable", true),
+    provider_reasonable_and_adequate_safeguards_present:
+      profileFact("fact.article5.provider.safeguards", false),
+    deployer_uses_for_generation_or_manipulation_purpose:
+      profileFact("fact.article5.deployer.purpose", true),
+  };
+  const ba = structured(await callTool("euaiact_assess_system", baProfile));
+  const baLegal = ba.findings.filter((finding) => finding.block === "legal_classification");
+  test("MIGRATION-002 holdout.03: ba emits prospective provider and deployer prohibition branches",
+    ba.status === "determined" &&
+    ba.legal_classification.routes.some((route) =>
+      route.route === "prohibited" &&
+      route.actor_roles.join(",") === "deployer,provider") &&
+    baLegal.some((finding) =>
+      finding.scope.actors.join(",") === "provider" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 5(1a)(a)(i)" &&
+        item.operative_date === "2026-12-02")) &&
+    baLegal.some((finding) =>
+      finding.scope.actors.join(",") === "deployer" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1a)(b)")));
+  test("MIGRATION-002 holdout.03: ba evaluates 5(1b) and keeps Article 50 actor-specific",
+    baLegal.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1b)")) &&
+    baLegal
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision.startsWith("Article 50")))
+      .map((finding) => `${finding.scope.actors.join(",")}:${finding.provenance[0].exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Article 50(4),provider:Article 50(2)" &&
+    ba.implementation_readiness.applicable_duties
+      .filter((duty) => duty.exact_provision.startsWith("Art. 50"))
+      .map((duty) => `${duty.actor_roles.join(",")}:${duty.exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Art. 50(4),provider:Art. 50(2)" &&
+    ba.legal_classification.limitations.some((limitation) => limitation.includes("Article 111(4)")));
+
+  const bbProfile = loadProfile("transparency-deepfake.json");
+  bbProfile.transparency.deep_fake_content.value = false;
+  bbProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.bb.operation", "generation"),
+    bb_directive_2011_93_category:
+      profileFact("fact.article5.bb.directive-category", "article_2_c_iv"),
+    bb_without_right_defence_applies_under_national_law:
+      profileFact("fact.article5.bb.without-right-defence", false),
+    provider_generation_or_manipulation_is_intended_purpose:
+      profileFact("fact.article5.bb.provider.intended", true),
+    provider_foreseeable_and_reproducible_outcome_without_significant_modification:
+      profileFact("fact.article5.bb.provider.foreseeable", true),
+    provider_reasonable_and_adequate_safeguards_present:
+      profileFact("fact.article5.bb.provider.safeguards", false),
+    deployer_uses_for_generation_or_manipulation_purpose:
+      profileFact("fact.article5.bb.deployer.purpose", true),
+  };
+  const bb = structured(await callTool("euaiact_assess_system", bbProfile));
+  const bbLegalProvisions = bb.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.04: bb is fail-closed and requires human review for caller-asserted defence",
+    bb.status === "human_review_required" &&
+    bb.legal_classification.status === "human_review_required" &&
+    bb.legal_classification.routes.some((route) =>
+      route.route === "prohibited" &&
+      route.actor_roles.join(",") === "deployer,provider") &&
+    bbLegalProvisions.includes("Article 5(1)(bb)") &&
+    bbLegalProvisions.includes("Article 5(1a)(a)(i)") &&
+    bbLegalProvisions.includes("Article 5(1a)(b)") &&
+    !bbLegalProvisions.includes("Article 5(1b)") &&
+    bb.findings
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision === "Article 5(1)(bb)"))
+      .every((finding) => finding.provenance.every((item) => item.operative_date === "2026-12-02")) &&
+    bb.findings
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision.startsWith("Article 50")))
+      .map((finding) => `${finding.scope.actors.join(",")}:${finding.provenance[0].exact_provision}`)
+      .join(",") === "provider:Article 50(2)" &&
+    bb.facts_used.some((fact) =>
+      fact.fact_id === "fact.article5.bb.without-right-defence" &&
+      fact.verification === "caller_asserted") &&
+    bb.warnings.some((warning) => warning.code === "LEGAL_REVIEW_REQUIRED"));
+
+  const assertedBbDefenceProfile = structuredClone(bbProfile);
+  assertedBbDefenceProfile.article_5_prohibitions
+    .bb_without_right_defence_applies_under_national_law.value = true;
+  const assertedBbDefence = structured(
+    await callTool("euaiact_assess_system", assertedBbDefenceProfile),
+  );
+  test("MIGRATION-002 policy P1: caller-asserted bb defence never removes the prohibition route",
+    assertedBbDefence.status === "human_review_required" &&
+    assertedBbDefence.legal_classification.routes.some((route) => route.route === "prohibited") &&
+    assertedBbDefence.facts_used.some((fact) =>
+      fact.fact_id === "fact.article5.bb.without-right-defence" &&
+      fact.value === true &&
+      fact.verification === "caller_asserted"));
+
+  const standardEditProfile = loadProfile("minimal-complete.json");
+  standardEditProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.edit.operation", "manipulation"),
+    ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person:
+      profileFact("fact.article5.edit.material", true),
+    ba_required_consent_present: profileFact("fact.article5.edit.consent", true),
+    ba_manipulation_increases_intimate_exposure:
+      profileFact("fact.article5.edit.increased-exposure", false),
+    ba_manipulation_alters_sexually_explicit_activity:
+      profileFact("fact.article5.edit.alters-activity", false),
+  };
+  standardEditProfile.transparency.standard_editing_assistive_function =
+    profileFact("fact.transparency.edit.standard", true);
+  standardEditProfile.transparency.substantially_alters_input_or_semantics =
+    profileFact("fact.transparency.edit.substantial", false);
+  const standardEdit = structured(
+    await callTool("euaiact_assess_system", standardEditProfile),
+  );
+  test("MIGRATION-002 holdout.05: complete editing exclusions return determined minimal",
+    standardEdit.status === "determined" &&
+    standardEdit.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    standardEdit.missing_facts.every((fact) => fact.missing_fact_id !== "missing.intended-purpose") &&
+    standardEdit.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1)(ba)") &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1b)")) &&
+    standardEdit.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 50(2)")));
+
+  const gpai = await runAssessment("gpai-systemic.json");
+  const gpaiLegalProvisions = gpai.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.08: compute presumption carries Article 51 and 52 anchors",
+    ["Article 51(1)(a)", "Article 51(2)", "Article 52(1)", "Article 52(2)"]
+      .every((provision) => gpaiLegalProvisions.includes(provision)) &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision === "Article 52(1)") &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision.startsWith("Article 53")) &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision.startsWith("Article 55")) &&
+    !gpai.implementation_readiness.applicable_duties.some((duty) =>
+      /^(?:Article|Art\.) 54/.test(duty.exact_provision)));
+
+  const gpaiBoundaryProfile = loadProfile("gpai-systemic.json");
+  gpaiBoundaryProfile.gpai.training_flops.value = 1e25;
+  const gpaiBoundary = structured(
+    await callTool("euaiact_assess_system", gpaiBoundaryProfile),
+  );
+  const gpaiBoundaryProvisions = gpaiBoundary.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.08: exact 1e25 boundary triggers Article 51 and 52 end to end",
+    gpaiBoundary.status === "determined" &&
+    ["Article 51(1)(a)", "Article 51(2)", "Article 52(1)", "Article 52(2)"]
+      .every((provision) => gpaiBoundaryProvisions.includes(provision)) &&
+    gpaiBoundary.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision === "Article 52(1)"));
+
+  const explicitNonEuProfile = loadProfile("minimal-complete.json");
+  explicitNonEuProfile.geography.jurisdictions[0].value = "Canada";
+  explicitNonEuProfile.geography.used_in_eu.value = false;
+  explicitNonEuProfile.geography.placed_on_eu_market =
+    profileFact("fact.geography.non-eu.placed", false);
+  explicitNonEuProfile.geography.output_used_in_eu =
+    profileFact("fact.geography.non-eu.output", false);
+  const explicitNonEu = structured(
+    await callTool("euaiact_assess_system", explicitNonEuProfile),
+  );
+  test("MIGRATION-002 holdout.10: all explicit negative Article 2 nexus facts yield non-applicability",
+    explicitNonEu.status === "not_applicable" &&
+    explicitNonEu.legal_classification.status === "not_applicable" &&
+    explicitNonEu.impact.status === "determined" &&
+    explicitNonEu.implementation_readiness.status === "not_applicable" &&
+    !explicitNonEu.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction") &&
+    explicitNonEu.findings.some((finding) =>
+      finding.determination === "not_applicable" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 2(1)" &&
+        item.operative_date === "2026-08-02")));
+
+  const stackedProfile = loadProfile("high-risk-plus-transparency.json");
+  stackedProfile.role_facts.roles = [];
+  stackedProfile.biometric_and_practices = {
+    social_scoring: {
+      fact_id: "fact.practice.social-scoring",
+      value: true,
+      origin: "explicit_structured_input",
+      verification: "caller_asserted",
+      evidence_reference_ids: [],
+    },
+    social_scoring_unrelated_context: {
+      fact_id: "fact.practice.social-scoring.unrelated-context",
+      value: true,
+      origin: "explicit_structured_input",
+      verification: "caller_asserted",
+      evidence_reference_ids: [],
+    },
+  };
+  const stacked = structured(await callTool("euaiact_assess_system", stackedProfile));
+  test("assess: prohibited, high-risk, and transparency routes coexist in normative order",
+    stacked.legal_classification.routes.map((route) => route.route).join(",") ===
+      "prohibited,high_risk,transparency_duty");
+  test("assess: a prohibited route cannot hide a missing actor for high-risk readiness",
+    stacked.legal_classification.status === "determined" &&
+    stacked.implementation_readiness.status === "undetermined" &&
+    stacked.status === "undetermined" &&
+    stacked.missing_facts.some((fact) => fact.missing_fact_id === "missing.readiness.actor-role"));
+
+  const deepfakeWithoutPurpose = loadProfile("transparency-deepfake.json");
+  delete deepfakeWithoutPurpose.intended_use;
+  deepfakeWithoutPurpose.transparency.generates_or_manipulates_synthetic_content.value = false;
+  const explicitDeepfake = structured(await callTool("euaiact_assess_system", deepfakeWithoutPurpose));
+  test("assess: an explicit deep-fake predicate does not require inferred purpose text",
+    explicitDeepfake.legal_classification.status === "determined" &&
+    explicitDeepfake.legal_classification.routes.map((route) => route.route).join(",") ===
+      "transparency_duty");
+
+  // FIX-RUN2 F3 (blind run 2, holdout2.10): an Annex I route may only be
+  // grounded when the cited instrument itself is in the pinned Annex I list.
+  const annexIInstruments = await import("./dist/decision-contract/annex-i-instruments.js");
+  test("FIX-RUN2 F3: pinned Annex I list is the closed post-M1 set, points 2 to 21",
+    annexIInstruments.ANNEX_I_INSTRUMENTS.length === 20 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.map((item) => item.annex_point).join(",") ===
+      "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21" &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.filter((item) => item.section === "A").length === 11 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.filter((item) => item.section === "B").length === 9 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.some((item) =>
+      item.annex_point === 21 && item.citation === "Regulation (EU) 2023/1230"));
+  test("FIX-RUN2 F3: membership is instrument identity, never substring presence",
+    annexIInstruments.matchAnnexIInstrument("Regulation (EC) No 1223/2009 on cosmetic products").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Directive 2001/83/EC").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EC) No 178/2002").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2017/745").entry?.annex_point === 11 &&
+    annexIInstruments.matchAnnexIInstrument("32017R0745").entry?.annex_point === 11 &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2023/1230 on machinery").entry?.annex_point === 21 &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2017/745 of the European Parliament and of the Council of 5 April 2017 on medical devices, amending Directive 2001/83/EC, Regulation (EC) No 178/2002 and Regulation (EC) No 1223/2009").status === "listed" &&
+    annexIInstruments.matchAnnexIInstrument("the applicable European cosmetics harmonisation framework").status === "no_citation");
+
+  const annexITrapProfile = {
+    profile_version: "1.0",
+    identity: {
+      system_name: profileFact("fact.identity.name", "Cosmetics shade formulator"),
+      machine_based_system: profileFact("fact.identity.machine", true),
+      infers_from_inputs_how_to_generate_outputs: profileFact("fact.identity.infers", true),
+    },
+    intended_use: {
+      intended_purpose: profileFact(
+        "fact.intended-use.purpose",
+        "Recommend cosmetic foundation shade formulations to laboratory technicians",
+      ),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: {
+      roles: [
+        profileFact("fact.role.product-manufacturer", "product_manufacturer"),
+        profileFact("fact.role.provider", "provider"),
+      ],
+    },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.eu", "EU")],
+      used_in_eu: profileFact("fact.geo.used", true),
+      affected_person_groups: [profileFact("fact.geo.group.consumers", "Cosmetics consumers")],
+    },
+    decision_context: {
+      decision_consequence: profileFact(
+        "fact.decision.consequence",
+        "Shade formulation suggestions reviewed by laboratory staff",
+      ),
+      materially_influences_decision: profileFact("fact.decision.influence", false),
+    },
+    annex_i: {
+      product_or_safety_component: profileFact("fact.annex-i.product", true),
+      annex_i_legislation: [
+        profileFact(
+          "fact.annex-i.cosmetics",
+          "Regulation (EC) No 1223/2009 on cosmetic products",
+        ),
+      ],
+      third_party_conformity_assessment_required: profileFact("fact.annex-i.conformity", true),
+    },
+    transparency: {
+      interacts_with_natural_persons: profileFact("fact.transparency.interacts", false),
+      generates_or_manipulates_synthetic_content: profileFact("fact.transparency.synthetic", false),
+      deep_fake_content: profileFact("fact.transparency.deepfake", false),
+    },
+  };
+  const annexITrap = structured(await callTool("euaiact_assess_system", annexITrapProfile));
+  const annexITrapNegative = annexITrap.findings.find(
+    (finding) => finding.finding_id === "finding.legal.high-risk.annex-i.not-listed.001",
+  );
+  test("FIX-RUN2 F3: a caller-asserted non-listed instrument cannot create the Annex I route",
+    annexITrap.status === "determined" &&
+    annexITrap.legal_classification.status === "determined" &&
+    annexITrap.impact.status === "determined" &&
+    annexITrap.implementation_readiness.status === "determined" &&
+    annexITrap.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    annexITrap.legal_classification.routes[0].finding_ids.includes(
+      "finding.legal.high-risk.annex-i.not-listed.001") &&
+    !annexITrap.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision.includes("Article 6(1)"))));
+  test("FIX-RUN2 F3: the negative boundary carries the clean Article 6(1) anchor at the Annex I regime date",
+    annexITrapNegative !== undefined &&
+    annexITrapNegative.determination === "does_not_apply" &&
+    annexITrapNegative.provenance.length === 1 &&
+    annexITrapNegative.provenance[0].exact_provision === "Article 6(1)" &&
+    annexITrapNegative.provenance[0].operative_date === "2028-08-02" &&
+    annexITrapNegative.summary.includes("listed in Annex I") &&
+    annexITrap.facts_used.some((fact) =>
+      fact.fact_id === "fact.annex-i.cosmetics" &&
+      fact.verification === "caller_asserted") &&
+    annexITrap.facts_used.some((fact) =>
+      fact.fact_id === "fact.annex-i.conformity" && fact.value === true));
+
+  const annexIListedProfile = structuredClone(annexITrapProfile);
+  annexIListedProfile.annex_i.annex_i_legislation = [
+    profileFact("fact.annex-i.machinery", "Regulation (EU) 2023/1230 on machinery"),
+  ];
+  const annexIListed = structured(await callTool("euaiact_assess_system", annexIListedProfile));
+  test("FIX-RUN2 F3: a listed instrument, including the M1 machinery entry, still grounds the route",
+    annexIListed.legal_classification.routes.some((route) => route.route === "high_risk") &&
+    annexIListed.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 6(1) and Annex I")));
+
+  const annexIVagueProfile = structuredClone(annexITrapProfile);
+  annexIVagueProfile.annex_i.annex_i_legislation = [
+    profileFact("fact.annex-i.vague", "the applicable European cosmetics harmonisation framework"),
+  ];
+  const annexIVague = structured(await callTool("euaiact_assess_system", annexIVagueProfile));
+  test("FIX-RUN2 F3: an unidentifiable instrument name fails closed with a decisive missing fact",
+    annexIVague.status === "undetermined" &&
+    annexIVague.legal_classification.routes.length === 0 &&
+    annexIVague.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.annex-i.instrument-identity" &&
+      fact.profile_path === "/annex_i/annex_i_legislation" &&
+      fact.decisive === true));
+
+  // FIX-RUN2 F2 (blind run 2, holdout2.08): abstention enumerates every
+  // independent decisive missing fact at leaf level, never only the first
+  // gap family found.
+  const nexusLeafPaths = [
+    "/geography/placed_on_eu_market",
+    "/geography/used_in_eu",
+    "/geography/output_used_in_eu",
+    "/geography/jurisdictions",
+  ];
+  const dressedTrapProfile = {
+    profile_version: "1.0",
+    role_facts: { roles: [profileFact("fact.role.provider", "provider")] },
+    annex_iii: {
+      domain: profileFact("fact.annex-iii.domain", "employment"),
+      purpose: profileFact(
+        "fact.annex-iii.purpose",
+        "Scoring pilot for workforce evaluation across teams",
+      ),
+    },
+  };
+  const dressedTrap = structured(await callTool("euaiact_assess_system", dressedTrapProfile));
+  const dressedDecisive = dressedTrap.missing_facts.filter((fact) => fact.decisive);
+  test("FIX-RUN2 F2: abstention enumerates the missing intended purpose alongside the nexus gap",
+    dressedTrap.status === "undetermined" &&
+    dressedTrap.legal_classification.status === "undetermined" &&
+    dressedTrap.impact.status === "undetermined" &&
+    dressedTrap.implementation_readiness.status === "undetermined" &&
+    dressedTrap.legal_classification.routes.length === 0 &&
+    dressedDecisive.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose" &&
+      fact.profile_path === "/intended_use/intended_purpose") &&
+    dressedDecisive.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      nexusLeafPaths.includes(fact.profile_path)) &&
+    dressedDecisive.length >= 2 &&
+    dressedDecisive.every((fact) =>
+      fact.question.trim().length > 0 && fact.reason.trim().length > 0));
+  test("FIX-RUN2 F2: the abstention finding references both independent legal gaps",
+    dressedTrap.findings.some((finding) =>
+      finding.finding_basis === "tool_state_abstention" &&
+      finding.provenance.length === 0 &&
+      finding.missing_fact_ids.includes("missing.intended-purpose") &&
+      finding.missing_fact_ids.includes("missing.legal.jurisdiction")));
+
+  const nonEuLeafProfile = {
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: profileFact(
+        "fact.purpose.non-eu",
+        "Spam filter for a non-Union mail service",
+      ),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: { roles: [profileFact("fact.role.non-eu.provider", "provider")] },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.non-eu.us", "United States")],
+      used_in_eu: profileFact("fact.geo.non-eu.used", false),
+      affected_person_groups: [profileFact("fact.geo.non-eu.group", "Mailbox owners")],
+    },
+  };
+  const nonEuLeaf = structured(await callTool("euaiact_assess_system", nonEuLeafProfile));
+  test("FIX-RUN2 F2: the nexus gap names the first absent geography leaf under its stable ID",
+    nonEuLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      fact.profile_path === "/geography/placed_on_eu_market") &&
+    !nonEuLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose"));
+
+  const fallbackLeafProfile = {
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: profileFact("fact.purpose.fallback", "Non-Union analytics pilot"),
+      reasonably_foreseeable_uses: [],
+    },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.fallback.us", "United States")],
+      placed_on_eu_market: profileFact("fact.geo.fallback.placed", false),
+      used_in_eu: profileFact("fact.geo.fallback.used", false),
+      output_used_in_eu: profileFact("fact.geo.fallback.output", false),
+      affected_person_groups: [],
+    },
+  };
+  const fallbackLeaf = structured(await callTool("euaiact_assess_system", fallbackLeafProfile));
+  test("FIX-RUN2 F2: with every boolean leaf supplied the nexus gap falls back to the jurisdictions leaf",
+    fallbackLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      fact.profile_path === "/geography/jurisdictions"));
+
+  // FIX-RUN2 F1 (A4 size finding): a rich dual-route dual-actor envelope must
+  // stay inside the 64 KiB canonical bound without losing any duty-level
+  // provision or operative-date anchor.
+  const worstCase = await runAssessment("worst-case-dual-route.json");
+  const worstCaseBytes = Buffer.byteLength(canonicalize(worstCase), "utf8");
+  test("FIX-RUN2 F1: the rich dual-route worst case stays inside the 64 KiB bound",
+    worstCase.status === "determined" &&
+    worstCase.legal_classification.routes.map((route) => route.route).join(",") ===
+      "high_risk,transparency_duty" &&
+    worstCase.implementation_readiness.applicable_duties.length >= 20 &&
+    new Set(
+      worstCase.implementation_readiness.applicable_duties.flatMap((duty) => duty.actor_roles),
+    ).size >= 2 &&
+    worstCaseBytes <= 65_536);
+  test("FIX-RUN2 F1: the worst case is deterministic across repeated runs",
+    canonicalResponseHash(worstCase) ===
+      canonicalResponseHash(await runAssessment("worst-case-dual-route.json")));
+  const worstCaseReadinessFindings = new Map(
+    worstCase.findings
+      .filter((finding) => finding.block === "implementation_readiness")
+      .map((finding) => [finding.finding_id, finding]),
+  );
+  test("FIX-RUN2 F1: every duty keeps its provision and date anchored in its actor finding",
+    worstCase.implementation_readiness.applicable_duties.every((duty) =>
+      duty.finding_ids.length > 0 &&
+      duty.finding_ids.every((findingId) => {
+        const finding = worstCaseReadinessFindings.get(findingId);
+        return finding !== undefined &&
+          finding.determination === "applies" &&
+          finding.finding_basis === "legal_proposition" &&
+          duty.actor_roles.every((actor) => finding.scope.actors.includes(actor)) &&
+          finding.provenance.some((item) =>
+            item.exact_provision === duty.exact_provision &&
+            item.operative_date === duty.operative_date);
+      })));
+  const worstCaseFindingIds = worstCase.findings
+    .map((finding) => finding.finding_id)
+    .sort();
+  test("FIX-RUN2 F1: the global disclosure warnings still cover every finding",
+    ["NON_BINDING_SOURCE", "OUTPUT_NOT_LEGAL_ADVICE", "SUMMARY_ONLY"].every((code) =>
+      JSON.stringify(
+        worstCase.warnings.find((warning) => warning.code === code)?.finding_ids,
+      ) === JSON.stringify(worstCaseFindingIds)));
+
+  const freeTextOnly = await runAssessment("free-text-only.json");
+  test("assess: unverified free text cannot satisfy a decisive predicate",
+    freeTextOnly.status === "undetermined" &&
+    freeTextOnly.warnings.some((warning) => warning.code === "UNVERIFIED_FREE_TEXT") &&
+    freeTextOnly.legal_classification.routes.length === 0);
+
+  const duplicateIdProfile = loadProfile("contract-high-risk.json");
+  duplicateIdProfile.identity.lifecycle_stage.fact_id =
+    duplicateIdProfile.identity.system_name.fact_id;
+  let duplicateIdRejected = false;
+  try {
+    await callTool("euaiact_assess_system", duplicateIdProfile);
+  } catch (error) {
+    duplicateIdRejected = /Duplicate fact_id/.test(String(error));
+  }
+  test("assess: duplicate fact IDs are rejected before decisioning", duplicateIdRejected);
+
+  const danglingEvidenceProfile = loadProfile("high-risk-low-impact-controlled.json");
+  danglingEvidenceProfile.controls_and_evidence.controls[0].evidence_reference_ids = [
+    "evidence.unknown",
+  ];
+  let danglingEvidenceRejected = false;
+  try {
+    await callTool("euaiact_assess_system", danglingEvidenceProfile);
+  } catch (error) {
+    danglingEvidenceRejected = /unknown evidence_id/.test(String(error));
+  }
+  test("assess: dangling evidence IDs are rejected before decisioning", danglingEvidenceRejected);
+
+  const allFindingReferencesResolve = (response) => {
+    const facts = new Set(response.facts_used.map((fact) => fact.fact_id));
+    const assumptions = new Set(response.assumptions.map((item) => item.assumption_id));
+    const missing = new Set(response.missing_facts.map((item) => item.missing_fact_id));
+    return response.findings.every((finding) =>
+      finding.fact_ids.every((id) => facts.has(id)) &&
+      finding.assumption_ids.every((id) => assumptions.has(id)) &&
+      finding.missing_fact_ids.every((id) => missing.has(id)) &&
+      (finding.finding_basis === "legal_proposition"
+        ? finding.provenance.length > 0
+        : finding.provenance.length === 0) &&
+      finding.provenance.every((record) =>
+        record.instrument_id === "regulation-eu-2024-1689" &&
+        record.instrument_status === "enacted" &&
+        record.authority_source_ids.join(",") === "source.oj.2024.1689.original,source.oj.2026.1744" &&
+        record.source_id && record.exact_provision && record.official_url &&
+        record.operative_date &&
+        record.source_status === "official_consolidated_snapshot_non_authentic" &&
+        record.verification_level === "consolidated_snapshot_integrity_verified"));
+  };
+  test("assess: every finding has resolving fact and full provenance references",
+    allFindingReferencesResolve(high) &&
+    allFindingReferencesResolve(prohibited) &&
+    allFindingReferencesResolve(sparse));
+  test("assess: no numeric or other confidence field is emitted",
+    !JSON.stringify([high, minimal, prohibited, sparse]).includes('"confidence"'));
+  test("assess: curated labels are disclosed as summaries, not statutory text",
+    [high, minimal, prohibited, sparse].every((output) =>
+      output.warnings.some((warning) =>
+        warning.code === "SUMMARY_ONLY" && warning.message.includes("not statutory text"))));
+  test("assess: consolidated snapshot limitation is disclosed on every output",
+    [high, minimal, prohibited, sparse].every((output) =>
+      output.warnings.some((warning) => warning.code === "NON_BINDING_SOURCE")));
+  test("assess: sealed corpus identity is fixed and complete",
+    high.corpus.sha256 === "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5" &&
+    high.corpus.source_snapshot_ids.length === 4 &&
+    readFileSync("compiler/PROOF-no-regression.md", "utf8").includes(high.corpus.sha256));
+
+  const runtimeSchemaPairs = [
+    ["schemas/shared.ts", "src/decision-contract/shared.ts"],
+    ["schemas/profile.ts", "src/decision-contract/profile.ts"],
+    ["schemas/finding.ts", "src/decision-contract/finding.ts"],
+    ["schemas/result-blocks.ts", "src/decision-contract/result-blocks.ts"],
+    ["schemas/envelope.ts", "src/decision-contract/envelope.ts"],
+  ];
+  test("assess: runtime schemas are byte-identical mirrors of the frozen contract",
+    runtimeSchemaPairs.every(([frozen, runtime]) =>
+      readFileSync(frozen, "utf8") === readFileSync(runtime, "utf8")));
+
+  const index = loadJson(join(fixtureRoot, "fixture-index.json"));
+  const hashes = loadJson(join(goldenRoot, "hashes.json"));
+  test("assess: exactly 12 runnable contract profiles are golden-pinned",
+    index.cases.length === 12 && hashes.goldens.length === 12);
+  const unicodeCompare = (left, right) => {
+    const a = [...left].map((character) => character.codePointAt(0));
+    const b = [...right].map((character) => character.codePointAt(0));
+    for (let index = 0; index < Math.min(a.length, b.length); index++) {
+      if (a[index] !== b[index]) return a[index] - b[index];
+    }
+    return a.length - b.length;
+  };
+  const isSorted = (values, compare = unicodeCompare) =>
+    values.every((value, index) => index === 0 || compare(values[index - 1], value) <= 0);
+  const blockOrder = { legal_classification: 0, impact: 1, implementation_readiness: 2 };
+  const routeOrder = { prohibited: 0, high_risk: 1, transparency_duty: 2, gpai: 3, minimal: 4 };
+  const atomicOrder = [
+    "euaiact_annex_iv_checklist",
+    "euaiact_answer_question",
+    "euaiact_assess_art6_3_exception",
+    "euaiact_calculate_penalty",
+    "euaiact_check_deadlines",
+    "euaiact_check_gpai_systemic_risk",
+    "euaiact_classify_system",
+    "euaiact_get_article",
+    "euaiact_get_obligations",
+  ];
+  const orderingConforms = (output) =>
+    isSorted(output.corpus.source_snapshot_ids) &&
+    isSorted(output.facts_used.map((item) => item.fact_id)) &&
+    output.facts_used.every((item) => isSorted(item.evidence_reference_ids)) &&
+    isSorted(output.assumptions.map((item) => item.assumption_id)) &&
+    output.assumptions.every((item) => isSorted(item.source_fact_ids)) &&
+    isSorted(output.missing_facts.map((item) => `${item.profile_path}\u0000${item.missing_fact_id}`)) &&
+    isSorted(output.findings, (left, right) =>
+      blockOrder[left.block] - blockOrder[right.block] || unicodeCompare(left.finding_id, right.finding_id)) &&
+    output.findings.every((finding) =>
+      isSorted(finding.fact_ids) &&
+      isSorted(finding.assumption_ids) &&
+      isSorted(finding.missing_fact_ids) &&
+      isSorted(finding.provenance, (left, right) =>
+        unicodeCompare(left.source_id, right.source_id) ||
+        unicodeCompare(left.exact_provision, right.exact_provision) ||
+        unicodeCompare(left.operative_date, right.operative_date))) &&
+    isSorted(output.warnings, (left, right) =>
+      unicodeCompare(left.code, right.code) || unicodeCompare(left.warning_id, right.warning_id)) &&
+    output.warnings.every((warning) => isSorted(warning.finding_ids)) &&
+    isSorted(output.recommended_next_calls, (left, right) =>
+      atomicOrder.indexOf(left.tool_name) - atomicOrder.indexOf(right.tool_name)) &&
+    output.recommended_next_calls.every((call) => isSorted(call.input_fact_ids)) &&
+    isSorted(output.legal_classification.routes, (left, right) =>
+      routeOrder[left.route] - routeOrder[right.route]);
+  const goldenOutputs = [];
+  for (const fixture of index.cases) {
+    const output = await runAssessment(fixture.profile);
+    goldenOutputs.push(output);
+    const golden = loadJson(join(goldenRoot, fixture.golden));
+    const expected = hashes.goldens.find((item) => item.case_id === fixture.case_id);
+    test(`assess golden: ${fixture.case_id}`,
+      assessSystemResponseSchema.safeParse(output).success &&
+      canonicalize(output) === canonicalize(golden) &&
+      canonicalResponseHash(output) === expected?.canonical_sha256);
+  }
+  test("assess: all normative response ordering rules hold across the golden set",
+    goldenOutputs.every(orderingConforms));
+  test("assess: every canonical golden response stays within the 64 KiB bound",
+    goldenOutputs.every((output) => Buffer.byteLength(canonicalize(output), "utf8") <= 65_536));
+
+  const permutedProfile = loadProfile("high-risk-low-impact-controlled.json");
+  permutedProfile.controls_and_evidence.evidence_references[0].supports_fact_ids.reverse();
+  const orderedProfileResult = await runAssessment("high-risk-low-impact-controlled.json");
+  const permutedProfileResult = structured(await callTool("euaiact_assess_system", permutedProfile));
+  test("assess: input ID order is normalized before decisioning",
+    canonicalResponseHash(orderedProfileResult) === canonicalResponseHash(permutedProfileResult));
+
+  const determinismHashes = [];
+  for (let run = 0; run < 10; run++) {
+    determinismHashes.push(canonicalResponseHash(await runAssessment("contract-high-risk.json")));
+  }
+  test("assess: same normalized profile has one canonical hash across 10 runs",
+    new Set(determinismHashes).size === 1 &&
+    determinismHashes[0] === hashes.goldens[0].canonical_sha256);
+
+  const compatibility = loadJson("tests/fixtures/compatibility/atomic-tools-1.5-baseline.json");
+  const RealDate = Date;
+  const fixedInstant = compatibility.fixed_instant;
+  globalThis.Date = class FixedDate extends RealDate {
+    constructor(...args) {
+      if (args.length === 0) super(fixedInstant);
+      else super(...args);
+    }
+    static now() { return RealDate.parse(fixedInstant); }
+  };
+  try {
+    for (const fixture of compatibility.fixtures) {
+      const actual = await callTool(fixture.tool_name, fixture.input);
+      const serialized = JSON.stringify(actual);
+      test(`atomic compatibility: ${fixture.tool_name}`,
+        Buffer.byteLength(serialized, "utf8") === fixture.baseline_bytes &&
+        createHash("sha256").update(serialized, "utf8").digest("hex") === fixture.baseline_sha256);
+    }
+  } finally {
+    globalThis.Date = RealDate;
+  }
 }
 
 // ─── SUMMARY ────────────────────────────────────────────────────────────────

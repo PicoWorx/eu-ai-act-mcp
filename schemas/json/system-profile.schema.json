@@ -1,0 +1,835 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/system-profile.schema.json",
+  "x-generated-from": "schemas/profile.ts#systemProfileSchema",
+  "$ref": "#/definitions/SystemProfile",
+  "definitions": {
+    "SystemProfile": {
+      "type": "object",
+      "properties": {
+        "profile_version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "identity": {
+          "type": "object",
+          "properties": {
+            "system_name": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 160,
+                  "pattern": "^[a-z][a-z0-9._:-]*$"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "origin": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_structured_input",
+                    "cited_evidence"
+                  ]
+                },
+                "verification": {
+                  "type": "string",
+                  "enum": [
+                    "caller_asserted",
+                    "evidence_linked"
+                  ]
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "system_version": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "owner": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "lifecycle_stage": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "concept",
+                    "development",
+                    "testing",
+                    "pilot",
+                    "production",
+                    "retired",
+                    "unknown"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "machine_based_system": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "boolean"
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "infers_from_inputs_how_to_generate_outputs": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "operates_with_varying_levels_of_autonomy": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "may_exhibit_adaptiveness_after_deployment": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "intended_use": {
+          "type": "object",
+          "properties": {
+            "intended_purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "reasonably_foreseeable_uses": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+              }
+            }
+          },
+          "required": [
+            "reasonably_foreseeable_uses"
+          ],
+          "additionalProperties": false
+        },
+        "role_facts": {
+          "type": "object",
+          "properties": {
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fact_id": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "provider",
+                      "deployer",
+                      "importer",
+                      "distributor",
+                      "authorised_representative",
+                      "product_manufacturer",
+                      "gpai_provider",
+                      "unknown"
+                    ]
+                  },
+                  "origin": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                  },
+                  "verification": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                  },
+                  "evidence_reference_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                    }
+                  }
+                },
+                "required": [
+                  "fact_id",
+                  "value",
+                  "origin",
+                  "verification",
+                  "evidence_reference_ids"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "places_on_market_under_own_name": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "develops_or_has_developed_system": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "uses_under_own_authority": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "required": [
+            "roles"
+          ],
+          "additionalProperties": false
+        },
+        "geography": {
+          "type": "object",
+          "properties": {
+            "jurisdictions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+              }
+            },
+            "placed_on_eu_market": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "used_in_eu": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "output_used_in_eu": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "affected_person_groups": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+              }
+            }
+          },
+          "required": [
+            "jurisdictions",
+            "affected_person_groups"
+          ],
+          "additionalProperties": false
+        },
+        "decision_context": {
+          "type": "object",
+          "properties": {
+            "decision_subject": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "decision_consequence": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "materially_influences_decision": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "human_review_before_effect": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "annex_i": {
+          "type": "object",
+          "properties": {
+            "product_or_safety_component": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "annex_i_legislation": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+              }
+            },
+            "third_party_conformity_assessment_required": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "solely_non_safety_user_assistance": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "required": [
+            "annex_i_legislation"
+          ],
+          "additionalProperties": false
+        },
+        "annex_iii": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "biometrics",
+                    "critical_infrastructure",
+                    "education",
+                    "employment",
+                    "essential_services",
+                    "law_enforcement",
+                    "migration_asylum_border_control",
+                    "justice_and_democratic_processes",
+                    "other",
+                    "unknown"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "annex_iii_point": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "performs_profiling": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "narrow_procedural_task": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "improves_prior_human_activity": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "detects_patterns_without_replacing_human_review": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "preparatory_task": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "biometric_and_practices": {
+          "type": "object",
+          "properties": {
+            "uses_biometrics": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "sole_purpose_identity_verification": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "remote_biometric_identification": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "realtime_operation": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "publicly_accessible_space": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "law_enforcement_use": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "biometric_categorisation": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "emotion_recognition": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "emotion_recognition_workplace_or_education": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "social_scoring": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "social_scoring_unrelated_context": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "social_scoring_unjustified_or_disproportionate": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "exploits_vulnerability": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "subliminal_or_manipulative_technique": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "article_5_prohibitions": {
+          "type": "object",
+          "properties": {
+            "operation": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "generation",
+                    "manipulation"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_required_consent_present": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_manipulation_increases_intimate_exposure": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_manipulation_alters_sexually_explicit_activity": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "bb_directive_2011_93_category": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "article_2_c_i",
+                    "article_2_c_ii",
+                    "article_2_c_iii",
+                    "article_2_c_iv",
+                    "article_2_e_i",
+                    "article_2_e_ii",
+                    "none",
+                    "unknown"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "bb_without_right_defence_applies_under_national_law": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_generation_or_manipulation_is_intended_purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_foreseeable_and_reproducible_outcome_without_significant_modification": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_reasonable_and_adequate_safeguards_present": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "deployer_uses_for_generation_or_manipulation_purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "transparency": {
+          "type": "object",
+          "properties": {
+            "interacts_with_natural_persons": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "generates_or_manipulates_synthetic_content": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "deep_fake_content": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "public_interest_text": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "output_machine_readable_marked": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "standard_editing_assistive_function": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "substantially_alters_input_or_semantics": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "gpai": {
+          "type": "object",
+          "properties": {
+            "is_gpai_model": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "model_name": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+            },
+            "training_flops": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "commission_designated_systemic_risk": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "integrates_third_party_gpai_model": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "model_placed_on_market_date": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "public_authority_and_fria": {
+          "type": "object",
+          "properties": {
+            "public_authority_or_public_law_body": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provides_public_service": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "private_entity_providing_public_service": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "fria_relevant_use": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "fria_completed": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
+        "controls_and_evidence": {
+          "type": "object",
+          "properties": {
+            "controls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "control_id": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  },
+                  "description": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name"
+                  },
+                  "implementation_state": {
+                    "type": "object",
+                    "properties": {
+                      "fact_id": {
+                        "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                      },
+                      "value": {
+                        "type": "string",
+                        "enum": [
+                          "planned",
+                          "implemented",
+                          "tested",
+                          "unknown"
+                        ]
+                      },
+                      "origin": {
+                        "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                      },
+                      "verification": {
+                        "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                      },
+                      "evidence_reference_ids": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                        }
+                      }
+                    },
+                    "required": [
+                      "fact_id",
+                      "value",
+                      "origin",
+                      "verification",
+                      "evidence_reference_ids"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "evidence_reference_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                    }
+                  }
+                },
+                "required": [
+                  "control_id",
+                  "description",
+                  "implementation_state",
+                  "evidence_reference_ids"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "evidence_references": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "evidence_id": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uri": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "observed_at": {
+                    "$ref": "#/definitions/SystemProfile/properties/gpai/properties/model_placed_on_market_date/properties/value"
+                  },
+                  "supports_fact_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                    }
+                  }
+                },
+                "required": [
+                  "evidence_id",
+                  "title",
+                  "supports_fact_ids"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "controls",
+            "evidence_references"
+          ],
+          "additionalProperties": false
+        },
+        "free_text": {
+          "type": "object",
+          "properties": {
+            "fact_id": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "origin": {
+              "type": "string",
+              "const": "caller_free_text"
+            },
+            "verification": {
+              "type": "string",
+              "const": "unverified_extraction"
+            }
+          },
+          "required": [
+            "fact_id",
+            "value",
+            "origin",
+            "verification"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "profile_version"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,42 @@
+{
+  "case_version": "1.2",
+  "case_id": "02-annex-iii-remote-identification",
+  "categories": [
+    "annex_iii",
+    "biometrics",
+    "remote_identification"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic deployer compares biometric templates against a remote watchlist after entry, without real-time law-enforcement use in a public space. This is remote identification rather than one-to-one verification, so the expected property is the Annex III biometrics route, not the Article 5 real-time prohibition.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "high_risk"
+    ],
+    "annex_iii_categories": [
+      1
+    ],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 6(2) and Annex III, point 1",
+        "operative_date": "2027-12-02"
+      }
+    ],
+    "forbidden_legal_provisions": [
+      "Article 5(1)(h)"
+    ],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

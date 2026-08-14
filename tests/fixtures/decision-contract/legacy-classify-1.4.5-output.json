@@ -1,0 +1,16 @@
+{
+  "risk_classification": "high-risk",
+  "confidence": "high",
+  "annex_iii_category": {
+    "number": 4,
+    "name": "Employment, workers management and access to self-employment"
+  },
+  "relevant_articles": ["Art. 6(2)", "Annex III(4)"],
+  "role_determination": "provider",
+  "obligations_summary": "Provider obligations for high-risk AI systems may apply.",
+  "caveat": null,
+  "matched_signals": ["employment"],
+  "missing_signals": [],
+  "next_questions": [],
+  "basis": "signals"
+}

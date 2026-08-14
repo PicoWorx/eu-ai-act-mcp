@@ -15,7 +15,7 @@ export function registerGpaiSystemicTool(server: McpServer): void {
     {
       title: "Check GPAI Model Systemic Risk Classification",
       description:
-        "Determine whether a general-purpose AI model qualifies as a GPAI model with systemic risk under Art. 51. A model is presumed to have high-impact capabilities when cumulative training compute exceeds 10^25 FLOPs (Art. 51(2)). The Commission may also designate models with equivalent capabilities or impact under Art. 51(1)(b). Returns baseline GPAI obligations under Art. 53 plus systemic-risk-only obligations under Art. 55, and the Art. 52 notification duty.",
+        "Determine whether a general-purpose AI model qualifies as a GPAI model with systemic risk under Art. 51. This tool uses an adjudicated conservative boundary at or above 10^25 cumulative training FLOPs for the Art. 51(2) presumption. The Commission may also designate models with equivalent capabilities or impact under Art. 51(1)(b). Returns baseline GPAI obligations under Art. 53 plus systemic-risk-only obligations under Art. 55, and the Art. 52 notification duty.",
       annotations: {
         readOnlyHint: true,
         idempotentHint: true,
@@ -32,7 +32,7 @@ export function registerGpaiSystemicTool(server: McpServer): void {
       // confident negative (crosses=false, designation "none"), which an agent
       // that could not find the FLOPs figure read as "not systemic risk".
       const undetermined = !flopsProvided && !designated;
-      const crossesFlops = flopsProvided ? input.training_flops! > FLOPS_THRESHOLD : null;
+      const crossesFlops = flopsProvided ? input.training_flops! >= FLOPS_THRESHOLD : null;
       const isSystemic = undetermined ? null : crossesFlops === true || designated;
 
       const designation: GpaiSystemicOutput["systemic_risk_designation"] = designated

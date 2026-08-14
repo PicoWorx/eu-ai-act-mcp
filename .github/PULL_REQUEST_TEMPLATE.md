@@ -17,8 +17,8 @@ If this PR touches the knowledge layer, cite the article(s) of Regulation (EU) 2
 ## Testing
 
 - [ ] I have added or updated tests in `test.mjs`
-- [ ] All 109+ tests pass locally (`node test.mjs`)
-- [ ] I have built the project (`npm run build`) without errors
+- [ ] Canonical verification passes locally (`npm run verify`)
+- [ ] Release-facing changes also pass artifact verification (`npm run verify:release`)
 
 ## Checklist
 

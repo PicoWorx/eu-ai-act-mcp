@@ -1,0 +1,40 @@
+{
+  "case_version": "1.2",
+  "case_id": "09-transparency-benefits-info-chatbot",
+  "categories": [
+    "transparency",
+    "article_50_chatbot",
+    "benefits_information_boundary"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic chatbot answers general questions about public-assistance programs but neither assesses nor influences eligibility. The benefits vocabulary must not turn an information service into Annex III point 5; the expected legal route is only the Article 50(1) interaction disclosure.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "transparency_duty"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 50(1)",
+        "operative_date": "2026-08-02"
+      }
+    ],
+    "forbidden_legal_provisions": [
+      "Article 6(2) and Annex III, point 5"
+    ],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

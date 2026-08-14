@@ -1,0 +1,419 @@
+{
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.decision.service-chatbot.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "Users may rely on support information supplied by the interface",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.service-chatbot.material",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.eu",
+      "profile_path": "/geography/jurisdictions/0",
+      "value": "EU",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.group.service-chatbot",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Customers using support",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.provider",
+      "profile_path": "/role_facts/roles/0",
+      "value": "provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.transparency.interacts",
+      "profile_path": "/transparency/interacts_with_natural_persons",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.transparency.synthetic",
+      "profile_path": "/transparency/generates_or_manipulates_synthetic_content",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.use.service-chatbot.purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "value": "Answer customer service questions through a conversational interface",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.transparency.article.50.1.fact.transparency.interacts",
+      "finding_basis": "legal_proposition",
+      "block": "legal_classification",
+      "summary": "Direct interaction with natural persons triggers the Article 50(1) route.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "service-chatbot"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.role.provider",
+        "fact.transparency.interacts"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 50(1)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
+          "operative_date": "2026-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
+      "block": "impact",
+      "summary": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "service-chatbot"
+      },
+      "fact_ids": [
+        "fact.decision.service-chatbot.consequence",
+        "fact.decision.service-chatbot.material",
+        "fact.group.service-chatbot"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.provider.001",
+      "finding_basis": "legal_proposition",
+      "block": "implementation_readiness",
+      "summary": "Applicable duties for the provider role: 2 (evidence documented 0, partial 0, missing 2). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "service-chatbot"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.role.provider",
+        "fact.transparency.interacts",
+        "fact.transparency.synthetic",
+        "fact.use.service-chatbot.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 50(1)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_50",
+          "operative_date": "2026-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.transparency.article.50.1.fact.transparency.interacts",
+        "finding.readiness.provider.001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.transparency.article.50.1.fact.transparency.interacts",
+        "finding.readiness.provider.001"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.transparency.article.50.1.fact.transparency.interacts",
+        "finding.readiness.provider.001"
+      ]
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_get_obligations",
+      "reason": "Retrieve the actor-specific Article 50 duties.",
+      "input_fact_ids": [
+        "fact.transparency.interacts"
+      ]
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "transparency_duty",
+        "finding_ids": [
+          "finding.legal.transparency.article.50.1.fact.transparency.interacts"
+        ],
+        "actor_roles": [
+          "provider"
+        ]
+      }
+    ],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "provider"
+    ],
+    "finding_ids": [
+      "finding.legal.transparency.article.50.1.fact.transparency.interacts"
+    ],
+    "limitations": [
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "The supplied facts describe limited decision influence. This impact statement does not change any legal classification route.",
+      "categories": [
+        "other_fundamental_rights"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.service.chatbot"
+      ],
+      "fact_ids": [
+        "fact.decision.service-chatbot.consequence",
+        "fact.decision.service-chatbot.material",
+        "fact.group.service-chatbot"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.fact.group.service.chatbot",
+        "label": "Customers using support",
+        "fact_ids": [
+          "fact.group.service-chatbot"
+        ]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "No supplied tested-control evidence reduces the described inherent impact.",
+      "categories": [
+        "other_fundamental_rights"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.service.chatbot"
+      ],
+      "fact_ids": [
+        "fact.decision.service-chatbot.consequence",
+        "fact.decision.service-chatbot.material",
+        "fact.group.service-chatbot"
+      ]
+    },
+    "finding_ids": [
+      "finding.impact.supplied-context.001"
+    ],
+    "limitations": [
+      "Impact is qualitative and contains no aggregate or numeric score.",
+      "Controls cannot alter legal classification."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.provider.art.4.ai.literacy",
+        "title": "Take measures to support the development of AI literacy of staff and operators",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 4",
+        "operative_date": "2026-07-27",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.50.1.transparency",
+        "title": "Disclose AI interaction to users",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 50(1)",
+        "operative_date": "2026-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.50.1.transparency",
+        "duty_ids": [
+          "duty.provider.art.50.1.transparency"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2026-07-27"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.50.1.transparency",
+        "duty_ids": [
+          "duty.provider.art.50.1.transparency"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2026-08-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.unassigned",
+        "label": "Unassigned",
+        "responsibility": "Assign accountable ownership for applicable duties and evidence."
+      }
+    ],
+    "finding_ids": [
+      "finding.readiness.provider.001"
+    ],
+    "limitations": [
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
+      "This output is not certification, approval, or regulatory assurance."
+    ],
+    "is_regulatory_approval": false
+  }
+}

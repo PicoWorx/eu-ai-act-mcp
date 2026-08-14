@@ -1,0 +1,390 @@
+{
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.decision.social-scoring.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "May restrict access to a public service based on the score",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.social-scoring.material",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.eu",
+      "profile_path": "/geography/jurisdictions/0",
+      "value": "EU",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.group.social-scoring",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Residents assessed by the service",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.social-scoring",
+      "profile_path": "/biometric_and_practices/social_scoring",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "profile_path": "/biometric_and_practices/social_scoring_unrelated_context",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.deployer",
+      "profile_path": "/role_facts/roles/0",
+      "value": "deployer",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.use.social-scoring.purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "value": "Evaluate people over time based on social behaviour and apply detrimental treatment",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.prohibited.art.5.1.c.001",
+      "finding_basis": "legal_proposition",
+      "block": "legal_classification",
+      "summary": "The existing Article 5 classifier identifies a prohibited-practice route from the supplied facts.",
+      "scope": {
+        "actors": [
+          "deployer"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "social-scoring"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
+        "fact.role.deployer",
+        "fact.use.social-scoring.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 5(1)(c)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
+      "block": "impact",
+      "summary": "The supplied consequence is: May restrict access to a public service based on the score.",
+      "scope": {
+        "actors": [
+          "deployer"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "social-scoring"
+      },
+      "fact_ids": [
+        "fact.decision.social-scoring.consequence",
+        "fact.decision.social-scoring.material",
+        "fact.group.social-scoring",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice",
+      "finding_basis": "legal_proposition",
+      "block": "implementation_readiness",
+      "summary": "Do not deploy or place the prohibited practice on the market is selected from the existing obligations tool; supplied evidence state is missing.",
+      "scope": {
+        "actors": [
+          "deployer"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "social-scoring"
+      },
+      "fact_ids": [
+        "fact.geography.eu",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
+        "fact.role.deployer",
+        "fact.use.social-scoring.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 5(1)(c)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_5",
+          "operative_date": "2025-02-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.legal-review.prohibited.001",
+      "code": "LEGAL_REVIEW_REQUIRED",
+      "message": "A prohibited-practice route requires legal review, including any narrow statutory exception.",
+      "finding_ids": [
+        "finding.legal.prohibited.art.5.1.c.001"
+      ]
+    },
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.prohibited.art.5.1.c.001",
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.prohibited.art.5.1.c.001",
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.prohibited.art.5.1.c.001",
+        "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+      ]
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_get_article",
+      "reason": "Review the operational Article 5 summary and verify the official provision.",
+      "input_fact_ids": [
+        "fact.geography.eu",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context",
+        "fact.role.deployer",
+        "fact.use.social-scoring.purpose"
+      ]
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "prohibited",
+        "finding_ids": [
+          "finding.legal.prohibited.art.5.1.c.001"
+        ],
+        "actor_roles": [
+          "deployer"
+        ]
+      }
+    ],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "deployer"
+    ],
+    "finding_ids": [
+      "finding.legal.prohibited.art.5.1.c.001"
+    ],
+    "limitations": [
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "The supplied consequence is: May restrict access to a public service based on the score.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.social.scoring"
+      ],
+      "fact_ids": [
+        "fact.decision.social-scoring.consequence",
+        "fact.decision.social-scoring.material",
+        "fact.group.social-scoring",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.fact.group.social.scoring",
+        "label": "Residents assessed by the service",
+        "fact_ids": [
+          "fact.group.social-scoring"
+        ]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "No supplied tested-control evidence reduces the described inherent impact.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.social.scoring"
+      ],
+      "fact_ids": [
+        "fact.decision.social-scoring.consequence",
+        "fact.decision.social-scoring.material",
+        "fact.group.social-scoring",
+        "fact.practice.social-scoring",
+        "fact.practice.social-scoring.unrelated-context"
+      ]
+    },
+    "finding_ids": [
+      "finding.impact.supplied-context.001"
+    ],
+    "limitations": [
+      "Impact is qualitative and contains no aggregate or numeric score.",
+      "Controls cannot alter legal classification."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.deployer.article.5.1.c.prohibited.practice",
+        "title": "Do not deploy or place the prohibited practice on the market",
+        "actor_roles": [
+          "deployer"
+        ],
+        "exact_provision": "Article 5(1)(c)",
+        "operative_date": "2025-02-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+        ]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.missing.duty.deployer.article.5.1.c.prohibited.practice",
+        "duty_ids": [
+          "duty.deployer.article.5.1.c.prohibited.practice"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.duty.deployer.article.5.1.c.prohibited.practice",
+        "duty_ids": [
+          "duty.deployer.article.5.1.c.prohibited.practice"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2025-02-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.unassigned",
+        "label": "Unassigned",
+        "responsibility": "Assign accountable ownership for applicable duties and evidence."
+      }
+    ],
+    "finding_ids": [
+      "finding.readiness.duty.deployer.article.5.1.c.prohibited.practice"
+    ],
+    "limitations": [
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
+      "This output is not certification, approval, or regulatory assurance."
+    ],
+    "is_regulatory_approval": false
+  }
+}

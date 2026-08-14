@@ -1,0 +1,117 @@
+{
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "dadeca3a516d9508bb0ea7553d9ddf5ef9ca586902bb3b9f441efa6c6910c399",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.oj.2024.1689.consolidated.20260727"
+    ]
+  },
+  "status": "undetermined",
+  "facts_used": [],
+  "assumptions": [],
+  "missing_facts": [
+    {
+      "missing_fact_id": "missing.intended-purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "question": "What is the system intended to do, for whom, and in which operational context?",
+      "reason": "Intended purpose is decisive for prohibited-practice, Annex III, and transparency routes.",
+      "decisive": true,
+      "affected_blocks": [
+        "legal_classification",
+        "impact",
+        "implementation_readiness"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "finding.legal.abstention.intended-purpose.001",
+      "block": "legal_classification",
+      "summary": "Legal classification cannot be determined without the intended purpose and use context.",
+      "scope": {
+        "actors": [
+          "unknown"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "Unspecified system"
+      },
+      "fact_ids": [],
+      "assumption_ids": [],
+      "missing_fact_ids": [
+        "missing.intended-purpose"
+      ],
+      "provenance": [],
+      "determination": "undetermined",
+      "reason_for_abstention": "A decisive use-context fact is missing. Guessing would create an unsupported legal conclusion.",
+      "finding_basis": "tool_state_abstention"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.abstention.intended-purpose.001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.legal.abstention.intended-purpose.001"
+      ]
+    }
+  ],
+  "recommended_next_calls": [],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "routes": [],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "unknown"
+    ],
+    "finding_ids": [
+      "finding.legal.abstention.intended-purpose.001"
+    ],
+    "limitations": [
+      "Intended purpose and operational use are missing."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "inherent_impact": null,
+    "relevant_affected_groups": [],
+    "current_controls": [],
+    "residual_impact": null,
+    "finding_ids": [],
+    "limitations": [
+      "Affected groups and decision consequences are missing."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "readiness_state": "undetermined",
+    "applicable_duties": [],
+    "evidence_status": [],
+    "control_gaps": [],
+    "owners": [],
+    "finding_ids": [],
+    "limitations": [
+      "Applicable duties cannot be selected before classification."
+    ],
+    "is_regulatory_approval": false
+  }
+}

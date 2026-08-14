@@ -52,19 +52,30 @@ const ART101 = sliceBetween("Article 101 Fines for providers", "Article 102");
 const ART73 = sliceBetween("Article 73 Reporting of serious incidents", "Article 74");
 const ART111 = sliceBetween("Article 111 AI systems already placed", "Article 112 Evaluation");
 const ART10 = sliceBetween("Article 10 Data and data governance", "Article 11");
+const ART2 = sliceBetween("Article 2 Scope", "Article 3 Definitions");
+const ART5 = sliceBetween("Article 5 Prohibited AI practices", "Article 6 Classification rules");
+const ART50 = sliceBetween("Article 50 Transparency obligations", "Article 51 Classification");
 const ART51 = sliceBetween("Article 51 Classification of general-purpose AI models", "Article 52");
+const ART52 = sliceBetween("Article 52 Procedure", "Article 53 Obligations");
 
 // Served-side sources
 const { getMilestonesWithDaysRemaining, getOperativeHighRiskDates } = await import("./dist/knowledge/deadlines.js");
 const { omnibusEnactment } = await import("./dist/knowledge/digital-omnibus.js");
 const { getPenaltyTier, calculateMaxFine } = await import("./dist/knowledge/penalties.js");
 const { articles } = await import("./dist/knowledge/articles.js");
-const { annexIIICategories } = await import("./dist/knowledge/annex-iii.js");
+const { annexIIICategories, prohibitedPractices } = await import("./dist/knowledge/annex-iii.js");
+const { faqDatabase } = await import("./dist/knowledge/faq-database.js");
+const SERVER_BUNDLE = norm(readFileSync("dist/server.js", "utf8"));
+const ARTICLE_TOOL_BUNDLE = norm(readFileSync("dist/tools/article.js", "utf8"));
+const ASSESSMENT_BUNDLE = norm(readFileSync("dist/decision-contract/assess-system.js", "utf8"));
+const README = norm(readFileSync("README.md", "utf8"));
+const CHANGELOG = norm(readFileSync("CHANGELOG.md", "utf8"));
 
 const milestones = getMilestonesWithDaysRemaining();
 const dates = getOperativeHighRiskDates();
 const art = (n) => articles.find((a) => a.number === n);
 const milestone = (d) => milestones.find((m) => m.date === d);
+const faq = (id) => faqDatabase.find((entry) => entry.id === id)?.answer ?? "";
 
 function toolHandler(registerFn) {
   let h;
@@ -126,13 +137,14 @@ check("D12 served enactment record", "served",
 
 // ── Thresholds and amounts ───────────────────────────────────────────────────
 
-check("T1 GPAI systemic-risk presumption: strictly greater than 10^25 FLOPs", "law",
+check("T1 GPAI systemic-risk presumption: statutory text is strictly greater than 10^25 FLOPs", "law",
   ART51.includes("measured in floating point operations is greater than 10") && nearAnchor(ART51, "greater than 10", "25", 12));
 {
   const h = toolHandler((await import("./dist/tools/gpai-systemic.js")).registerGpaiSystemicTool);
   const at = (await h({ training_flops: 1e25 })).structuredContent;
   const over = (await h({ training_flops: 1.0000001e25 })).structuredContent;
-  check("T1", "served", at.crosses_flops_threshold === false && over.crosses_flops_threshold === true);
+  check("T1 adjudicated conservative product boundary", "served",
+    at.crosses_flops_threshold === true && over.crosses_flops_threshold === true);
 }
 
 check("P1 Art. 99(3): EUR 35 000 000 / 7 %, whichever higher", "law",
@@ -227,6 +239,54 @@ check("E10b Art. 5(1b) qualifies point (ba) only", "law",
   inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material in a way that does not increase the exposure"));
 check("E10b", "served", /\(1b\) qualifies point \(ba\) ONLY/i.test(art("5")?.summary ?? ""));
 
+check("MIG2-A Article 2(1) contains the three relevant territorial nexus routes", "law",
+  ART2.includes("placing on the market") &&
+  ART2.includes("deployers of AI systems that have their place of establishment") &&
+  ART2.includes("where the output produced by the AI system is used in the Union"));
+check("MIG2-A", "served",
+  ASSESSMENT_BUNDLE.includes("Article 2(1)") &&
+  ASSESSMENT_BUNDLE.includes("2026-08-02") &&
+  ASSESSMENT_BUNDLE.includes("explicitNegativeEUNexus"));
+
+check("MIG2-B Article 5(1a) separates provider and deployer purpose gates", "law",
+  ART5.includes("that generation or manipulation is the intended purpose") &&
+  ART5.includes("the deployer uses the system for the purpose of generating or manipulating"));
+check("MIG2-B", "served",
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(a)(i)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(a)(ii)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(b)"));
+
+check("MIG2-C Article 5(1b) is the point (ba)-only manipulation exclusion", "law",
+  ART5.includes("point (ba)") &&
+  ART5.includes("does not increase the exposure") &&
+  ART5.includes("alter the nature of any depicted sexually explicit activities"));
+check("MIG2-C", "served",
+  ASSESSMENT_BUNDLE.includes("Article 5(1b)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1)(ba) does not apply"));
+
+check("MIG2-D Article 50(2) excludes standard editing and non-substantial alteration", "law",
+  ART50.includes("assistive function for standard editing") &&
+  ART50.includes("do not substantially alter the input data"));
+check("MIG2-D", "served",
+  ASSESSMENT_BUNDLE.includes("standard_editing_assistive_function") &&
+  ASSESSMENT_BUNDLE.includes("substantially_alters_input_or_semantics") &&
+  ASSESSMENT_BUNDLE.includes("Article 50(2) does not apply"));
+
+check("MIG2-E Article 51(1)(a) and 51(2) support the compute presumption", "law",
+  ART51.includes("high impact capabilities") &&
+  ART51.includes("pursuant to paragraph 1, point (a)"));
+check("MIG2-E", "served",
+  ASSESSMENT_BUNDLE.includes("Article 51(1)(a)") &&
+  ASSESSMENT_BUNDLE.includes("Article 51(2)"));
+
+check("MIG2-F Article 52 carries notification and exceptional rebuttal", "law",
+  ART52.includes("within two weeks") &&
+  ART52.includes("sufficiently substantiated arguments") &&
+  ART52.includes("exceptionally"));
+check("MIG2-F", "served",
+  ASSESSMENT_BUNDLE.includes("Article 52(1)") &&
+  ASSESSMENT_BUNDLE.includes("Article 52(2)"));
+
 check("E11 Art. 49(1) registration: Annex III except point 2", "law",
   inLaw("with the exception of high-risk AI systems referred to in point 2 of Annex III"));
 
@@ -239,6 +299,289 @@ check("E13 verification exclusion served as SCOPED, never minimal/high-risk", "s
   const r = (await h({ signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } })).structuredContent;
   return /Not high-risk under Annex III\(1\)\(a\)/.test(r.obligations_summary) && r.risk_classification !== "minimal" && r.risk_classification !== "high-risk";
 })());
+
+// ── Audited truth corrections ───────────────────────────────────────────────
+// Every audit row has a corpus assertion and a served-surface assertion.
+
+check("A-M015 Art. 50 duties are paragraph- and actor-specific", "law",
+  inLaw("Providers shall ensure that AI systems intended to interact directly with natural persons") &&
+  inLaw("Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content") &&
+  inLaw("Deployers of an emotion recognition system or a biometric categorisation system") &&
+  inLaw("Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake"));
+check("A-M015", "served",
+  SERVER_BUNDLE.includes("Art. 50 contains paragraph-specific duties") &&
+  SERVER_BUNDLE.includes("Apply the actor, scope, and exceptions in the relevant paragraph") &&
+  !SERVER_BUNDLE.includes("chatbots, emotion recognition, deepfakes, AI-generated content must be disclosed"));
+
+check("A-M016 minimal label does not displace Art. 4 and Art. 95 is voluntary", "law",
+  inLaw("Providers and deployers of AI systems shall take measures to support the development of AI literacy") &&
+  inLaw("voluntary application to AI systems, other than high-risk AI systems"));
+check("A-M016", "served",
+  SERVER_BUNDLE.includes("No higher-tier obligation is identified from this risk label alone") &&
+  SERVER_BUNDLE.includes("Art. 4 and any other independently triggered provisions still require separate review") &&
+  SERVER_BUNDLE.includes("Art. 95 codes of conduct are voluntary"));
+
+check("A-M029 Art. 5(1a) covers ba and bb; 5(1b) covers ba only", "law",
+  inLaw("For the purposes of paragraph 1, first subparagraph, points (ba) and (bb)") &&
+  inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material"));
+check("A-M029", "served", (() => {
+  const description = prohibitedPractices.find((practice) => practice.id === "art5-1bb")?.description ?? "";
+  return description.includes("Art. 5(1a) applies") &&
+    description.includes("Art. 5(1b) does not apply to point (bb)") &&
+    description.includes("it qualifies point (ba) only");
+})());
+
+check("A-M061 penalties attach to the exact Art. 99 tiers", "law",
+  nearAnchor(ART99, "Article 5", "35 000 000", 300) &&
+  nearAnchor(ART99, "obligations of providers pursuant to Article 16", "15 000 000", 700) &&
+  nearAnchor(ART99, "incorrect, incomplete or misleading information", "7 500 000", 300) &&
+  ART99.includes("In the case of SMCs, each fine referred to in paragraphs 4 and 5"));
+check("A-M061", "served", (() => {
+  const answer = faq("faq-16-penalties");
+  return answer.includes("violations enumerated in Art. 99(4)") &&
+    answer.includes("For an undertaking the higher ceiling applies") &&
+    answer.includes("small mid-caps only for paragraphs 4 and 5") &&
+    !answer.includes("High-risk and other obligation violations");
+})());
+
+check("A-M062 Art. 49 registration has three bounded routes", "law",
+  inLaw("high-risk AI system listed in Annex III, with the exception of high-risk AI systems referred to in point 2 of Annex III") &&
+  inLaw("AI system for which the provider has concluded that it is not high-risk according to Article 6(3)") &&
+  inLaw("deployers that are public authorities, Union institutions, bodies, offices or agencies or persons acting on their behalf"));
+check("A-M062", "served", (() => {
+  const answer = faq("faq-19-registration");
+  return answer.includes("Registration applies only where Art. 49 says so") &&
+    answer.includes("except a system in Annex III point 2") &&
+    answer.includes("Art. 6(3) non-high-risk determination") &&
+    answer.includes("not a blanket registration rule for every high-risk system");
+})());
+
+check("A-M063 healthcare high-risk status requires a statutory route", "law",
+  inLaw("is intended to be used as a safety component of a product, or the AI system is itself a product") &&
+  inLaw("is required to undergo a third-party conformity assessment") &&
+  inLaw("emergency healthcare patient triage systems") &&
+  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling"));
+check("A-M063", "served", (() => {
+  const answer = faq("faq-15-healthcare");
+  return answer.includes("Art. 6(1), Annex I, product-law, third-party-conformity") &&
+    answer.includes("Annex III(5)(d)") &&
+    answer.includes("subject to Art. 6(3)") &&
+    answer.includes("not high-risk merely because they are used in healthcare");
+})());
+
+check("A-M064 national legal-services status must be verified", "law",
+  inLaw("This text is meant purely as a documentation tool and has no legal effect") &&
+  inLaw("The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal"));
+check("A-M064", "served",
+  README.includes("must be verified against current official sources") &&
+  README.includes("qualified local counsel") &&
+  !README.includes("not Rechtsberatung im Sinne"));
+
+check("A-M073 deferred high-risk dates are unconditional", "law",
+  inLaw("2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2)") &&
+  inLaw("2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1)"));
+check("A-M073", "served",
+  CHANGELOG.includes("Enacted Art. 113, third paragraph, point (c), makes both dates unconditional") &&
+  !CHANGELOG.includes("Both are backstop dates; a Commission decision on support measures can bring them forward"));
+
+check("A-M074 changelog preserves the Art. 5 qualifier split", "law",
+  inLaw("For the purposes of paragraph 1, first subparagraph, points (ba) and (bb)") &&
+  inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material"));
+check("A-M074", "served",
+  CHANGELOG.includes("Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only") &&
+  !CHANGELOG.includes("with the Art. 5(1a) and (1b) qualifications"));
+
+check("A-M078 profiling override is the Art. 6(3) third subparagraph", "law",
+  inLaw("Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling") &&
+  inLaw("paragraph 3, second subparagraph"));
+check("A-M078", "served",
+  CHANGELOG.includes("profiling block (Art. 6(3), third subparagraph)") &&
+  !CHANGELOG.includes("profiling block (Art. 6(3) second subparagraph)"));
+
+check("A-M080 Annex IV is the statutory minimum as applicable", "law",
+  inLaw("The technical documentation referred to in Article 11(1) shall contain at least the following information, as applicable to the relevant AI system"));
+check("A-M080", "served", await (async () => {
+  const h = toolHandler((await import("./dist/tools/annex-iv.js")).registerAnnexIvTool);
+  const output = (await h({ format: "checklist" })).structuredContent;
+  return output.guidance_note === "The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph." &&
+    output.checklist_markdown.includes(output.guidance_note) &&
+    SERVER_BUNDLE.includes(output.guidance_note);
+})());
+
+check("A-M081 Annex IV simplified form covers SMEs, start-ups and SMCs", "law",
+  inLaw("SMEs, including start-ups, and SMCs, may provide the elements of the technical documentation specified in Annex IV in a simplified manner") &&
+  inLaw("Where an SME, including a start-up, or an SMC, opts to provide the information required in Annex IV in a simplified manner, it shall use the form referred to in this paragraph"));
+check("A-M081", "served", await (async () => {
+  const h = toolHandler((await import("./dist/tools/annex-iv.js")).registerAnnexIvTool);
+  const output = (await h({ format: "checklist", sme_simplified: true })).structuredContent;
+  return output.guidance_note === "The nine titles and descriptions summarise Annex IV. `sub_items` are non-binding implementation prompts, are not verbatim Annex IV text, and do not create additional legal requirements. Under Article 11(1), SMEs, including start-ups, and SMCs may provide the Annex IV elements in a simplified manner only by using the Commission form referred to in that paragraph." &&
+    output.sme_note === output.guidance_note &&
+    art("11")?.summary.includes("SMEs, including start-ups, and SMCs");
+})());
+
+check("A-M082 Art. 73 two-day route incorporates Art. 3(49)(b)", "law",
+  ART73.includes("a serious incident as defined in Article 3, point (49)(b)") &&
+  inLaw("a serious and irreversible disruption of the management or operation of critical infrastructure"));
+check("A-M082", "served",
+  /serious and irreversible disruption of the management or operation of critical infrastructure under Art\. 3\(49\)\(b\).{0,100}(2|two) days/.test(art("73")?.summary ?? "") &&
+  !/incidents involving widespread infringement or affecting critical infrastructure/.test(art("73")?.summary ?? ""));
+
+check("A-M083 Art. 73 provider investigation and Art. 26 deployer cooperation stay separate", "law",
+  ART73.includes("Following the reporting of a serious incident pursuant to paragraph 1, the provider shall, without delay, perform the necessary investigations") &&
+  ART73.includes("This shall include a risk assessment of the incident, and corrective action") &&
+  ART73.includes("where relevant with the notified body concerned") &&
+  inLaw("Deployers shall cooperate with the relevant competent authorities in any action those authorities take in relation to the high-risk AI system"));
+check("A-M083", "served",
+  art("73")?.summary.endsWith("Following a report, the provider must investigate, take corrective action, and cooperate with the competent authorities and, where relevant, the notified body under Article 73(6). Deployers have the separate Article 26(12) duty to cooperate with relevant competent authorities in actions concerning the high-risk system.") &&
+  !art("73")?.summary.includes("competent authorities and the Commission in any investigation"));
+
+check("A-GROUND operational summaries are not official statutory text", "law",
+  inLaw("This text is meant purely as a documentation tool and has no legal effect") &&
+  inLaw("authentic versions of the relevant acts"));
+check("A-GROUND", "served",
+  ARTICLE_TOOL_BUNDLE.includes("The summary is not statutory text") &&
+  ARTICLE_TOOL_BUNDLE.includes("verify the official provision before quoting it") &&
+  !ARTICLE_TOOL_BUNDLE.includes("quote article text with a link") &&
+  SERVER_BUNDLE.includes("Do not quote the summary as statutory text") &&
+  SERVER_BUNDLE.includes("quote only wording verified there") &&
+  !SERVER_BUNDLE.includes("fetch the text and EUR-Lex URL") &&
+  README.includes("verify definitive wording in the official source before quoting"));
+
+// ── Run-2 adjudicated fixes (blind run 2, ADJUDICATION-2-RUN2) ───────────────
+
+const ANNEXI = sliceBetween("ANNEX I List of Union harmonisation legislation", "ANNEX II");
+const { ANNEX_I_INSTRUMENTS, matchAnnexIInstrument, assessAnnexIListing } =
+  await import("./dist/decision-contract/annex-i-instruments.js");
+
+check("R2-F3a Art. 6(1)(a) conditions the Annex I route on the listed acts", "law",
+  inLaw("covered by the Union harmonisation legislation listed in Annex I") &&
+  inLaw("that AI system shall be considered to be high-risk where both of the following conditions are fulfilled"));
+check("R2-F3a", "served",
+  ASSESSMENT_BUNDLE.includes("Union harmonisation legislation listed in Annex I") &&
+  ASSESSMENT_BUNDLE.includes("finding.legal.high-risk.annex-i.not-listed.001"));
+
+check("R2-F3b every pinned instrument sits at its Annex I point in the corpus", "law",
+  ANNEXI.length > 0 &&
+  ANNEX_I_INSTRUMENTS.every((item) => ANNEXI.includes(`${item.annex_point}. ${item.citation}`)));
+check("R2-F3b", "served",
+  ANNEX_I_INSTRUMENTS.length === 20 &&
+  ANNEX_I_INSTRUMENTS.map((item) => item.annex_point).join(",") ===
+    "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21" &&
+  matchAnnexIInstrument("Regulation (EU) 2017/745").entry?.annex_point === 11 &&
+  matchAnnexIInstrument("32017R0745").entry?.annex_point === 11);
+
+check("R2-F3c Annex I Section A point 1 is deleted by M1", "law", (() => {
+  const sectionAHead = sliceBetween(
+    "based on the New Legislative Framework",
+    "2. Directive 2009/48/EC",
+    ANNEXI,
+  );
+  return sectionAHead.length > 0 && !/\d\.\s+(Directive|Regulation)/.test(sectionAHead);
+})());
+check("R2-F3c", "served",
+  !ANNEX_I_INSTRUMENTS.some((item) => item.annex_point === 1));
+
+check("R2-F3d 1223/2009 appears once in the act, only inside the point 11 title", "law",
+  CONSOLIDATED.split("1223/2009").length === 2 &&
+  nearAnchor(ANNEXI, "Regulation (EU) 2017/745", "1223/2009", 300));
+check("R2-F3d", "served",
+  matchAnnexIInstrument("Regulation (EC) No 1223/2009 on cosmetic products").status === "not_listed" &&
+  matchAnnexIInstrument("Directive 2001/83/EC").status === "not_listed" &&
+  assessAnnexIListing(["Regulation (EC) No 1223/2009 on cosmetic products"]).refuted === true &&
+  assessAnnexIListing(["Regulation (EU) 2017/745"]).refuted === false);
+
+check("R2-F3e machinery Regulation (EU) 2023/1230 is Annex I point 21 (M1)", "law",
+  ANNEXI.includes("21. Regulation (EU) 2023/1230") &&
+  nearAnchor(ANNEXI, "21. Regulation (EU) 2023/1230", "on machinery", 200));
+check("R2-F3e", "served",
+  matchAnnexIInstrument("Regulation (EU) 2023/1230 on machinery").entry?.annex_point === 21);
+
+check("R2-F3f a refuted listing yields the negative Article 6(1) boundary at the regime date", "law",
+  inLaw("2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1)"));
+check("R2-F3f", "served", await (async () => {
+  const { assessSystem } = await import("./dist/decision-contract/assess-system.js");
+  const fact = (fact_id, value) => ({
+    fact_id,
+    value,
+    origin: "explicit_structured_input",
+    verification: "caller_asserted",
+    evidence_reference_ids: [],
+  });
+  const out = await assessSystem({
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: fact("fact.purpose", "Recommend cosmetic shade formulations to laboratory technicians"),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: { roles: [fact("fact.role.provider", "provider")] },
+    geography: {
+      jurisdictions: [fact("fact.geo.eu", "EU")],
+      used_in_eu: fact("fact.geo.used", true),
+      affected_person_groups: [fact("fact.geo.group", "Cosmetics consumers")],
+    },
+    decision_context: { decision_consequence: fact("fact.decision", "Suggestions reviewed by laboratory staff") },
+    annex_i: {
+      product_or_safety_component: fact("fact.annex-i.product", true),
+      annex_i_legislation: [
+        fact("fact.annex-i.cosmetics", "Regulation (EC) No 1223/2009 on cosmetic products"),
+      ],
+      third_party_conformity_assessment_required: fact("fact.annex-i.conformity", true),
+    },
+  });
+  return out.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    out.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 6(1)" && item.operative_date === "2028-08-02")) &&
+    !out.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision.includes("Article 6(1)")));
+})());
+
+check("R2-F2a Annex III routes are intended-purpose predicates (Art. 3(12), Annex III point 4)", "law",
+  inLaw("‘intended purpose’ means the use for which an AI system is intended by the provider") &&
+  inLaw("AI systems intended to be used for the recruitment or selection of natural persons") &&
+  inLaw("to allocate tasks based on individual behaviour or personal traits or characteristics or to monitor and evaluate the performance and behaviour of persons in such relationships"));
+check("R2-F2a", "served", await (async () => {
+  const { assessSystem } = await import("./dist/decision-contract/assess-system.js");
+  const fact = (fact_id, value) => ({
+    fact_id,
+    value,
+    origin: "explicit_structured_input",
+    verification: "caller_asserted",
+    evidence_reference_ids: [],
+  });
+  const out = await assessSystem({
+    profile_version: "1.0",
+    role_facts: { roles: [fact("fact.role.provider", "provider")] },
+    annex_iii: {
+      domain: fact("fact.annex-iii.domain", "employment"),
+      purpose: fact("fact.annex-iii.purpose", "Scoring pilot for workforce evaluation across teams"),
+    },
+  });
+  const decisive = out.missing_facts.filter((item) => item.decisive);
+  return out.status === "undetermined" &&
+    out.legal_classification.routes.length === 0 &&
+    decisive.some((item) => item.profile_path === "/intended_use/intended_purpose") &&
+    decisive.some((item) =>
+      item.missing_fact_id === "missing.legal.jurisdiction" &&
+      [
+        "/geography/placed_on_eu_market",
+        "/geography/used_in_eu",
+        "/geography/output_used_in_eu",
+        "/geography/jurisdictions",
+      ].includes(item.profile_path));
+})());
+
+check("R2-F2b the territorial nexus is an Article 2(1) predicate served at leaf level", "law",
+  ART2.includes("providers placing on the market or putting into service AI systems") &&
+  ART2.includes("deployers of AI systems that have their place of establishment or are located within the Union") &&
+  ART2.includes("where the output produced by the AI system is used in the Union"));
+check("R2-F2b", "served",
+  ASSESSMENT_BUNDLE.includes("/geography/placed_on_eu_market") &&
+  ASSESSMENT_BUNDLE.includes("/geography/used_in_eu") &&
+  ASSESSMENT_BUNDLE.includes("/geography/output_used_in_eu") &&
+  ASSESSMENT_BUNDLE.includes("Which fact establishes the Union nexus"));
 
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log(`\nCLAIM MATRIX RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} checks`);

@@ -1,0 +1,23 @@
+{
+  "name": "@lexbeam/regulation-compiler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Private deterministic regulation compiler for Lexbeam legal artifacts.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./adapters/eu-ai-act": {
+      "types": "./dist/adapters/eu-ai-act.d.ts",
+      "default": "./dist/adapters/eu-ai-act.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck:test": "tsc -p tsconfig.test.json",
+    "test": "npm run build && npm run typecheck:test && npx --no-install tsx --test test/*.test.ts"
+  },
+  "dependencies": {}
+}

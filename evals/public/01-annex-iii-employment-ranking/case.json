@@ -1,0 +1,40 @@
+{
+  "case_version": "1.2",
+  "case_id": "01-annex-iii-employment-ranking",
+  "categories": [
+    "annex_iii",
+    "clear_high_risk",
+    "provider_role"
+  ],
+  "fixed_boundary": false,
+  "description": "A synthetic provider ranks job applicants before a recruiter reviews them. The profile supplies the employment purpose, Annex III point, EU nexus, actor role, affected group, and decision consequence, so the evaluation expects a determined Annex III employment route without treating missing implementation evidence as legal uncertainty.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "high_risk"
+    ],
+    "annex_iii_categories": [
+      4
+    ],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 6(2) and Annex III, point 4",
+        "operative_date": "2027-12-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

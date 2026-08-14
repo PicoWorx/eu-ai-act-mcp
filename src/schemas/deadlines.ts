@@ -14,6 +14,7 @@ export const deadlinesInputSchema = z.object({
 
 const sourceStatusEnum = z.enum([
   "enacted_oj",
+  "official_consolidated_snapshot_non_authentic",
   "commission_proposal",
   "political_agreement",
   "adopted_pending_publication",

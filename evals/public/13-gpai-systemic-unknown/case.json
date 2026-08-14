@@ -1,0 +1,44 @@
+{
+  "case_version": "1.2",
+  "case_id": "13-gpai-systemic-unknown",
+  "categories": [
+    "gpai",
+    "systemic_risk_ambiguity",
+    "decisive_subroute_boundary"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic GPAI provider supplies neither training compute nor a Commission designation fact. The model route itself is known, but systemic-risk status is not; the readiness projection may include Article 53 baseline duties and must not invent Article 55 systemic duties.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "gpai"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 3(63)",
+        "operative_date": "2025-02-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ],
+    "required_readiness_provision_prefixes": [
+      "Art. 53"
+    ],
+    "forbidden_readiness_provision_prefixes": [
+      "Art. 55"
+    ]
+  }
+}

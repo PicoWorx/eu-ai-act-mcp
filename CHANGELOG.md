@@ -6,6 +6,73 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-14
+
+Decision-contract and verification release. It adds one bounded assessment tool,
+applies the approved MIGRATION-001 provenance correction, resolves the independent
+G8 legal-review findings, and makes one command the publication gate.
+
+### Features
+
+- Added `euaiact_assess_system` as tool 10. It accepts a normalized sparse system
+  profile and keeps legal classification, qualitative impact, and implementation
+  readiness in separate result blocks.
+- Added fail-closed decisive missing facts, stable finding and fact IDs, sealed
+  corpus identity, actor-specific follow-up calls, and RFC 8785 response hashing.
+- Added twelve runnable contract profiles, complete golden responses, and pinned
+  hashes. The permanent suite checks equality, ordering, size, provenance,
+  disclosure, and ten-run determinism.
+
+### Legal corrections
+
+- Corrected Article 50 readiness selection so paragraphs (1) to (4) activate only
+  from their own statutory predicates and relevant actor role.
+- Required an Article 5(1)(c)(i) or (ii) treatment limb before classifying social
+  scoring as prohibited.
+- Added the Article 51(2) systemic-risk presumption and Article 52(2) rebuttal route
+  before selecting Article 55 duties.
+- Replaced unsupported exhaustive negative conclusions with bounded routing and
+  explicit Article 2, Article 111, source, and readiness limitations.
+- Corrected Chapter I and Article 4 dates, Annex I qualification anchors, caller
+  impact provenance, Article 73 cooperation wording, and the Article 11 simplified
+  Annex IV form wording.
+
+### Contract migration
+
+- Migrated the decision contract from 1.0 to 1.1 under MIGRATION-001. Consolidated
+  EUR-Lex content now carries
+  `official_consolidated_snapshot_non_authentic` and
+  `consolidated_snapshot_integrity_verified`; authentic original and amending OJ
+  acts remain named as authority sources.
+- Added `finding_basis` to distinguish legal propositions, caller-supplied impact,
+  and tool-state abstentions. Non-legal findings no longer carry invented legal
+  provenance.
+- Regenerated TypeScript and JSON schemas, runtime mirrors, fixtures, all twelve
+  goldens, canonical hashes, and public-evaluation expectations.
+- Corrected public case 15 under the SPRINT-LOG M6b authorization: its impact block
+  is undetermined when intended purpose is a decisive missing fact.
+
+### Benchmark and verification
+
+- Added a 20-case public benchmark with ten deterministic runs per case. Day 0
+  records the initial failing baseline, Day 1 records the pre-migration green
+  baseline, and Day 2 records contract 1.1 with every aggregate metric green.
+- Added `npm run verify`, covering a clean build, 467 behavior checks, 96 legal
+  claim checks, 48 schema checks, corpus and compiler verification, public grading,
+  explicit golden determinism, package contents, and version identity.
+- Added `npm run verify:release`, which installs the packed tarball into an isolated
+  project, checks all twelve profiles over MCP stdio, generates an SPDX runtime
+  SBOM, and writes hashed release evidence.
+- Changed `prepublishOnly` and CI to use the canonical verification command.
+
+### Compatibility
+
+- Contract 1.1 is a breaking schema migration for decision-envelope consumers.
+  It requires `finding_basis`, enacted instrument status, authentic authority IDs,
+  and honest consolidated-source verification metadata.
+- The nine pre-existing atomic tools retain their shapes. Pinned compatibility
+  fixtures cover their intentional wording and Article 4 date corrections.
+
 ## [1.4.5] - 2026-08-06
 
 ### Changed
@@ -163,21 +230,21 @@ Verified against the plain text of CELEX 32026R1744 held at `projects/lawvable/_
 ### Changed
 
 - **Digital Omnibus on AI enacted.** The `omnibusEnactment` record now carries CELEX `32026R1744`, OJ publication `2026-07-24` and entry into force `2026-07-27`, verified against the enacted OJ text on 2026-07-26. All derived surfaces (operative dates, milestone timeline, status labels, server instructions, resources) resolve to the enacted state.
-- **Annex III high-risk obligations deferred to 2 December 2027** and **Annex I to 2 August 2028** (Art. 113(3)(c) as amended). Both are backstop dates; a Commission decision on support measures can bring them forward.
+- **Historical defect, corrected in 1.4.3:** Annex III was correctly dated 2 December 2027 and Annex I 2 August 2028, but this release incorrectly called them backstop dates that a Commission decision could bring forward. Enacted Art. 113, third paragraph, point (c), makes both dates unconditional.
 - **Obligation deadlines are derived rather than hardcoded.** `euaiact_get_obligations` now takes its high-risk application dates from the same source as `euaiact_check_deadlines`, split by Annex III and Annex I, so the two tools cannot state different law for the same system. Previously every high-risk obligation carried a fixed `2026-08-02`.
 - **Art. 50(2) transition reconciled and reattributed.** The entry now cites the new Art. 111(4) where the rule sits, carries the enacted date 2 December 2026 and is tagged to the enacted OJ text. The proposal's 2 February 2027 does not appear in the adopted act. `OmnibusDelta.sourceStatus` accepts `enacted_oj` so reconciled items can be labelled honestly.
 - Summary key-changes, the source registry note, the Art. 113 article summary and three FAQ answers rewritten for the enacted state.
 
 ### Added
 
-- **Art. 5(1)(ba) and (bb) prohibited practices** (non-consensual intimate material and child sexual abuse material), with the Art. 5(1a) and (1b) qualifications, applying from 2 December 2026. These are now reachable through classification and prohibited-practice lookups.
+- **Art. 5(1)(ba) and (bb) prohibited practices** (non-consensual intimate material and child sexual abuse material), applying from 2 December 2026. Art. 5(1a) applies to both points; Art. 5(1b) qualifies point (ba) only. These are now reachable through classification and prohibited-practice lookups.
 - **Milestone for 2 December 2026** covering the new Art. 5 prohibitions and the Art. 111(4) synthetic-content transition.
 - **Cross-tool consistency tests** asserting that obligation deadlines match the operative deadline dates, and that limited-risk Art. 50 duties stay on 2 August 2026.
 - Reverse-simulation tests proving a pending record still resolves to pre-OJ behaviour after the flip.
 
 ### Fixed
 
-- The Annex III milestone description now states that the deferred date is a backstop and that obligations can apply earlier after a Commission decision.
+- **Historical defect, corrected in 1.4.3:** the Annex III milestone incorrectly described the date as a backstop and said obligations could apply earlier after a Commission decision. The enacted date is unconditional.
 
 ### Known limitations
 
@@ -272,10 +339,10 @@ Legal-accuracy and release-hygiene release following a cross-model audit (Codex)
 - **Matched signals and follow-up questions.** Every classification now returns `matched_signals`, `missing_signals`, and `next_questions` so the calling agent can explain why and ask the user what is still needed.
 - **`euaiact_get_article`** to retrieve operational summaries of the most-cited articles plus stable EUR-Lex URLs for grounded citations.
 - **`euaiact_check_gpai_systemic_risk`** to determine whether a GPAI model crosses the Art. 51(2) 10²⁵ FLOPs threshold and return Art. 53 baseline plus Art. 55 systemic-risk obligations with the Art. 52 notification duty.
-- **`euaiact_assess_art6_3_exception`** to walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3) second subparagraph) and the Art. 6(4) documentation reminder plus Art. 49(2) registration duty.
+- **`euaiact_assess_art6_3_exception`** to walk through the Art. 6(3) "no significant risk" exception with explicit handling of the profiling block (Art. 6(3), third subparagraph) and the Art. 6(4) documentation reminder plus Art. 49(2) registration duty.
 - **`euaiact_annex_iv_checklist`** to return all nine Annex IV technical-documentation items, optionally as a markdown checklist, with an SME-simplified note.
 - **Resources** `euaiact://annex/iii` (full Annex III categories) and `euaiact://annex/iv` (full Annex IV checklist).
-- **Prompt** `ground-citation` to guide the agent to call `euaiact_get_article` and quote with an EUR-Lex URL.
+- **Prompt** `ground-citation` originally guided the agent to quote after calling `euaiact_get_article`; this was later corrected because the tool returns an operational summary, not statutory text. Agents must follow the EUR-Lex URL and verify official wording before quoting.
 - 5 new FAQ entries covering the FLOPs threshold for systemic-risk GPAI, FRIA for credit scoring, chatbot disclosure under Art. 50(1), minimal-risk spellchecker and recommender examples, and an expanded Art. 6(3) exception entry with the profiling caveat.
 - `comparative` block in `euaiact_calculate_penalty` showing the SME reduction alongside the non-SME amount.
 - `only_upcoming` filter and a `next_milestone` shortcut in `euaiact_check_deadlines`.

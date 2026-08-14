@@ -84,7 +84,9 @@ await validate("euaiact_classify_system", classifyOutputSchema, {
     requires_third_party_conformity_assessment: false, affects_fundamental_rights: false,
     targets_children_or_vulnerable: false, generates_synthetic_content: false,
     interacts_with_natural_persons: false, performs_emotion_recognition_workplace_or_school: false,
-    performs_social_scoring: false, performs_social_scoring_by_public_authority: false,
+    performs_social_scoring: false, social_scoring_unrelated_context: false,
+    social_scoring_unjustified_or_disproportionate: false,
+    performs_social_scoring_by_public_authority: false,
   },
 }, "minimal (all-false)");
 
@@ -199,6 +201,7 @@ const RESOURCE_SCHEMAS = {
     annex: z.literal("IV"),
     title: z.string(),
     items: z.array(z.any()).length(9),
+    guidance_note: z.string().includes("non-binding implementation prompts"),
     relevant_articles: z.array(z.string()),
     eurlex_url: z.string().includes("02024R1689-20260727"),
   }),

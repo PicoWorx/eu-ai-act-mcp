@@ -1,0 +1,1142 @@
+{
+  "$id": "https://schemas.lexbeam.com/eu-ai-act/1.5/lawpatch-manifest.schema.json",
+  "x-generated-from": "schemas/lawpatch-manifest.ts#lawPatchManifestSchema",
+  "$ref": "#/definitions/LawPatchManifest",
+  "definitions": {
+    "LawPatchManifest": {
+      "type": "object",
+      "properties": {
+        "manifest_version": {
+          "type": "string",
+          "const": "0.1"
+        },
+        "artifact": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 160,
+              "pattern": "^[a-z][a-z0-9._:-]*$"
+            },
+            "artifact_version": {
+              "type": "string",
+              "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+            },
+            "artifact_kind": {
+              "type": "string",
+              "enum": [
+                "normalized_regulation",
+                "decision_contract",
+                "lawpatch",
+                "generated_surface_bundle"
+              ]
+            },
+            "regulation_id": {
+              "type": "string",
+              "const": "eu-ai-act"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "artifact_version",
+            "artifact_kind",
+            "regulation_id"
+          ],
+          "additionalProperties": false
+        },
+        "compiler": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "lexbeam-regulation-compiler"
+            },
+            "version": {
+              "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_version"
+            },
+            "source_commit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "source_commit"
+          ],
+          "additionalProperties": false
+        },
+        "source_date_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "corpus": {
+          "type": "object",
+          "properties": {
+            "corpus_id": {
+              "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+            },
+            "corpus_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "verified_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "current_instrument": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_snapshot_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "corpus_id",
+            "corpus_sha256",
+            "verified_at",
+            "current_instrument",
+            "source_snapshot_ids"
+          ],
+          "additionalProperties": false
+        },
+        "domain_payload": {
+          "type": "object",
+          "properties": {
+            "schema_id": {
+              "type": "string",
+              "const": "schema.lawpatch.manifest"
+            },
+            "schema_version": {
+              "type": "string",
+              "const": "0.1.0"
+            },
+            "fields": {
+              "type": "array",
+              "minItems": 14,
+              "maxItems": 14,
+              "items": [
+                {
+                  "type": "string",
+                  "const": "/lawpatch_manifest_version"
+                },
+                {
+                  "type": "string",
+                  "const": "/package"
+                },
+                {
+                  "type": "string",
+                  "const": "/jurisdiction"
+                },
+                {
+                  "type": "string",
+                  "const": "/effective_date"
+                },
+                {
+                  "type": "string",
+                  "const": "/transitions"
+                },
+                {
+                  "type": "string",
+                  "const": "/sources"
+                },
+                {
+                  "type": "string",
+                  "const": "/citations"
+                },
+                {
+                  "type": "string",
+                  "const": "/obligation_deltas"
+                },
+                {
+                  "type": "string",
+                  "const": "/rules"
+                },
+                {
+                  "type": "string",
+                  "const": "/tests"
+                },
+                {
+                  "type": "string",
+                  "const": "/affected_selectors"
+                },
+                {
+                  "type": "string",
+                  "const": "/migration"
+                },
+                {
+                  "type": "string",
+                  "const": "/human_review"
+                },
+                {
+                  "type": "string",
+                  "const": "/oscal_component_definition_mapping"
+                }
+              ]
+            },
+            "sha256": {
+              "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+            }
+          },
+          "required": [
+            "schema_id",
+            "schema_version",
+            "fields",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "content_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "source_snapshot",
+                  "normalized_source",
+                  "citation_registry",
+                  "rule",
+                  "test",
+                  "expected_result",
+                  "schema",
+                  "claim_matrix",
+                  "generated_surface",
+                  "oscal_export",
+                  "migration_note"
+                ]
+              },
+              "media_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "path",
+              "role",
+              "media_type",
+              "sha256",
+              "bytes"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "digest_contract": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "canonicalization": {
+              "type": "string",
+              "const": "RFC8785"
+            },
+            "manifest_fields": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "items": [
+                {
+                  "type": "string",
+                  "const": "/manifest_version"
+                },
+                {
+                  "type": "string",
+                  "const": "/artifact"
+                },
+                {
+                  "type": "string",
+                  "const": "/compiler"
+                },
+                {
+                  "type": "string",
+                  "const": "/source_date_epoch"
+                },
+                {
+                  "type": "string",
+                  "const": "/corpus"
+                },
+                {
+                  "type": "string",
+                  "const": "/domain_payload"
+                },
+                {
+                  "type": "string",
+                  "const": "/content_files"
+                },
+                {
+                  "type": "string",
+                  "const": "/digest_contract"
+                }
+              ]
+            },
+            "volatile_fields": {
+              "type": "array",
+              "minItems": 9,
+              "maxItems": 9,
+              "items": [
+                {
+                  "type": "string",
+                  "const": "/volatile/generated_at"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/sealed_at"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_id"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_host"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/build_path"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/ci_job_url"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/correlation_id"
+                },
+                {
+                  "type": "string",
+                  "const": "/volatile/duration_ms"
+                },
+                {
+                  "type": "string",
+                  "const": "/signature"
+                }
+              ]
+            },
+            "file_order": {
+              "type": "string",
+              "const": "path_ascending_unicode_code_point"
+            },
+            "file_bytes": {
+              "type": "string",
+              "const": "sha256_raw_bytes_then_include_file_record"
+            }
+          },
+          "required": [
+            "algorithm",
+            "canonicalization",
+            "manifest_fields",
+            "volatile_fields",
+            "file_order",
+            "file_bytes"
+          ],
+          "additionalProperties": false
+        },
+        "content_digest": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "value": {
+              "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+            }
+          },
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "volatile": {
+          "type": "object",
+          "properties": {
+            "generated_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sealed_at": {
+              "$ref": "#/definitions/LawPatchManifest/properties/volatile/properties/generated_at"
+            },
+            "build_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "build_host": {
+              "type": "string",
+              "minLength": 1
+            },
+            "build_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ci_job_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+            },
+            "duration_ms": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "lawpatch_manifest_version": {
+          "type": "string",
+          "const": "0.1"
+        },
+        "package": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^@lexbeam-lawpatch\\/[a-z0-9-]+$"
+            },
+            "version": {
+              "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_version"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "regulation_family": {
+              "type": "string",
+              "const": "EU AI Act"
+            },
+            "component": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "package_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "version_range": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "content_digest": {
+                    "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+                  }
+                },
+                "required": [
+                  "package_name",
+                  "version_range",
+                  "content_digest"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "title",
+            "regulation_family",
+            "component",
+            "dependencies"
+          ],
+          "additionalProperties": false
+        },
+        "jurisdiction": {
+          "type": "object",
+          "properties": {
+            "codes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "const": "EU"
+              },
+              "minItems": 1
+            },
+            "territorial_scope": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "codes",
+            "territorial_scope"
+          ],
+          "additionalProperties": false
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/verified_at"
+            },
+            {
+              "type": "string",
+              "const": "not_date_bound"
+            }
+          ]
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "transition_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "from_state": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to_state": {
+                "type": "string",
+                "minLength": 1
+              },
+              "operative_date": {
+                "$ref": "#/definitions/LawPatchManifest/properties/effective_date"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "citation_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "transition_id",
+              "from_state",
+              "to_state",
+              "operative_date",
+              "conditions",
+              "citation_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "celex": {
+                "type": "string",
+                "minLength": 1
+              },
+              "official_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "source_status": {
+                "type": "string",
+                "enum": [
+                  "enacted_oj",
+                  "official_consolidated_snapshot_non_authentic",
+                  "commission_proposal",
+                  "political_agreement",
+                  "adopted_pending_publication",
+                  "commission_guideline_draft",
+                  "commission_guideline_final",
+                  "commission_study",
+                  "code_under_assessment",
+                  "code_adequate_voluntary_tool"
+                ]
+              },
+              "publication_date": {
+                "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/verified_at"
+              },
+              "snapshot_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "content_sha256": {
+                "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+              }
+            },
+            "required": [
+              "source_id",
+              "title",
+              "official_url",
+              "source_status",
+              "publication_date",
+              "snapshot_path",
+              "content_sha256"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "citation_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "source_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "exact_provision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "official_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verification_level": {
+                "type": "string",
+                "enum": [
+                  "complete_official_text",
+                  "consolidated_snapshot_integrity_verified",
+                  "official_metadata_only",
+                  "curated_summary_only",
+                  "unverified"
+                ]
+              }
+            },
+            "required": [
+              "citation_id",
+              "source_id",
+              "exact_provision",
+              "official_url",
+              "verification_level"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "obligation_deltas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "delta_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "add",
+                  "modify",
+                  "remove"
+                ]
+              },
+              "obligation_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "actor_roles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "provider",
+                    "deployer",
+                    "importer",
+                    "distributor",
+                    "authorised_representative",
+                    "product_manufacturer",
+                    "gpai_provider",
+                    "unknown"
+                  ]
+                },
+                "minItems": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "before": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "after": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "effective_date": {
+                "$ref": "#/definitions/LawPatchManifest/properties/effective_date"
+              },
+              "citation_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                },
+                "minItems": 1
+              },
+              "human_review_required": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "delta_id",
+              "operation",
+              "obligation_id",
+              "actor_roles",
+              "summary",
+              "before",
+              "after",
+              "effective_date",
+              "citation_ids",
+              "human_review_required"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "rule_version": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_version"
+              },
+              "rule_kind": {
+                "type": "string",
+                "const": "decision_table"
+              },
+              "rule_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "input_selectors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "outcome_codes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                },
+                "minItems": 1
+              },
+              "citation_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "rule_id",
+              "rule_version",
+              "rule_kind",
+              "rule_path",
+              "input_selectors",
+              "outcome_codes",
+              "citation_ids"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "test_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "fixture_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expected_result_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expected_result": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "determined",
+                      "undetermined",
+                      "not_applicable"
+                    ]
+                  },
+                  "outcome_code": {
+                    "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                  },
+                  "finding_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                    }
+                  },
+                  "required_warning_codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "status",
+                  "outcome_code",
+                  "finding_ids",
+                  "required_warning_codes"
+                ],
+                "additionalProperties": false
+              },
+              "covered_rule_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                },
+                "minItems": 1
+              },
+              "critical": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "test_id",
+              "fixture_path",
+              "expected_result_path",
+              "expected_result",
+              "covered_rule_ids",
+              "critical"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "affected_selectors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "selector_id": {
+                "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+              },
+              "selector_kind": {
+                "type": "string",
+                "enum": [
+                  "capability",
+                  "workflow",
+                  "policy",
+                  "control",
+                  "tool",
+                  "output_surface"
+                ]
+              },
+              "selector": {
+                "type": "string",
+                "minLength": 1
+              },
+              "effect": {
+                "type": "string",
+                "enum": [
+                  "add",
+                  "change",
+                  "remove",
+                  "retest"
+                ]
+              },
+              "obligation_delta_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                }
+              }
+            },
+            "required": [
+              "selector_id",
+              "selector_kind",
+              "selector",
+              "effect",
+              "obligation_delta_ids"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "migration": {
+          "type": "object",
+          "properties": {
+            "migration_notes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "rollback_target": {
+              "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_version"
+            },
+            "rollback_notes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "breaking_change": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "migration_notes",
+            "rollback_target",
+            "rollback_notes",
+            "breaking_change"
+          ],
+          "additionalProperties": false
+        },
+        "human_review": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "flags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "novel_interpretation",
+                  "negative_legal_conclusion",
+                  "non_binding_source",
+                  "transition_complexity",
+                  "critical_rule_change",
+                  "manual_exception"
+                ]
+              }
+            },
+            "reviewer_role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "promotion_gate": {
+              "type": "string",
+              "enum": [
+                "approve",
+                "approve_with_conditions",
+                "reject"
+              ]
+            }
+          },
+          "required": [
+            "required",
+            "flags",
+            "reviewer_role",
+            "promotion_gate"
+          ],
+          "additionalProperties": false
+        },
+        "oscal_component_definition_mapping": {
+          "type": "object",
+          "properties": {
+            "oscal_version": {
+              "type": "string",
+              "const": "1.1.2"
+            },
+            "export_model": {
+              "type": "string",
+              "const": "component-definition"
+            },
+            "component_uuid_strategy": {
+              "type": "string",
+              "const": "uuid_v5_from_content_digest"
+            },
+            "field_mappings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lawpatch_pointer": {
+                    "type": "string",
+                    "pattern": "^(?:\\/(?:[^~/]|~[01])*)*$"
+                  },
+                  "oscal_pointer": {
+                    "$ref": "#/definitions/LawPatchManifest/properties/oscal_component_definition_mapping/properties/field_mappings/items/properties/lawpatch_pointer"
+                  },
+                  "transform": {
+                    "type": "string",
+                    "enum": [
+                      "copy",
+                      "join_text",
+                      "to_responsible_role",
+                      "to_source_link",
+                      "to_implemented_requirement"
+                    ]
+                  }
+                },
+                "required": [
+                  "lawpatch_pointer",
+                  "oscal_pointer",
+                  "transform"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "control_mappings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "obligation_delta_id": {
+                    "$ref": "#/definitions/LawPatchManifest/properties/artifact/properties/artifact_id"
+                  },
+                  "oscal_control_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "implementation_status": {
+                    "type": "string",
+                    "enum": [
+                      "planned",
+                      "implemented",
+                      "partial",
+                      "not_applicable"
+                    ]
+                  }
+                },
+                "required": [
+                  "obligation_delta_id",
+                  "oscal_control_id",
+                  "implementation_status"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "oscal_version",
+            "export_model",
+            "component_uuid_strategy",
+            "field_mappings",
+            "control_mappings"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "Ed25519"
+            },
+            "public_key_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "signed_digest": {
+              "$ref": "#/definitions/LawPatchManifest/properties/corpus/properties/corpus_sha256"
+            },
+            "signature_base64": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9+/]{86}==$"
+            },
+            "signed_at": {
+              "$ref": "#/definitions/LawPatchManifest/properties/volatile/properties/generated_at"
+            }
+          },
+          "required": [
+            "algorithm",
+            "public_key_id",
+            "signed_digest",
+            "signature_base64",
+            "signed_at"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "manifest_version",
+        "artifact",
+        "compiler",
+        "source_date_epoch",
+        "corpus",
+        "domain_payload",
+        "content_files",
+        "digest_contract",
+        "content_digest",
+        "lawpatch_manifest_version",
+        "package",
+        "jurisdiction",
+        "effective_date",
+        "transitions",
+        "sources",
+        "citations",
+        "obligation_deltas",
+        "rules",
+        "tests",
+        "affected_selectors",
+        "migration",
+        "human_review",
+        "oscal_component_definition_mapping",
+        "signature"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

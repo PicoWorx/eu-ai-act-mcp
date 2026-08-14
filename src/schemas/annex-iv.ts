@@ -22,6 +22,7 @@ export const annexIvItemSchema = z.object({
 
 export const annexIvOutputSchema = z.object({
   items: z.array(annexIvItemSchema),
+  guidance_note: z.string(),
   checklist_markdown: z.string().optional(),
   sme_note: z.string().optional(),
   total_items: z.number(),

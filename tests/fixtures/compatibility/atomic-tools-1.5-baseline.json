@@ -1,0 +1,94 @@
+{
+  "fixed_instant": "2026-08-13T12:00:00.000Z",
+  "fixtures": [
+    {
+      "tool_name": "euaiact_annex_iv_checklist",
+      "input": {
+        "format": "checklist",
+        "sme_simplified": true
+      },
+      "baseline_sha256": "8e2d76bf5c1f89eb15e58657590cb8b9f218da9a485f2ff245d6d41fb311cb1f",
+      "baseline_bytes": 29568
+    },
+    {
+      "tool_name": "euaiact_answer_question",
+      "input": {
+        "question": "Do I need to register my Annex III system in the EU database?"
+      },
+      "baseline_sha256": "b947fc16b2a6af8ef11c73a2a62c5566713b182868487a1534f426ea016fc230",
+      "baseline_bytes": 1984
+    },
+    {
+      "tool_name": "euaiact_assess_art6_3_exception",
+      "input": {
+        "annex_iii_number": 4,
+        "performs_profiling": false,
+        "narrow_procedural_task": true,
+        "no_significant_risk_to_health_safety_fundamental_rights": true,
+        "documented_assessment": true
+      },
+      "baseline_sha256": "acc48040a52c9fc04aa9c8d0343e211ef1d5cee936f22cdb77cb336f6bf9f598",
+      "baseline_bytes": 3097
+    },
+    {
+      "tool_name": "euaiact_calculate_penalty",
+      "input": {
+        "violation_type": "high_risk",
+        "annual_turnover_eur": 100000000,
+        "is_sme": true,
+        "is_smc": false
+      },
+      "baseline_sha256": "f3901aeca694f0aa40ff81dc71fd4aaef017082d98694be23a0e36193c563b25",
+      "baseline_bytes": 2081
+    },
+    {
+      "tool_name": "euaiact_check_deadlines",
+      "input": {
+        "area": "GPAI",
+        "only_upcoming": true
+      },
+      "baseline_sha256": "c74d48749a3f138798fde4ce0b25744abcf75a9d405b4a71ee4ee7d8be34bde4",
+      "baseline_bytes": 6843
+    },
+    {
+      "tool_name": "euaiact_check_gpai_systemic_risk",
+      "input": {
+        "model_name": "Fixture model",
+        "training_flops": 3e+25
+      },
+      "baseline_sha256": "08b95f65fa0c28112966c0001cb05179b133f7380e15fe13ca6b5b8e7cee75e4",
+      "baseline_bytes": 9025
+    },
+    {
+      "tool_name": "euaiact_classify_system",
+      "input": {
+        "description": "AI system that ranks job applicants before recruiter review",
+        "role": "provider",
+        "signals": {
+          "domain": "employment"
+        }
+      },
+      "baseline_sha256": "f8ab20ead5fd531ae9178600cb16373c8d8d4b034c0d61d055a1cab308975fca",
+      "baseline_bytes": 3928
+    },
+    {
+      "tool_name": "euaiact_get_article",
+      "input": {
+        "article": "73"
+      },
+      "baseline_sha256": "7b1a8b1e37f48d5ad5b74d92d538c729e822fe8547f325af0fb0ccaef11489f1",
+      "baseline_bytes": 2649
+    },
+    {
+      "tool_name": "euaiact_get_obligations",
+      "input": {
+        "role": "provider",
+        "risk_level": "high-risk",
+        "high_risk_source": "annex_iii",
+        "annex_iii_point": 4
+      },
+      "baseline_sha256": "987faee71404c1c3be00ff218bf3f123160956ede9e71c4808b0655a04285b18",
+      "baseline_bytes": 23007
+    }
+  ]
+}

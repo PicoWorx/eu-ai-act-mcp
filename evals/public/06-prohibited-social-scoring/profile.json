@@ -1,0 +1,92 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.prohibited-social-scoring.name",
+      "value": "prohibited-social-scoring",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.prohibited-social-scoring.purpose",
+      "value": "Score natural persons from social behaviour and use the score to restrict public services",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.prohibited-social-scoring.deployer",
+        "value": "deployer",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.prohibited-social-scoring.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.prohibited-social-scoring.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.prohibited-social-scoring",
+        "value": "People seeking a public service",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.prohibited-social-scoring.consequence",
+      "value": "The score can cause detrimental treatment unrelated to the original context",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.prohibited-social-scoring.material",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "biometric_and_practices": {
+    "social_scoring": {
+      "fact_id": "fact.practice.social-scoring",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "social_scoring_unrelated_context": {
+      "fact_id": "fact.practice.social-scoring.unrelated-context",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

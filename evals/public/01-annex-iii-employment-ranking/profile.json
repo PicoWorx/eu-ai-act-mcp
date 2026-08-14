@@ -1,0 +1,106 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.annex-iii-employment-ranking.name",
+      "value": "annex-iii-employment-ranking",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.annex-iii-employment-ranking.purpose",
+      "value": "Rank job applicants before human recruiter review",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.annex-iii-employment-ranking.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.annex-iii-employment-ranking.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.annex-iii-employment-ranking.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.annex-iii-employment-ranking",
+        "value": "Job applicants",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.annex-iii-employment-ranking.consequence",
+      "value": "Changes the order in which applicants receive recruiter review",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.annex-iii-employment-ranking.material",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_iii": {
+    "domain": {
+      "fact_id": "fact.annex-iii.employment.domain",
+      "value": "employment",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "purpose": {
+      "fact_id": "fact.annex-iii.employment.purpose",
+      "value": "Recruitment and candidate ranking",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "annex_iii_point": {
+      "fact_id": "fact.annex-iii.employment.point",
+      "value": 4,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "performs_profiling": {
+      "fact_id": "fact.annex-iii.employment.profiling",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.system-name",
+      "value": "Static lookup table",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "machine_based_system": {
+      "fact_id": "fact.identity.machine-based-system",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "infers_from_inputs_how_to_generate_outputs": {
+      "fact_id": "fact.identity.infers-outputs",
+      "value": false,
+      "origin": "cited_evidence",
+      "verification": "evidence_linked",
+      "evidence_reference_ids": ["evidence.system-specification"]
+    }
+  },
+  "controls_and_evidence": {
+    "controls": [],
+    "evidence_references": [
+      {
+        "evidence_id": "evidence.system-specification",
+        "title": "Static lookup table specification",
+        "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "supports_fact_ids": ["fact.identity.infers-outputs"]
+      }
+    ]
+  }
+}

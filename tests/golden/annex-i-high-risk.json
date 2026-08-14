@@ -1,0 +1,1004 @@
+{
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "determined",
+  "facts_used": [
+    {
+      "fact_id": "fact.annex-i.mdr",
+      "profile_path": "/annex_i/annex_i_legislation/0",
+      "value": "Regulation (EU) 2017/745",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-i.non-safety-assistance",
+      "profile_path": "/annex_i/solely_non_safety_user_assistance",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-i.product",
+      "profile_path": "/annex_i/product_or_safety_component",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.annex-i.third-party-conformity",
+      "profile_path": "/annex_i/third_party_conformity_assessment_required",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.medical-safety-component.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "value": "A faulty output may affect patient health and safety",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.decision.medical-safety-component.material",
+      "profile_path": "/decision_context/materially_influences_decision",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.geography.eu",
+      "profile_path": "/geography/jurisdictions/0",
+      "value": "EU",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.group.medical-safety-component",
+      "profile_path": "/geography/affected_person_groups/0",
+      "value": "Patients using the device",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.role.provider",
+      "profile_path": "/role_facts/roles/0",
+      "value": "provider",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    {
+      "fact_id": "fact.use.medical-safety-component.purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "value": "Control a safety function in a regulated medical device",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [],
+  "findings": [
+    {
+      "finding_id": "finding.legal.high-risk.annex_i.001",
+      "finding_basis": "legal_proposition",
+      "block": "legal_classification",
+      "summary": "The existing Article 6 classifier identifies a high-risk route from the supplied facts.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "medical-safety-component"
+      },
+      "fact_ids": [
+        "fact.annex-i.mdr",
+        "fact.annex-i.product",
+        "fact.annex-i.third-party-conformity",
+        "fact.decision.medical-safety-component.consequence",
+        "fact.decision.medical-safety-component.material",
+        "fact.geography.eu",
+        "fact.role.provider",
+        "fact.use.medical-safety-component.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 6(1) and Annex I",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_6",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Article 6(1a) to (1c)",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_6",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.impact.supplied-context.001",
+      "finding_basis": "caller_supplied_impact",
+      "block": "impact",
+      "summary": "The supplied consequence is: A faulty output may affect patient health and safety.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "medical-safety-component"
+      },
+      "fact_ids": [
+        "fact.decision.medical-safety-component.consequence",
+        "fact.decision.medical-safety-component.material",
+        "fact.group.medical-safety-component"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [],
+      "determination": "applies"
+    },
+    {
+      "finding_id": "finding.readiness.provider.001",
+      "finding_basis": "legal_proposition",
+      "block": "implementation_readiness",
+      "summary": "Applicable duties for the provider role: 13 (evidence documented 0, partial 0, missing 13). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.",
+      "scope": {
+        "actors": [
+          "provider"
+        ],
+        "jurisdictions": [
+          "EU"
+        ],
+        "system_scope": "medical-safety-component"
+      },
+      "fact_ids": [
+        "fact.annex-i.mdr",
+        "fact.annex-i.non-safety-assistance",
+        "fact.annex-i.product",
+        "fact.annex-i.third-party-conformity",
+        "fact.geography.eu",
+        "fact.role.provider",
+        "fact.use.medical-safety-component.purpose"
+      ],
+      "assumption_ids": [],
+      "missing_fact_ids": [],
+      "provenance": [
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 10",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_10",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 11",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_11",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 12, Art. 19",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_12",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 13",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_13",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 14",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_14",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 15",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_15",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 17",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_17",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 4",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_4",
+          "operative_date": "2026-07-27",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 43",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_43",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 47",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_47",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 72",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_72",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 73",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_73",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        },
+        {
+          "instrument_id": "regulation-eu-2024-1689",
+          "exact_provision": "Art. 9",
+          "instrument_status": "enacted",
+          "source_id": "source.oj.2024.1689.consolidated.20260727",
+          "authority_source_ids": [
+            "source.oj.2024.1689.original",
+            "source.oj.2026.1744"
+          ],
+          "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727#art_9",
+          "operative_date": "2028-08-02",
+          "source_status": "official_consolidated_snapshot_non_authentic",
+          "verification_level": "consolidated_snapshot_integrity_verified"
+        }
+      ],
+      "determination": "applies"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.high-risk.annex_i.001",
+        "finding.readiness.provider.001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.high-risk.annex_i.001",
+        "finding.readiness.provider.001"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.impact.supplied-context.001",
+        "finding.legal.high-risk.annex_i.001",
+        "finding.readiness.provider.001"
+      ]
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_get_obligations",
+      "reason": "Retrieve duties for the Article 6(1) high-risk route.",
+      "input_fact_ids": [
+        "fact.annex-i.mdr",
+        "fact.annex-i.product",
+        "fact.annex-i.third-party-conformity",
+        "fact.decision.medical-safety-component.consequence",
+        "fact.decision.medical-safety-component.material",
+        "fact.geography.eu",
+        "fact.role.provider",
+        "fact.use.medical-safety-component.purpose"
+      ]
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "routes": [
+      {
+        "route": "high_risk",
+        "finding_ids": [
+          "finding.legal.high-risk.annex_i.001"
+        ],
+        "actor_roles": [
+          "provider"
+        ]
+      }
+    ],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "provider"
+    ],
+    "finding_ids": [
+      "finding.legal.high-risk.annex_i.001"
+    ],
+    "limitations": [
+      "Routes are independent. Impact and implementation readiness are reported separately.",
+      "The supplied geography label does not establish territorial scope. Determine Article 2(1)'s actor, establishment, market-placement, deployment-location, or Union-output condition and test all applicable Article 2 limitations and exclusions separately.",
+      "The stated date is the general application date for the statutory route. It does not determine the treatment of a system already placed on the market or put into service. Apply Article 111 to the system's market date, type, model and later design changes."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "inherent_impact": {
+      "description": "The supplied consequence is: A faulty output may affect patient health and safety.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.medical.safety.component"
+      ],
+      "fact_ids": [
+        "fact.decision.medical-safety-component.consequence",
+        "fact.decision.medical-safety-component.material",
+        "fact.group.medical-safety-component"
+      ]
+    },
+    "relevant_affected_groups": [
+      {
+        "group_id": "group.fact.group.medical.safety.component",
+        "label": "Patients using the device",
+        "fact_ids": [
+          "fact.group.medical-safety-component"
+        ]
+      }
+    ],
+    "current_controls": [],
+    "residual_impact": {
+      "description": "No supplied tested-control evidence reduces the described inherent impact.",
+      "categories": [
+        "due_process_and_effective_remedy"
+      ],
+      "affected_group_ids": [
+        "group.fact.group.medical.safety.component"
+      ],
+      "fact_ids": [
+        "fact.decision.medical-safety-component.consequence",
+        "fact.decision.medical-safety-component.material",
+        "fact.group.medical-safety-component"
+      ]
+    },
+    "finding_ids": [
+      "finding.impact.supplied-context.001"
+    ],
+    "limitations": [
+      "Impact is qualitative and contains no aggregate or numeric score.",
+      "Controls cannot alter legal classification."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "determined",
+    "readiness_state": "evidence_missing",
+    "applicable_duties": [
+      {
+        "duty_id": "duty.provider.art.10.data.governance",
+        "title": "Data governance and management",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 10",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.11.documentation",
+        "title": "Technical documentation",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 11",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.12.art.19.documentation",
+        "title": "Logging capability and provider log retention",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 12, Art. 19",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.13.transparency",
+        "title": "Transparency and provision of information to deployers",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 13",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.14.human.oversight",
+        "title": "Human oversight measures",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 14",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.15.technical.requirements",
+        "title": "Accuracy, robustness, and cybersecurity",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 15",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.17.quality.management",
+        "title": "Quality management system",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 17",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.4.ai.literacy",
+        "title": "Take measures to support the development of AI literacy of staff and operators",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 4",
+        "operative_date": "2026-07-27",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.43.conformity.assessment",
+        "title": "Conformity assessment",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 43",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.47.conformity.assessment",
+        "title": "EU Declaration of Conformity",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 47",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.72.post.market",
+        "title": "Post-market monitoring",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 72",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.73.incident.reporting",
+        "title": "Reporting serious incidents",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 73",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      },
+      {
+        "duty_id": "duty.provider.art.9.risk.management",
+        "title": "Establish a risk management system",
+        "actor_roles": [
+          "provider"
+        ],
+        "exact_provision": "Art. 9",
+        "operative_date": "2028-08-02",
+        "evidence_state": "missing",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "finding_ids": [
+          "finding.readiness.provider.001"
+        ]
+      }
+    ],
+    "evidence_status": [
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.10.data.governance",
+        "duty_ids": [
+          "duty.provider.art.10.data.governance"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.11.documentation",
+        "duty_ids": [
+          "duty.provider.art.11.documentation"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.12.art.19.documentation",
+        "duty_ids": [
+          "duty.provider.art.12.art.19.documentation"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.13.transparency",
+        "duty_ids": [
+          "duty.provider.art.13.transparency"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.14.human.oversight",
+        "duty_ids": [
+          "duty.provider.art.14.human.oversight"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.15.technical.requirements",
+        "duty_ids": [
+          "duty.provider.art.15.technical.requirements"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.17.quality.management",
+        "duty_ids": [
+          "duty.provider.art.17.quality.management"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.43.conformity.assessment",
+        "duty_ids": [
+          "duty.provider.art.43.conformity.assessment"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.47.conformity.assessment",
+        "duty_ids": [
+          "duty.provider.art.47.conformity.assessment"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.72.post.market",
+        "duty_ids": [
+          "duty.provider.art.72.post.market"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.73.incident.reporting",
+        "duty_ids": [
+          "duty.provider.art.73.incident.reporting"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      },
+      {
+        "evidence_id": "evidence.missing.duty.provider.art.9.risk.management",
+        "duty_ids": [
+          "duty.provider.art.9.risk.management"
+        ],
+        "state": "missing",
+        "note": "No evidence reference was matched to this duty in the supplied profile."
+      }
+    ],
+    "control_gaps": [
+      {
+        "gap_id": "gap.duty.provider.art.10.data.governance",
+        "duty_ids": [
+          "duty.provider.art.10.data.governance"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.11.documentation",
+        "duty_ids": [
+          "duty.provider.art.11.documentation"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.12.art.19.documentation",
+        "duty_ids": [
+          "duty.provider.art.12.art.19.documentation"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.13.transparency",
+        "duty_ids": [
+          "duty.provider.art.13.transparency"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.14.human.oversight",
+        "duty_ids": [
+          "duty.provider.art.14.human.oversight"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.15.technical.requirements",
+        "duty_ids": [
+          "duty.provider.art.15.technical.requirements"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.17.quality.management",
+        "duty_ids": [
+          "duty.provider.art.17.quality.management"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.4.ai.literacy",
+        "duty_ids": [
+          "duty.provider.art.4.ai.literacy"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2026-07-27"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.43.conformity.assessment",
+        "duty_ids": [
+          "duty.provider.art.43.conformity.assessment"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.47.conformity.assessment",
+        "duty_ids": [
+          "duty.provider.art.47.conformity.assessment"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.72.post.market",
+        "duty_ids": [
+          "duty.provider.art.72.post.market"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.73.incident.reporting",
+        "duty_ids": [
+          "duty.provider.art.73.incident.reporting"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      },
+      {
+        "gap_id": "gap.duty.provider.art.9.risk.management",
+        "duty_ids": [
+          "duty.provider.art.9.risk.management"
+        ],
+        "description": "Supply documented evidence for this duty.",
+        "owner_ids": [
+          "owner.unassigned"
+        ],
+        "target_date": "2028-08-02"
+      }
+    ],
+    "owners": [
+      {
+        "owner_id": "owner.unassigned",
+        "label": "Unassigned",
+        "responsibility": "Assign accountable ownership for applicable duties and evidence."
+      }
+    ],
+    "finding_ids": [
+      "finding.readiness.provider.001"
+    ],
+    "limitations": [
+      "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",
+      "This output is not certification, approval, or regulatory assurance.",
+      "The stated date is the general application date for the statutory route. It does not determine the treatment of a system already placed on the market or put into service. Apply Article 111 to the system's market date, type, model and later design changes."
+    ],
+    "is_regulatory_approval": false
+  }
+}

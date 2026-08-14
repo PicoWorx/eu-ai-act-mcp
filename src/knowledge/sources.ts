@@ -27,6 +27,7 @@ export type SourceStatus =
   | "political_agreement"
   | "adopted_pending_publication"
   | "enacted_oj"
+  | "official_consolidated_snapshot_non_authentic"
   | "commission_guideline_draft"
   | "commission_guideline_final"
   | "commission_study"
@@ -35,6 +36,7 @@ export type SourceStatus =
 
 export const SOURCE_STATUS_LABELS: Record<SourceStatus, string> = {
   enacted_oj: "Enacted law (published in the Official Journal)",
+  official_consolidated_snapshot_non_authentic: "Official consolidated snapshot (documentation text without legal effect)",
   commission_proposal: "Commission proposal (not adopted)",
   political_agreement: "Political agreement (not yet adopted or published)",
   adopted_pending_publication: "Adopted by the co-legislators, pending Official Journal publication",

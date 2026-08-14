@@ -1,0 +1,92 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.transparency-benefits-info-chatbot.name",
+      "value": "transparency-benefits-info-chatbot",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.transparency-benefits-info-chatbot.purpose",
+      "value": "Answer general questions about public assistance programs without assessing eligibility",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.transparency-benefits-info-chatbot.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.transparency-benefits-info-chatbot.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.transparency-benefits-info-chatbot.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.transparency-benefits-info-chatbot",
+        "value": "People seeking general program information",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.transparency-benefits-info-chatbot.consequence",
+      "value": "Users may rely on general information but no eligibility decision is made",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.benefits-info.material",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "transparency": {
+    "interacts_with_natural_persons": {
+      "fact_id": "fact.transparency.benefits-info.interacts",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "generates_or_manipulates_synthetic_content": {
+      "fact_id": "fact.transparency.benefits-info.synthetic",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

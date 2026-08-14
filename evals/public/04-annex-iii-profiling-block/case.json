@@ -1,0 +1,41 @@
+{
+  "case_version": "1.2",
+  "case_id": "04-annex-iii-profiling-block",
+  "categories": [
+    "annex_iii",
+    "article_6_3_boundary",
+    "profiling"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic recruitment-ranking system performs profiling of natural persons. The expected high-risk route must remain in place because profiling blocks reliance on the Article 6(3) exception, while the frozen profile still cannot express the separate no-significant-risk predicate.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "high_risk"
+    ],
+    "annex_iii_categories": [
+      4
+    ],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 6(2) and Annex III, point 4",
+        "operative_date": "2027-12-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ],
+    "requires_article_6_3_profiling_block": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "case_version": "1.2",
+  "case_id": "11-transparency-deepfake",
+  "categories": [
+    "transparency",
+    "article_50_synthetic_content",
+    "article_50_deepfake",
+    "provider_deployer_boundary"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic provider and deployer generate and publish video depicting real adults in fictional scenes. The expected result preserves both the provider-side machine-readable marking route under Article 50(2) and the deployer-side deepfake disclosure route under Article 50(4).",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "transparency_duty"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 50(2)",
+        "operative_date": "2026-08-02"
+      },
+      {
+        "provision": "Article 50(4)",
+        "operative_date": "2026-08-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

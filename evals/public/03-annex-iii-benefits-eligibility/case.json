@@ -1,0 +1,40 @@
+{
+  "case_version": "1.2",
+  "case_id": "03-annex-iii-benefits-eligibility",
+  "categories": [
+    "annex_iii",
+    "essential_services",
+    "eligibility_decision"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic public-benefits workflow assesses whether natural persons qualify for essential public assistance and materially influences the eligibility decision. The supplied decision purpose distinguishes it from a general information service and requires the Annex III point 5 route.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "high_risk"
+    ],
+    "annex_iii_categories": [
+      5
+    ],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 6(2) and Annex III, point 5",
+        "operative_date": "2027-12-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "NON_BINDING_SOURCE",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

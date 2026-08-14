@@ -1,0 +1,95 @@
+{
+  "algorithm": "sha256",
+  "canonicalization": "RFC8785",
+  "volatile_paths_removed": [
+    "/runtime_metadata/generated_at",
+    "/runtime_metadata/correlation_id",
+    "/runtime_metadata/duration_ms"
+  ],
+  "goldens": [
+    {
+      "case_id": "contract-high-risk",
+      "profile": "contract-high-risk.json",
+      "golden": "contract-high-risk.json",
+      "canonical_sha256": "7553df1a207f494a08deb3bf15490412449903e8a96ead07aee558bc658130e2",
+      "canonical_bytes": 27808
+    },
+    {
+      "case_id": "contract-not-applicable",
+      "profile": "contract-not-applicable.json",
+      "golden": "contract-not-applicable.json",
+      "canonical_sha256": "e86192d08429a166b2d1c50981ef00672a0c2a3c417d90a6965e9cb9d2c4bff8",
+      "canonical_bytes": 3984
+    },
+    {
+      "case_id": "contract-sparse",
+      "profile": "contract-sparse.json",
+      "golden": "contract-sparse.json",
+      "canonical_sha256": "60baa41f5da11960de199da935022954a72ceac193c6d04b9b9a299e8da5ea00",
+      "canonical_bytes": 4741
+    },
+    {
+      "case_id": "prohibited-social-scoring",
+      "profile": "prohibited-social-scoring.json",
+      "golden": "prohibited-social-scoring.json",
+      "canonical_sha256": "3929a029f836535ed0b93e1daf39b50cdbc271e9e96aa656d317c4edf840204d",
+      "canonical_bytes": 10760
+    },
+    {
+      "case_id": "minimal-complete",
+      "profile": "minimal-complete.json",
+      "golden": "minimal-complete.json",
+      "canonical_sha256": "e143a2754b5876bb3fc89b8e2573543835c834807069cedc5247b9bc07d07d83",
+      "canonical_bytes": 16749
+    },
+    {
+      "case_id": "transparency-chatbot",
+      "profile": "transparency-chatbot.json",
+      "golden": "transparency-chatbot.json",
+      "canonical_sha256": "fcdc442f5aff6bde8e99b26c034874826d9603d06429f3a5a920d7222cff238f",
+      "canonical_bytes": 11262
+    },
+    {
+      "case_id": "transparency-deepfake",
+      "profile": "transparency-deepfake.json",
+      "golden": "transparency-deepfake.json",
+      "canonical_sha256": "e473b2b1d4a316a8b4ad05085ea699c511a6250cddee0f6aeaba6dcae32e00db",
+      "canonical_bytes": 16644
+    },
+    {
+      "case_id": "annex-i-high-risk",
+      "profile": "annex-i-high-risk.json",
+      "golden": "annex-i-high-risk.json",
+      "canonical_sha256": "260f272725b1114ebfde3bd33230add9b78074f20b56773f6b56fbe4215d5f6a",
+      "canonical_bytes": 26761
+    },
+    {
+      "case_id": "gpai-systemic",
+      "profile": "gpai-systemic.json",
+      "golden": "gpai-systemic.json",
+      "canonical_sha256": "bb7a71485bcb128eb27634ff55e7fad3df7c72621c184abc06334f71b425c15e",
+      "canonical_bytes": 24090
+    },
+    {
+      "case_id": "high-risk-plus-transparency",
+      "profile": "high-risk-plus-transparency.json",
+      "golden": "high-risk-plus-transparency.json",
+      "canonical_sha256": "d91a1c7b196092260c368dcfb54db6fef5d298f790ab9885d68de37a50c10b5c",
+      "canonical_bytes": 30966
+    },
+    {
+      "case_id": "high-risk-low-impact-controlled",
+      "profile": "high-risk-low-impact-controlled.json",
+      "golden": "high-risk-low-impact-controlled.json",
+      "canonical_sha256": "dff3a325b3126c203875ff1a2f09dc8c387c887eb42b965aabcacd59f02faf4d",
+      "canonical_bytes": 28236
+    },
+    {
+      "case_id": "free-text-only",
+      "profile": "free-text-only.json",
+      "golden": "free-text-only.json",
+      "canonical_sha256": "f0b6a7681f2d62057e62a71d773fd26a782c8e2fa9f3d0d742dcab7e85a830d8",
+      "canonical_bytes": 5205
+    }
+  ]
+}

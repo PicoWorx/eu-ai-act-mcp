@@ -1,0 +1,100 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": { "fact_id": "fact.identity.name", "value": "ExamGuard Remote Proctoring Suite", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "system_version": { "fact_id": "fact.identity.version", "value": "7.4.2-enterprise", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "owner": { "fact_id": "fact.identity.owner", "value": "Assessment Integrity Platform Group, Office of the Chief Compliance Officer", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "lifecycle_stage": { "fact_id": "fact.identity.lifecycle", "value": "production", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "machine_based_system": { "fact_id": "fact.identity.machine", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "infers_from_inputs_how_to_generate_outputs": { "fact_id": "fact.identity.infers", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "operates_with_varying_levels_of_autonomy": { "fact_id": "fact.identity.autonomy", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "may_exhibit_adaptiveness_after_deployment": { "fact_id": "fact.identity.adaptive", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "intended_use": {
+    "intended_purpose": { "fact_id": "fact.intended-use.purpose", "value": "Remote proctoring of high-stakes university and professional certification examinations: the system continuously monitors candidates through webcam, microphone and screen capture, detects prohibited behaviour during tests, evaluates candidate conduct against integrity rules, and produces incident reports that examination boards use when deciding whether to invalidate results or impose sanctions.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "reasonably_foreseeable_uses": [
+      { "fact_id": "fact.intended-use.foreseeable.admissions", "value": "Use of accumulated proctoring incident histories by admissions offices when evaluating applicants for postgraduate programmes.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.intended-use.foreseeable.employment", "value": "Use of certification examination integrity scores by employers screening candidates for regulated professional roles.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.intended-use.foreseeable.recertification", "value": "Periodic recertification testing of practising professionals subject to continuing-education obligations.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+    ]
+  },
+  "role_facts": {
+    "roles": [
+      { "fact_id": "fact.role.provider", "value": "provider", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.role.deployer", "value": "deployer", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+    ],
+    "places_on_market_under_own_name": { "fact_id": "fact.role.own-name", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "develops_or_has_developed_system": { "fact_id": "fact.role.develops", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "uses_under_own_authority": { "fact_id": "fact.role.uses", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "geography": {
+    "jurisdictions": [
+      { "fact_id": "fact.geo.jurisdiction.eu", "value": "EU", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.jurisdiction.de", "value": "Germany", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.jurisdiction.fr", "value": "France", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.jurisdiction.nl", "value": "Netherlands", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+    ],
+    "placed_on_eu_market": { "fact_id": "fact.geo.placed", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "used_in_eu": { "fact_id": "fact.geo.used", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "output_used_in_eu": { "fact_id": "fact.geo.output", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "affected_person_groups": [
+      { "fact_id": "fact.geo.group.students", "value": "University students sitting remote examinations", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.group.candidates", "value": "Professional certification candidates", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.group.disabled", "value": "Candidates with disabilities or atypical test-taking behaviour", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+      { "fact_id": "fact.geo.group.minors", "value": "Minor candidates in secondary-education examinations", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+    ]
+  },
+  "decision_context": {
+    "decision_subject": { "fact_id": "fact.decision.subject", "value": "Examination candidates whose conduct is monitored and scored during remote tests", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "decision_consequence": { "fact_id": "fact.decision.consequence", "value": "Invalidation of examination results, denial of certification, disciplinary proceedings, and exclusion from future examination sittings", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "materially_influences_decision": { "fact_id": "fact.decision.influence", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "human_review_before_effect": { "fact_id": "fact.decision.human-review", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "annex_iii": {
+    "domain": { "fact_id": "fact.annex-iii.domain", "value": "education", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "purpose": { "fact_id": "fact.annex-iii.purpose", "value": "Monitoring and detecting prohibited behaviour of students during tests in the context of education and vocational training", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "annex_iii_point": { "fact_id": "fact.annex-iii.point", "value": 3, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "performs_profiling": { "fact_id": "fact.annex-iii.profiling", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "biometric_and_practices": {
+    "uses_biometrics": { "fact_id": "fact.biometric.uses", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "sole_purpose_identity_verification": { "fact_id": "fact.biometric.verification", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "remote_biometric_identification": { "fact_id": "fact.biometric.remote-id", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "biometric_categorisation": { "fact_id": "fact.biometric.categorisation", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "emotion_recognition": { "fact_id": "fact.biometric.emotion", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "transparency": {
+    "interacts_with_natural_persons": { "fact_id": "fact.transparency.interacts", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "generates_or_manipulates_synthetic_content": { "fact_id": "fact.transparency.synthetic", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "deep_fake_content": { "fact_id": "fact.transparency.deepfake", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "public_authority_and_fria": {
+    "public_authority_or_public_law_body": { "fact_id": "fact.fria.public-body", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "provides_public_service": { "fact_id": "fact.fria.public-service", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "fria_relevant_use": { "fact_id": "fact.fria.relevant", "value": true, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] },
+    "fria_completed": { "fact_id": "fact.fria.completed", "value": false, "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }
+  },
+  "controls_and_evidence": {
+    "controls": [
+      { "control_id": "control.risk-management", "description": { "fact_id": "fact.control.risk-management.desc", "value": "Documented risk management system covering foreseeable misuse, bias against candidates with disabilities, and environmental false positives, reviewed quarterly by the integrity board.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.risk-register"] }, "implementation_state": { "fact_id": "fact.control.risk-management.state", "value": "implemented", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.risk-register"] },
+      { "control_id": "control.data-governance", "description": { "fact_id": "fact.control.data-governance.desc", "value": "Data governance and data management procedures for training, validation and testing datasets, including representativeness reviews for candidate populations across member states.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.dataset-datasheet"] }, "implementation_state": { "fact_id": "fact.control.data-governance.state", "value": "implemented", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.dataset-datasheet"] },
+      { "control_id": "control.human-oversight", "description": { "fact_id": "fact.control.human-oversight.desc", "value": "Human oversight measures: every automated incident flag is reviewed by two trained proctors before any report reaches an examination board, with an escalation path to a senior integrity officer.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.oversight-sop"] }, "implementation_state": { "fact_id": "fact.control.human-oversight.state", "value": "tested", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.oversight-sop"] },
+      { "control_id": "control.logging", "description": { "fact_id": "fact.control.logging.desc", "value": "Automatic recording of events over the system lifetime, with tamper-evident retention of session logs for the statutory period and access restricted to authorised integrity staff.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.log-policy"] }, "implementation_state": { "fact_id": "fact.control.logging.state", "value": "implemented", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.log-policy"] },
+      { "control_id": "control.transparency-notice", "description": { "fact_id": "fact.control.transparency-notice.desc", "value": "Candidate-facing transparency notice explaining monitoring scope, data categories, retention and the right to contest automated incident flags, displayed before every session.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.notice-template"] }, "implementation_state": { "fact_id": "fact.control.transparency-notice.state", "value": "implemented", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.notice-template"] },
+      { "control_id": "control.accuracy-monitoring", "description": { "fact_id": "fact.control.accuracy-monitoring.desc", "value": "Accuracy, robustness and cybersecurity monitoring with monthly false-positive audits segmented by candidate demographic group and connectivity conditions.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.accuracy-report"] }, "implementation_state": { "fact_id": "fact.control.accuracy-monitoring.state", "value": "planned", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.accuracy-report"] },
+      { "control_id": "control.incident-response", "description": { "fact_id": "fact.control.incident-response.desc", "value": "Serious incident response procedure with notification duties, root-cause analysis and corrective action tracking for malfunctions that could affect examination outcomes.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.incident-runbook"] }, "implementation_state": { "fact_id": "fact.control.incident-response.state", "value": "planned", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.incident-runbook"] },
+      { "control_id": "control.instructions-for-use", "description": { "fact_id": "fact.control.instructions.desc", "value": "Instructions for use for deploying institutions covering configuration limits, prohibited configurations, accessibility accommodations and interpretation of integrity scores.", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": ["evidence.ifu-manual"] }, "implementation_state": { "fact_id": "fact.control.instructions.state", "value": "implemented", "origin": "explicit_structured_input", "verification": "caller_asserted", "evidence_reference_ids": [] }, "evidence_reference_ids": ["evidence.ifu-manual"] }
+    ],
+    "evidence_references": [
+      { "evidence_id": "evidence.risk-register", "title": "Enterprise risk register extract for the proctoring platform", "supports_fact_ids": ["fact.control.risk-management.desc"] },
+      { "evidence_id": "evidence.dataset-datasheet", "title": "Training and validation dataset datasheet with representativeness analysis", "supports_fact_ids": ["fact.control.data-governance.desc"] },
+      { "evidence_id": "evidence.oversight-sop", "title": "Standard operating procedure for two-person review of incident flags", "supports_fact_ids": ["fact.control.human-oversight.desc"] },
+      { "evidence_id": "evidence.log-policy", "title": "Session logging and retention policy", "supports_fact_ids": ["fact.control.logging.desc"] },
+      { "evidence_id": "evidence.notice-template", "title": "Candidate transparency notice template", "supports_fact_ids": ["fact.control.transparency-notice.desc"] },
+      { "evidence_id": "evidence.accuracy-report", "title": "Quarterly accuracy and robustness audit report", "supports_fact_ids": ["fact.control.accuracy-monitoring.desc"] },
+      { "evidence_id": "evidence.incident-runbook", "title": "Incident response runbook", "supports_fact_ids": ["fact.control.incident-response.desc"] },
+      { "evidence_id": "evidence.ifu-manual", "title": "Instructions-for-use manual for deploying institutions", "supports_fact_ids": ["fact.control.instructions.desc"] }
+    ]
+  },
+  "free_text": { "fact_id": "fact.free-text.context", "value": "The platform is offered to universities and professional bodies across the Union. Institutions configure sensitivity thresholds locally. The provider also operates the hosted service for several examination boards, acting as deployer for those sittings.", "origin": "caller_free_text", "verification": "unverified_extraction" }
+}

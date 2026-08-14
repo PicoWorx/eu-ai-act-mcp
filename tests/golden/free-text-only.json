@@ -1,0 +1,181 @@
+{
+  "contract_version": "1.2",
+  "server_version": "1.5.0",
+  "corpus": {
+    "id": "eu-ai-act-2026-07-27",
+    "regulation_id": "eu-ai-act",
+    "sha256": "bd86e216a0c5958809275c972fc5ad9f8d9e358975d6dbec28556c1310d701d5",
+    "verified_at": "2026-08-06",
+    "current_instrument": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744",
+    "source_snapshot_ids": [
+      "source.com.2025.836.superseded",
+      "source.oj.2024.1689.consolidated.20260727",
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ]
+  },
+  "status": "undetermined",
+  "facts_used": [
+    {
+      "fact_id": "fact.free-text.description",
+      "profile_path": "/free_text",
+      "value": "We use something that may rank candidates, but no structured facts are confirmed.",
+      "origin": "caller_free_text",
+      "verification": "unverified_extraction",
+      "evidence_reference_ids": []
+    }
+  ],
+  "assumptions": [],
+  "missing_facts": [
+    {
+      "missing_fact_id": "missing.impact.consequence",
+      "profile_path": "/decision_context/decision_consequence",
+      "question": "What consequence can the system or its output have for affected persons?",
+      "reason": "An impact statement requires a supplied effect or decision consequence.",
+      "decisive": true,
+      "affected_blocks": [
+        "impact"
+      ]
+    },
+    {
+      "missing_fact_id": "missing.impact.affected-groups",
+      "profile_path": "/geography/affected_person_groups",
+      "question": "Which natural-person groups may be affected by the system or its outputs?",
+      "reason": "Affected groups are decisive for a bounded impact statement.",
+      "decisive": true,
+      "affected_blocks": [
+        "impact"
+      ]
+    },
+    {
+      "missing_fact_id": "missing.legal.jurisdiction",
+      "profile_path": "/geography/placed_on_eu_market",
+      "question": "Which fact establishes the Union nexus: placed_on_eu_market, used_in_eu, output_used_in_eu, or an EU entry in jurisdictions?",
+      "reason": "A supplied non-EU jurisdiction alone does not establish EU AI Act territorial scope. Supplying any one of the named geography facts resolves this gap.",
+      "decisive": true,
+      "affected_blocks": [
+        "implementation_readiness",
+        "legal_classification"
+      ]
+    },
+    {
+      "missing_fact_id": "missing.intended-purpose",
+      "profile_path": "/intended_use/intended_purpose",
+      "question": "What is the system intended to do, for whom, and in which operational context?",
+      "reason": "Intended purpose is decisive for prohibited-practice, Annex III, and transparency routes.",
+      "decisive": true,
+      "affected_blocks": [
+        "impact",
+        "implementation_readiness",
+        "legal_classification"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "finding.legal.abstention.missing-facts.001",
+      "finding_basis": "tool_state_abstention",
+      "block": "legal_classification",
+      "summary": "Legal classification cannot be determined from the supplied decisive facts.",
+      "scope": {
+        "actors": [
+          "unknown"
+        ],
+        "jurisdictions": [
+          "unspecified"
+        ],
+        "system_scope": "System described in the supplied profile"
+      },
+      "fact_ids": [],
+      "assumption_ids": [],
+      "missing_fact_ids": [
+        "missing.intended-purpose",
+        "missing.legal.jurisdiction"
+      ],
+      "provenance": [],
+      "determination": "undetermined",
+      "reason_for_abstention": "One or more decisive legal predicates are missing. Guessing would create an unsupported legal conclusion."
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "warning.non-binding-source.001",
+      "code": "NON_BINDING_SOURCE",
+      "message": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.",
+      "finding_ids": [
+        "finding.legal.abstention.missing-facts.001"
+      ]
+    },
+    {
+      "warning_id": "warning.not-legal-advice.001",
+      "code": "OUTPUT_NOT_LEGAL_ADVICE",
+      "message": "This bounded technical output is not legal advice, certification, or regulatory approval.",
+      "finding_ids": [
+        "finding.legal.abstention.missing-facts.001"
+      ]
+    },
+    {
+      "warning_id": "warning.summary-only.001",
+      "code": "SUMMARY_ONLY",
+      "message": "Finding summaries and duty titles are bounded operational summaries, not statutory text. Verify every conclusion against the linked official provision.",
+      "finding_ids": [
+        "finding.legal.abstention.missing-facts.001"
+      ]
+    },
+    {
+      "warning_id": "warning.unverified-free-text.001",
+      "code": "UNVERIFIED_FREE_TEXT",
+      "message": "Caller free text is retained as unverified context and does not satisfy a decisive legal predicate.",
+      "finding_ids": []
+    }
+  ],
+  "recommended_next_calls": [
+    {
+      "tool_name": "euaiact_classify_system",
+      "reason": "Re-run the atomic classifier after supplying the enumerated decisive facts.",
+      "input_fact_ids": []
+    }
+  ],
+  "legal_classification": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "routes": [],
+    "annex_iii_categories": [],
+    "actor_roles": [
+      "unknown"
+    ],
+    "finding_ids": [
+      "finding.legal.abstention.missing-facts.001"
+    ],
+    "limitations": [
+      "Decisive facts are listed in missing_facts."
+    ]
+  },
+  "impact": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "inherent_impact": null,
+    "relevant_affected_groups": [],
+    "current_controls": [],
+    "residual_impact": null,
+    "finding_ids": [],
+    "limitations": [
+      "Decisive affected-group or consequence facts are missing."
+    ],
+    "does_not_alter_legal_classification": true
+  },
+  "implementation_readiness": {
+    "schema_version": "1.0",
+    "status": "undetermined",
+    "readiness_state": "undetermined",
+    "applicable_duties": [],
+    "evidence_status": [],
+    "control_gaps": [],
+    "owners": [],
+    "finding_ids": [],
+    "limitations": [
+      "Applicable duties cannot be selected before legal classification."
+    ],
+    "is_regulatory_approval": false
+  }
+}
