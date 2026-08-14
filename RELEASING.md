@@ -1,116 +1,117 @@
 # Releasing this server
 
-Written 2026-07-27 after the 1.4.0 release, where the version was bumped in one
-place and the live server kept announcing the old one for half a day.
+The release path has two canonical commands. Do not substitute an ad hoc build,
+individual test script, or the retired `build-and-test.mjs` workflow.
 
-## The version lives in ONE place now. Keep it that way.
+## Canonical verification
 
-`package.json` is the source of truth. `src/constants.ts` exports `SERVER_VERSION`,
-read from it at runtime, and both consumers import that constant.
-
-It used to live in three places, which is how it drifted:
-
-| Where | What it feeds | Symptom when stale |
-|---|---|---|
-| `package.json` | the npm package | `npm view ... version` is behind |
-| `src/server.ts`, MCP handshake | what CLIENTS display | Smithery shows the old version while serving new code |
-| `src/http.ts`, `/health` | uptime checks and humans | `/health` disagrees with the package |
-
-If you ever add a fourth place, you have reintroduced the bug. Check with:
+Run this for every change:
 
 ```bash
-grep -rn '"[0-9]\+\.[0-9]\+\.[0-9]\+"' src/ | grep -v package.json
+npm ci
+npm run verify
 ```
 
-That should return nothing.
+`npm run verify` is ordered and fail-fast. It removes the generated root `dist/`
+directory and then runs:
 
-## Deployment topology, because the three paths are independent
+1. clean TypeScript build;
+2. behavior suite;
+3. claim matrix;
+4. post-serialization schema gate;
+5. pinned-corpus verification;
+6. deterministic regulation-compiler tests;
+7. public-evaluation grader with Day 2 baseline reproduction;
+8. all 12 golden profiles ten times against their pinned canonical hashes;
+9. `npm pack --dry-run` content inspection; and
+10. package, served, and changelog version identity.
 
-- **Railway** builds from the `Dockerfile`, which copies `src/` and runs
-  `npm run build`. It never uses committed build output. Pushing to `main` is
-  what updates it. It serves **https://mcp.lexbeam.com**.
-- **Smithery** serves the Railway deployment, so the version it shows comes from
-  the MCP initialize handshake, not from npm. It updates when Railway restarts.
-  Listing: https://smithery.ai/servers/lexbeam-software/eu-ai-act
-- **npm** is a separate path used by anyone running `npx @lexbeam-software/eu-ai-act-mcp`.
-  It only updates when you publish, and it is easy to forget precisely because
-  Railway and Smithery look correct without it. Publishing needs `npm login`,
-  which lives on one machine only, so a release started elsewhere stops here.
+The package-content gate requires compiled `dist` entry points, permits only npm's
+standard `LICENSE`, `README.md`, and `package.json` files outside `dist`, rejects
+unexpected compiled file types and symlinks, and rejects `.env` files or holdout
+references.
 
-Pushing to main fixes the hosted path. It does nothing for npm consumers.
+CI runs this same command on every push and pull request under Node.js 20 and 22.
+The `prepublishOnly` lifecycle also runs it, so the standard `npm publish` path
+cannot bypass the canonical gates. Never publish with `--ignore-scripts`.
 
-## Verifying a release actually landed
+## Release verification
 
-A version bump proves nothing; check the payload, not the number.
+Before approving or publishing a release candidate, run:
 
 ```bash
-# 1. hosted version, usually current within a minute or two of the push
-curl -s https://mcp.lexbeam.com/health
-# {"status":"ok","server":"lexbeam-eu-ai-act-mcp","version":"1.4.3"}
-
-# 2. the content itself, which is the check that matters
-curl -s -X POST https://mcp.lexbeam.com/mcp \
-  -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
-  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"euaiact_check_deadlines","arguments":{}}}'
-
-# 3. npm, the path that silently stays behind
-npm view @lexbeam-software/eu-ai-act-mcp version
+npm run verify:release
 ```
 
-Note that `/` returns 404; only `/health` and `/mcp` are served.
+This reruns every canonical gate, creates the actual npm tarball without invoking
+publication lifecycle scripts recursively, installs it into an isolated temporary
+project, and calls all 12 golden profiles through the packed MCP server over stdio.
+The responses must match the pinned RFC 8785 SHA-256 hashes.
 
-## `dist/` is not tracked
+The command also generates an SPDX runtime SBOM with `npm sbom` and writes an
+ignored `release-evidence/` directory containing:
 
-`.gitignore` has always listed `dist/`, but 120 compiled files were committed
-before that line existed and stayed tracked, leaving a partial build in git that
-crashed a fresh clone with `ERR_MODULE_NOT_FOUND`. They were untracked in
-`f00ab45`. Do not commit `dist/` again.
+- one log for every canonical and release-only gate;
+- the complete canonical verification log and summaries;
+- the packed tarball and npm package metadata;
+- the SPDX SBOM;
+- a release manifest with package, Git, Node.js, and npm identity; and
+- `digests.sha256`, covering every other evidence file.
 
-`prepublishOnly` runs the build before `npm publish`, so the published package is
-always compiled from source. Do NOT use `prepare` for this: it runs during
-`npm install`, and the Dockerfile runs `npm ci` before copying `tsconfig.json`
-and `src/`, so the build would fail and take the deployment with it.
-
-## Tracking beats ignoring
-
-`.gitignore` only filters files git is not already tracking. Once a file is tracked, git
-never consults the ignore rules for it again, so a path can sit in `.gitignore` and be
-committed at the same time. This repo hit it twice:
-
-- `dist/` - 120 compiled files, untracked in `f00ab45`.
-- `node_modules/` - 3,714 files, roughly 69 MB including a platform-specific `esbuild`
-  binary. Every clone dragged them down, and `npm ci` then rewrote the directory, so git
-  reported thousands of changes to a path it was told to ignore.
-
-`git status` will not warn you, because it stays quiet about tracked, unmodified files, and
-`git check-ignore` reports nothing for a tracked file by design. The only reliable check:
+Verify the bundle after generation with:
 
 ```bash
-git ls-files node_modules dist | head    # must be empty
+cd release-evidence
+shasum -a 256 -c digests.sha256
 ```
 
-The cure is `git rm -r --cached <path>`, which drops it from the index and leaves it on
-disk. Note this cleans the current tree, not history, so old clones stay large until the
-history is rewritten.
+GitHub's manually dispatched `Release verification` workflow runs the same command
+and uploads that directory as a workflow artifact. It does not publish the package.
 
-## Checklist
+## Version identity
 
-0. `git ls-files node_modules dist` must return nothing.
-1. Bump the version in `package.json` and `smithery.yaml`.
-2. `npm run build && node test.mjs` - the suite must be fully green.
-3. Add a CHANGELOG entry, including anything left unresolved.
-4. Commit, push to `main`, wait for the Railway build.
-5. `curl https://mcp.lexbeam.com/health` and confirm the version matches.
-6. `npm publish` if npx consumers should get it, then confirm with
-   `npm view @lexbeam-software/eu-ai-act-mcp version`.
+`package.json` is the package version source. `src/constants.ts` reads that value
+into `SERVER_VERSION`, which feeds the MCP handshake and HTTP health response. The
+first released entry below `[Unreleased]` in `CHANGELOG.md` must carry the same
+version. The final verification gate imports the freshly built server constant and
+compares all three values.
 
-## When the legal content changes
+`smithery.yaml` is deployment metadata and must also be reviewed when the package
+version changes, but it is not part of the npm artifact identity check.
 
-A legal amendment is a content pass, not a date edit. Flipping the enactment
-record alone left the obligations data, the summary key-changes list, the source
-registry, several FAQ answers, the Art. 113 summary and the prohibited-practices
-data all stating superseded law. The cross-tool consistency test now catches the
-worst class of that, where two tools report different application dates for the
-same system, but it cannot catch stale prose. Grep for the superseded dates
-before shipping.
+## Publication checklist
+
+1. Confirm the branch contains the intended legal, schema, test, and documentation
+   changes.
+2. Confirm `package.json`, `package-lock.json`, `smithery.yaml`, and the changelog
+   describe the intended release.
+3. Run `npm run verify:release` from a clean checkout.
+4. Review `release-evidence/manifest.json`, `digests.sha256`, the package manifest,
+   the black-box golden log, and the SBOM.
+5. Commit the release changes. Obtain the required review and approval.
+6. Use the standard `npm publish` command only from the approved commit. Its
+   `prepublishOnly` hook reruns `npm run verify`.
+7. Confirm the published package version and hosted MCP version only after an
+   authorized publication or deployment.
+
+Pushing to `main`, deploying the hosted service, and publishing to npm remain three
+independent actions. Verification authorizes none of them by itself.
+
+## Generated and tracked content
+
+Root `dist/`, `compiler/dist/`, `node_modules/`, and `release-evidence/` are generated
+and must remain untracked. Verify that with:
+
+```bash
+git ls-files node_modules dist compiler/dist release-evidence
+```
+
+The command must print nothing. Never use `prepare` for the root build because it
+runs during installation before deployment images have copied the build inputs.
+
+## Legal-content releases
+
+A legal amendment is a content pass, not a date edit. Reconcile every served
+surface, regenerate contract fixtures and goldens when required, verify the pinned
+corpus and claim matrix, and record any contract migration before running the two
+canonical commands.

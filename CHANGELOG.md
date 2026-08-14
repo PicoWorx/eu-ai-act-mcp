@@ -6,43 +6,72 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-## [1.5.0] - 2026-08-13
+## [1.5.0] - 2026-08-14
 
-Decision-contract release. Adds one bounded assessment call without changing the
-input, output, or behavior of the existing nine atomic tools.
+Decision-contract and verification release. It adds one bounded assessment tool,
+applies the approved MIGRATION-001 provenance correction, resolves the independent
+G8 legal-review findings, and makes one command the publication gate.
 
-### Added
+### Features
 
-- `euaiact_assess_system`, registered as tool 10, accepts the frozen sparse system
-  profile and returns separate legal-classification, qualitative-impact, and
-  implementation-readiness blocks.
-- Fail-closed decisive missing facts, stable finding and fact IDs, complete finding
-  provenance, sealed corpus identity, and actor-specific follow-up calls to the
-  existing atomic tools.
-- RFC 8785 response hashing with only the three frozen runtime-metadata paths removed.
-- Twelve runnable contract profiles, twelve complete golden outputs, and pinned
-  SHA-256 hashes. The permanent suite verifies golden equality, normative ordering,
-  10-run determinism, the 64 KiB bound, provenance resolution, no numeric confidence,
-  and the summary-only disclosure.
-- A compatibility fixture that hashes the exact serialized result from each of the
-  nine existing tools at a fixed instant.
+- Added `euaiact_assess_system` as tool 10. It accepts a normalized sparse system
+  profile and keeps legal classification, qualitative impact, and implementation
+  readiness in separate result blocks.
+- Added fail-closed decisive missing facts, stable finding and fact IDs, sealed
+  corpus identity, actor-specific follow-up calls, and RFC 8785 response hashing.
+- Added twelve runnable contract profiles, complete golden responses, and pinned
+  hashes. The permanent suite checks equality, ordering, size, provenance,
+  disclosure, and ten-run determinism.
 
-### Changed
+### Legal corrections
 
-- Package and server version raised to 1.5.0.
-- Server instructions now describe ten tools and the boundary between legal
-  classification, impact, and evidence readiness.
-- The 1.4.5 truth-correction ledger was cherry-picked before the decision layer, so
-  the new assessment is grounded in the corrected Article 5, Article 73, penalty,
-  registration, GPAI, and summary wording.
+- Corrected Article 50 readiness selection so paragraphs (1) to (4) activate only
+  from their own statutory predicates and relevant actor role.
+- Required an Article 5(1)(c)(i) or (ii) treatment limb before classifying social
+  scoring as prohibited.
+- Added the Article 51(2) systemic-risk presumption and Article 52(2) rebuttal route
+  before selecting Article 55 duties.
+- Replaced unsupported exhaustive negative conclusions with bounded routing and
+  explicit Article 2, Article 111, source, and readiness limitations.
+- Corrected Chapter I and Article 4 dates, Annex I qualification anchors, caller
+  impact provenance, Article 73 cooperation wording, and the Article 11 simplified
+  Annex IV form wording.
+
+### Contract migration
+
+- Migrated the decision contract from 1.0 to 1.1 under MIGRATION-001. Consolidated
+  EUR-Lex content now carries
+  `official_consolidated_snapshot_non_authentic` and
+  `consolidated_snapshot_integrity_verified`; authentic original and amending OJ
+  acts remain named as authority sources.
+- Added `finding_basis` to distinguish legal propositions, caller-supplied impact,
+  and tool-state abstentions. Non-legal findings no longer carry invented legal
+  provenance.
+- Regenerated TypeScript and JSON schemas, runtime mirrors, fixtures, all twelve
+  goldens, canonical hashes, and public-evaluation expectations.
+- Corrected public case 15 under the SPRINT-LOG M6b authorization: its impact block
+  is undetermined when intended purpose is a decisive missing fact.
+
+### Benchmark and verification
+
+- Added a 20-case public benchmark with ten deterministic runs per case. Day 0
+  records the initial failing baseline, Day 1 records the pre-migration green
+  baseline, and Day 2 records contract 1.1 with every aggregate metric green.
+- Added `npm run verify`, covering a clean build, 467 behavior checks, 96 legal
+  claim checks, 48 schema checks, corpus and compiler verification, public grading,
+  explicit golden determinism, package contents, and version identity.
+- Added `npm run verify:release`, which installs the packed tarball into an isolated
+  project, checks all twelve profiles over MCP stdio, generates an SPDX runtime
+  SBOM, and writes hashed release evidence.
+- Changed `prepublishOnly` and CI to use the canonical verification command.
 
 ### Compatibility
 
-- The frozen decision-contract schemas are unchanged. Runtime copies are asserted
-  byte-for-byte against them.
-- Existing nine-tool results are asserted byte-identical for the pinned compatibility
-  inputs. `euaiact_assess_system` is additive and does not wrap or mutate atomic
-  results.
+- Contract 1.1 is a breaking schema migration for decision-envelope consumers.
+  It requires `finding_basis`, enacted instrument status, authentic authority IDs,
+  and honest consolidated-source verification metadata.
+- The nine pre-existing atomic tools retain their shapes. Pinned compatibility
+  fixtures cover their intentional wording and Article 4 date corrections.
 
 ## [1.4.5] - 2026-08-06
 
