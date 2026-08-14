@@ -25,8 +25,8 @@
       "case_id": "contract-sparse",
       "profile": "contract-sparse.json",
       "golden": "contract-sparse.json",
-      "canonical_sha256": "31178216c2b50f7960ef356d0e1b2133a152ca84dafa38c20ec05442e5abbd63",
-      "canonical_bytes": 4603
+      "canonical_sha256": "60baa41f5da11960de199da935022954a72ceac193c6d04b9b9a299e8da5ea00",
+      "canonical_bytes": 4741
     },
     {
       "case_id": "prohibited-social-scoring",
@@ -88,8 +88,8 @@
       "case_id": "free-text-only",
       "profile": "free-text-only.json",
       "golden": "free-text-only.json",
-      "canonical_sha256": "b30506bbb0ca4e261ad1e99975aeaaba3c504009fbba87339b48b304b4acc207",
-      "canonical_bytes": 5067
+      "canonical_sha256": "f0b6a7681f2d62057e62a71d773fd26a782c8e2fa9f3d0d742dcab7e85a830d8",
+      "canonical_bytes": 5205
     }
   ]
 }

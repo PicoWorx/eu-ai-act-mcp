@@ -171,9 +171,9 @@ const gates = [
     run: commandGate(process.execPath, [
       "evals/grader.mjs",
       "--label",
-      "day-3-baseline",
+      "day-4-baseline",
       "--check",
-      "evals/results/day-3-baseline.json",
+      "evals/results/day-4-baseline.json",
     ], "20 cases; baseline match"),
   },
   {

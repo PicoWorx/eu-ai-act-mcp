@@ -1764,6 +1764,94 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
       fact.profile_path === "/annex_i/annex_i_legislation" &&
       fact.decisive === true));
 
+  // FIX-RUN2 F2 (blind run 2, holdout2.08): abstention enumerates every
+  // independent decisive missing fact at leaf level, never only the first
+  // gap family found.
+  const nexusLeafPaths = [
+    "/geography/placed_on_eu_market",
+    "/geography/used_in_eu",
+    "/geography/output_used_in_eu",
+    "/geography/jurisdictions",
+  ];
+  const dressedTrapProfile = {
+    profile_version: "1.0",
+    role_facts: { roles: [profileFact("fact.role.provider", "provider")] },
+    annex_iii: {
+      domain: profileFact("fact.annex-iii.domain", "employment"),
+      purpose: profileFact(
+        "fact.annex-iii.purpose",
+        "Scoring pilot for workforce evaluation across teams",
+      ),
+    },
+  };
+  const dressedTrap = structured(await callTool("euaiact_assess_system", dressedTrapProfile));
+  const dressedDecisive = dressedTrap.missing_facts.filter((fact) => fact.decisive);
+  test("FIX-RUN2 F2: abstention enumerates the missing intended purpose alongside the nexus gap",
+    dressedTrap.status === "undetermined" &&
+    dressedTrap.legal_classification.status === "undetermined" &&
+    dressedTrap.impact.status === "undetermined" &&
+    dressedTrap.implementation_readiness.status === "undetermined" &&
+    dressedTrap.legal_classification.routes.length === 0 &&
+    dressedDecisive.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose" &&
+      fact.profile_path === "/intended_use/intended_purpose") &&
+    dressedDecisive.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      nexusLeafPaths.includes(fact.profile_path)) &&
+    dressedDecisive.length >= 2 &&
+    dressedDecisive.every((fact) =>
+      fact.question.trim().length > 0 && fact.reason.trim().length > 0));
+  test("FIX-RUN2 F2: the abstention finding references both independent legal gaps",
+    dressedTrap.findings.some((finding) =>
+      finding.finding_basis === "tool_state_abstention" &&
+      finding.provenance.length === 0 &&
+      finding.missing_fact_ids.includes("missing.intended-purpose") &&
+      finding.missing_fact_ids.includes("missing.legal.jurisdiction")));
+
+  const nonEuLeafProfile = {
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: profileFact(
+        "fact.purpose.non-eu",
+        "Spam filter for a non-Union mail service",
+      ),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: { roles: [profileFact("fact.role.non-eu.provider", "provider")] },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.non-eu.us", "United States")],
+      used_in_eu: profileFact("fact.geo.non-eu.used", false),
+      affected_person_groups: [profileFact("fact.geo.non-eu.group", "Mailbox owners")],
+    },
+  };
+  const nonEuLeaf = structured(await callTool("euaiact_assess_system", nonEuLeafProfile));
+  test("FIX-RUN2 F2: the nexus gap names the first absent geography leaf under its stable ID",
+    nonEuLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      fact.profile_path === "/geography/placed_on_eu_market") &&
+    !nonEuLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose"));
+
+  const fallbackLeafProfile = {
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: profileFact("fact.purpose.fallback", "Non-Union analytics pilot"),
+      reasonably_foreseeable_uses: [],
+    },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.fallback.us", "United States")],
+      placed_on_eu_market: profileFact("fact.geo.fallback.placed", false),
+      used_in_eu: profileFact("fact.geo.fallback.used", false),
+      output_used_in_eu: profileFact("fact.geo.fallback.output", false),
+      affected_person_groups: [],
+    },
+  };
+  const fallbackLeaf = structured(await callTool("euaiact_assess_system", fallbackLeafProfile));
+  test("FIX-RUN2 F2: with every boolean leaf supplied the nexus gap falls back to the jurisdictions leaf",
+    fallbackLeaf.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.legal.jurisdiction" &&
+      fact.profile_path === "/geography/jurisdictions"));
+
   const freeTextOnly = await runAssessment("free-text-only.json");
   test("assess: unverified free text cannot satisfy a decisive predicate",
     freeTextOnly.status === "undetermined" &&

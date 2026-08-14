@@ -538,6 +538,51 @@ check("R2-F3f", "served", await (async () => {
       finding.provenance.some((item) => item.exact_provision.includes("Article 6(1)")));
 })());
 
+check("R2-F2a Annex III routes are intended-purpose predicates (Art. 3(12), Annex III point 4)", "law",
+  inLaw("‘intended purpose’ means the use for which an AI system is intended by the provider") &&
+  inLaw("AI systems intended to be used for the recruitment or selection of natural persons") &&
+  inLaw("to allocate tasks based on individual behaviour or personal traits or characteristics or to monitor and evaluate the performance and behaviour of persons in such relationships"));
+check("R2-F2a", "served", await (async () => {
+  const { assessSystem } = await import("./dist/decision-contract/assess-system.js");
+  const fact = (fact_id, value) => ({
+    fact_id,
+    value,
+    origin: "explicit_structured_input",
+    verification: "caller_asserted",
+    evidence_reference_ids: [],
+  });
+  const out = await assessSystem({
+    profile_version: "1.0",
+    role_facts: { roles: [fact("fact.role.provider", "provider")] },
+    annex_iii: {
+      domain: fact("fact.annex-iii.domain", "employment"),
+      purpose: fact("fact.annex-iii.purpose", "Scoring pilot for workforce evaluation across teams"),
+    },
+  });
+  const decisive = out.missing_facts.filter((item) => item.decisive);
+  return out.status === "undetermined" &&
+    out.legal_classification.routes.length === 0 &&
+    decisive.some((item) => item.profile_path === "/intended_use/intended_purpose") &&
+    decisive.some((item) =>
+      item.missing_fact_id === "missing.legal.jurisdiction" &&
+      [
+        "/geography/placed_on_eu_market",
+        "/geography/used_in_eu",
+        "/geography/output_used_in_eu",
+        "/geography/jurisdictions",
+      ].includes(item.profile_path));
+})());
+
+check("R2-F2b the territorial nexus is an Article 2(1) predicate served at leaf level", "law",
+  ART2.includes("providers placing on the market or putting into service AI systems") &&
+  ART2.includes("deployers of AI systems that have their place of establishment or are located within the Union") &&
+  ART2.includes("where the output produced by the AI system is used in the Union"));
+check("R2-F2b", "served",
+  ASSESSMENT_BUNDLE.includes("/geography/placed_on_eu_market") &&
+  ASSESSMENT_BUNDLE.includes("/geography/used_in_eu") &&
+  ASSESSMENT_BUNDLE.includes("/geography/output_used_in_eu") &&
+  ASSESSMENT_BUNDLE.includes("Which fact establishes the Union nexus"));
+
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log(`\nCLAIM MATRIX RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} checks`);
 if (fail > 0) process.exit(1);

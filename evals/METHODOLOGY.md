@@ -110,7 +110,7 @@ From the repository root:
 
 ```sh
 npm run build
-node evals/grader.mjs --label day-3-baseline --check evals/results/day-3-baseline.json
+node evals/grader.mjs --label day-4-baseline --check evals/results/day-4-baseline.json
 ```
 
 `Baseline reproduction: MATCH` means the current grader, corpus, and tool output reproduce the committed JSON byte for byte. The process still exits with status 1 when the reproduced baseline is below a threshold. A baseline mismatch or invalid corpus is a separate reproduction failure and must be investigated before interpreting rates.
@@ -134,6 +134,8 @@ The Day-0 corpus reveals three awkward behaviors:
 - Case 20 routes a formatting-only recruitment utility to Annex III point 4 from recruitment vocabulary despite complete structured negative signals. The public expectation remains minimal, and the baseline remains red.
 
 Day 0, Day 1, and Day 2 remain unchanged historical artifacts. MIGRATION-001 published corpus version 1.1.0 and Day 2. MIGRATION-002 publishes contract and corpus version 1.2 with Day 3. The public profiles and expected legal properties remain unchanged; only their case contract versions advance. The Day 3 response changes record the approved product fixes, actor-specific Article 50 scoping, canonical GPAI labels, and added Article 51 and 52 grounding.
+
+Day 4 records the adjudicated blind-run-2 product fixes on the unchanged public corpus: complete leaf-level decisive-gap enumeration on abstention and Annex I closed-list instrument validation. Cases and expectations are unchanged; only the served envelopes moved. Day 0 through Day 3 remain unchanged historical artifacts.
 
 ## Independent sealed evaluation protocol
 

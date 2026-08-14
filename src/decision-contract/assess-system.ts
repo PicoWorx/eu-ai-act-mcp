@@ -436,11 +436,24 @@ async function assessLegalClassification(
     };
   }
   if (!hasEUNexus) {
+    // The territorial-nexus gap is reported at leaf level so the caller knows
+    // which schema field to supply. Any one of the four geography leaves
+    // resolves the gap; the first absent leaf in schema order is named.
+    const nexusLeafPath =
+      geography?.placed_on_eu_market === undefined
+        ? "/geography/placed_on_eu_market"
+        : geography.used_in_eu === undefined
+          ? "/geography/used_in_eu"
+          : geography.output_used_in_eu === undefined
+            ? "/geography/output_used_in_eu"
+            : "/geography/jurisdictions";
     addMissing(context, {
       missing_fact_id: "missing.legal.jurisdiction",
-      profile_path: "/geography",
-      question: "Which fact establishes an EU market, use, output, or jurisdiction nexus?",
-      reason: "A supplied non-EU jurisdiction alone does not establish EU AI Act territorial scope.",
+      profile_path: nexusLeafPath,
+      question:
+        "Which fact establishes the Union nexus: placed_on_eu_market, used_in_eu, output_used_in_eu, or an EU entry in jurisdictions?",
+      reason:
+        "A supplied non-EU jurisdiction alone does not establish EU AI Act territorial scope. Supplying any one of the named geography facts resolves this gap.",
       decisive: true,
       affected_blocks: ["legal_classification", "implementation_readiness"],
     });
@@ -573,6 +586,40 @@ async function assessLegalClassification(
         "What is the system intended to do, for whom, and in which operational context?",
       reason:
         "Intended purpose is decisive for prohibited-practice, Annex III, and transparency routes.",
+      decisive: true,
+      affected_blocks: [
+        "legal_classification",
+        "impact",
+        "implementation_readiness",
+      ],
+    });
+  }
+
+  // Complete decisive-gap enumeration on abstention. When any decisive legal
+  // gap exists and the Article 3(12) intended purpose is absent, the missing
+  // purpose is enumerated as an independent decisive gap at leaf level, in
+  // addition to the other gaps and never collapsed into one representative.
+  // Every Annex III route predicate is an "intended to be used" predicate, so
+  // the intended purpose is decisive independently of the territorial nexus,
+  // and structured area vocabulary cannot substitute for it. Profiles whose
+  // complete structured predicates determine every route without abstention
+  // are unaffected.
+  const hasDecisiveLegalGap = [...context.missing.values()].some(
+    (missing) =>
+      missing.decisive && missing.affected_blocks.includes("legal_classification"),
+  );
+  if (
+    hasDecisiveLegalGap &&
+    purposeFacts.length === 0 &&
+    !context.missing.has("missing.intended-purpose")
+  ) {
+    addMissing(context, {
+      missing_fact_id: "missing.intended-purpose",
+      profile_path: "/intended_use/intended_purpose",
+      question:
+        "What is the system intended to do, for whom, and in which operational context?",
+      reason:
+        "The Article 3(12) intended purpose is decisive for prohibited-practice, Annex III, and transparency routes and is missing independently of the other enumerated gaps.",
       decisive: true,
       affected_blocks: [
         "legal_classification",

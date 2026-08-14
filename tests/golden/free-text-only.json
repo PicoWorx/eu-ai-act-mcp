@@ -38,17 +38,6 @@
       ]
     },
     {
-      "missing_fact_id": "missing.legal.jurisdiction",
-      "profile_path": "/geography",
-      "question": "Which fact establishes an EU market, use, output, or jurisdiction nexus?",
-      "reason": "A supplied non-EU jurisdiction alone does not establish EU AI Act territorial scope.",
-      "decisive": true,
-      "affected_blocks": [
-        "implementation_readiness",
-        "legal_classification"
-      ]
-    },
-    {
       "missing_fact_id": "missing.impact.affected-groups",
       "profile_path": "/geography/affected_person_groups",
       "question": "Which natural-person groups may be affected by the system or its outputs?",
@@ -56,6 +45,17 @@
       "decisive": true,
       "affected_blocks": [
         "impact"
+      ]
+    },
+    {
+      "missing_fact_id": "missing.legal.jurisdiction",
+      "profile_path": "/geography/placed_on_eu_market",
+      "question": "Which fact establishes the Union nexus: placed_on_eu_market, used_in_eu, output_used_in_eu, or an EU entry in jurisdictions?",
+      "reason": "A supplied non-EU jurisdiction alone does not establish EU AI Act territorial scope. Supplying any one of the named geography facts resolves this gap.",
+      "decisive": true,
+      "affected_blocks": [
+        "implementation_readiness",
+        "legal_classification"
       ]
     },
     {
