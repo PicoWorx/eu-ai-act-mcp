@@ -135,7 +135,7 @@ The Day-0 corpus reveals three awkward behaviors:
 
 Day 0, Day 1, and Day 2 remain unchanged historical artifacts. MIGRATION-001 published corpus version 1.1.0 and Day 2. MIGRATION-002 publishes contract and corpus version 1.2 with Day 3. The public profiles and expected legal properties remain unchanged; only their case contract versions advance. The Day 3 response changes record the approved product fixes, actor-specific Article 50 scoping, canonical GPAI labels, and added Article 51 and 52 grounding.
 
-Day 4 records the adjudicated blind-run-2 product fixes on the unchanged public corpus: complete leaf-level decisive-gap enumeration on abstention and Annex I closed-list instrument validation. Cases and expectations are unchanged; only the served envelopes moved. Day 0 through Day 3 remain unchanged historical artifacts.
+Day 4 records the adjudicated blind-run-2 product fixes on the unchanged public corpus: complete leaf-level decisive-gap enumeration on abstention, Annex I closed-list instrument validation, and readiness-finding compaction that keeps rich dual-route envelopes inside the 64 KiB canonical bound while preserving every duty-level provision and operative-date anchor. Cases and expectations are unchanged; only the served envelopes moved. Day 0 through Day 3 remain unchanged historical artifacts.
 
 ## Independent sealed evaluation protocol
 

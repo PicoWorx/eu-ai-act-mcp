@@ -197,10 +197,10 @@
       "determination": "applies"
     },
     {
-      "finding_id": "finding.readiness.duty.provider.art.10.data.governance",
+      "finding_id": "finding.readiness.provider.001",
       "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
-      "summary": "Data governance and management is selected from the existing obligations tool; supplied evidence state is missing.",
+      "summary": "Applicable duties for the provider role: 14 (evidence documented 1, partial 0, missing 13). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.",
       "scope": {
         "actors": [
           "provider"
@@ -235,36 +235,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.11.documentation",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Technical documentation is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 11",
@@ -278,36 +249,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.12.art.19.documentation",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Logging capability and provider log retention is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 12, Art. 19",
@@ -321,36 +263,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.13.transparency",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Transparency and provision of information to deployers is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 13",
@@ -364,36 +277,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.14.human.oversight",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Human oversight measures is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 14",
@@ -407,36 +291,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.15.technical.requirements",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Accuracy, robustness, and cybersecurity is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 15",
@@ -450,36 +305,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.17.quality.management",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Quality management system is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 17",
@@ -493,36 +319,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 4",
@@ -536,36 +333,7 @@
           "operative_date": "2026-07-27",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.43.conformity.assessment",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Conformity assessment is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 43",
@@ -579,36 +347,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.47.conformity.assessment",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "EU Declaration of Conformity is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 47",
@@ -622,36 +361,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.49.registration",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Registration in the EU database is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 49",
@@ -665,36 +375,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.72.post.market",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Post-market monitoring is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 72",
@@ -708,36 +389,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.73.incident.reporting",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Reporting serious incidents is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 73",
@@ -751,36 +403,7 @@
           "operative_date": "2027-12-02",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.9.risk.management",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Establish a risk management system is selected from the existing obligations tool; supplied evidence state is documented.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "review-ordering"
-      },
-      "fact_ids": [
-        "fact.annex-iii.domain",
-        "fact.annex-iii.point",
-        "fact.annex-iii.profiling",
-        "fact.annex-iii.purpose",
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.use.review-ordering.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 9",
@@ -807,20 +430,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.high-risk.annex_iii.4.001",
-        "finding.readiness.duty.provider.art.10.data.governance",
-        "finding.readiness.duty.provider.art.11.documentation",
-        "finding.readiness.duty.provider.art.12.art.19.documentation",
-        "finding.readiness.duty.provider.art.13.transparency",
-        "finding.readiness.duty.provider.art.14.human.oversight",
-        "finding.readiness.duty.provider.art.15.technical.requirements",
-        "finding.readiness.duty.provider.art.17.quality.management",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.43.conformity.assessment",
-        "finding.readiness.duty.provider.art.47.conformity.assessment",
-        "finding.readiness.duty.provider.art.49.registration",
-        "finding.readiness.duty.provider.art.72.post.market",
-        "finding.readiness.duty.provider.art.73.incident.reporting",
-        "finding.readiness.duty.provider.art.9.risk.management"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -830,20 +440,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.high-risk.annex_iii.4.001",
-        "finding.readiness.duty.provider.art.10.data.governance",
-        "finding.readiness.duty.provider.art.11.documentation",
-        "finding.readiness.duty.provider.art.12.art.19.documentation",
-        "finding.readiness.duty.provider.art.13.transparency",
-        "finding.readiness.duty.provider.art.14.human.oversight",
-        "finding.readiness.duty.provider.art.15.technical.requirements",
-        "finding.readiness.duty.provider.art.17.quality.management",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.43.conformity.assessment",
-        "finding.readiness.duty.provider.art.47.conformity.assessment",
-        "finding.readiness.duty.provider.art.49.registration",
-        "finding.readiness.duty.provider.art.72.post.market",
-        "finding.readiness.duty.provider.art.73.incident.reporting",
-        "finding.readiness.duty.provider.art.9.risk.management"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -853,20 +450,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.high-risk.annex_iii.4.001",
-        "finding.readiness.duty.provider.art.10.data.governance",
-        "finding.readiness.duty.provider.art.11.documentation",
-        "finding.readiness.duty.provider.art.12.art.19.documentation",
-        "finding.readiness.duty.provider.art.13.transparency",
-        "finding.readiness.duty.provider.art.14.human.oversight",
-        "finding.readiness.duty.provider.art.15.technical.requirements",
-        "finding.readiness.duty.provider.art.17.quality.management",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.43.conformity.assessment",
-        "finding.readiness.duty.provider.art.47.conformity.assessment",
-        "finding.readiness.duty.provider.art.49.registration",
-        "finding.readiness.duty.provider.art.72.post.market",
-        "finding.readiness.duty.provider.art.73.incident.reporting",
-        "finding.readiness.duty.provider.art.9.risk.management"
+        "finding.readiness.provider.001"
       ]
     }
   ],
@@ -1000,7 +584,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.10.data.governance"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1016,7 +600,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.11.documentation"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1032,7 +616,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.12.art.19.documentation"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1048,7 +632,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.13.transparency"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1064,7 +648,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.14.human.oversight"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1080,7 +664,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.15.technical.requirements"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1096,7 +680,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.17.quality.management"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1112,7 +696,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.4.ai.literacy"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1128,7 +712,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.43.conformity.assessment"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1144,7 +728,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.47.conformity.assessment"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1160,7 +744,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.49.registration"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1176,7 +760,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.72.post.market"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1192,7 +776,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.73.incident.reporting"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -1208,7 +792,7 @@
           "owner.profile"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.9.risk.management"
+          "finding.readiness.provider.001"
         ]
       }
     ],
@@ -1332,7 +916,7 @@
         "duty_ids": [
           "duty.provider.art.10.data.governance"
         ],
-        "description": "Supply documented evidence for Data governance and management.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1343,7 +927,7 @@
         "duty_ids": [
           "duty.provider.art.11.documentation"
         ],
-        "description": "Supply documented evidence for Technical documentation.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1354,7 +938,7 @@
         "duty_ids": [
           "duty.provider.art.12.art.19.documentation"
         ],
-        "description": "Supply documented evidence for Logging capability and provider log retention.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1365,7 +949,7 @@
         "duty_ids": [
           "duty.provider.art.13.transparency"
         ],
-        "description": "Supply documented evidence for Transparency and provision of information to deployers.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1376,7 +960,7 @@
         "duty_ids": [
           "duty.provider.art.14.human.oversight"
         ],
-        "description": "Supply documented evidence for Human oversight measures.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1387,7 +971,7 @@
         "duty_ids": [
           "duty.provider.art.15.technical.requirements"
         ],
-        "description": "Supply documented evidence for Accuracy, robustness, and cybersecurity.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1398,7 +982,7 @@
         "duty_ids": [
           "duty.provider.art.17.quality.management"
         ],
-        "description": "Supply documented evidence for Quality management system.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1409,7 +993,7 @@
         "duty_ids": [
           "duty.provider.art.4.ai.literacy"
         ],
-        "description": "Supply documented evidence for Take measures to support the development of AI literacy of staff and operators.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1420,7 +1004,7 @@
         "duty_ids": [
           "duty.provider.art.43.conformity.assessment"
         ],
-        "description": "Supply documented evidence for Conformity assessment.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1431,7 +1015,7 @@
         "duty_ids": [
           "duty.provider.art.47.conformity.assessment"
         ],
-        "description": "Supply documented evidence for EU Declaration of Conformity.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1442,7 +1026,7 @@
         "duty_ids": [
           "duty.provider.art.49.registration"
         ],
-        "description": "Supply documented evidence for Registration in the EU database.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1453,7 +1037,7 @@
         "duty_ids": [
           "duty.provider.art.72.post.market"
         ],
-        "description": "Supply documented evidence for Post-market monitoring.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1464,7 +1048,7 @@
         "duty_ids": [
           "duty.provider.art.73.incident.reporting"
         ],
-        "description": "Supply documented evidence for Reporting serious incidents.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.profile"
         ],
@@ -1479,20 +1063,7 @@
       }
     ],
     "finding_ids": [
-      "finding.readiness.duty.provider.art.10.data.governance",
-      "finding.readiness.duty.provider.art.11.documentation",
-      "finding.readiness.duty.provider.art.12.art.19.documentation",
-      "finding.readiness.duty.provider.art.13.transparency",
-      "finding.readiness.duty.provider.art.14.human.oversight",
-      "finding.readiness.duty.provider.art.15.technical.requirements",
-      "finding.readiness.duty.provider.art.17.quality.management",
-      "finding.readiness.duty.provider.art.4.ai.literacy",
-      "finding.readiness.duty.provider.art.43.conformity.assessment",
-      "finding.readiness.duty.provider.art.47.conformity.assessment",
-      "finding.readiness.duty.provider.art.49.registration",
-      "finding.readiness.duty.provider.art.72.post.market",
-      "finding.readiness.duty.provider.art.73.incident.reporting",
-      "finding.readiness.duty.provider.art.9.risk.management"
+      "finding.readiness.provider.001"
     ],
     "limitations": [
       "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",

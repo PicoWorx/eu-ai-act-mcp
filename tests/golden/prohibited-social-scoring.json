@@ -364,7 +364,7 @@
         "duty_ids": [
           "duty.deployer.article.5.1.c.prohibited.practice"
         ],
-        "description": "Supply documented evidence for Do not deploy or place the prohibited practice on the market.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.unassigned"
         ],

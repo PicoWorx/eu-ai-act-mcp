@@ -148,10 +148,10 @@
       "determination": "applies"
     },
     {
-      "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "finding_id": "finding.readiness.provider.001",
       "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
-      "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
+      "summary": "Applicable duties for the provider role: 2 (evidence documented 0, partial 0, missing 2). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.",
       "scope": {
         "actors": [
           "provider"
@@ -184,34 +184,7 @@
           "operative_date": "2026-07-27",
           "source_status": "official_consolidated_snapshot_non_authentic",
           "verification_level": "consolidated_snapshot_integrity_verified"
-        }
-      ],
-      "determination": "applies"
-    },
-    {
-      "finding_id": "finding.readiness.duty.provider.art.50.1.transparency",
-      "finding_basis": "legal_proposition",
-      "block": "implementation_readiness",
-      "summary": "Disclose AI interaction to users is selected from the existing obligations tool; supplied evidence state is missing.",
-      "scope": {
-        "actors": [
-          "provider"
-        ],
-        "jurisdictions": [
-          "EU"
-        ],
-        "system_scope": "service-chatbot"
-      },
-      "fact_ids": [
-        "fact.geography.eu",
-        "fact.role.provider",
-        "fact.transparency.interacts",
-        "fact.transparency.synthetic",
-        "fact.use.service-chatbot.purpose"
-      ],
-      "assumption_ids": [],
-      "missing_fact_ids": [],
-      "provenance": [
+        },
         {
           "instrument_id": "regulation-eu-2024-1689",
           "exact_provision": "Art. 50(1)",
@@ -238,8 +211,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.transparency.article.50.1.fact.transparency.interacts",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.50.1.transparency"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -249,8 +221,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.transparency.article.50.1.fact.transparency.interacts",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.50.1.transparency"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -260,8 +231,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.transparency.article.50.1.fact.transparency.interacts",
-        "finding.readiness.duty.provider.art.4.ai.literacy",
-        "finding.readiness.duty.provider.art.50.1.transparency"
+        "finding.readiness.provider.001"
       ]
     }
   ],
@@ -368,7 +338,7 @@
           "owner.unassigned"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.4.ai.literacy"
+          "finding.readiness.provider.001"
         ]
       },
       {
@@ -384,7 +354,7 @@
           "owner.unassigned"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.50.1.transparency"
+          "finding.readiness.provider.001"
         ]
       }
     ],
@@ -412,7 +382,7 @@
         "duty_ids": [
           "duty.provider.art.4.ai.literacy"
         ],
-        "description": "Supply documented evidence for Take measures to support the development of AI literacy of staff and operators.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.unassigned"
         ],
@@ -423,7 +393,7 @@
         "duty_ids": [
           "duty.provider.art.50.1.transparency"
         ],
-        "description": "Supply documented evidence for Disclose AI interaction to users.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.unassigned"
         ],
@@ -438,8 +408,7 @@
       }
     ],
     "finding_ids": [
-      "finding.readiness.duty.provider.art.4.ai.literacy",
-      "finding.readiness.duty.provider.art.50.1.transparency"
+      "finding.readiness.provider.001"
     ],
     "limitations": [
       "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",

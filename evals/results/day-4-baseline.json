@@ -60,8 +60,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "2eae0daefa4672cb9e7b315c603c1282bbe0d4f207803fc3caf9b794d934d022",
-        "canonical_bytes": 41913
+        "canonical_sha256": "4624da1811bf86e836b51345ee6ca92114e963c7ab5b8694ff0f5b63ad21de24",
+        "canonical_bytes": 28306
       },
       "metrics": {
         "response_schema": {
@@ -152,8 +152,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "5f69cfb957529713260e02946b03250e621c073d3781b78e1e274105fd1e7d46",
-        "canonical_bytes": 37361
+        "canonical_sha256": "aaa753ca2d48387b9a8549933dd51ea35d04d3f45eb201b6dcf1bf50e9282c7a",
+        "canonical_bytes": 25906
       },
       "metrics": {
         "response_schema": {
@@ -244,8 +244,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "654444b0dfd379c84692eeb4fd608e7f7019d8fc0fb2cb61aa68502d32c7493a",
-        "canonical_bytes": 33182
+        "canonical_sha256": "9687300b971bed42792f5bd428580e606f2232b42f526321884cd33bd5d104d5",
+        "canonical_bytes": 23617
       },
       "metrics": {
         "response_schema": {
@@ -336,8 +336,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "47df259274b7e1a6274c775661353fadd87a8f23e5a58f012106738372d4c496",
-        "canonical_bytes": 41668
+        "canonical_sha256": "2b0bb1ff979b1e2fb5353e2d2f33f7a4410f04601844810454653ff76d62a980",
+        "canonical_bytes": 28269
       },
       "metrics": {
         "response_schema": {
@@ -430,8 +430,8 @@
             "operative_date": "2028-08-02"
           }
         ],
-        "canonical_sha256": "97288df0817cb91e57c55895f150d12f29213962481259ca07030ee93248ccc3",
-        "canonical_bytes": 39050
+        "canonical_sha256": "cd4a602d471e5f2f80cd02718ed303a47dbf43b907160d54f973db4e12992b2c",
+        "canonical_bytes": 26937
       },
       "metrics": {
         "response_schema": {
@@ -519,8 +519,8 @@
             "operative_date": "2025-02-02"
           }
         ],
-        "canonical_sha256": "33efbe9414c6e9a9cf35a9c131342c9a67568f3d0d7d86b8a79169713a904efa",
-        "canonical_bytes": 11325
+        "canonical_sha256": "49ef967252a2aa79cc420af88c5844540be05d5dad343b38432cae3bdac2bb6c",
+        "canonical_bytes": 11274
       },
       "metrics": {
         "response_schema": {
@@ -609,8 +609,8 @@
             "operative_date": "2026-12-02"
           }
         ],
-        "canonical_sha256": "8cb6b2d396839e8e6ccd86bc659b943b74f3dd1a1c46aa9e24597872796f7c40",
-        "canonical_bytes": 10571
+        "canonical_sha256": "be61b2e28a1d6560653c8057ac9124dbcd059b1fba4bf4fe2dbb18605b5b46b2",
+        "canonical_bytes": 10520
       },
       "metrics": {
         "response_schema": {
@@ -699,8 +699,8 @@
             "operative_date": "2026-12-02"
           }
         ],
-        "canonical_sha256": "ab5e60989d1f4bce43ccbe51e211bc44dec84ddd36aadac5b18fd8f6cfb7ee9f",
-        "canonical_bytes": 10144
+        "canonical_sha256": "cd121a3124719dcb339cdc303a12054ef36a51196300c6abfbe3442b6fbc99ce",
+        "canonical_bytes": 10093
       },
       "metrics": {
         "response_schema": {
@@ -789,8 +789,8 @@
             "operative_date": "2026-08-02"
           }
         ],
-        "canonical_sha256": "a8b85e5a6c15b5bafde1e24fd935a02c3c612d94cd265455060b6838cac02793",
-        "canonical_bytes": 13110
+        "canonical_sha256": "eb35149c7810f1add5e543ee3f52c117e870e2f38339933777cd0a776c6cb381",
+        "canonical_bytes": 12022
       },
       "metrics": {
         "response_schema": {
@@ -878,8 +878,8 @@
             "operative_date": "2026-08-02"
           }
         ],
-        "canonical_sha256": "412d817eb5e92ca366bbdd2d43c8112854bd88bad5c07e208d3c7d6ddf3efaa4",
-        "canonical_bytes": 14014
+        "canonical_sha256": "d8b7a111a5acd5264140a0216a4d4779bdb9f2596ed6d5b875bdb6003e61056f",
+        "canonical_bytes": 12796
       },
       "metrics": {
         "response_schema": {
@@ -973,8 +973,8 @@
             "operative_date": "2026-08-02"
           }
         ],
-        "canonical_sha256": "ffe3e7c8d2450bb2dc5c30ca43978c2443060ac05747490ac5af554b8d0e4fda",
-        "canonical_bytes": 19591
+        "canonical_sha256": "41f9016a1b8835642dda8cba45574720c6673b7fb344e7299866cd83d4c3f0a5",
+        "canonical_bytes": 17341
       },
       "metrics": {
         "response_schema": {
@@ -1079,8 +1079,8 @@
             "operative_date": "2025-08-02"
           }
         ],
-        "canonical_sha256": "d703287b08920a8758c038afa241a541cd2a4f28d6f2a518e7ceeb3580079b0f",
-        "canonical_bytes": 33652
+        "canonical_sha256": "b963d4768a3a30f701c6ee834f6b56ec78be852d1a10dd4ebc75efc241af2b99",
+        "canonical_bytes": 24624
       },
       "metrics": {
         "response_schema": {
@@ -1169,8 +1169,8 @@
             "operative_date": "2025-02-02"
           }
         ],
-        "canonical_sha256": "3df3661388738e9a4277400f40071dfa0f2440c5466b872c5190504142c8d26d",
-        "canonical_bytes": 17531
+        "canonical_sha256": "e87faf7f8cfe938ebf5790d1b6252c252f10d77ca9e3367ddba46e55c924e0fe",
+        "canonical_bytes": 14415
       },
       "metrics": {
         "response_schema": {
@@ -1282,8 +1282,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "f4427de16cbdfea3a3bebd5cdb61c082fffb6c45c582ba1248b80fc4d8567700",
-        "canonical_bytes": 23354
+        "canonical_sha256": "d10a4cdd861dc8b0950c66d7900b5801ba3d1de0872ce174a0fa32a116d8be9d",
+        "canonical_bytes": 23263
       },
       "metrics": {
         "response_schema": {
@@ -1826,8 +1826,8 @@
             "operative_date": "2027-12-02"
           }
         ],
-        "canonical_sha256": "0058ef320250a336b1d4d31043ce255b8b7921b22eb8aef1d124de4515bb9391",
-        "canonical_bytes": 25228
+        "canonical_sha256": "c46fda35e96c4c1006eb2fd891c9f1ff91a9e25ca25c6605ad196b98a3499c2e",
+        "canonical_bytes": 25137
       },
       "metrics": {
         "response_schema": {

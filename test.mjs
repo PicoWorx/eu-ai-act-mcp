@@ -1852,6 +1852,50 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
       fact.missing_fact_id === "missing.legal.jurisdiction" &&
       fact.profile_path === "/geography/jurisdictions"));
 
+  // FIX-RUN2 F1 (A4 size finding): a rich dual-route dual-actor envelope must
+  // stay inside the 64 KiB canonical bound without losing any duty-level
+  // provision or operative-date anchor.
+  const worstCase = await runAssessment("worst-case-dual-route.json");
+  const worstCaseBytes = Buffer.byteLength(canonicalize(worstCase), "utf8");
+  test("FIX-RUN2 F1: the rich dual-route worst case stays inside the 64 KiB bound",
+    worstCase.status === "determined" &&
+    worstCase.legal_classification.routes.map((route) => route.route).join(",") ===
+      "high_risk,transparency_duty" &&
+    worstCase.implementation_readiness.applicable_duties.length >= 20 &&
+    new Set(
+      worstCase.implementation_readiness.applicable_duties.flatMap((duty) => duty.actor_roles),
+    ).size >= 2 &&
+    worstCaseBytes <= 65_536);
+  test("FIX-RUN2 F1: the worst case is deterministic across repeated runs",
+    canonicalResponseHash(worstCase) ===
+      canonicalResponseHash(await runAssessment("worst-case-dual-route.json")));
+  const worstCaseReadinessFindings = new Map(
+    worstCase.findings
+      .filter((finding) => finding.block === "implementation_readiness")
+      .map((finding) => [finding.finding_id, finding]),
+  );
+  test("FIX-RUN2 F1: every duty keeps its provision and date anchored in its actor finding",
+    worstCase.implementation_readiness.applicable_duties.every((duty) =>
+      duty.finding_ids.length > 0 &&
+      duty.finding_ids.every((findingId) => {
+        const finding = worstCaseReadinessFindings.get(findingId);
+        return finding !== undefined &&
+          finding.determination === "applies" &&
+          finding.finding_basis === "legal_proposition" &&
+          duty.actor_roles.every((actor) => finding.scope.actors.includes(actor)) &&
+          finding.provenance.some((item) =>
+            item.exact_provision === duty.exact_provision &&
+            item.operative_date === duty.operative_date);
+      })));
+  const worstCaseFindingIds = worstCase.findings
+    .map((finding) => finding.finding_id)
+    .sort();
+  test("FIX-RUN2 F1: the global disclosure warnings still cover every finding",
+    ["NON_BINDING_SOURCE", "OUTPUT_NOT_LEGAL_ADVICE", "SUMMARY_ONLY"].every((code) =>
+      JSON.stringify(
+        worstCase.warnings.find((warning) => warning.code === code)?.finding_ids,
+      ) === JSON.stringify(worstCaseFindingIds)));
+
   const freeTextOnly = await runAssessment("free-text-only.json");
   test("assess: unverified free text cannot satisfy a decisive predicate",
     freeTextOnly.status === "undetermined" &&

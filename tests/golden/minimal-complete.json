@@ -322,10 +322,10 @@
       "determination": "applies"
     },
     {
-      "finding_id": "finding.readiness.duty.provider.art.4.ai.literacy",
+      "finding_id": "finding.readiness.provider.001",
       "finding_basis": "legal_proposition",
       "block": "implementation_readiness",
-      "summary": "Take measures to support the development of AI literacy of staff and operators is selected from the existing obligations tool; supplied evidence state is missing.",
+      "summary": "Applicable duties for the provider role: 1 (evidence documented 0, partial 0, missing 1). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.",
       "scope": {
         "actors": [
           "provider"
@@ -388,7 +388,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.minimal.bounded.001",
-        "finding.readiness.duty.provider.art.4.ai.literacy"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -398,7 +398,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.minimal.bounded.001",
-        "finding.readiness.duty.provider.art.4.ai.literacy"
+        "finding.readiness.provider.001"
       ]
     },
     {
@@ -408,7 +408,7 @@
       "finding_ids": [
         "finding.impact.supplied-context.001",
         "finding.legal.minimal.bounded.001",
-        "finding.readiness.duty.provider.art.4.ai.literacy"
+        "finding.readiness.provider.001"
       ]
     }
   ],
@@ -522,7 +522,7 @@
           "owner.unassigned"
         ],
         "finding_ids": [
-          "finding.readiness.duty.provider.art.4.ai.literacy"
+          "finding.readiness.provider.001"
         ]
       }
     ],
@@ -542,7 +542,7 @@
         "duty_ids": [
           "duty.provider.art.4.ai.literacy"
         ],
-        "description": "Supply documented evidence for Take measures to support the development of AI literacy of staff and operators.",
+        "description": "Supply documented evidence for this duty.",
         "owner_ids": [
           "owner.unassigned"
         ],
@@ -557,7 +557,7 @@
       }
     ],
     "finding_ids": [
-      "finding.readiness.duty.provider.art.4.ai.literacy"
+      "finding.readiness.provider.001"
     ],
     "limitations": [
       "Readiness reports only whether the supplied evidence was mapped to the duties identified in this output. It does not establish that all applicable duties were identified, that the evidence is legally sufficient, or that the provider or deployer complies with the Regulation.",

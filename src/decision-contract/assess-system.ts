@@ -2023,6 +2023,26 @@ async function assessReadiness(
   const gaps: AssessSystemResponse["implementation_readiness"]["control_gaps"] = [];
   const findingIds: string[] = [];
 
+  // One shared readiness finding per actor keeps every duty's exact provision
+  // and operative date as a provenance anchor pair while eliminating the
+  // repeated per-duty provenance boilerplate, scope, and fact-ID blocks that
+  // pushed rich dual-route envelopes over the 64 KiB response bound.
+  // Duty-level detail stays complete in applicable_duties, and every duty
+  // references its actor's shared finding, which the readiness duty schema
+  // expressly allows. The prohibited-practice duty keeps its own dedicated
+  // finding so the prospective Article 5 anchor stays date-homogeneous inside
+  // one finding, as MIGRATION-002 pinned it.
+  interface ActorReadinessAggregate {
+    actor: ActorRole;
+    count: number;
+    documented: number;
+    partial: number;
+    missing: number;
+    provenance: Map<string, Provenance>;
+  }
+  const sharedReadinessFindings = new Map<ActorRole, ActorReadinessAggregate>();
+  const readinessFindingId = (actor: ActorRole): string =>
+    `finding.readiness.${slug(actor)}.001`;
   for (const duty of duties) {
     const dutyId = `duty.${slug(duty.actor)}.${slug(duty.article)}.${slug(duty.category)}`;
     const categoryTerms = duty.category
@@ -2052,27 +2072,53 @@ async function assessReadiness(
         : hasImplementedControl || matchingEvidenceIds.length > 0
           ? "partial"
           : "missing";
-    const findingId = `finding.readiness.${slug(dutyId)}`;
-    const roleFactIds = roleFactsFor(context, duty.actor);
-    const findingFactIds = sortStrings([...legal.route_fact_ids, ...roleFactIds]);
-    addFinding(context, {
-      finding_id: findingId,
-      finding_basis: "legal_proposition",
-      block: "implementation_readiness",
-      summary: `${duty.title} is selected from the existing obligations tool; supplied evidence state is ${evidenceState}.`,
-      scope: {
-        actors: [duty.actor],
-        jurisdictions: context.jurisdictions,
-        system_scope: context.scope,
-      },
-      fact_ids: findingFactIds,
-      assumption_ids: [],
-      missing_fact_ids: [],
-      provenance: [
-        provenance(duty.article, duty.deadline, articleAnchor(duty.article)),
-      ],
-      determination: "applies",
-    });
+    const isProhibitedDuty = duty.category === "prohibited_practice";
+    const findingId = isProhibitedDuty
+      ? `finding.readiness.${slug(dutyId)}`
+      : readinessFindingId(duty.actor);
+    if (isProhibitedDuty) {
+      addFinding(context, {
+        finding_id: findingId,
+        finding_basis: "legal_proposition",
+        block: "implementation_readiness",
+        summary: `${duty.title} is selected from the existing obligations tool; supplied evidence state is ${evidenceState}.`,
+        scope: {
+          actors: [duty.actor],
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([
+          ...legal.route_fact_ids,
+          ...roleFactsFor(context, duty.actor),
+        ]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: [
+          provenance(duty.article, duty.deadline, articleAnchor(duty.article)),
+        ],
+        determination: "applies",
+      });
+      findingIds.push(findingId);
+    } else {
+      const aggregate = sharedReadinessFindings.get(duty.actor) ?? {
+        actor: duty.actor,
+        count: 0,
+        documented: 0,
+        partial: 0,
+        missing: 0,
+        provenance: new Map<string, Provenance>(),
+      };
+      aggregate.count += 1;
+      aggregate[evidenceState] += 1;
+      const provenanceKey = `${duty.article} ${duty.deadline}`;
+      if (!aggregate.provenance.has(provenanceKey)) {
+        aggregate.provenance.set(
+          provenanceKey,
+          provenance(duty.article, duty.deadline, articleAnchor(duty.article)),
+        );
+      }
+      sharedReadinessFindings.set(duty.actor, aggregate);
+    }
     readinessDuties.push({
       duty_id: dutyId,
       title: duty.title,
@@ -2083,7 +2129,6 @@ async function assessReadiness(
       owner_ids: ownerIds,
       finding_ids: [findingId],
     });
-    findingIds.push(findingId);
 
     if (matchingEvidenceIds.length === 0) {
       evidenceStatus.set(`evidence.missing.${slug(dutyId)}`, {
@@ -2112,11 +2157,37 @@ async function assessReadiness(
       gaps.push({
         gap_id: `gap.${slug(dutyId)}`,
         duty_ids: [dutyId],
-        description: `Supply documented evidence for ${duty.title}.`,
+        description: "Supply documented evidence for this duty.",
         owner_ids: ownerIds,
         target_date: duty.deadline,
       });
     }
+  }
+
+  for (const aggregate of [...sharedReadinessFindings.values()].sort(
+    (left, right) => compareUnicodeCodePoints(left.actor, right.actor),
+  )) {
+    const findingId = readinessFindingId(aggregate.actor);
+    addFinding(context, {
+      finding_id: findingId,
+      finding_basis: "legal_proposition",
+      block: "implementation_readiness",
+      summary: `Applicable duties for the ${aggregate.actor} role: ${aggregate.count} (evidence documented ${aggregate.documented}, partial ${aggregate.partial}, missing ${aggregate.missing}). The duties are selected from the existing obligations tool; per-duty titles, exact provisions, operative dates, and evidence states are listed in applicable_duties.`,
+      scope: {
+        actors: [aggregate.actor],
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: sortStrings([
+        ...legal.route_fact_ids,
+        ...roleFactsFor(context, aggregate.actor),
+      ]),
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [...aggregate.provenance.values()],
+      determination: "applies",
+    });
+    findingIds.push(findingId);
   }
 
   readinessDuties.sort((left, right) => compareUnicodeCodePoints(left.duty_id, right.duty_id));
