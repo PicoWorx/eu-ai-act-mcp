@@ -1,10 +1,10 @@
 # MIGRATION-001: Source-status honesty and G8 legal-review corrections
 
-Status: approved  
-Approved by: Werner  
-Approval date: 14 August 2026  
-Implementation branch: `sprint/mig-001-legal-fixes`  
-Base branch: `sprint/l6-public-evals`
+- Status: approved
+- Approved by: Werner
+- Approval date: 14 August 2026
+- Implementation branch: `sprint/mig-001-legal-fixes`
+- Base branch: `sprint/l6-public-evals`
 
 ## Decision
 
