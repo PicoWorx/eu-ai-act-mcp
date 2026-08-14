@@ -1075,9 +1075,26 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   // Cross-model round 3 blockers, pinned as regressions:
   const P8 = { uses_biometrics: false, performs_social_scoring: false, generates_synthetic_content: false, interacts_with_natural_persons: false, is_safety_component_of_regulated_product: false, affects_fundamental_rights: false, targets_children_or_vulnerable: false, performs_emotion_recognition_workplace_or_school: false };
   const rB1 = structured(await callTool("euaiact_classify_system", { description: "AI system that ranks and shortlists job applicants for recruitment", signals: P8 }));
-  test("blocker: negative signals cannot override risky text (recruitment)", rB1.risk_classification === "high-risk" && rB1.basis === "text");
-  const rB2 = structured(await callTool("euaiact_classify_system", { description: "system deciding eligibility for essential public assistance benefits", signals: ALL_FALSE }));
-  test("blocker: all-false signals cannot override risky text (benefits)", rB2.risk_classification === "high-risk");
+  test("blocker: partial negative signals cannot override risky text (recruitment)", rB1.risk_classification === "high-risk" && rB1.basis === "text");
+  const rB2 = structured(await callTool("euaiact_classify_system", { description: "system deciding eligibility for essential public assistance benefits", signals: P8 }));
+  test("blocker: partial negative signals cannot override risky text (benefits)", rB2.risk_classification === "high-risk");
+  const COMPLETE_ROUTE_NEGATIVES = {
+    domain: "other", uses_biometrics: false, biometric_sole_purpose_verification: false,
+    biometric_remote_identification: false, biometric_realtime: false,
+    biometric_law_enforcement: false, biometric_publicly_accessible_space: false,
+    is_safety_component_of_regulated_product: false,
+    requires_third_party_conformity_assessment: false,
+    generates_synthetic_content: false, interacts_with_natural_persons: false,
+    performs_emotion_recognition_workplace_or_school: false, performs_social_scoring: false,
+  };
+  const rStructuredDominance = structured(await callTool("euaiact_classify_system", {
+    description: "Format job application documents into a consistent layout without ranking, filtering, scoring, or evaluating candidates",
+    use_case: "Document formatting for job application files without candidate evaluation",
+    signals: COMPLETE_ROUTE_NEGATIVES,
+  }));
+  test("classify: complete structured negatives dominate recruitment vocabulary",
+    rStructuredDominance.risk_classification === "minimal" &&
+    rStructuredDominance.basis === "signals");
   const rB3 = structured(await callTool("euaiact_classify_system", { description: "scans faces in the terminal to identify persons on a watchlist", signals: { uses_biometrics: true, biometric_sole_purpose_verification: true } }));
   test("blocker: verification signal contradicted by identification text", rB3.risk_classification === "insufficient_information" && /CONTRADICTED|contradiction|mutually exclusive/i.test(JSON.stringify(rB3)));
 
@@ -1317,6 +1334,18 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     sparse.missing_facts.some((fact) => fact.affected_blocks.includes("legal_classification")) &&
     sparse.missing_facts.some((fact) => fact.affected_blocks.includes("impact")) &&
     sparse.missing_facts.some((fact) => fact.affected_blocks.includes("implementation_readiness")));
+  const missingPurposeProfile = loadProfile("minimal-complete.json");
+  delete missingPurposeProfile.intended_use;
+  delete missingPurposeProfile.annex_iii.purpose;
+  const missingPurpose = structured(await callTool("euaiact_assess_system", missingPurposeProfile));
+  test("assess: decisive missing fact propagates to every named block",
+    missingPurpose.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.intended-purpose" &&
+      fact.decisive &&
+      fact.affected_blocks.includes("impact")) &&
+    missingPurpose.impact.status === "undetermined" &&
+    missingPurpose.impact.inherent_impact === null &&
+    missingPurpose.impact.residual_impact === null);
   test("assess: omitted jurisdiction is disclosed instead of defaulting to EU",
     sparse.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction") &&
     sparse.findings.every((finding) => finding.scope.jurisdictions.join(",") === "unspecified"));

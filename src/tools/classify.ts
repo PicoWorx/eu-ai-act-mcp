@@ -37,6 +37,27 @@ const ALL_SIGNAL_KEYS: Array<keyof ClassifySignals> = [
   "performs_social_scoring_by_public_authority",
 ];
 
+// These fields decide the Article 5, Article 6 / Annex III, Annex I, and
+// Article 50 routes. When every one is supplied and negative, the structured
+// facts are authoritative over keyword or vocabulary heuristics. Partial
+// negative answers still fall through to text matching so omissions cannot
+// create a minimal conclusion.
+const ROUTE_DETERMINATIVE_SIGNAL_KEYS: Array<keyof ClassifySignals> = [
+  "domain",
+  "uses_biometrics",
+  "biometric_sole_purpose_verification",
+  "biometric_remote_identification",
+  "biometric_realtime",
+  "biometric_law_enforcement",
+  "biometric_publicly_accessible_space",
+  "is_safety_component_of_regulated_product",
+  "requires_third_party_conformity_assessment",
+  "generates_synthetic_content",
+  "interacts_with_natural_persons",
+  "performs_emotion_recognition_workplace_or_school",
+  "performs_social_scoring",
+];
+
 const SIGNAL_QUESTIONS: Record<keyof ClassifySignals, string> = {
   domain: "What is the primary sector this AI system operates in (employment, education, biometrics, critical infrastructure, law enforcement, migration, justice, essential services, health, GPAI, product safety, other)?",
   uses_biometrics: "Does the system process biometric data such as face, fingerprint, iris, voice or gait?",
@@ -487,12 +508,20 @@ function classifyFromSignals(input: ClassifyInput): ClassifyOutput | null {
   const providedKeys = ALL_SIGNAL_KEYS.filter((k) => s[k] !== undefined);
   const anyRiskSignalTrue = providedKeys.some((k) => s[k] === true);
   const domainMapsToAnnexIII = s.domain !== undefined && DOMAIN_TO_ANNEX_III[s.domain] !== undefined;
-  // Signals must be reconciled with the text: negative signals cannot override
-  // a description that names a prohibited practice, an Annex III use or an
-  // Art. 50 trigger. On any text hit, fall through to the text path instead of
-  // answering minimal. (Cross-model blocker: "8 false signals + recruitment
-  // ranking description" returned minimal.)
-  if (!anyRiskSignalTrue && !domainMapsToAnnexIII && providedKeys.length >= 8 && combined && textIndicatesRisk(combined)) {
+  const completeRouteExclusions = ROUTE_DETERMINATIVE_SIGNAL_KEYS.every(
+    (key) => s[key] !== undefined,
+  );
+  // Incomplete negative facts cannot override a contradictory risk description.
+  // Complete route exclusions do override vocabulary because structured facts
+  // are the deterministic source of truth for classification.
+  if (
+    !anyRiskSignalTrue &&
+    !domainMapsToAnnexIII &&
+    !completeRouteExclusions &&
+    providedKeys.length >= 8 &&
+    combined &&
+    textIndicatesRisk(combined)
+  ) {
     return null;
   }
   if (!anyRiskSignalTrue && !domainMapsToAnnexIII && providedKeys.length >= 8) {

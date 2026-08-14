@@ -537,12 +537,17 @@ async function assessLegalClassification(
         classifierInput.signals.requires_third_party_conformity_assessment,
     },
   });
+  // A structured minimal result is terminal for high-risk recovery. The probe
+  // may recover an independent route after other positive results, but it must
+  // not reintroduce vocabulary over complete structured negative facts.
   const highRiskClassification =
     classification.risk_classification === "high-risk"
       ? classification
-      : highRiskProbe.risk_classification === "high-risk"
-        ? highRiskProbe
-        : null;
+      : classification.risk_classification === "minimal"
+        ? null
+        : highRiskProbe.risk_classification === "high-risk"
+          ? highRiskProbe
+          : null;
   const allLegalFactIds = legalSignalFactIds(context.normalized);
   const routes: AssessSystemResponse["legal_classification"]["routes"] = [];
   const legalFindingIds: string[] = [];
@@ -1034,6 +1039,24 @@ function assessImpact(
       residual_impact: null,
       finding_ids: [],
       limitations: ["Decisive affected-group or consequence facts are missing."],
+      does_not_alter_legal_classification: true,
+    };
+  }
+
+  const inheritedImpactMissing = [...context.missing.values()].filter(
+    (missing) =>
+      missing.decisive && missing.affected_blocks.includes("impact"),
+  );
+  if (inheritedImpactMissing.length > 0) {
+    return {
+      schema_version: "1.0",
+      status: "undetermined",
+      inherent_impact: null,
+      relevant_affected_groups: [],
+      current_controls: controls,
+      residual_impact: null,
+      finding_ids: [],
+      limitations: ["Decisive facts affecting impact are listed in missing_facts."],
       does_not_alter_legal_classification: true,
     };
   }
