@@ -1643,6 +1643,127 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     explicitDeepfake.legal_classification.routes.map((route) => route.route).join(",") ===
       "transparency_duty");
 
+  // FIX-RUN2 F3 (blind run 2, holdout2.10): an Annex I route may only be
+  // grounded when the cited instrument itself is in the pinned Annex I list.
+  const annexIInstruments = await import("./dist/decision-contract/annex-i-instruments.js");
+  test("FIX-RUN2 F3: pinned Annex I list is the closed post-M1 set, points 2 to 21",
+    annexIInstruments.ANNEX_I_INSTRUMENTS.length === 20 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.map((item) => item.annex_point).join(",") ===
+      "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21" &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.filter((item) => item.section === "A").length === 11 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.filter((item) => item.section === "B").length === 9 &&
+    annexIInstruments.ANNEX_I_INSTRUMENTS.some((item) =>
+      item.annex_point === 21 && item.citation === "Regulation (EU) 2023/1230"));
+  test("FIX-RUN2 F3: membership is instrument identity, never substring presence",
+    annexIInstruments.matchAnnexIInstrument("Regulation (EC) No 1223/2009 on cosmetic products").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Directive 2001/83/EC").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EC) No 178/2002").status === "not_listed" &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2017/745").entry?.annex_point === 11 &&
+    annexIInstruments.matchAnnexIInstrument("32017R0745").entry?.annex_point === 11 &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2023/1230 on machinery").entry?.annex_point === 21 &&
+    annexIInstruments.matchAnnexIInstrument("Regulation (EU) 2017/745 of the European Parliament and of the Council of 5 April 2017 on medical devices, amending Directive 2001/83/EC, Regulation (EC) No 178/2002 and Regulation (EC) No 1223/2009").status === "listed" &&
+    annexIInstruments.matchAnnexIInstrument("the applicable European cosmetics harmonisation framework").status === "no_citation");
+
+  const annexITrapProfile = {
+    profile_version: "1.0",
+    identity: {
+      system_name: profileFact("fact.identity.name", "Cosmetics shade formulator"),
+      machine_based_system: profileFact("fact.identity.machine", true),
+      infers_from_inputs_how_to_generate_outputs: profileFact("fact.identity.infers", true),
+    },
+    intended_use: {
+      intended_purpose: profileFact(
+        "fact.intended-use.purpose",
+        "Recommend cosmetic foundation shade formulations to laboratory technicians",
+      ),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: {
+      roles: [
+        profileFact("fact.role.product-manufacturer", "product_manufacturer"),
+        profileFact("fact.role.provider", "provider"),
+      ],
+    },
+    geography: {
+      jurisdictions: [profileFact("fact.geo.eu", "EU")],
+      used_in_eu: profileFact("fact.geo.used", true),
+      affected_person_groups: [profileFact("fact.geo.group.consumers", "Cosmetics consumers")],
+    },
+    decision_context: {
+      decision_consequence: profileFact(
+        "fact.decision.consequence",
+        "Shade formulation suggestions reviewed by laboratory staff",
+      ),
+      materially_influences_decision: profileFact("fact.decision.influence", false),
+    },
+    annex_i: {
+      product_or_safety_component: profileFact("fact.annex-i.product", true),
+      annex_i_legislation: [
+        profileFact(
+          "fact.annex-i.cosmetics",
+          "Regulation (EC) No 1223/2009 on cosmetic products",
+        ),
+      ],
+      third_party_conformity_assessment_required: profileFact("fact.annex-i.conformity", true),
+    },
+    transparency: {
+      interacts_with_natural_persons: profileFact("fact.transparency.interacts", false),
+      generates_or_manipulates_synthetic_content: profileFact("fact.transparency.synthetic", false),
+      deep_fake_content: profileFact("fact.transparency.deepfake", false),
+    },
+  };
+  const annexITrap = structured(await callTool("euaiact_assess_system", annexITrapProfile));
+  const annexITrapNegative = annexITrap.findings.find(
+    (finding) => finding.finding_id === "finding.legal.high-risk.annex-i.not-listed.001",
+  );
+  test("FIX-RUN2 F3: a caller-asserted non-listed instrument cannot create the Annex I route",
+    annexITrap.status === "determined" &&
+    annexITrap.legal_classification.status === "determined" &&
+    annexITrap.impact.status === "determined" &&
+    annexITrap.implementation_readiness.status === "determined" &&
+    annexITrap.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    annexITrap.legal_classification.routes[0].finding_ids.includes(
+      "finding.legal.high-risk.annex-i.not-listed.001") &&
+    !annexITrap.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision.includes("Article 6(1)"))));
+  test("FIX-RUN2 F3: the negative boundary carries the clean Article 6(1) anchor at the Annex I regime date",
+    annexITrapNegative !== undefined &&
+    annexITrapNegative.determination === "does_not_apply" &&
+    annexITrapNegative.provenance.length === 1 &&
+    annexITrapNegative.provenance[0].exact_provision === "Article 6(1)" &&
+    annexITrapNegative.provenance[0].operative_date === "2028-08-02" &&
+    annexITrapNegative.summary.includes("listed in Annex I") &&
+    annexITrap.facts_used.some((fact) =>
+      fact.fact_id === "fact.annex-i.cosmetics" &&
+      fact.verification === "caller_asserted") &&
+    annexITrap.facts_used.some((fact) =>
+      fact.fact_id === "fact.annex-i.conformity" && fact.value === true));
+
+  const annexIListedProfile = structuredClone(annexITrapProfile);
+  annexIListedProfile.annex_i.annex_i_legislation = [
+    profileFact("fact.annex-i.machinery", "Regulation (EU) 2023/1230 on machinery"),
+  ];
+  const annexIListed = structured(await callTool("euaiact_assess_system", annexIListedProfile));
+  test("FIX-RUN2 F3: a listed instrument, including the M1 machinery entry, still grounds the route",
+    annexIListed.legal_classification.routes.some((route) => route.route === "high_risk") &&
+    annexIListed.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 6(1) and Annex I")));
+
+  const annexIVagueProfile = structuredClone(annexITrapProfile);
+  annexIVagueProfile.annex_i.annex_i_legislation = [
+    profileFact("fact.annex-i.vague", "the applicable European cosmetics harmonisation framework"),
+  ];
+  const annexIVague = structured(await callTool("euaiact_assess_system", annexIVagueProfile));
+  test("FIX-RUN2 F3: an unidentifiable instrument name fails closed with a decisive missing fact",
+    annexIVague.status === "undetermined" &&
+    annexIVague.legal_classification.routes.length === 0 &&
+    annexIVague.missing_facts.some((fact) =>
+      fact.missing_fact_id === "missing.annex-i.instrument-identity" &&
+      fact.profile_path === "/annex_i/annex_i_legislation" &&
+      fact.decisive === true));
+
   const freeTextOnly = await runAssessment("free-text-only.json");
   test("assess: unverified free text cannot satisfy a decisive predicate",
     freeTextOnly.status === "undetermined" &&

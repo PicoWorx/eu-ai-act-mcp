@@ -447,6 +447,97 @@ check("A-GROUND", "served",
   !SERVER_BUNDLE.includes("fetch the text and EUR-Lex URL") &&
   README.includes("verify definitive wording in the official source before quoting"));
 
+// ── Run-2 adjudicated fixes (blind run 2, ADJUDICATION-2-RUN2) ───────────────
+
+const ANNEXI = sliceBetween("ANNEX I List of Union harmonisation legislation", "ANNEX II");
+const { ANNEX_I_INSTRUMENTS, matchAnnexIInstrument, assessAnnexIListing } =
+  await import("./dist/decision-contract/annex-i-instruments.js");
+
+check("R2-F3a Art. 6(1)(a) conditions the Annex I route on the listed acts", "law",
+  inLaw("covered by the Union harmonisation legislation listed in Annex I") &&
+  inLaw("that AI system shall be considered to be high-risk where both of the following conditions are fulfilled"));
+check("R2-F3a", "served",
+  ASSESSMENT_BUNDLE.includes("Union harmonisation legislation listed in Annex I") &&
+  ASSESSMENT_BUNDLE.includes("finding.legal.high-risk.annex-i.not-listed.001"));
+
+check("R2-F3b every pinned instrument sits at its Annex I point in the corpus", "law",
+  ANNEXI.length > 0 &&
+  ANNEX_I_INSTRUMENTS.every((item) => ANNEXI.includes(`${item.annex_point}. ${item.citation}`)));
+check("R2-F3b", "served",
+  ANNEX_I_INSTRUMENTS.length === 20 &&
+  ANNEX_I_INSTRUMENTS.map((item) => item.annex_point).join(",") ===
+    "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21" &&
+  matchAnnexIInstrument("Regulation (EU) 2017/745").entry?.annex_point === 11 &&
+  matchAnnexIInstrument("32017R0745").entry?.annex_point === 11);
+
+check("R2-F3c Annex I Section A point 1 is deleted by M1", "law", (() => {
+  const sectionAHead = sliceBetween(
+    "based on the New Legislative Framework",
+    "2. Directive 2009/48/EC",
+    ANNEXI,
+  );
+  return sectionAHead.length > 0 && !/\d\.\s+(Directive|Regulation)/.test(sectionAHead);
+})());
+check("R2-F3c", "served",
+  !ANNEX_I_INSTRUMENTS.some((item) => item.annex_point === 1));
+
+check("R2-F3d 1223/2009 appears once in the act, only inside the point 11 title", "law",
+  CONSOLIDATED.split("1223/2009").length === 2 &&
+  nearAnchor(ANNEXI, "Regulation (EU) 2017/745", "1223/2009", 300));
+check("R2-F3d", "served",
+  matchAnnexIInstrument("Regulation (EC) No 1223/2009 on cosmetic products").status === "not_listed" &&
+  matchAnnexIInstrument("Directive 2001/83/EC").status === "not_listed" &&
+  assessAnnexIListing(["Regulation (EC) No 1223/2009 on cosmetic products"]).refuted === true &&
+  assessAnnexIListing(["Regulation (EU) 2017/745"]).refuted === false);
+
+check("R2-F3e machinery Regulation (EU) 2023/1230 is Annex I point 21 (M1)", "law",
+  ANNEXI.includes("21. Regulation (EU) 2023/1230") &&
+  nearAnchor(ANNEXI, "21. Regulation (EU) 2023/1230", "on machinery", 200));
+check("R2-F3e", "served",
+  matchAnnexIInstrument("Regulation (EU) 2023/1230 on machinery").entry?.annex_point === 21);
+
+check("R2-F3f a refuted listing yields the negative Article 6(1) boundary at the regime date", "law",
+  inLaw("2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1)"));
+check("R2-F3f", "served", await (async () => {
+  const { assessSystem } = await import("./dist/decision-contract/assess-system.js");
+  const fact = (fact_id, value) => ({
+    fact_id,
+    value,
+    origin: "explicit_structured_input",
+    verification: "caller_asserted",
+    evidence_reference_ids: [],
+  });
+  const out = await assessSystem({
+    profile_version: "1.0",
+    intended_use: {
+      intended_purpose: fact("fact.purpose", "Recommend cosmetic shade formulations to laboratory technicians"),
+      reasonably_foreseeable_uses: [],
+    },
+    role_facts: { roles: [fact("fact.role.provider", "provider")] },
+    geography: {
+      jurisdictions: [fact("fact.geo.eu", "EU")],
+      used_in_eu: fact("fact.geo.used", true),
+      affected_person_groups: [fact("fact.geo.group", "Cosmetics consumers")],
+    },
+    decision_context: { decision_consequence: fact("fact.decision", "Suggestions reviewed by laboratory staff") },
+    annex_i: {
+      product_or_safety_component: fact("fact.annex-i.product", true),
+      annex_i_legislation: [
+        fact("fact.annex-i.cosmetics", "Regulation (EC) No 1223/2009 on cosmetic products"),
+      ],
+      third_party_conformity_assessment_required: fact("fact.annex-i.conformity", true),
+    },
+  });
+  return out.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    out.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 6(1)" && item.operative_date === "2028-08-02")) &&
+    !out.findings.some((finding) =>
+      finding.determination === "applies" &&
+      finding.provenance.some((item) => item.exact_provision.includes("Article 6(1)")));
+})());
+
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log(`\nCLAIM MATRIX RESULTS: ${pass} passed, ${fail} failed out of ${pass + fail} checks`);
 if (fail > 0) process.exit(1);

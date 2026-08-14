@@ -1,5 +1,6 @@
 import { SERVER_VERSION } from "../constants.js";
 import type { ClassifyOutput } from "../schemas/classify.js";
+import { assessAnnexIListing } from "./annex-i-instruments.js";
 import {
   invokeArt6Exception,
   invokeClassifier,
@@ -476,15 +477,41 @@ async function assessLegalClassification(
       hasStandardEditingExclusion
   );
 
+  const annexILegislationFacts = factsUnder(
+    context.normalized,
+    "/annex_i/annex_i_legislation",
+  );
+  const annexIListing = assessAnnexIListing(
+    annexILegislationFacts.map((fact) => String(fact.value)),
+  );
+  // Article 6(1), point (a), conditions the Annex I route on coverage by the
+  // Union harmonisation legislation listed in Annex I. List membership is
+  // decided against the pinned closed list by instrument identity, never by
+  // keyword or substring presence in Annex I text. When every caller-cited
+  // instrument is outside the list, the asserted listing is refuted and
+  // Article 6(1) fails on point (a) independently of the point (b) fact.
+  const annexIListingRefuted = annexILegislationFacts.length > 0 && annexIListing.refuted;
   if (profile.annex_i?.product_or_safety_component?.value === true) {
     const conformity = profile.annex_i.third_party_conformity_assessment_required;
-    if (!conformity) {
+    if (!conformity && !annexIListingRefuted) {
       addMissing(context, {
         missing_fact_id: "missing.annex-i.third-party-conformity",
         profile_path: "/annex_i/third_party_conformity_assessment_required",
         question:
           "Does the applicable Annex I product law require third-party conformity assessment?",
         reason: "Article 6(1) requires this fact in addition to Annex I product coverage.",
+        decisive: true,
+        affected_blocks: ["legal_classification", "implementation_readiness"],
+      });
+    }
+    if (annexILegislationFacts.length > 0 && !annexIListing.any_citation) {
+      addMissing(context, {
+        missing_fact_id: "missing.annex-i.instrument-identity",
+        profile_path: "/annex_i/annex_i_legislation",
+        question:
+          "Which Union harmonisation instrument listed in Annex I covers the product? Supply its exact citation, for example Regulation (EU) 2017/745, or its CELEX number.",
+        reason:
+          "Article 6(1), point (a), requires coverage by the Union harmonisation legislation listed in Annex I. The supplied legislation name does not identify an instrument, so list membership cannot be verified against the pinned corpus.",
         decisive: true,
         affected_blocks: ["legal_classification", "implementation_readiness"],
       });
@@ -605,6 +632,13 @@ async function assessLegalClassification(
   }
 
   const classifierInput = buildClassifierInput(profile, context.actors);
+  if (annexIListingRefuted) {
+    // The asserted Annex I coverage is refuted against the pinned list, so the
+    // annex_i signals must not reach the classifier as grounds for the
+    // Article 6(1) route. Every other supplied predicate routes normally.
+    classifierInput.signals.is_safety_component_of_regulated_product = undefined;
+    classifierInput.signals.requires_third_party_conformity_assessment = undefined;
+  }
   const classification = await invokeClassifier(classifierInput);
   const highRiskProbe = await invokeClassifier({
     description: profile.annex_iii?.purpose?.value,
@@ -987,6 +1021,35 @@ async function assessLegalClassification(
         "A prohibited-practice route requires legal review, including any narrow statutory exception and its application date.",
       finding_ids: sortStrings(prohibitedFindingIds),
     });
+  }
+
+  if (
+    annexIListingRefuted &&
+    profile.annex_i?.product_or_safety_component?.value === true
+  ) {
+    const findingId = "finding.legal.high-risk.annex-i.not-listed.001";
+    addFinding(context, {
+      finding_id: findingId,
+      finding_basis: "legal_proposition",
+      block: "legal_classification",
+      summary:
+        "Article 6(1) does not apply. Article 6(1), point (a), conditions the high-risk route on coverage by the Union harmonisation legislation listed in Annex I, and no caller-cited instrument is among the listed acts of the pinned Annex I, Section A, points 2 to 12, or Section B, points 13 to 21. An instrument whose number appears only inside another listed entry's title is not listed. The caller-asserted Annex I facts are retained with caller_asserted verification.",
+      scope: {
+        actors: context.actors,
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: sortStrings([
+        ...factsUnder(context.normalized, "/annex_i").map((fact) => fact.fact_id),
+        ...scopeFactIds(context.normalized),
+      ]),
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [provenance("Article 6(1)", "2028-08-02", "art_6")],
+      determination: "does_not_apply",
+    });
+    boundaryNegativeFindingIds.push(findingId);
+    legalFindingIds.push(findingId);
   }
 
   if (highRiskClassification) {
