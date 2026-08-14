@@ -1454,12 +1454,17 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     baLegal.some((finding) =>
       finding.determination === "does_not_apply" &&
       finding.provenance.some((item) => item.exact_provision === "Article 5(1b)")) &&
-    baLegal.filter((finding) =>
-      finding.provenance.some((item) => item.exact_provision === "Article 50(2)"))
-      .every((finding) => finding.scope.actors.join(",") === "provider") &&
-    baLegal.filter((finding) =>
-      finding.provenance.some((item) => item.exact_provision === "Article 50(4)"))
-      .every((finding) => finding.scope.actors.join(",") === "deployer"));
+    baLegal
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision.startsWith("Article 50")))
+      .map((finding) => `${finding.scope.actors.join(",")}:${finding.provenance[0].exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Article 50(4),provider:Article 50(2)" &&
+    ba.implementation_readiness.applicable_duties
+      .filter((duty) => duty.exact_provision.startsWith("Art. 50"))
+      .map((duty) => `${duty.actor_roles.join(",")}:${duty.exact_provision}`)
+      .sort()
+      .join(",") === "deployer:Art. 50(4),provider:Art. 50(2)" &&
+    ba.legal_classification.limitations.some((limitation) => limitation.includes("Article 111(4)")));
 
   const bbProfile = loadProfile("transparency-deepfake.json");
   bbProfile.transparency.deep_fake_content.value = false;
@@ -1485,13 +1490,38 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
   test("MIGRATION-002 holdout.04: bb is fail-closed and requires human review for caller-asserted defence",
     bb.status === "human_review_required" &&
     bb.legal_classification.status === "human_review_required" &&
-    bb.legal_classification.routes.some((route) => route.route === "prohibited") &&
+    bb.legal_classification.routes.some((route) =>
+      route.route === "prohibited" &&
+      route.actor_roles.join(",") === "deployer,provider") &&
     bbLegalProvisions.includes("Article 5(1)(bb)") &&
+    bbLegalProvisions.includes("Article 5(1a)(a)(i)") &&
+    bbLegalProvisions.includes("Article 5(1a)(b)") &&
     !bbLegalProvisions.includes("Article 5(1b)") &&
+    bb.findings
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision === "Article 5(1)(bb)"))
+      .every((finding) => finding.provenance.every((item) => item.operative_date === "2026-12-02")) &&
+    bb.findings
+      .filter((finding) => finding.provenance.some((item) => item.exact_provision.startsWith("Article 50")))
+      .map((finding) => `${finding.scope.actors.join(",")}:${finding.provenance[0].exact_provision}`)
+      .join(",") === "provider:Article 50(2)" &&
     bb.facts_used.some((fact) =>
       fact.fact_id === "fact.article5.bb.without-right-defence" &&
       fact.verification === "caller_asserted") &&
     bb.warnings.some((warning) => warning.code === "LEGAL_REVIEW_REQUIRED"));
+
+  const assertedBbDefenceProfile = structuredClone(bbProfile);
+  assertedBbDefenceProfile.article_5_prohibitions
+    .bb_without_right_defence_applies_under_national_law.value = true;
+  const assertedBbDefence = structured(
+    await callTool("euaiact_assess_system", assertedBbDefenceProfile),
+  );
+  test("MIGRATION-002 policy P1: caller-asserted bb defence never removes the prohibition route",
+    assertedBbDefence.status === "human_review_required" &&
+    assertedBbDefence.legal_classification.routes.some((route) => route.route === "prohibited") &&
+    assertedBbDefence.facts_used.some((fact) =>
+      fact.fact_id === "fact.article5.bb.without-right-defence" &&
+      fact.value === true &&
+      fact.verification === "caller_asserted"));
 
   const standardEditProfile = loadProfile("minimal-complete.json");
   standardEditProfile.article_5_prohibitions = {
@@ -1535,7 +1565,24 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
     gpai.implementation_readiness.applicable_duties.some((duty) =>
       duty.exact_provision.startsWith("Article 53")) &&
     gpai.implementation_readiness.applicable_duties.some((duty) =>
-      duty.exact_provision.startsWith("Article 55")));
+      duty.exact_provision.startsWith("Article 55")) &&
+    !gpai.implementation_readiness.applicable_duties.some((duty) =>
+      /^(?:Article|Art\.) 54/.test(duty.exact_provision)));
+
+  const gpaiBoundaryProfile = loadProfile("gpai-systemic.json");
+  gpaiBoundaryProfile.gpai.training_flops.value = 1e25;
+  const gpaiBoundary = structured(
+    await callTool("euaiact_assess_system", gpaiBoundaryProfile),
+  );
+  const gpaiBoundaryProvisions = gpaiBoundary.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.08: exact 1e25 boundary triggers Article 51 and 52 end to end",
+    gpaiBoundary.status === "determined" &&
+    ["Article 51(1)(a)", "Article 51(2)", "Article 52(1)", "Article 52(2)"]
+      .every((provision) => gpaiBoundaryProvisions.includes(provision)) &&
+    gpaiBoundary.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision === "Article 52(1)"));
 
   const explicitNonEuProfile = loadProfile("minimal-complete.json");
   explicitNonEuProfile.geography.jurisdictions[0].value = "Canada";

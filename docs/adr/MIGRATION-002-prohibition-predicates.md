@@ -119,6 +119,26 @@ The migration covers these dependent surfaces:
 - Verification: canonical verifier now reproduces Day 3, while package, schema, compiler, corpus, determinism, and clean-install gates remain in force.
 - Generated distribution: compiled JavaScript, declarations, and source maps under `dist/`.
 
+## Golden change ledger
+
+Every response golden was regenerated because `contract_version` is part of the canonical response. The only content changes beyond that version field are identified explicitly below.
+
+| Golden | Legitimate reason for change |
+|---|---|
+| `tests/golden/annex-i-high-risk.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/contract-high-risk.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/contract-not-applicable.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/contract-sparse.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/free-text-only.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/gpai-systemic.json` | Contract version, express Article 51(1)(a) and Article 52 provenance, Article 52(1) readiness, canonical `Article` labels, and the adjudicated at-or-above threshold summary |
+| `tests/golden/high-risk-low-impact-controlled.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/high-risk-plus-transparency.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/minimal-complete.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/prohibited-social-scoring.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/transparency-chatbot.json` | Contract version 1.1 to 1.2 only |
+| `tests/golden/transparency-deepfake.json` | Contract version, provider-only Article 50(2) scope, deployer-only Article 50(4) scope, and the unresolved Article 111(4) transition limitation |
+| `tests/golden/hashes.json` | Canonical hashes and byte counts regenerated for the twelve response changes listed above |
+
 ## Public-eval change ledger
 
 | Surface | Change | Reason |
