@@ -292,6 +292,7 @@ function legalSignalFactIds(normalized: NormalizedProfile): string[] {
     "/annex_i",
     "/annex_iii",
     "/biometric_and_practices",
+    "/article_5_prohibitions",
     "/transparency",
     "/gpai",
   ];
@@ -325,6 +326,7 @@ interface LegalResult {
   high_risk_source?: "annex_i" | "annex_iii";
   annex_iii_point?: number;
   gpai_systemic_risk?: boolean;
+  impact_outside_regulation?: boolean;
 }
 
 async function assessLegalClassification(
@@ -382,6 +384,56 @@ async function assessLegalClassification(
     geography?.placed_on_eu_market?.value === true ||
     geography?.used_in_eu?.value === true ||
     geography?.output_used_in_eu?.value === true;
+  const explicitNegativeEUNexus =
+    jurisdictionFacts.length > 0 &&
+    factsUnder(context.normalized, "/role_facts/roles").length > 0 &&
+    geography?.placed_on_eu_market?.value === false &&
+    geography?.used_in_eu?.value === false &&
+    geography?.output_used_in_eu?.value === false;
+  if (!hasEUNexus && explicitNegativeEUNexus) {
+    const nexusFacts = [
+      factAt(context.normalized, "/geography/placed_on_eu_market"),
+      factAt(context.normalized, "/geography/used_in_eu"),
+      factAt(context.normalized, "/geography/output_used_in_eu"),
+    ].filter((fact): fact is FactUsed => Boolean(fact));
+    const findingId = "finding.legal.territorial-scope.article-2.001";
+    addFinding(context, {
+      finding_id: findingId,
+      finding_basis: "legal_proposition",
+      block: "legal_classification",
+      summary:
+        "All supplied Article 2(1) nexus predicates are expressly false. The Regulation does not apply to the described non-Union deployment.",
+      scope: {
+        actors: context.actors,
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: sortStrings([
+        ...nexusFacts.map((fact) => fact.fact_id),
+        ...scopeFactIds(context.normalized),
+      ]),
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [provenance("Article 2(1)", "2026-08-02", "art_2")],
+      determination: "not_applicable",
+    });
+    return {
+      classification: null,
+      route_fact_ids: nexusFacts.map((fact) => fact.fact_id),
+      impact_outside_regulation: true,
+      block: {
+        schema_version: "1.0",
+        status: "not_applicable",
+        routes: [],
+        annex_iii_categories: [],
+        actor_roles: context.actors,
+        finding_ids: [findingId],
+        limitations: [
+          "This non-applicability result is bounded to the supplied Article 2(1) nexus facts and described deployment.",
+        ],
+      },
+    };
+  }
   if (!hasEUNexus) {
     addMissing(context, {
       missing_fact_id: "missing.legal.jurisdiction",
@@ -395,6 +447,11 @@ async function assessLegalClassification(
 
   const purposeFacts = intendedPurposeFacts(context.normalized);
   const practices = profile.biometric_and_practices;
+  const article5 = profile.article_5_prohibitions;
+  const hasArticle5StructuredContext = article5 !== undefined;
+  const hasStandardEditingExclusion =
+    profile.transparency?.standard_editing_assistive_function?.value === true &&
+    profile.transparency?.substantially_alters_input_or_semantics?.value === false;
   const directPositive = Boolean(
     practices?.social_scoring?.value ||
       practices?.emotion_recognition_workplace_or_education?.value ||
@@ -414,7 +471,9 @@ async function assessLegalClassification(
       profile.transparency?.public_interest_text?.value ||
       practices?.emotion_recognition?.value ||
       practices?.biometric_categorisation?.value ||
-      profile.gpai?.is_gpai_model?.value
+      profile.gpai?.is_gpai_model?.value ||
+      hasArticle5StructuredContext ||
+      hasStandardEditingExclusion
   );
 
   if (profile.annex_i?.product_or_safety_component?.value === true) {
@@ -587,8 +646,284 @@ async function assessLegalClassification(
   let highRiskSource: LegalResult["high_risk_source"];
   let annexPoint: number | undefined;
   const legalLimitations: string[] = [];
+  const boundaryNegativeFindingIds: string[] = [];
+  let requiresHumanReview = false;
 
-  if (classification.risk_classification === "prohibited") {
+  const article5Facts = factsUnder(context.normalized, "/article_5_prohibitions");
+  const operation = profile.article_5_prohibitions?.operation;
+  const providerIntended =
+    profile.article_5_prohibitions
+      ?.provider_generation_or_manipulation_is_intended_purpose;
+  const providerForeseeable =
+    profile.article_5_prohibitions
+      ?.provider_foreseeable_and_reproducible_outcome_without_significant_modification;
+  const providerSafeguards =
+    profile.article_5_prohibitions
+      ?.provider_reasonable_and_adequate_safeguards_present;
+  const deployerPurpose =
+    profile.article_5_prohibitions
+      ?.deployer_uses_for_generation_or_manipulation_purpose;
+  const providerTrigger =
+    providerIntended?.value === true ||
+    (providerForeseeable?.value === true && providerSafeguards?.value === false);
+  const providerTriggerProvision = providerIntended?.value === true
+    ? "Article 5(1a)(a)(i)"
+    : "Article 5(1a)(a)(ii)";
+
+  const baMaterial =
+    profile.article_5_prohibitions
+      ?.ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person;
+  const baConsent = profile.article_5_prohibitions?.ba_required_consent_present;
+  const baIncreasesExposure =
+    profile.article_5_prohibitions?.ba_manipulation_increases_intimate_exposure;
+  const baAltersActivity =
+    profile.article_5_prohibitions?.ba_manipulation_alters_sexually_explicit_activity;
+  const baExclusionApplies =
+    operation?.value === "manipulation" &&
+    baIncreasesExposure?.value === false &&
+    baAltersActivity?.value === false;
+  const baConditionsMet =
+    baMaterial?.value === true &&
+    baConsent?.value === false &&
+    operation !== undefined &&
+    !baExclusionApplies;
+
+  if (operation?.value === "manipulation" && baExclusionApplies) {
+    const findingId = "finding.legal.article-5.ba.excluded-by-1b.001";
+    addFinding(context, {
+      finding_id: findingId,
+      finding_basis: "legal_proposition",
+      block: "legal_classification",
+      summary:
+        "Article 5(1b) applies as an editing exclusion, so Article 5(1)(ba) does not apply to this manipulation.",
+      scope: {
+        actors: context.actors,
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: sortStrings([
+        operation.fact_id,
+        baIncreasesExposure.fact_id,
+        baAltersActivity.fact_id,
+        ...scopeFactIds(context.normalized),
+      ]),
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [
+        provenance("Article 5(1)(ba)", "2026-12-02", "art_5"),
+        provenance("Article 5(1b)", "2026-12-02", "art_5"),
+      ],
+      determination: "does_not_apply",
+    });
+    boundaryNegativeFindingIds.push(findingId);
+    legalFindingIds.push(findingId);
+  } else if (baConditionsMet) {
+    const qualifierFindingId = "finding.legal.article-5.ba.qualifier-1b.001";
+    const qualifierFactIds = sortStrings([
+      operation.fact_id,
+      ...(baIncreasesExposure ? [baIncreasesExposure.fact_id] : []),
+      ...(baAltersActivity ? [baAltersActivity.fact_id] : []),
+      ...scopeFactIds(context.normalized),
+    ]);
+    addFinding(context, {
+      finding_id: qualifierFindingId,
+      finding_basis: "legal_proposition",
+      block: "legal_classification",
+      summary: operation.value === "generation"
+        ? "Article 5(1b) does not exclude generation because it is limited to qualifying manipulation under point (ba)."
+        : "Article 5(1b) does not exclude this manipulation because it increases intimate exposure or alters the nature of sexually explicit activity.",
+      scope: {
+        actors: context.actors,
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: qualifierFactIds,
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [provenance("Article 5(1b)", "2026-12-02", "art_5")],
+      determination: "does_not_apply",
+    });
+    legalFindingIds.push(qualifierFindingId);
+
+    const baFindingIds: string[] = [];
+    const baActors: ActorRole[] = [];
+    if (context.actors.includes("provider") && providerTrigger) {
+      const findingId = "finding.legal.article-5.ba.provider.001";
+      addFinding(context, {
+        finding_id: findingId,
+        finding_basis: "legal_proposition",
+        block: "legal_classification",
+        summary:
+          "The supplied conditions meet the provider-side Article 5(1)(ba) boundary. The prohibition applies prospectively from 2 December 2026.",
+        scope: {
+          actors: ["provider"],
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([
+          ...article5Facts.map((fact) => fact.fact_id),
+          ...roleFactsFor(context, "provider"),
+          ...factsUnder(context.normalized, "/geography/jurisdictions").map(
+            (fact) => fact.fact_id,
+          ),
+        ]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: [
+          provenance("Article 5(1)(ba)", "2026-12-02", "art_5"),
+          provenance(providerTriggerProvision, "2026-12-02", "art_5"),
+        ],
+        determination: "applies",
+      });
+      baFindingIds.push(findingId);
+      baActors.push("provider");
+      legalFindingIds.push(findingId);
+    }
+    if (context.actors.includes("deployer") && deployerPurpose?.value === true) {
+      const findingId = "finding.legal.article-5.ba.deployer.001";
+      addFinding(context, {
+        finding_id: findingId,
+        finding_basis: "legal_proposition",
+        block: "legal_classification",
+        summary:
+          "The supplied conditions meet the deployer-side Article 5(1)(ba) purpose boundary. The prohibition applies prospectively from 2 December 2026.",
+        scope: {
+          actors: ["deployer"],
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([
+          ...article5Facts.map((fact) => fact.fact_id),
+          ...roleFactsFor(context, "deployer"),
+          ...factsUnder(context.normalized, "/geography/jurisdictions").map(
+            (fact) => fact.fact_id,
+          ),
+        ]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: [
+          provenance("Article 5(1)(ba)", "2026-12-02", "art_5"),
+          provenance("Article 5(1a)(b)", "2026-12-02", "art_5"),
+        ],
+        determination: "applies",
+      });
+      baFindingIds.push(findingId);
+      baActors.push("deployer");
+      legalFindingIds.push(findingId);
+    }
+    if (baFindingIds.length > 0) {
+      routes.push({
+        route: "prohibited",
+        finding_ids: baFindingIds,
+        actor_roles: baActors,
+      });
+    }
+  }
+
+  const bbCategory = profile.article_5_prohibitions?.bb_directive_2011_93_category;
+  const bbDefence =
+    profile.article_5_prohibitions
+      ?.bb_without_right_defence_applies_under_national_law;
+  const bbCovered =
+    operation !== undefined &&
+    bbCategory !== undefined &&
+    bbCategory.value !== "none" &&
+    bbCategory.value !== "unknown";
+  const callerAssertedDefence =
+    bbDefence?.verification === "caller_asserted";
+  if (bbCovered) {
+    const bbFindingIds: string[] = [];
+    const bbActors: ActorRole[] = [];
+    if (context.actors.includes("provider") && providerTrigger) {
+      const findingId = "finding.legal.article-5.bb.provider.001";
+      addFinding(context, {
+        finding_id: findingId,
+        finding_basis: "legal_proposition",
+        block: "legal_classification",
+        summary:
+          "The supplied conditions meet the provider-side Article 5(1)(bb) boundary. The prohibition applies prospectively from 2 December 2026.",
+        scope: {
+          actors: ["provider"],
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([
+          ...article5Facts.map((fact) => fact.fact_id),
+          ...roleFactsFor(context, "provider"),
+          ...factsUnder(context.normalized, "/geography/jurisdictions").map(
+            (fact) => fact.fact_id,
+          ),
+        ]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: [
+          provenance("Article 5(1)(bb)", "2026-12-02", "art_5"),
+          provenance(providerTriggerProvision, "2026-12-02", "art_5"),
+        ],
+        determination: "applies",
+      });
+      bbFindingIds.push(findingId);
+      bbActors.push("provider");
+      legalFindingIds.push(findingId);
+    }
+    if (context.actors.includes("deployer") && deployerPurpose?.value === true) {
+      const findingId = "finding.legal.article-5.bb.deployer.001";
+      addFinding(context, {
+        finding_id: findingId,
+        finding_basis: "legal_proposition",
+        block: "legal_classification",
+        summary:
+          "The supplied conditions meet the deployer-side Article 5(1)(bb) purpose boundary. The prohibition applies prospectively from 2 December 2026.",
+        scope: {
+          actors: ["deployer"],
+          jurisdictions: context.jurisdictions,
+          system_scope: context.scope,
+        },
+        fact_ids: sortStrings([
+          ...article5Facts.map((fact) => fact.fact_id),
+          ...roleFactsFor(context, "deployer"),
+          ...factsUnder(context.normalized, "/geography/jurisdictions").map(
+            (fact) => fact.fact_id,
+          ),
+        ]),
+        assumption_ids: [],
+        missing_fact_ids: [],
+        provenance: [
+          provenance("Article 5(1)(bb)", "2026-12-02", "art_5"),
+          provenance("Article 5(1a)(b)", "2026-12-02", "art_5"),
+        ],
+        determination: "applies",
+      });
+      bbFindingIds.push(findingId);
+      bbActors.push("deployer");
+      legalFindingIds.push(findingId);
+    }
+    if (bbFindingIds.length > 0) {
+      routes.push({
+        route: "prohibited",
+        finding_ids: bbFindingIds,
+        actor_roles: bbActors,
+      });
+      requiresHumanReview = true;
+      context.warnings.push({
+        warning_id: "warning.legal-review.article-5-bb-national-law.001",
+        code: "LEGAL_REVIEW_REQUIRED",
+        message: callerAssertedDefence
+          ? "A caller assertion about the national-law without-right defence cannot remove the Article 5(1)(bb) prohibition route. Human review of the applicable national law is required."
+          : "The Article 5(1)(bb) national-law without-right defence requires human review and cannot be resolved by this corpus.",
+        finding_ids: bbFindingIds,
+      });
+    }
+  }
+
+  if (
+    classification.risk_classification === "prohibited" &&
+    !routes.some((route) => route.route === "prohibited") &&
+    !(
+      profile.article_5_prohibitions !== undefined &&
+      classification.relevant_articles.some((article) => /\(ba\)|\(bb\)/.test(article))
+    )
+  ) {
     const factIds = sortStrings([
       ...positiveFactIds(context.normalized, [
         "/biometric_and_practices",
@@ -633,6 +968,24 @@ async function assessLegalClassification(
       tool_name: "euaiact_get_article",
       reason: "Review the operational Article 5 summary and verify the official provision.",
       input_fact_ids: factIds,
+    });
+  }
+
+  if (
+    routes.some((route) => route.route === "prohibited") &&
+    !context.warnings.some(
+      (warning) => warning.warning_id === "warning.legal-review.prohibited.001",
+    )
+  ) {
+    const prohibitedFindingIds = routes
+      .filter((route) => route.route === "prohibited")
+      .flatMap((route) => route.finding_ids);
+    context.warnings.push({
+      warning_id: "warning.legal-review.prohibited.001",
+      code: "LEGAL_REVIEW_REQUIRED",
+      message:
+        "A prohibited-practice route requires legal review, including any narrow statutory exception and its application date.",
+      finding_ids: sortStrings(prohibitedFindingIds),
     });
   }
 
@@ -728,46 +1081,97 @@ async function assessLegalClassification(
     }
   }
 
+  const standardEditingFact = factAt(
+    context.normalized,
+    "/transparency/standard_editing_assistive_function",
+  );
+  const substantialAlterationFact = factAt(
+    context.normalized,
+    "/transparency/substantially_alters_input_or_semantics",
+  );
+  if (
+    standardEditingFact?.value === true &&
+    substantialAlterationFact?.value === false
+  ) {
+    const findingId = "finding.legal.transparency.article-50-2.standard-editing.001";
+    addFinding(context, {
+      finding_id: findingId,
+      finding_basis: "legal_proposition",
+      block: "legal_classification",
+      summary:
+        "Article 50(2) does not apply because the supplied facts establish an assistive standard-editing function that does not substantially alter the input or its semantics.",
+      scope: {
+        actors: context.actors.includes("provider") ? ["provider"] : context.actors,
+        jurisdictions: context.jurisdictions,
+        system_scope: context.scope,
+      },
+      fact_ids: sortStrings([
+        standardEditingFact.fact_id,
+        substantialAlterationFact.fact_id,
+        ...scopeFactIds(context.normalized),
+      ]),
+      assumption_ids: [],
+      missing_fact_ids: [],
+      provenance: [provenance("Article 50(2)", "2026-08-02", "art_50")],
+      determination: "does_not_apply",
+    });
+    boundaryNegativeFindingIds.push(findingId);
+    legalFindingIds.push(findingId);
+  }
+
   const transparencyFindingIds: string[] = [];
+  const transparencyActors = new Set<ActorRole>();
   const transparencyFacts: Array<{
     path: string;
     provision: string;
     summary: string;
+    actor: "provider" | "deployer";
   }> = [
     {
       path: "/transparency/interacts_with_natural_persons",
       provision: "Article 50(1)",
       summary: "Direct interaction with natural persons triggers the Article 50(1) route.",
+      actor: "provider",
     },
     {
       path: "/transparency/generates_or_manipulates_synthetic_content",
       provision: "Article 50(2)",
       summary: "Synthetic content generation triggers the Article 50(2) marking route.",
+      actor: "provider",
     },
     {
       path: "/transparency/deep_fake_content",
       provision: "Article 50(4)",
       summary: "Deep-fake content triggers the Article 50(4) disclosure route.",
+      actor: "deployer",
     },
     {
       path: "/transparency/public_interest_text",
       provision: "Article 50(4)",
       summary: "Public-interest synthetic text triggers the Article 50(4) disclosure route.",
+      actor: "deployer",
     },
     {
       path: "/biometric_and_practices/emotion_recognition",
       provision: "Article 50(3)",
       summary: "Emotion recognition triggers the Article 50(3) information route.",
+      actor: "deployer",
     },
     {
       path: "/biometric_and_practices/biometric_categorisation",
       provision: "Article 50(3)",
       summary: "Biometric categorisation triggers the Article 50(3) information route.",
+      actor: "deployer",
     },
   ];
   for (const trigger of transparencyFacts) {
     const fact = factAt(context.normalized, trigger.path);
-    if (fact?.value !== true) continue;
+    if (
+      fact?.value !== true ||
+      (trigger.provision === "Article 50(2)" &&
+        standardEditingFact?.value === true &&
+        substantialAlterationFact?.value === false)
+    ) continue;
     const findingId = `finding.legal.transparency.${slug(trigger.provision)}.${slug(
       fact.fact_id,
     )}`;
@@ -777,7 +1181,7 @@ async function assessLegalClassification(
       block: "legal_classification",
       summary: trigger.summary,
       scope: {
-        actors: context.actors,
+        actors: [trigger.actor],
         jurisdictions: context.jurisdictions,
         system_scope: context.scope,
       },
@@ -788,13 +1192,19 @@ async function assessLegalClassification(
       determination: "applies",
     });
     transparencyFindingIds.push(findingId);
+    transparencyActors.add(trigger.actor);
     legalFindingIds.push(findingId);
+    if (trigger.provision === "Article 50(2)") {
+      legalLimitations.push(
+        "The profile does not establish whether Article 111(4) moves the provider's Article 50(2) compliance deadline to 2 December 2026 for a system placed on the market before 2 August 2026.",
+      );
+    }
   }
   if (transparencyFindingIds.length > 0) {
     routes.push({
       route: "transparency_duty",
       finding_ids: transparencyFindingIds,
-      actor_roles: context.actors,
+      actor_roles: [...transparencyActors],
     });
     addRecommendation(context, {
       tool_name: "euaiact_get_obligations",
@@ -850,7 +1260,7 @@ async function assessLegalClassification(
         finding_basis: "legal_proposition",
         block: "legal_classification",
         summary: thresholdBasis
-          ? "Training compute above 10^25 FLOPs creates the Article 51(2) presumption of high-impact capabilities. Classification remains subject to the Article 52 procedure, including the provider's exceptional substantiated rebuttal route and the Commission's decision."
+          ? "Training compute at or above the adjudicated 10^25 FLOPs product boundary creates the Article 51(2) presumption route. Classification remains subject to the Article 52 procedure, including the provider's exceptional substantiated rebuttal route and the Commission's decision."
           : "The supplied fact records a Commission designation of the model as a GPAI model with systemic risk under Article 51(1)(b).",
         scope: {
           actors: context.actors,
@@ -862,7 +1272,9 @@ async function assessLegalClassification(
         missing_fact_ids: [],
         provenance: thresholdBasis
           ? [
+              provenance("Article 51(1)(a)", "2025-08-02", "art_51"),
               provenance("Article 51(2)", "2025-08-02", "art_51"),
+              provenance("Article 52(1)", "2025-08-02", "art_52"),
               provenance("Article 52(2)", "2025-08-02", "art_52"),
             ]
           : [provenance("Article 51(1)(b)", "2025-08-02", "art_51")],
@@ -876,6 +1288,21 @@ async function assessLegalClassification(
       tool_name: "euaiact_check_gpai_systemic_risk",
       reason: "Assess the separate GPAI systemic-risk route from compute or designation facts.",
       input_fact_ids: factsUnder(context.normalized, "/gpai").map((fact) => fact.fact_id),
+    });
+  }
+
+  if (routes.length === 0 && boundaryNegativeFindingIds.length > 0) {
+    routes.push({
+      route: "minimal",
+      finding_ids: sortStrings(boundaryNegativeFindingIds),
+      actor_roles: context.actors,
+    });
+    context.warnings.push({
+      warning_id: "warning.legal-review.negative-boundary.001",
+      code: "LEGAL_REVIEW_REQUIRED",
+      message:
+        "The minimal route rests on express statutory exclusions and remains bounded to the supplied negative facts.",
+      finding_ids: sortStrings(boundaryNegativeFindingIds),
     });
   }
 
@@ -978,7 +1405,7 @@ async function assessLegalClassification(
     gpai_systemic_risk: gpaiSystemicRisk,
     block: {
       schema_version: "1.0",
-      status: "determined",
+      status: requiresHumanReview ? "human_review_required" : "determined",
       routes,
       annex_iii_categories: [...new Set(annexCategories)].sort((a, b) => a - b),
       actor_roles: context.actors,
@@ -1042,7 +1469,10 @@ function assessImpact(
   context: AssessmentContext,
   legal: LegalResult,
 ): AssessSystemResponse["impact"] {
-  if (legal.block.status === "not_applicable") {
+  if (
+    legal.block.status === "not_applicable" &&
+    legal.impact_outside_regulation !== true
+  ) {
     return {
       schema_version: "1.0",
       status: "not_applicable",
@@ -1221,6 +1651,10 @@ function assessImpact(
 function articleAnchor(article: string): string {
   const match = article.match(/(?:Art\.|Article)\s*(\d+[a-z]?)/i);
   return match ? `art_${match[1]!.toLowerCase()}` : "art_1";
+}
+
+function canonicalProvisionLabel(article: string): string {
+  return article.replace(/^Art\.\s*/i, "Article ");
 }
 
 function roleFactsFor(context: AssessmentContext, actor: ActorRole): string[] {
@@ -1408,11 +1842,20 @@ async function assessReadiness(
           dutyInputs.push({
             actor,
             title: duty.obligation,
-            article: duty.article,
+            article: canonicalProvisionLabel(duty.article),
             deadline: duty.deadline,
             category: duty.category,
           }),
         );
+      if (legal.gpai_systemic_risk === true) {
+        dutyInputs.push({
+          actor,
+          title: "Notify the Commission of the Article 51(1)(a) condition without delay and within two weeks",
+          article: "Article 52(1)",
+          deadline: "2025-08-02",
+          category: "notification",
+        });
+      }
     }
   }
 
@@ -1426,7 +1869,7 @@ async function assessReadiness(
       actor: context.actors[0] ?? "unknown",
       title: "Do not deploy or place the prohibited practice on the market",
       article: exactProhibitedProvision,
-      deadline: legal.classification?.relevant_articles.some((article) => /\(ba\)|\(bb\)/.test(article))
+      deadline: /\(ba\)|\(bb\)/.test(exactProhibitedProvision)
         ? "2026-12-02"
         : "2025-02-02",
       category: "prohibited_practice",
@@ -1685,7 +2128,9 @@ export async function assessSystem(input: unknown): Promise<AssessSystemResponse
           impact.status === "undetermined" ||
           implementationReadiness.status === "undetermined"
         ? "undetermined"
-        : "determined";
+        : legal.block.status === "human_review_required"
+          ? "human_review_required"
+          : "determined";
 
   const response: AssessSystemResponse = {
     contract_version: DECISION_CONTRACT_VERSION,

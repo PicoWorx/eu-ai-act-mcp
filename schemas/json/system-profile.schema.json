@@ -446,6 +446,115 @@
           },
           "additionalProperties": false
         },
+        "article_5_prohibitions": {
+          "type": "object",
+          "properties": {
+            "operation": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "generation",
+                    "manipulation"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_required_consent_present": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_manipulation_increases_intimate_exposure": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "ba_manipulation_alters_sexually_explicit_activity": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "bb_directive_2011_93_category": {
+              "type": "object",
+              "properties": {
+                "fact_id": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                },
+                "value": {
+                  "type": "string",
+                  "enum": [
+                    "article_2_c_i",
+                    "article_2_c_ii",
+                    "article_2_c_iii",
+                    "article_2_c_iv",
+                    "article_2_e_i",
+                    "article_2_e_ii",
+                    "none",
+                    "unknown"
+                  ]
+                },
+                "origin": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/origin"
+                },
+                "verification": {
+                  "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/verification"
+                },
+                "evidence_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SystemProfile/properties/identity/properties/system_name/properties/fact_id"
+                  }
+                }
+              },
+              "required": [
+                "fact_id",
+                "value",
+                "origin",
+                "verification",
+                "evidence_reference_ids"
+              ],
+              "additionalProperties": false
+            },
+            "bb_without_right_defence_applies_under_national_law": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_generation_or_manipulation_is_intended_purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_foreseeable_and_reproducible_outcome_without_significant_modification": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "provider_reasonable_and_adequate_safeguards_present": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "deployer_uses_for_generation_or_manipulation_purpose": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            }
+          },
+          "additionalProperties": false
+        },
         "transparency": {
           "type": "object",
           "properties": {
@@ -462,6 +571,12 @@
               "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
             },
             "output_machine_readable_marked": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "standard_editing_assistive_function": {
+              "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
+            },
+            "substantially_alters_input_or_semantics": {
               "$ref": "#/definitions/SystemProfile/properties/identity/properties/machine_based_system"
             }
           },

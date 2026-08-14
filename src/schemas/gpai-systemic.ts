@@ -6,7 +6,7 @@ export const gpaiSystemicInputSchema = z.object({
     .finite()
     .nonnegative()
     .optional()
-    .describe("Cumulative training compute in FLOPs (e.g. 2e25). Art. 51(2) presumes systemic risk when > 1e25. Omit if unknown; the tool then abstains instead of answering."),
+    .describe("Cumulative training compute in FLOPs (e.g. 2e25). The adjudicated product boundary triggers the Art. 51(2) presumption at or above 1e25. Omit if unknown; the tool then abstains instead of answering."),
   commission_designated: z
     .boolean()
     .optional()

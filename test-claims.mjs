@@ -52,7 +52,11 @@ const ART101 = sliceBetween("Article 101 Fines for providers", "Article 102");
 const ART73 = sliceBetween("Article 73 Reporting of serious incidents", "Article 74");
 const ART111 = sliceBetween("Article 111 AI systems already placed", "Article 112 Evaluation");
 const ART10 = sliceBetween("Article 10 Data and data governance", "Article 11");
+const ART2 = sliceBetween("Article 2 Scope", "Article 3 Definitions");
+const ART5 = sliceBetween("Article 5 Prohibited AI practices", "Article 6 Classification rules");
+const ART50 = sliceBetween("Article 50 Transparency obligations", "Article 51 Classification");
 const ART51 = sliceBetween("Article 51 Classification of general-purpose AI models", "Article 52");
+const ART52 = sliceBetween("Article 52 Procedure", "Article 53 Obligations");
 
 // Served-side sources
 const { getMilestonesWithDaysRemaining, getOperativeHighRiskDates } = await import("./dist/knowledge/deadlines.js");
@@ -63,6 +67,7 @@ const { annexIIICategories, prohibitedPractices } = await import("./dist/knowled
 const { faqDatabase } = await import("./dist/knowledge/faq-database.js");
 const SERVER_BUNDLE = norm(readFileSync("dist/server.js", "utf8"));
 const ARTICLE_TOOL_BUNDLE = norm(readFileSync("dist/tools/article.js", "utf8"));
+const ASSESSMENT_BUNDLE = norm(readFileSync("dist/decision-contract/assess-system.js", "utf8"));
 const README = norm(readFileSync("README.md", "utf8"));
 const CHANGELOG = norm(readFileSync("CHANGELOG.md", "utf8"));
 
@@ -132,13 +137,14 @@ check("D12 served enactment record", "served",
 
 // ── Thresholds and amounts ───────────────────────────────────────────────────
 
-check("T1 GPAI systemic-risk presumption: strictly greater than 10^25 FLOPs", "law",
+check("T1 GPAI systemic-risk presumption: statutory text is strictly greater than 10^25 FLOPs", "law",
   ART51.includes("measured in floating point operations is greater than 10") && nearAnchor(ART51, "greater than 10", "25", 12));
 {
   const h = toolHandler((await import("./dist/tools/gpai-systemic.js")).registerGpaiSystemicTool);
   const at = (await h({ training_flops: 1e25 })).structuredContent;
   const over = (await h({ training_flops: 1.0000001e25 })).structuredContent;
-  check("T1", "served", at.crosses_flops_threshold === false && over.crosses_flops_threshold === true);
+  check("T1 adjudicated conservative product boundary", "served",
+    at.crosses_flops_threshold === true && over.crosses_flops_threshold === true);
 }
 
 check("P1 Art. 99(3): EUR 35 000 000 / 7 %, whichever higher", "law",
@@ -232,6 +238,54 @@ check("E10", "served", /2011\/93/.test(art("5")?.summary ?? "") && /without righ
 check("E10b Art. 5(1b) qualifies point (ba) only", "law",
   inLaw("For the purposes of paragraph 1, first subparagraph, point (ba), an AI system that manipulates material in a way that does not increase the exposure"));
 check("E10b", "served", /\(1b\) qualifies point \(ba\) ONLY/i.test(art("5")?.summary ?? ""));
+
+check("MIG2-A Article 2(1) contains the three relevant territorial nexus routes", "law",
+  ART2.includes("placing on the market") &&
+  ART2.includes("deployers of AI systems that have their place of establishment") &&
+  ART2.includes("where the output produced by the AI system is used in the Union"));
+check("MIG2-A", "served",
+  ASSESSMENT_BUNDLE.includes("Article 2(1)") &&
+  ASSESSMENT_BUNDLE.includes("2026-08-02") &&
+  ASSESSMENT_BUNDLE.includes("explicitNegativeEUNexus"));
+
+check("MIG2-B Article 5(1a) separates provider and deployer purpose gates", "law",
+  ART5.includes("that generation or manipulation is the intended purpose") &&
+  ART5.includes("the deployer uses the system for the purpose of generating or manipulating"));
+check("MIG2-B", "served",
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(a)(i)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(a)(ii)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1a)(b)"));
+
+check("MIG2-C Article 5(1b) is the point (ba)-only manipulation exclusion", "law",
+  ART5.includes("point (ba)") &&
+  ART5.includes("does not increase the exposure") &&
+  ART5.includes("alter the nature of any depicted sexually explicit activities"));
+check("MIG2-C", "served",
+  ASSESSMENT_BUNDLE.includes("Article 5(1b)") &&
+  ASSESSMENT_BUNDLE.includes("Article 5(1)(ba) does not apply"));
+
+check("MIG2-D Article 50(2) excludes standard editing and non-substantial alteration", "law",
+  ART50.includes("assistive function for standard editing") &&
+  ART50.includes("do not substantially alter the input data"));
+check("MIG2-D", "served",
+  ASSESSMENT_BUNDLE.includes("standard_editing_assistive_function") &&
+  ASSESSMENT_BUNDLE.includes("substantially_alters_input_or_semantics") &&
+  ASSESSMENT_BUNDLE.includes("Article 50(2) does not apply"));
+
+check("MIG2-E Article 51(1)(a) and 51(2) support the compute presumption", "law",
+  ART51.includes("high impact capabilities") &&
+  ART51.includes("pursuant to paragraph 1, point (a)"));
+check("MIG2-E", "served",
+  ASSESSMENT_BUNDLE.includes("Article 51(1)(a)") &&
+  ASSESSMENT_BUNDLE.includes("Article 51(2)"));
+
+check("MIG2-F Article 52 carries notification and exceptional rebuttal", "law",
+  ART52.includes("within two weeks") &&
+  ART52.includes("sufficiently substantiated arguments") &&
+  ART52.includes("exceptionally"));
+check("MIG2-F", "served",
+  ASSESSMENT_BUNDLE.includes("Article 52(1)") &&
+  ASSESSMENT_BUNDLE.includes("Article 52(2)"));
 
 check("E11 Art. 49(1) registration: Annex III except point 2", "law",
   inLaw("with the exception of high-risk AI systems referred to in point 2 of Annex III"));

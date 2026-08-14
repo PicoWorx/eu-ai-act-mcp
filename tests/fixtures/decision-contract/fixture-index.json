@@ -1,5 +1,5 @@
 {
-  "fixture_set": "eu-ai-act-decision-contract-1.1",
+  "fixture_set": "eu-ai-act-decision-contract-1.2",
   "fixtures": [
     {
       "file": "profile-high-risk.json",

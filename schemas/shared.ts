@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const INTERNAL_REGULATION_ID = "eu-ai-act" as const;
-export const DECISION_CONTRACT_VERSION = "1.1" as const;
+export const DECISION_CONTRACT_VERSION = "1.2" as const;
 export const PROFILE_VERSION = "1.0" as const;
 
 export const isoDateSchema = z
@@ -61,6 +61,7 @@ export const operativeDateSchema = z.union([
 
 export const decisionStatusSchema = z.enum([
   "determined",
+  "human_review_required",
   "undetermined",
   "not_applicable",
 ]);

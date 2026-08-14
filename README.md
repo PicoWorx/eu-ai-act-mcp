@@ -145,7 +145,7 @@ Operative dates as amended:
 npm install
 npm run build        # typescript -> dist/
 node test.mjs         # full suite incl. ten agent journeys
-node test-claims.mjs  # 92-check matrix: pinned law corpus vs served facts
+node test-claims.mjs  # 108-check matrix: pinned law corpus vs served facts
 node test-schemas.mjs # post-serialization output-schema gate
 node law/fetch.mjs verify # verify all 4 pinned legal documents
 npm --prefix compiler test # deterministic compiler: 6 tests

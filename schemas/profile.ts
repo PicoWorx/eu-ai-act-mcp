@@ -34,6 +34,23 @@ export const numberFactSchema = profileFact(z.number().finite().nonnegative());
 export const integerFactSchema = profileFact(z.number().int().nonnegative());
 export const roleFactSchema = profileFact(actorRoleSchema);
 
+export const article5OperationSchema = z.enum(["generation", "manipulation"]);
+export const article5OperationFactSchema = profileFact(article5OperationSchema);
+
+export const directive201193CategorySchema = z.enum([
+  "article_2_c_i",
+  "article_2_c_ii",
+  "article_2_c_iii",
+  "article_2_c_iv",
+  "article_2_e_i",
+  "article_2_e_ii",
+  "none",
+  "unknown",
+]);
+export const directive201193CategoryFactSchema = profileFact(
+  directive201193CategorySchema,
+);
+
 export const lifecycleStageSchema = z.enum([
   "concept",
   "development",
@@ -172,6 +189,24 @@ const biometricAndPracticeGroupSchema = z
   })
   .strict();
 
+const article5ProhibitionsGroupSchema = z
+  .object({
+    operation: article5OperationFactSchema.optional(),
+    ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person:
+      booleanFactSchema.optional(),
+    ba_required_consent_present: booleanFactSchema.optional(),
+    ba_manipulation_increases_intimate_exposure: booleanFactSchema.optional(),
+    ba_manipulation_alters_sexually_explicit_activity: booleanFactSchema.optional(),
+    bb_directive_2011_93_category: directive201193CategoryFactSchema.optional(),
+    bb_without_right_defence_applies_under_national_law: booleanFactSchema.optional(),
+    provider_generation_or_manipulation_is_intended_purpose: booleanFactSchema.optional(),
+    provider_foreseeable_and_reproducible_outcome_without_significant_modification:
+      booleanFactSchema.optional(),
+    provider_reasonable_and_adequate_safeguards_present: booleanFactSchema.optional(),
+    deployer_uses_for_generation_or_manipulation_purpose: booleanFactSchema.optional(),
+  })
+  .strict();
+
 const transparencyGroupSchema = z
   .object({
     interacts_with_natural_persons: booleanFactSchema.optional(),
@@ -179,6 +214,8 @@ const transparencyGroupSchema = z
     deep_fake_content: booleanFactSchema.optional(),
     public_interest_text: booleanFactSchema.optional(),
     output_machine_readable_marked: booleanFactSchema.optional(),
+    standard_editing_assistive_function: booleanFactSchema.optional(),
+    substantially_alters_input_or_semantics: booleanFactSchema.optional(),
   })
   .strict();
 
@@ -230,6 +267,7 @@ export const systemProfileSchema = z
     annex_i: annexIGroupSchema.optional(),
     annex_iii: annexIIIGroupSchema.optional(),
     biometric_and_practices: biometricAndPracticeGroupSchema.optional(),
+    article_5_prohibitions: article5ProhibitionsGroupSchema.optional(),
     transparency: transparencyGroupSchema.optional(),
     gpai: gpaiGroupSchema.optional(),
     public_authority_and_fria: publicAuthorityAndFriaGroupSchema.optional(),

@@ -1120,7 +1120,7 @@ console.log("\n🩹 1.4.4 REGRESSIONS");
   const gOver = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 3e25 }));
   test("gpai: 3e25 crosses", gOver.is_gpai_with_systemic_risk === true);
   const gAt = structured(await callTool("euaiact_check_gpai_systemic_risk", { training_flops: 1e25 }));
-  test("gpai: exactly 1e25 does not cross (strict greater-than)", gAt.crosses_flops_threshold === false && gAt.is_gpai_with_systemic_risk === false);
+  test("gpai: adjudicated boundary treats exactly 1e25 as threshold met", gAt.crosses_flops_threshold === true && gAt.is_gpai_with_systemic_risk === true);
   const gDesig = structured(await callTool("euaiact_check_gpai_systemic_risk", { commission_designated: true }));
   test("gpai: designation alone establishes systemic risk", gDesig.is_gpai_with_systemic_risk === true && gDesig.systemic_risk_designation === "commission_designated");
 
@@ -1314,6 +1314,15 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
   const loadProfile = (name) => loadJson(join(fixtureRoot, name));
   const runAssessment = async (name) =>
     structured(await callTool("euaiact_assess_system", loadProfile(name)));
+  const profileFact = (fact_id, value, verification = "caller_asserted") => ({
+    fact_id,
+    value,
+    origin: verification === "evidence_linked"
+      ? "cited_evidence"
+      : "explicit_structured_input",
+    verification,
+    evidence_reference_ids: [],
+  });
 
   const high = await runAssessment("contract-high-risk.json");
   test("assess: clear Annex III system is high-risk",
@@ -1406,6 +1415,149 @@ console.log("\n🧩 ASSESS SYSTEM 1.5");
       .map((duty) => `${duty.actor_roles[0]}:${duty.exact_provision}`)
       .sort()
       .join(",") === "deployer:Art. 50(4),provider:Art. 50(2)");
+
+  const baProfile = loadProfile("transparency-deepfake.json");
+  baProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.ba.operation", "generation"),
+    ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person:
+      profileFact("fact.article5.ba.material", true),
+    ba_required_consent_present: profileFact("fact.article5.ba.consent", false),
+    ba_manipulation_increases_intimate_exposure:
+      profileFact("fact.article5.ba.increased-exposure", true),
+    ba_manipulation_alters_sexually_explicit_activity:
+      profileFact("fact.article5.ba.alters-activity", false),
+    provider_generation_or_manipulation_is_intended_purpose:
+      profileFact("fact.article5.provider.intended", true),
+    provider_foreseeable_and_reproducible_outcome_without_significant_modification:
+      profileFact("fact.article5.provider.foreseeable", true),
+    provider_reasonable_and_adequate_safeguards_present:
+      profileFact("fact.article5.provider.safeguards", false),
+    deployer_uses_for_generation_or_manipulation_purpose:
+      profileFact("fact.article5.deployer.purpose", true),
+  };
+  const ba = structured(await callTool("euaiact_assess_system", baProfile));
+  const baLegal = ba.findings.filter((finding) => finding.block === "legal_classification");
+  test("MIGRATION-002 holdout.03: ba emits prospective provider and deployer prohibition branches",
+    ba.status === "determined" &&
+    ba.legal_classification.routes.some((route) =>
+      route.route === "prohibited" &&
+      route.actor_roles.join(",") === "deployer,provider") &&
+    baLegal.some((finding) =>
+      finding.scope.actors.join(",") === "provider" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 5(1a)(a)(i)" &&
+        item.operative_date === "2026-12-02")) &&
+    baLegal.some((finding) =>
+      finding.scope.actors.join(",") === "deployer" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1a)(b)")));
+  test("MIGRATION-002 holdout.03: ba evaluates 5(1b) and keeps Article 50 actor-specific",
+    baLegal.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1b)")) &&
+    baLegal.filter((finding) =>
+      finding.provenance.some((item) => item.exact_provision === "Article 50(2)"))
+      .every((finding) => finding.scope.actors.join(",") === "provider") &&
+    baLegal.filter((finding) =>
+      finding.provenance.some((item) => item.exact_provision === "Article 50(4)"))
+      .every((finding) => finding.scope.actors.join(",") === "deployer"));
+
+  const bbProfile = loadProfile("transparency-deepfake.json");
+  bbProfile.transparency.deep_fake_content.value = false;
+  bbProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.bb.operation", "generation"),
+    bb_directive_2011_93_category:
+      profileFact("fact.article5.bb.directive-category", "article_2_c_iv"),
+    bb_without_right_defence_applies_under_national_law:
+      profileFact("fact.article5.bb.without-right-defence", false),
+    provider_generation_or_manipulation_is_intended_purpose:
+      profileFact("fact.article5.bb.provider.intended", true),
+    provider_foreseeable_and_reproducible_outcome_without_significant_modification:
+      profileFact("fact.article5.bb.provider.foreseeable", true),
+    provider_reasonable_and_adequate_safeguards_present:
+      profileFact("fact.article5.bb.provider.safeguards", false),
+    deployer_uses_for_generation_or_manipulation_purpose:
+      profileFact("fact.article5.bb.deployer.purpose", true),
+  };
+  const bb = structured(await callTool("euaiact_assess_system", bbProfile));
+  const bbLegalProvisions = bb.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.04: bb is fail-closed and requires human review for caller-asserted defence",
+    bb.status === "human_review_required" &&
+    bb.legal_classification.status === "human_review_required" &&
+    bb.legal_classification.routes.some((route) => route.route === "prohibited") &&
+    bbLegalProvisions.includes("Article 5(1)(bb)") &&
+    !bbLegalProvisions.includes("Article 5(1b)") &&
+    bb.facts_used.some((fact) =>
+      fact.fact_id === "fact.article5.bb.without-right-defence" &&
+      fact.verification === "caller_asserted") &&
+    bb.warnings.some((warning) => warning.code === "LEGAL_REVIEW_REQUIRED"));
+
+  const standardEditProfile = loadProfile("minimal-complete.json");
+  standardEditProfile.article_5_prohibitions = {
+    operation: profileFact("fact.article5.edit.operation", "manipulation"),
+    ba_realistic_intimate_or_sexually_explicit_material_of_identifiable_person:
+      profileFact("fact.article5.edit.material", true),
+    ba_required_consent_present: profileFact("fact.article5.edit.consent", true),
+    ba_manipulation_increases_intimate_exposure:
+      profileFact("fact.article5.edit.increased-exposure", false),
+    ba_manipulation_alters_sexually_explicit_activity:
+      profileFact("fact.article5.edit.alters-activity", false),
+  };
+  standardEditProfile.transparency.standard_editing_assistive_function =
+    profileFact("fact.transparency.edit.standard", true);
+  standardEditProfile.transparency.substantially_alters_input_or_semantics =
+    profileFact("fact.transparency.edit.substantial", false);
+  const standardEdit = structured(
+    await callTool("euaiact_assess_system", standardEditProfile),
+  );
+  test("MIGRATION-002 holdout.05: complete editing exclusions return determined minimal",
+    standardEdit.status === "determined" &&
+    standardEdit.legal_classification.routes.map((route) => route.route).join(",") === "minimal" &&
+    standardEdit.missing_facts.every((fact) => fact.missing_fact_id !== "missing.intended-purpose") &&
+    standardEdit.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1)(ba)") &&
+      finding.provenance.some((item) => item.exact_provision === "Article 5(1b)")) &&
+    standardEdit.findings.some((finding) =>
+      finding.determination === "does_not_apply" &&
+      finding.provenance.some((item) => item.exact_provision === "Article 50(2)")));
+
+  const gpai = await runAssessment("gpai-systemic.json");
+  const gpaiLegalProvisions = gpai.findings
+    .filter((finding) => finding.block === "legal_classification")
+    .flatMap((finding) => finding.provenance.map((item) => item.exact_provision));
+  test("MIGRATION-002 holdout.08: compute presumption carries Article 51 and 52 anchors",
+    ["Article 51(1)(a)", "Article 51(2)", "Article 52(1)", "Article 52(2)"]
+      .every((provision) => gpaiLegalProvisions.includes(provision)) &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision === "Article 52(1)") &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision.startsWith("Article 53")) &&
+    gpai.implementation_readiness.applicable_duties.some((duty) =>
+      duty.exact_provision.startsWith("Article 55")));
+
+  const explicitNonEuProfile = loadProfile("minimal-complete.json");
+  explicitNonEuProfile.geography.jurisdictions[0].value = "Canada";
+  explicitNonEuProfile.geography.used_in_eu.value = false;
+  explicitNonEuProfile.geography.placed_on_eu_market =
+    profileFact("fact.geography.non-eu.placed", false);
+  explicitNonEuProfile.geography.output_used_in_eu =
+    profileFact("fact.geography.non-eu.output", false);
+  const explicitNonEu = structured(
+    await callTool("euaiact_assess_system", explicitNonEuProfile),
+  );
+  test("MIGRATION-002 holdout.10: all explicit negative Article 2 nexus facts yield non-applicability",
+    explicitNonEu.status === "not_applicable" &&
+    explicitNonEu.legal_classification.status === "not_applicable" &&
+    explicitNonEu.impact.status === "determined" &&
+    explicitNonEu.implementation_readiness.status === "not_applicable" &&
+    !explicitNonEu.missing_facts.some((fact) => fact.missing_fact_id === "missing.legal.jurisdiction") &&
+    explicitNonEu.findings.some((finding) =>
+      finding.determination === "not_applicable" &&
+      finding.provenance.some((item) =>
+        item.exact_provision === "Article 2(1)" &&
+        item.operative_date === "2026-08-02")));
 
   const stackedProfile = loadProfile("high-risk-plus-transparency.json");
   stackedProfile.role_facts.roles = [];

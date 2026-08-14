@@ -8,7 +8,7 @@
       "properties": {
         "contract_version": {
           "type": "string",
-          "const": "1.1"
+          "const": "1.2"
         },
         "server_version": {
           "type": "string",
@@ -61,6 +61,7 @@
           "type": "string",
           "enum": [
             "determined",
+            "human_review_required",
             "undetermined",
             "not_applicable"
           ]

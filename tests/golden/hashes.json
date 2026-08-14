@@ -11,84 +11,84 @@
       "case_id": "contract-high-risk",
       "profile": "contract-high-risk.json",
       "golden": "contract-high-risk.json",
-      "canonical_sha256": "772f6a089ec93977f06b96f2b24c06c1f7784a6c4f369b0105341533d9191030",
+      "canonical_sha256": "87c33cbc6823e58487ef7c490f1f759ca2d21f6c332a43dca6465fffc77562b2",
       "canonical_bytes": 39803
     },
     {
       "case_id": "contract-not-applicable",
       "profile": "contract-not-applicable.json",
       "golden": "contract-not-applicable.json",
-      "canonical_sha256": "6d487f4965badc93bff138460f3c29d05ae255adab3b36c26a6fbeb7f8f1752b",
+      "canonical_sha256": "e86192d08429a166b2d1c50981ef00672a0c2a3c417d90a6965e9cb9d2c4bff8",
       "canonical_bytes": 3984
     },
     {
       "case_id": "contract-sparse",
       "profile": "contract-sparse.json",
       "golden": "contract-sparse.json",
-      "canonical_sha256": "9a59c29f970fde661e5bd5b1686abea3b13a85c316120135987991bece1441e1",
+      "canonical_sha256": "31178216c2b50f7960ef356d0e1b2133a152ca84dafa38c20ec05442e5abbd63",
       "canonical_bytes": 4603
     },
     {
       "case_id": "prohibited-social-scoring",
       "profile": "prohibited-social-scoring.json",
       "golden": "prohibited-social-scoring.json",
-      "canonical_sha256": "d5fcade1a3df32d0faa94e2a9349ac34d76876472c8d1150edf4bac9ce3e4947",
+      "canonical_sha256": "8614d0f30c8b2ad74bc9a23a4d34ec778d8a4db412af3c96359e2d55fb1878ca",
       "canonical_bytes": 10811
     },
     {
       "case_id": "minimal-complete",
       "profile": "minimal-complete.json",
       "golden": "minimal-complete.json",
-      "canonical_sha256": "0393e92048b95da6a86655b56ab13452424079e10e07dba78cc192a7c3fdafe1",
+      "canonical_sha256": "e645ac703b06276052a0665add41e6ad50f44dc68cae326e59b7d567f0010aa9",
       "canonical_bytes": 16840
     },
     {
       "case_id": "transparency-chatbot",
       "profile": "transparency-chatbot.json",
       "golden": "transparency-chatbot.json",
-      "canonical_sha256": "c0b339477234d9b1bca4325c0ab79c83578b2a86ea3c369fe7a72c2d877698a0",
+      "canonical_sha256": "723ac23a2ca104968f6740bddb76c19ed909be3cca2588d5f80e8467a94380bd",
       "canonical_bytes": 12214
     },
     {
       "case_id": "transparency-deepfake",
       "profile": "transparency-deepfake.json",
       "golden": "transparency-deepfake.json",
-      "canonical_sha256": "b1db150ee5014e2bef80ab85f39a36ef5feaaa803fd40d289ec174962b7b4f6e",
-      "canonical_bytes": 18524
+      "canonical_sha256": "8416e2d454d29d40789d4c5a736d7744380733e854a4c0e7a6e123512aaaa28c",
+      "canonical_bytes": 18688
     },
     {
       "case_id": "annex-i-high-risk",
       "profile": "annex-i-high-risk.json",
       "golden": "annex-i-high-risk.json",
-      "canonical_sha256": "aa25595a758174b9a10c65245748c05d5cf6da7948e341fc35b6479cc2ac3865",
+      "canonical_sha256": "d8b0797aca1caa47adb938ba6ca0370c1625b6d67355dbbc40688011a9ff623b",
       "canonical_bytes": 38250
     },
     {
       "case_id": "gpai-systemic",
       "profile": "gpai-systemic.json",
       "golden": "gpai-systemic.json",
-      "canonical_sha256": "ab98368aa49937d1a072019315c4c2e5a7cd8cb8db47ff171e3267bff8b11512",
-      "canonical_bytes": 28452
+      "canonical_sha256": "81076a248c65b704bd79e867cf3b4e1d0dd4c6f07162e6b078089c5c91cefb20",
+      "canonical_bytes": 32302
     },
     {
       "case_id": "high-risk-plus-transparency",
       "profile": "high-risk-plus-transparency.json",
       "golden": "high-risk-plus-transparency.json",
-      "canonical_sha256": "303b2102aae7a8e2f36efd53c321491e5e1e68ddd0df93d78420c704f00a10a2",
+      "canonical_sha256": "4bb23eade19fada032ea22599ec6f512c8b8908c4c1aa11e3e1578b921e11ffb",
       "canonical_bytes": 44817
     },
     {
       "case_id": "high-risk-low-impact-controlled",
       "profile": "high-risk-low-impact-controlled.json",
       "golden": "high-risk-low-impact-controlled.json",
-      "canonical_sha256": "aaa084b5edc7de90ac5511dbe371b4acfd11c41ec728017084a51a0cefdfa1ff",
+      "canonical_sha256": "a3df6a789f4b600b064bba108cd369edd38d0ebc38aa7ce4506e588322ade1cb",
       "canonical_bytes": 40157
     },
     {
       "case_id": "free-text-only",
       "profile": "free-text-only.json",
       "golden": "free-text-only.json",
-      "canonical_sha256": "1f4fe7cb7011bf9f4f22b263a08a4a5b2badf0531833da45873a8567b24c4ca7",
+      "canonical_sha256": "b30506bbb0ca4e261ad1e99975aeaaba3c504009fbba87339b48b304b4acc207",
       "canonical_bytes": 5067
     }
   ]
