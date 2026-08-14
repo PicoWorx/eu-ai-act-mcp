@@ -1,0 +1,26 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.not-ai.name",
+      "value": "deterministic-file-sorter",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "machine_based_system": {
+      "fact_id": "fact.identity.not-ai.machine-based",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "infers_from_inputs_how_to_generate_outputs": {
+      "fact_id": "fact.identity.not-ai.infers",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

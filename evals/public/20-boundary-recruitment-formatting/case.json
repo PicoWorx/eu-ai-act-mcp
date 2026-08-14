@@ -1,0 +1,41 @@
+{
+  "case_version": "1.0",
+  "case_id": "20-boundary-recruitment-formatting",
+  "categories": [
+    "boundary",
+    "recruitment_formatting",
+    "conflicting_text_and_signals",
+    "minimal"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic utility only normalizes typography and field order in job-application documents and explicitly does not rank, filter, score, or evaluate candidates. Complete structured negatives should prevent recruitment vocabulary alone from creating Annex III point 4, so the expected property is the bounded minimal route.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "minimal"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Articles 5, 6, 50 and 95, and Annexes I and III",
+        "operative_date": "not_date_bound"
+      }
+    ],
+    "forbidden_legal_provisions": [
+      "Article 6(2) and Annex III, point 4"
+    ],
+    "required_warning_codes": [
+      "LEGAL_REVIEW_REQUIRED",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

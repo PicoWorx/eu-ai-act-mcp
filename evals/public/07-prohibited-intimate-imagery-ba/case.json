@@ -1,0 +1,41 @@
+{
+  "case_version": "1.0",
+  "case_id": "07-prohibited-intimate-imagery-ba",
+  "categories": [
+    "prohibited",
+    "article_5_ba",
+    "corrected_scope"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic image system is intended to generate non-consensual intimate material depicting identifiable adults. The expected property is the new Article 5(1)(ba) prohibition from 2 December 2026; Article 5(1a) reaches this point and Article 5(1b) qualifies point (ba), not point (bb).",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "prohibited"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 5(1)(ba)",
+        "operative_date": "2026-12-02"
+      }
+    ],
+    "forbidden_legal_provisions": [
+      "Article 5(1)(bb)"
+    ],
+    "required_warning_codes": [
+      "LEGAL_REVIEW_REQUIRED",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ],
+    "article_5_qualifier_scope": "ba"
+  }
+}

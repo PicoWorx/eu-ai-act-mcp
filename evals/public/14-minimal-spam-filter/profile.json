@@ -1,0 +1,232 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.minimal-spam-filter.name",
+      "value": "minimal-spam-filter",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.minimal-spam-filter.purpose",
+      "value": "Filter unsolicited email without making decisions about natural persons",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.minimal-spam-filter.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.minimal-spam-filter.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.minimal-spam-filter.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.minimal-spam-filter",
+        "value": "Email users",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.minimal-spam-filter.consequence",
+      "value": "Moves likely spam to a review folder",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.minimal-spam-filter.material",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_i": {
+    "product_or_safety_component": {
+      "fact_id": "fact.annex-i.minimal-spam-filter.product",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "annex_i_legislation": [],
+    "third_party_conformity_assessment_required": {
+      "fact_id": "fact.annex-i.minimal-spam-filter.third-party",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_iii": {
+    "domain": {
+      "fact_id": "fact.annex-iii.minimal-spam-filter.domain",
+      "value": "other",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "purpose": {
+      "fact_id": "fact.annex-iii.minimal-spam-filter.purpose",
+      "value": "Email spam filtering",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "biometric_and_practices": {
+    "uses_biometrics": {
+      "fact_id": "fact.practice.minimal-spam-filter.biometrics",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "sole_purpose_identity_verification": {
+      "fact_id": "fact.practice.minimal-spam-filter.verification",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "remote_biometric_identification": {
+      "fact_id": "fact.practice.minimal-spam-filter.remote",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "realtime_operation": {
+      "fact_id": "fact.practice.minimal-spam-filter.realtime",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "publicly_accessible_space": {
+      "fact_id": "fact.practice.minimal-spam-filter.public-space",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "law_enforcement_use": {
+      "fact_id": "fact.practice.minimal-spam-filter.law-enforcement",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "biometric_categorisation": {
+      "fact_id": "fact.practice.minimal-spam-filter.categorisation",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "emotion_recognition": {
+      "fact_id": "fact.practice.minimal-spam-filter.emotion",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "emotion_recognition_workplace_or_education": {
+      "fact_id": "fact.practice.minimal-spam-filter.emotion-work-education",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "social_scoring": {
+      "fact_id": "fact.practice.minimal-spam-filter.social-scoring",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "exploits_vulnerability": {
+      "fact_id": "fact.practice.minimal-spam-filter.vulnerability",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "subliminal_or_manipulative_technique": {
+      "fact_id": "fact.practice.minimal-spam-filter.manipulation",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "transparency": {
+    "interacts_with_natural_persons": {
+      "fact_id": "fact.transparency.minimal-spam-filter.interaction",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "generates_or_manipulates_synthetic_content": {
+      "fact_id": "fact.transparency.minimal-spam-filter.synthetic",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "deep_fake_content": {
+      "fact_id": "fact.transparency.minimal-spam-filter.deepfake",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "public_interest_text": {
+      "fact_id": "fact.transparency.minimal-spam-filter.public-interest",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "output_machine_readable_marked": {
+      "fact_id": "fact.transparency.minimal-spam-filter.marked",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

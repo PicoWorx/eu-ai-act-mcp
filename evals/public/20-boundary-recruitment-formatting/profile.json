@@ -1,0 +1,232 @@
+{
+  "profile_version": "1.0",
+  "identity": {
+    "system_name": {
+      "fact_id": "fact.identity.boundary-recruitment-formatting.name",
+      "value": "boundary-recruitment-formatting",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "intended_use": {
+    "intended_purpose": {
+      "fact_id": "fact.use.boundary-recruitment-formatting.purpose",
+      "value": "Format job application documents into a consistent layout without ranking, filtering, scoring, or evaluating candidates",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "reasonably_foreseeable_uses": []
+  },
+  "role_facts": {
+    "roles": [
+      {
+        "fact_id": "fact.role.boundary-recruitment-formatting.provider",
+        "value": "provider",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "geography": {
+    "jurisdictions": [
+      {
+        "fact_id": "fact.geography.boundary-recruitment-formatting.eu",
+        "value": "EU",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ],
+    "used_in_eu": {
+      "fact_id": "fact.geography.boundary-recruitment-formatting.used-in-eu",
+      "value": true,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "affected_person_groups": [
+      {
+        "fact_id": "fact.group.boundary-recruitment-formatting",
+        "value": "People whose documents are reformatted",
+        "origin": "explicit_structured_input",
+        "verification": "caller_asserted",
+        "evidence_reference_ids": []
+      }
+    ]
+  },
+  "decision_context": {
+    "decision_consequence": {
+      "fact_id": "fact.decision.boundary-recruitment-formatting.consequence",
+      "value": "The output changes typography and field order only",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "materially_influences_decision": {
+      "fact_id": "fact.decision.boundary-recruitment-formatting.material",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_i": {
+    "product_or_safety_component": {
+      "fact_id": "fact.annex-i.boundary-recruitment-formatting.product",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "annex_i_legislation": [],
+    "third_party_conformity_assessment_required": {
+      "fact_id": "fact.annex-i.boundary-recruitment-formatting.third-party",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "annex_iii": {
+    "domain": {
+      "fact_id": "fact.annex-iii.boundary-recruitment-formatting.domain",
+      "value": "other",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "purpose": {
+      "fact_id": "fact.annex-iii.boundary-recruitment-formatting.purpose",
+      "value": "Document formatting for job application files without candidate evaluation",
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "biometric_and_practices": {
+    "uses_biometrics": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.biometrics",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "sole_purpose_identity_verification": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.verification",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "remote_biometric_identification": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.remote",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "realtime_operation": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.realtime",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "publicly_accessible_space": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.public-space",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "law_enforcement_use": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.law-enforcement",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "biometric_categorisation": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.categorisation",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "emotion_recognition": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.emotion",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "emotion_recognition_workplace_or_education": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.emotion-work-education",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "social_scoring": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.social-scoring",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "exploits_vulnerability": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.vulnerability",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "subliminal_or_manipulative_technique": {
+      "fact_id": "fact.practice.boundary-recruitment-formatting.manipulation",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  },
+  "transparency": {
+    "interacts_with_natural_persons": {
+      "fact_id": "fact.transparency.boundary-recruitment-formatting.interaction",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "generates_or_manipulates_synthetic_content": {
+      "fact_id": "fact.transparency.boundary-recruitment-formatting.synthetic",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "deep_fake_content": {
+      "fact_id": "fact.transparency.boundary-recruitment-formatting.deepfake",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "public_interest_text": {
+      "fact_id": "fact.transparency.boundary-recruitment-formatting.public-interest",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    },
+    "output_machine_readable_marked": {
+      "fact_id": "fact.transparency.boundary-recruitment-formatting.marked",
+      "value": false,
+      "origin": "explicit_structured_input",
+      "verification": "caller_asserted",
+      "evidence_reference_ids": []
+    }
+  }
+}

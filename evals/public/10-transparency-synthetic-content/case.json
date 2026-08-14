@@ -1,0 +1,36 @@
+{
+  "case_version": "1.0",
+  "case_id": "10-transparency-synthetic-content",
+  "categories": [
+    "transparency",
+    "article_50_synthetic_content"
+  ],
+  "fixed_boundary": false,
+  "description": "A synthetic provider generates product images for publication and supplies a machine-readable marking fact. The expected legal route is the Article 50(2) synthetic-content duty; the marking fact informs readiness but does not remove the legal route.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "transparency_duty"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 50(2)",
+        "operative_date": "2026-08-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

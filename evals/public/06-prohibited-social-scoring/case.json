@@ -1,0 +1,37 @@
+{
+  "case_version": "1.0",
+  "case_id": "06-prohibited-social-scoring",
+  "categories": [
+    "prohibited",
+    "article_5"
+  ],
+  "fixed_boundary": false,
+  "description": "A synthetic deployer scores natural persons from social behaviour and uses the score for detrimental treatment in an unrelated public-service context. The profile explicitly supplies the social-scoring predicate, so the expected result is a prohibited route under Article 5(1)(c).",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "prohibited"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 5(1)(c)",
+        "operative_date": "2025-02-02"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "LEGAL_REVIEW_REQUIRED",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

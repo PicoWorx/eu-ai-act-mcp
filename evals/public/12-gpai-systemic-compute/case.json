@@ -1,0 +1,42 @@
+{
+  "case_version": "1.0",
+  "case_id": "12-gpai-systemic-compute",
+  "categories": [
+    "gpai",
+    "systemic_risk",
+    "compute_threshold"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic GPAI provider supplies a training-compute fact above the systemic-risk threshold. The high-level legal route remains GPAI and the readiness projection must include both Article 53 baseline duties and Article 55 systemic-risk duties without treating the downstream systems as classified.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "gpai"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 3(63) and Chapter V",
+        "operative_date": "not_date_bound"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ],
+    "required_readiness_provision_prefixes": [
+      "Art. 53",
+      "Art. 55"
+    ],
+    "forbidden_readiness_provision_prefixes": []
+  }
+}

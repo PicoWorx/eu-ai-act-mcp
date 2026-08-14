@@ -1,0 +1,1950 @@
+{
+  "grader_version": "1.0.0",
+  "run_label": "day-0-baseline",
+  "subject": {
+    "tool": "euaiact_assess_system",
+    "package": "@lexbeam-software/eu-ai-act-mcp",
+    "package_version": "1.5.0",
+    "decision_contract_version": "1.0",
+    "law_corpus_id": "eu-ai-act-2026-07-27"
+  },
+  "public_corpus": {
+    "version": "1.0.0",
+    "case_count": 20,
+    "synthetic_only": true,
+    "expected_values": "properties_only",
+    "sha256": "378b2a8b47974f4dcd8b4da019bbb6414e841fa3c8c05315b705d6454214891d"
+  },
+  "grader_sha256": "14cc195f8b8b6a3ddc31177ef91fd9eb647b8f9f3765d8789ba26ef25988f68d",
+  "runs_per_case": 10,
+  "max_canonical_response_bytes": 65536,
+  "safety_metrics": [
+    "response_schema",
+    "abstention_correctness",
+    "citation_integrity",
+    "summary_disclosure",
+    "unsupported_conclusions",
+    "block_separation",
+    "response_size",
+    "determinism",
+    "fixed_legal_boundaries"
+  ],
+  "cases": [
+    {
+      "case_id": "01-annex-iii-employment-ranking",
+      "description": "A synthetic provider ranks job applicants before a recruiter reviews them. The profile supplies the employment purpose, Annex III point, EU nexus, actor role, affected group, and decision consequence, so the evaluation expects a determined Annex III employment route without treating missing implementation evidence as legal uncertainty.",
+      "categories": [
+        "annex_iii",
+        "clear_high_risk",
+        "provider_role"
+      ],
+      "fixed_boundary": false,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [
+          4
+        ],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(2) and Annex III, point 4",
+            "operative_date": "2027-12-02"
+          }
+        ],
+        "canonical_sha256": "1db3a04421f9947abeecace17a53a73853ea7574511783fd8dba5563ce0eb139",
+        "canonical_bytes": 36976
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": false,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "02-annex-iii-remote-identification",
+      "description": "A synthetic deployer compares biometric templates against a remote watchlist after entry, without real-time law-enforcement use in a public space. This is remote identification rather than one-to-one verification, so the expected property is the Annex III biometrics route, not the Article 5 real-time prohibition.",
+      "categories": [
+        "annex_iii",
+        "biometrics",
+        "remote_identification"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [
+          1
+        ],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(2) and Annex III, point 1",
+            "operative_date": "2027-12-02"
+          }
+        ],
+        "canonical_sha256": "2c4d92edc9433118fa3d60327abf05f84c0ab759ea7adbf8bd3f12d22ea4bc70",
+        "canonical_bytes": 33451
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "03-annex-iii-benefits-eligibility",
+      "description": "A synthetic public-benefits workflow assesses whether natural persons qualify for essential public assistance and materially influences the eligibility decision. The supplied decision purpose distinguishes it from a general information service and requires the Annex III point 5 route.",
+      "categories": [
+        "annex_iii",
+        "essential_services",
+        "eligibility_decision"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [
+          5
+        ],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(2) and Annex III, point 5",
+            "operative_date": "2027-12-02"
+          }
+        ],
+        "canonical_sha256": "9483840ebebe30eb54deecd5bc1ef04c2f39199dff746e94e0a6c6889c40b5c7",
+        "canonical_bytes": 29272
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "04-annex-iii-profiling-block",
+      "description": "A synthetic recruitment-ranking system performs profiling of natural persons. The expected high-risk route must remain in place because profiling blocks reliance on the Article 6(3) exception, while the frozen profile still cannot express the separate no-significant-risk predicate.",
+      "categories": [
+        "annex_iii",
+        "article_6_3_boundary",
+        "profiling"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [
+          4
+        ],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(2) and Annex III, point 4",
+            "operative_date": "2027-12-02"
+          }
+        ],
+        "canonical_sha256": "61b1c2bad136ffee9b9415b4ec3a51ba9040ca80ba61412716fdebdccd244198",
+        "canonical_bytes": 36731
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "05-annex-i-medical-safety",
+      "description": "A synthetic AI component controls a safety function in a regulated medical device and the applicable product law requires third-party conformity assessment. Both cumulative Article 6(1) facts are supplied, so the expected route is Annex I high-risk with the amended 2028 application date.",
+      "categories": [
+        "annex_i",
+        "clear_high_risk",
+        "medical_device"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(1) and Annex I",
+            "operative_date": "2028-08-02"
+          }
+        ],
+        "canonical_sha256": "60c2c2e2b5d3c04a396d415c51c5e6974cb28f46a5662254d5b044f22e9064b3",
+        "canonical_bytes": 33859
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "06-prohibited-social-scoring",
+      "description": "A synthetic deployer scores natural persons from social behaviour and uses the score for detrimental treatment in an unrelated public-service context. The profile explicitly supplies the social-scoring predicate, so the expected result is a prohibited route under Article 5(1)(c).",
+      "categories": [
+        "prohibited",
+        "article_5"
+      ],
+      "fixed_boundary": false,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "prohibited"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 5(1)(c)",
+            "operative_date": "2025-02-02"
+          }
+        ],
+        "canonical_sha256": "759b47f6dca49bf9e753d6fde7e8b6bfbb7c931de6dc858c37cace68e68ec0fa",
+        "canonical_bytes": 9602
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": false,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "07-prohibited-intimate-imagery-ba",
+      "description": "A synthetic image system is intended to generate non-consensual intimate material depicting identifiable adults. The expected property is the new Article 5(1)(ba) prohibition from 2 December 2026; Article 5(1a) reaches this point and Article 5(1b) qualifies point (ba), not point (bb).",
+      "categories": [
+        "prohibited",
+        "article_5_ba",
+        "corrected_scope"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "prohibited"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 5(1)(ba)",
+            "operative_date": "2026-12-02"
+          }
+        ],
+        "canonical_sha256": "0771d87df906e3380c9bcbd6e2c94d3a676fcb21600181034ccbf816e41d32ce",
+        "canonical_bytes": 9375
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "08-prohibited-csam-bb",
+      "description": "A synthetic generative system is intended to create child sexual abuse material. The expected property is the new Article 5(1)(bb) prohibition from 2 December 2026; Article 5(1a) reaches point (bb), while Article 5(1b) must not be represented as qualifying it because that paragraph is limited to point (ba).",
+      "categories": [
+        "prohibited",
+        "article_5_bb",
+        "corrected_scope"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "prohibited"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 5(1)(bb)",
+            "operative_date": "2026-12-02"
+          }
+        ],
+        "canonical_sha256": "9bdb43e00b93eaee8090dd4b86c69502ae78a1e166d1056e696fe5bd338998b2",
+        "canonical_bytes": 8948
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "09-transparency-benefits-info-chatbot",
+      "description": "A synthetic chatbot answers general questions about public-assistance programs but neither assesses nor influences eligibility. The benefits vocabulary must not turn an information service into Annex III point 5; the expected legal route is only the Article 50(1) interaction disclosure.",
+      "categories": [
+        "transparency",
+        "article_50_chatbot",
+        "benefits_information_boundary"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "transparency_duty"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 50(1)",
+            "operative_date": "2026-08-02"
+          }
+        ],
+        "canonical_sha256": "fd4bcf538e997eb83ce6857e01b3c1642f54ff8a9634c0da17b5d7633b9fe177",
+        "canonical_bytes": 13725
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "10-transparency-synthetic-content",
+      "description": "A synthetic provider generates product images for publication and supplies a machine-readable marking fact. The expected legal route is the Article 50(2) synthetic-content duty; the marking fact informs readiness but does not remove the legal route.",
+      "categories": [
+        "transparency",
+        "article_50_synthetic_content"
+      ],
+      "fixed_boundary": false,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "transparency_duty"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 50(2)",
+            "operative_date": "2026-08-02"
+          }
+        ],
+        "canonical_sha256": "ef7c5fb28bf1a413dc3f18f3bd452ec90ab0fbbc861bd8843975a878625ac9cd",
+        "canonical_bytes": 14497
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": false,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "11-transparency-deepfake",
+      "description": "A synthetic provider and deployer generate and publish video depicting real adults in fictional scenes. The expected result preserves both the provider-side machine-readable marking route under Article 50(2) and the deployer-side deepfake disclosure route under Article 50(4).",
+      "categories": [
+        "transparency",
+        "article_50_synthetic_content",
+        "article_50_deepfake",
+        "provider_deployer_boundary"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "transparency_duty"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 50(2)",
+            "operative_date": "2026-08-02"
+          },
+          {
+            "provision": "Article 50(4)",
+            "operative_date": "2026-08-02"
+          }
+        ],
+        "canonical_sha256": "687b8d597de52287d9feb69f80ef27a0fb6e0e1cccf55843797eef1fdb10a2ff",
+        "canonical_bytes": 21355
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "12-gpai-systemic-compute",
+      "description": "A synthetic GPAI provider supplies a training-compute fact above the systemic-risk threshold. The high-level legal route remains GPAI and the readiness projection must include both Article 53 baseline duties and Article 55 systemic-risk duties without treating the downstream systems as classified.",
+      "categories": [
+        "gpai",
+        "systemic_risk",
+        "compute_threshold"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "gpai"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 3(63) and Chapter V",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "c8236059d366c0987eb723cc77ddd500cb2274cd41d8841767da35f3cf80b2b5",
+        "canonical_bytes": 24837
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "13-gpai-systemic-unknown",
+      "description": "A synthetic GPAI provider supplies neither training compute nor a Commission designation fact. The model route itself is known, but systemic-risk status is not; the readiness projection may include Article 53 baseline duties and must not invent Article 55 systemic duties.",
+      "categories": [
+        "gpai",
+        "systemic_risk_ambiguity",
+        "decisive_subroute_boundary"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "gpai"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 3(63) and Chapter V",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "fe3addf3d3710ce2a8625c0eba952b285d344f4a2e5b8eaf5e8e73fe6f0ccec1",
+        "canonical_bytes": 15459
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "14-minimal-spam-filter",
+      "description": "A synthetic email spam filter has a complete set of negative higher-tier predicates, affects only message-folder placement, and does not make decisions about natural persons. The expected minimal route is a bounded negative conclusion and must retain the Article 4 literacy duty plus summary and legal-review warnings.",
+      "categories": [
+        "minimal",
+        "negative_legal_conclusion"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "minimal"
+        ],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Articles 5, 6, 50 and 95, and Annexes I and III",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "4554893095d0342baa8137d9a94ff9a9b0f8871581fe45cf3a839ec0e9853ece",
+        "canonical_bytes": 17640
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "15-missing-intended-purpose",
+      "description": "A synthetic profile supplies EU nexus, actor, affected group, and consequence but omits the intended purpose. Impact can still describe the supplied consequence, while legal classification and readiness must abstain and enumerate the decisive intended-purpose fact instead of guessing a route.",
+      "categories": [
+        "abstention",
+        "decisive_missing_fact"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "undetermined",
+        "block_statuses": {
+          "legal_classification": "undetermined",
+          "impact": "determined",
+          "implementation_readiness": "undetermined"
+        },
+        "routes": [],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [
+          "missing.intended-purpose"
+        ],
+        "legal_anchors": [
+          {
+            "provision": "Articles 5, 6 and 50, and Annexes I and III",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "5d6386f294fc9ea9314c1b9ee263cfa8bd4993cdcfffd09a5ec749e40a6dcc26",
+        "canonical_bytes": 6414
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "missing.intended-purpose affects a block that did not abstain: impact"
+          ]
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "decisive missing fact missing.intended-purpose did not stop impact"
+          ]
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "fixed legal scope boundary changed"
+          ]
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "abstention is not useful because decisive gaps are not exact"
+          ]
+        }
+      },
+      "pass": false
+    },
+    {
+      "case_id": "16-sparse-profile",
+      "description": "The sparsest valid public profile supplies only profile version 1.0. Every affected block must fail closed, the envelope must enumerate each decisive missing fact with a question and reason, and no empty-input path may be treated as minimal risk.",
+      "categories": [
+        "abstention",
+        "sparse_profile"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "undetermined",
+        "block_statuses": {
+          "legal_classification": "undetermined",
+          "impact": "undetermined",
+          "implementation_readiness": "undetermined"
+        },
+        "routes": [],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [
+          "missing.impact.consequence",
+          "missing.legal.jurisdiction",
+          "missing.impact.affected-groups",
+          "missing.intended-purpose"
+        ],
+        "legal_anchors": [
+          {
+            "provision": "Articles 5, 6 and 50, and Annexes I and III",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "c43d7ffa1cec9039b447db4fff2981b54e66beeb058be878924da4541b2230fe",
+        "canonical_bytes": 4454
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "17-not-ai-system",
+      "description": "A synthetic deterministic file sorter is machine-based but does not infer how to generate outputs from inputs. The supplied Article 3(1) definition fact makes the result not applicable, and its definition finding must use not_date_bound rather than inventing an operative deadline.",
+      "categories": [
+        "not_date_bound",
+        "not_applicable",
+        "definition_boundary"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "not_applicable",
+        "block_statuses": {
+          "legal_classification": "not_applicable",
+          "impact": "not_applicable",
+          "implementation_readiness": "not_applicable"
+        },
+        "routes": [],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 3(1)",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "eae65890310d8590ab4ee9c7ba0f9ba87ec3bf113dca7cb12e132eb57b60fe67",
+        "canonical_bytes": 3044
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "18-non-eu-no-nexus",
+      "description": "A synthetic spam filter is described only for the United States and explicitly has no supplied EU-use fact. Even though the higher-tier predicates are otherwise complete and negative, the assessment must not silently assume EU territorial scope or emit a minimal conclusion.",
+      "categories": [
+        "abstention",
+        "territorial_scope",
+        "non_eu_nexus"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "undetermined",
+        "block_statuses": {
+          "legal_classification": "undetermined",
+          "impact": "determined",
+          "implementation_readiness": "undetermined"
+        },
+        "routes": [],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [
+          "missing.legal.jurisdiction"
+        ],
+        "legal_anchors": [
+          {
+            "provision": "Articles 5, 6 and 50, and Annexes I and III",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "ae2756beabf7d818e5e3636700b1d78955d5e6dab748a5362b27996d499a3229",
+        "canonical_bytes": 11883
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "19-boundary-one-to-one-verification",
+      "description": "A synthetic identity check performs a one-to-one facial comparison only against the passport presented by the same person. That use is excluded from Annex III(1)(a), but the supplied profile is not complete enough for a global minimal conclusion, so the expected result is bounded abstention with neither high-risk nor minimal routing.",
+      "categories": [
+        "boundary",
+        "biometric_verification",
+        "abstention"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "undetermined",
+        "block_statuses": {
+          "legal_classification": "undetermined",
+          "impact": "determined",
+          "implementation_readiness": "undetermined"
+        },
+        "routes": [],
+        "annex_iii_categories": [],
+        "decisive_missing_fact_ids": [
+          "missing.classification-context"
+        ],
+        "legal_anchors": [
+          {
+            "provision": "Articles 5, 6 and 50, and Annexes I and III",
+            "operative_date": "not_date_bound"
+          }
+        ],
+        "canonical_sha256": "6a25b57d305f067b68fc4110cd9631e0c64fd1cfb4efcb7d66068751380f1297",
+        "canonical_bytes": 10215
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "case_id": "20-boundary-recruitment-formatting",
+      "description": "A synthetic utility only normalizes typography and field order in job-application documents and explicitly does not rank, filter, score, or evaluate candidates. Complete structured negatives should prevent recruitment vocabulary alone from creating Annex III point 4, so the expected property is the bounded minimal route.",
+      "categories": [
+        "boundary",
+        "recruitment_formatting",
+        "conflicting_text_and_signals",
+        "minimal"
+      ],
+      "fixed_boundary": true,
+      "actual": {
+        "law_corpus_id": "eu-ai-act-2026-07-27",
+        "status": "determined",
+        "block_statuses": {
+          "legal_classification": "determined",
+          "impact": "determined",
+          "implementation_readiness": "determined"
+        },
+        "routes": [
+          "high_risk"
+        ],
+        "annex_iii_categories": [
+          4
+        ],
+        "decisive_missing_fact_ids": [],
+        "legal_anchors": [
+          {
+            "provision": "Article 6(2) and Annex III, point 4",
+            "operative_date": "2027-12-02"
+          }
+        ],
+        "canonical_sha256": "156b0a896083811936e765582abf589227f8f1fe6684d177565de4c249e6c1ea",
+        "canonical_bytes": 59704
+      },
+      "metrics": {
+        "response_schema": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "routing_correctness": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "routes expected [minimal], received [high_risk]",
+            "Annex III categories expected [], received [4]"
+          ]
+        },
+        "abstention_correctness": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "citation_integrity": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "missing legal anchor Articles 5, 6, 50 and 95, and Annexes I and III@not_date_bound",
+            "forbidden legal provision emitted: Article 6(2) and Annex III, point 4"
+          ]
+        },
+        "summary_disclosure": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "missing required warning LEGAL_REVIEW_REQUIRED"
+          ]
+        },
+        "unsupported_conclusions": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "unsupported route emitted: high_risk"
+          ]
+        },
+        "block_separation": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "response_size": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "determinism": {
+          "evaluated": true,
+          "pass": true,
+          "reasons": []
+        },
+        "fixed_legal_boundaries": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "fixed route boundary changed",
+            "fixed legal citation boundary changed",
+            "fixed legal scope boundary changed"
+          ]
+        },
+        "useful_outcome": {
+          "evaluated": true,
+          "pass": false,
+          "reasons": [
+            "legal routing is not useful because it misses the expected property"
+          ]
+        }
+      },
+      "pass": false
+    }
+  ],
+  "aggregate": {
+    "response_schema": {
+      "passed": 20,
+      "evaluated": 20,
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "routing_correctness": {
+      "passed": 19,
+      "evaluated": 20,
+      "rate": 0.95,
+      "threshold": 0.95,
+      "pass": true
+    },
+    "abstention_correctness": {
+      "passed": 19,
+      "evaluated": 20,
+      "rate": 0.95,
+      "threshold": 1,
+      "pass": false
+    },
+    "citation_integrity": {
+      "passed": 19,
+      "evaluated": 20,
+      "rate": 0.95,
+      "threshold": 1,
+      "pass": false
+    },
+    "summary_disclosure": {
+      "passed": 19,
+      "evaluated": 20,
+      "rate": 0.95,
+      "threshold": 1,
+      "pass": false
+    },
+    "unsupported_conclusions": {
+      "passed": 18,
+      "evaluated": 20,
+      "rate": 0.9,
+      "threshold": 1,
+      "pass": false
+    },
+    "block_separation": {
+      "passed": 20,
+      "evaluated": 20,
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "response_size": {
+      "passed": 20,
+      "evaluated": 20,
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "determinism": {
+      "passed": 20,
+      "evaluated": 20,
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "fixed_legal_boundaries": {
+      "passed": 15,
+      "evaluated": 17,
+      "rate": 0.8823529411764706,
+      "threshold": 1,
+      "pass": false
+    },
+    "useful_outcome": {
+      "passed": 18,
+      "evaluated": 20,
+      "rate": 0.9,
+      "threshold": 0.95,
+      "pass": false
+    }
+  },
+  "overall_pass": false
+}

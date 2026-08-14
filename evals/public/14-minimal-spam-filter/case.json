@@ -1,0 +1,37 @@
+{
+  "case_version": "1.0",
+  "case_id": "14-minimal-spam-filter",
+  "categories": [
+    "minimal",
+    "negative_legal_conclusion"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic email spam filter has a complete set of negative higher-tier predicates, affects only message-folder placement, and does not make decisions about natural persons. The expected minimal route is a bounded negative conclusion and must retain the Article 4 literacy duty plus summary and legal-review warnings.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "determined",
+    "block_statuses": {
+      "legal_classification": "determined",
+      "impact": "determined",
+      "implementation_readiness": "determined"
+    },
+    "routes": [
+      "minimal"
+    ],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Articles 5, 6, 50 and 95, and Annexes I and III",
+        "operative_date": "not_date_bound"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "LEGAL_REVIEW_REQUIRED",
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

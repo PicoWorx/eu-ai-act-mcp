@@ -1,0 +1,35 @@
+{
+  "case_version": "1.0",
+  "case_id": "17-not-ai-system",
+  "categories": [
+    "not_date_bound",
+    "not_applicable",
+    "definition_boundary"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic deterministic file sorter is machine-based but does not infer how to generate outputs from inputs. The supplied Article 3(1) definition fact makes the result not applicable, and its definition finding must use not_date_bound rather than inventing an operative deadline.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "not_applicable",
+    "block_statuses": {
+      "legal_classification": "not_applicable",
+      "impact": "not_applicable",
+      "implementation_readiness": "not_applicable"
+    },
+    "routes": [],
+    "annex_iii_categories": [],
+    "abstention": false,
+    "required_missing_fact_ids": [],
+    "required_legal_anchors": [
+      {
+        "provision": "Article 3(1)",
+        "operative_date": "not_date_bound"
+      }
+    ],
+    "forbidden_legal_provisions": [],
+    "required_warning_codes": [
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}

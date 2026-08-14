@@ -1,0 +1,39 @@
+{
+  "case_version": "1.0",
+  "case_id": "19-boundary-one-to-one-verification",
+  "categories": [
+    "boundary",
+    "biometric_verification",
+    "abstention"
+  ],
+  "fixed_boundary": true,
+  "description": "A synthetic identity check performs a one-to-one facial comparison only against the passport presented by the same person. That use is excluded from Annex III(1)(a), but the supplied profile is not complete enough for a global minimal conclusion, so the expected result is bounded abstention with neither high-risk nor minimal routing.",
+  "profile_file": "profile.json",
+  "expected": {
+    "status": "undetermined",
+    "block_statuses": {
+      "legal_classification": "undetermined",
+      "impact": "determined",
+      "implementation_readiness": "undetermined"
+    },
+    "routes": [],
+    "annex_iii_categories": [],
+    "abstention": true,
+    "required_missing_fact_ids": [
+      "missing.classification-context"
+    ],
+    "required_legal_anchors": [
+      {
+        "provision": "Articles 5, 6 and 50, and Annexes I and III",
+        "operative_date": "not_date_bound"
+      }
+    ],
+    "forbidden_legal_provisions": [
+      "Article 6(2) and Annex III, point 1"
+    ],
+    "required_warning_codes": [
+      "OUTPUT_NOT_LEGAL_ADVICE",
+      "SUMMARY_ONLY"
+    ]
+  }
+}
