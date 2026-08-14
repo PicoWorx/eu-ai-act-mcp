@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "13-gpai-systemic-unknown",
   "categories": [
     "gpai",
@@ -24,12 +24,13 @@
     "required_missing_fact_ids": [],
     "required_legal_anchors": [
       {
-        "provision": "Article 3(63) and Chapter V",
-        "operative_date": "not_date_bound"
+        "provision": "Article 3(63)",
+        "operative_date": "2025-02-02"
       }
     ],
     "forbidden_legal_provisions": [],
     "required_warning_codes": [
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ],

@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "05-annex-i-medical-safety",
   "categories": [
     "annex_i",
@@ -30,6 +30,7 @@
     ],
     "forbidden_legal_provisions": [],
     "required_warning_codes": [
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ]

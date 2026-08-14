@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "09-transparency-benefits-info-chatbot",
   "categories": [
     "transparency",
@@ -32,6 +32,7 @@
       "Article 6(2) and Annex III, point 5"
     ],
     "required_warning_codes": [
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ]

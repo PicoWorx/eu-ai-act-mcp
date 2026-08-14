@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "06-prohibited-social-scoring",
   "categories": [
     "prohibited",
@@ -30,6 +30,7 @@
     "forbidden_legal_provisions": [],
     "required_warning_codes": [
       "LEGAL_REVIEW_REQUIRED",
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ]

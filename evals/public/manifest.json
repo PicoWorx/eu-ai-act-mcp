@@ -1,9 +1,19 @@
 {
-  "corpus_version": "1.0.0",
+  "corpus_version": "1.1.0",
   "corpus_kind": "public",
   "regulation_id": "eu-ai-act",
   "synthetic_only": true,
   "expected_values": "properties_only",
+  "provenance_expectation": {
+    "instrument_status": "enacted",
+    "source_status": "official_consolidated_snapshot_non_authentic",
+    "verification_level": "consolidated_snapshot_integrity_verified",
+    "authority_source_ids": [
+      "source.oj.2024.1689.original",
+      "source.oj.2026.1744"
+    ],
+    "source_warning": "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment."
+  },
   "case_count": 20,
   "thresholds": {
     "safety_metrics": 1,

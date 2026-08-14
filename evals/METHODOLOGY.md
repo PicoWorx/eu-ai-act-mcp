@@ -8,7 +8,7 @@ The benchmark does not assign numeric legal confidence. Its pass rates are softw
 
 ## Scope
 
-The evaluated subject is the registered `euaiact_assess_system` handler in package version 1.5.0, decision contract version 1.0. The grader invokes that real handler after building the repository. It does not mock the assessment or its calls to existing atomic tools.
+The evaluated subject is the registered `euaiact_assess_system` handler in package version 1.5.0, decision contract version 1.1. The grader invokes that real handler after building the repository. It does not mock the assessment or its calls to existing atomic tools.
 
 This lane evaluates the deterministic assessment tool only. It does not evaluate how an unfamiliar language model selects or calls the tool. Model-family tests, prompts, and agent traces belong to the separate agent-behavior lane and must report results by model and version.
 
@@ -42,7 +42,7 @@ Expected files specify observable properties such as route, block status, decisi
 | 14 | Bounded minimal route after complete negative predicates |
 | 15 | Missing intended purpose and affected-block abstention |
 | 16 | Sparsest valid profile and fail-closed missing facts |
-| 17 | Article 3(1) non-applicability with `not_date_bound` |
+| 17 | Article 3(1) non-applicability with the Chapter I application date |
 | 18 | Non-EU profile without an established EU nexus |
 | 19 | One-to-one biometric verification with bounded abstention |
 | 20 | Recruitment document formatting rather than candidate evaluation |
@@ -59,9 +59,10 @@ Ground truth follows the frozen decision contract and the pinned enacted-law cor
 - Article 5(1)(ba) and (bb) application on 2 December 2026;
 - Article 5(1a) covering points (ba) and (bb), while Article 5(1b) is limited to point (ba);
 - GPAI baseline and systemic-risk readiness duties kept distinct;
-- `not_date_bound` used only when a finding is not itself a deadline conclusion.
+- Article 3(1) and Article 3(63) use the Chapter I application date of 2 February 2025;
+- tool-state abstentions and caller-supplied impact findings carry no invented legal provenance.
 
-Operational summaries are never treated as statutory text. Every finding must link to official EUR-Lex text and disclose its source and verification level.
+Operational summaries are never treated as statutory text. Every legal proposition links to the official EUR-Lex consolidated snapshot and identifies the authentic original and amending OJ acts as its authority sources. The consolidated snapshot is labelled `official_consolidated_snapshot_non_authentic`, and its verification level is `consolidated_snapshot_integrity_verified`. Corpus verification establishes file identity and integrity only. It does not give the consolidated documentation text legal effect or prove legal correctness, completeness, compliance, certification, approval, or conformity assessment.
 
 ## Grader operation
 
@@ -82,9 +83,9 @@ Safety metrics require 100 percent. A single failure keeps the overall evaluatio
 
 | Metric | Pass condition | Threshold |
 |---|---|---:|
-| Response schema | Every response parses against contract version 1.0 | 100% |
+| Response schema | Every response parses against contract version 1.1 | 100% |
 | Abstention correctness | Required decisive gaps are exact, and every affected block is `undetermined` | 100% |
-| Citation integrity | Every finding has complete enacted-law provenance, official EUR-Lex URL, correct source, provision, and operative date | 100% |
+| Citation integrity | Every legal proposition has the migrated consolidated-snapshot status, integrity-only verification, authentic OJ authority IDs, official EUR-Lex URL, exact provision, and operative date; non-legal findings carry no legal provenance | 100% |
 | Summary disclosure | Required warnings exist, cover every finding, distinguish summaries from statutory text, and contain no legal-confidence field | 100% |
 | Unsupported conclusions | Routes are permitted, references resolve, decisive gaps stop affected blocks, and special scope predicates hold | 100% |
 | Block separation | Finding references do not cross the legal, impact, and readiness blocks | 100% |
@@ -109,7 +110,7 @@ From the repository root:
 
 ```sh
 npm run build
-node evals/grader.mjs --check evals/results/day-0-baseline.json
+node evals/grader.mjs --label day-2-baseline --check evals/results/day-2-baseline.json
 ```
 
 `Baseline reproduction: MATCH` means the current grader, corpus, and tool output reproduce the committed JSON byte for byte. The process still exits with status 1 when the reproduced baseline is below a threshold. A baseline mismatch or invalid corpus is a separate reproduction failure and must be investigated before interpreting rates.
@@ -117,12 +118,12 @@ node evals/grader.mjs --check evals/results/day-0-baseline.json
 To write a candidate baseline after an intentional, reviewed change:
 
 ```sh
-node evals/grader.mjs --output evals/results/candidate.json
+node evals/grader.mjs --label candidate --output evals/results/candidate.json
 ```
 
 Do not replace the Day-0 baseline merely because a metric is red. First adjudicate whether the implementation, ground truth, or grader is wrong. A legally grounded case must not be weakened to make the tool pass.
 
-## Day-0 interpretation
+## Historical baselines
 
 `evals/results/day-0-baseline.json` records the assessment behavior before evaluation-driven fixes. Red cases are evidence, not an incomplete benchmark. The committed result must preserve their exact property failures so a later implementation change can be compared without moving the cases.
 
@@ -131,6 +132,8 @@ The Day-0 corpus reveals three awkward behaviors:
 - Case 15 marks intended purpose as decisive for impact but returns the impact block as determined. This violates the frozen affected-block rule even though the supplied consequence permits a bounded impact description.
 - Case 19 correctly abstains on the global legal route for one-to-one verification and remains a useful bounded result. An atomic follow-up call is optional because the missing-fact question itself is actionable.
 - Case 20 routes a formatting-only recruitment utility to Annex III point 4 from recruitment vocabulary despite complete structured negative signals. The public expectation remains minimal, and the baseline remains red.
+
+Day 0 and Day 1 remain unchanged historical artifacts. MIGRATION-001 publishes corpus version 1.1.0 and Day 2. The captain-authorized SPRINT-LOG M6b correction changes only case 15's expected impact status from `determined` to `undetermined`; the intended-purpose fact was already declared decisive for impact. All other expectation changes are direct consequences of the source-status, exact-provision, operative-date, or statutory-predicate migration recorded in MIGRATION-001.
 
 ## Independent sealed evaluation protocol
 

@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "16-sparse-profile",
   "categories": [
     "abstention",
@@ -24,14 +24,10 @@
       "missing.intended-purpose",
       "missing.legal.jurisdiction"
     ],
-    "required_legal_anchors": [
-      {
-        "provision": "Articles 5, 6 and 50, and Annexes I and III",
-        "operative_date": "not_date_bound"
-      }
-    ],
+    "required_legal_anchors": [],
     "forbidden_legal_provisions": [],
     "required_warning_codes": [
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ]

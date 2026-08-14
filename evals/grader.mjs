@@ -21,7 +21,7 @@ import {
 
 const RUNS_PER_CASE = 10;
 const MAX_CANONICAL_BYTES = 65_536;
-const GRADER_VERSION = "1.0.0";
+const GRADER_VERSION = "1.1.0";
 const GRADER_FILE = fileURLToPath(import.meta.url);
 const EVALS_ROOT = dirname(GRADER_FILE);
 const REPO_ROOT = dirname(EVALS_ROOT);
@@ -114,6 +114,17 @@ function validateCorpus(manifest) {
   if (manifest.expected_values !== "properties_only") {
     throw new Error("Manifest must declare property-only expected values");
   }
+  const provenanceExpectation = manifest.provenance_expectation;
+  if (
+    provenanceExpectation?.instrument_status !== "enacted" ||
+    provenanceExpectation?.source_status !== "official_consolidated_snapshot_non_authentic" ||
+    provenanceExpectation?.verification_level !== "consolidated_snapshot_integrity_verified" ||
+    !Array.isArray(provenanceExpectation?.authority_source_ids) ||
+    provenanceExpectation.authority_source_ids.length === 0 ||
+    provenanceExpectation?.source_warning !== "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment."
+  ) {
+    throw new Error("Manifest must declare the MIGRATION-001 provenance expectation");
+  }
   if (manifest.case_count !== 20 || manifest.cases.length !== 20) {
     throw new Error("The public corpus must contain exactly 20 cases");
   }
@@ -163,12 +174,12 @@ function legalProvenance(output) {
 }
 
 function readinessExpectedDate(provision, expected) {
-  if (/^Art\. 4(?:$|\()/.test(provision)) return "2025-02-02";
+  if (/^Art\. 4(?:$|\()/.test(provision)) return "2026-07-27";
   if (/^Art\. 50(?:$|\()/.test(provision)) return "2026-08-02";
   if (/^Art\. (?:53|55)(?:$|\()/.test(provision)) {
     return "2025-08-02";
   }
-  if (provision === "Article 5") {
+  if (/^Article 5(?:$|\()/.test(provision)) {
     return expected.required_legal_anchors.some((anchor) => /\(ba\)|\(bb\)/.test(anchor.provision))
       ? "2026-12-02"
       : "2025-02-02";
@@ -232,7 +243,12 @@ function assessCitationIntegrity(output, expected) {
   const result = metric();
   const corpusSources = new Set(output.corpus.source_snapshot_ids);
   for (const finding of output.findings) {
-    if (finding.provenance.length === 0) result.fail(`${finding.finding_id} has no provenance`);
+    if (finding.finding_basis === "legal_proposition" && finding.provenance.length === 0) {
+      result.fail(`${finding.finding_id} legal proposition has no provenance`);
+    }
+    if (finding.finding_basis !== "legal_proposition" && finding.provenance.length !== 0) {
+      result.fail(`${finding.finding_id} non-legal finding carries legal provenance`);
+    }
     for (const provenance of finding.provenance) {
       if (!corpusSources.has(provenance.source_id)) {
         result.fail(`${finding.finding_id} cites a source outside the sealed law corpus`);
@@ -240,14 +256,23 @@ function assessCitationIntegrity(output, expected) {
       if (!provenance.official_url.startsWith("https://eur-lex.europa.eu/")) {
         result.fail(`${finding.finding_id} does not link to official EUR-Lex text`);
       }
-      if (provenance.source_status !== "enacted_oj") {
-        result.fail(`${finding.finding_id} does not use enacted Official Journal law`);
+      if (provenance.instrument_status !== "enacted") {
+        result.fail(`${finding.finding_id} does not identify the instrument as enacted`);
       }
-      if (provenance.verification_level !== "complete_official_text") {
-        result.fail(`${finding.finding_id} lacks complete official-text verification`);
+      if (provenance.source_status !== "official_consolidated_snapshot_non_authentic") {
+        result.fail(`${finding.finding_id} misstates the consolidated snapshot's legal status`);
       }
-      if (finding.block === "impact" && provenance.operative_date !== "not_date_bound") {
-        result.fail(`${finding.finding_id} assigns a date to the non-legal impact observation`);
+      if (provenance.verification_level !== "consolidated_snapshot_integrity_verified") {
+        result.fail(`${finding.finding_id} misstates what corpus verification establishes`);
+      }
+      if (!sameValues(provenance.authority_source_ids, [
+        "source.oj.2024.1689.original",
+        "source.oj.2026.1744",
+      ])) {
+        result.fail(`${finding.finding_id} lacks the authentic OJ authority source IDs`);
+      }
+      if (provenance.authority_source_ids.some((sourceId) => !corpusSources.has(sourceId))) {
+        result.fail(`${finding.finding_id} names authority outside the sealed law corpus`);
       }
       if (finding.block === "implementation_readiness") {
         const expectedDate = readinessExpectedDate(provenance.exact_provision, expected);
@@ -307,6 +332,19 @@ function assessSummaryDisclosure(output, expected) {
     }
     if (!sameValues(adviceWarning.finding_ids, findingIds)) {
       result.fail("OUTPUT_NOT_LEGAL_ADVICE warning does not cover every finding");
+    }
+  }
+  const sourceWarning = output.warnings.find(
+    (warning) => warning.code === "NON_BINDING_SOURCE",
+  );
+  if (!sourceWarning) {
+    result.fail("NON_BINDING_SOURCE warning absent");
+  } else {
+    if (sourceWarning.message !== "Corpus verification confirms only the identity and integrity of the pinned files. It does not establish that the consolidated snapshot has legal effect, that the corpus is current or complete for the facts, that an interpretation is correct, or that a system is compliant, certified, approved, or has passed a conformity assessment.") {
+      result.fail("NON_BINDING_SOURCE warning does not state the verification boundary");
+    }
+    if (!sameValues(sourceWarning.finding_ids, findingIds)) {
+      result.fail("NON_BINDING_SOURCE warning does not cover every finding");
     }
   }
   for (const path of findKeys(output, "confidence")) {
@@ -553,7 +591,7 @@ async function gradeCase(entry, handler) {
   };
 }
 
-async function grade() {
+async function grade(runLabel) {
   const manifestRaw = readFileSync(MANIFEST_FILE);
   const manifest = JSON.parse(manifestRaw.toString("utf8"));
   validateCorpus(manifest);
@@ -583,12 +621,12 @@ async function grade() {
   const packageMetadata = readJson(PACKAGE_FILE);
   return {
     grader_version: GRADER_VERSION,
-    run_label: "day-0-baseline",
+    run_label: runLabel,
     subject: {
       tool: "euaiact_assess_system",
       package: packageMetadata.name,
       package_version: packageMetadata.version,
-      decision_contract_version: "1.0",
+      decision_contract_version: "1.1",
       law_corpus_id: cases[0].actual.law_corpus_id,
     },
     public_corpus: {
@@ -612,10 +650,10 @@ function parseArguments(argv) {
   const options = {};
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
-    if (argument === "--output" || argument === "--check") {
+    if (argument === "--output" || argument === "--check" || argument === "--label") {
       const value = argv[index + 1];
-      if (!value) throw new Error(`${argument} requires a path`);
-      options[argument.slice(2)] = resolve(value);
+      if (!value) throw new Error(`${argument} requires a value`);
+      options[argument.slice(2)] = argument === "--label" ? value : resolve(value);
       index += 1;
     } else {
       throw new Error(`Unknown argument: ${argument}`);
@@ -648,7 +686,7 @@ function printSummary(results) {
 }
 
 const options = parseArguments(process.argv.slice(2));
-const results = await grade();
+const results = await grade(options.label ?? "candidate");
 const serialized = `${JSON.stringify(results, null, 2)}\n`;
 let baselineMatch = true;
 if (options.output) {

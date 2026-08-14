@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "07-prohibited-intimate-imagery-ba",
   "categories": [
     "prohibited",
@@ -33,6 +33,7 @@
     ],
     "required_warning_codes": [
       "LEGAL_REVIEW_REQUIRED",
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ],

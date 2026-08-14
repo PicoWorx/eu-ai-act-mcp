@@ -1,5 +1,5 @@
 {
-  "case_version": "1.0",
+  "case_version": "1.1",
   "case_id": "08-prohibited-csam-bb",
   "categories": [
     "prohibited",
@@ -34,6 +34,7 @@
     ],
     "required_warning_codes": [
       "LEGAL_REVIEW_REQUIRED",
+      "NON_BINDING_SOURCE",
       "OUTPUT_NOT_LEGAL_ADVICE",
       "SUMMARY_ONLY"
     ],
