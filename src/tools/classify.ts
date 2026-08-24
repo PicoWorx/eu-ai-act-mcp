@@ -112,7 +112,7 @@ function buildBase(partial: Partial<BaseResult> & Pick<BaseResult, "risk_classif
   return {
     annex_iii_category: null,
     caveat: null,
-    lexbeam_url: `${BRANDING.baseUrl}/tools/mcp`,
+    lexbeam_url: `${BRANDING.baseUrl}/kontakt`,
     ...partial,
     // Single choke point for citation hygiene: no duplicate articles in any output.
     relevant_articles: [...new Set(partial.relevant_articles)],
