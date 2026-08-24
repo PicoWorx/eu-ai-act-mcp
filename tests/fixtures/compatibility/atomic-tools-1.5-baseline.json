@@ -68,8 +68,8 @@
           "domain": "employment"
         }
       },
-      "baseline_sha256": "f8ab20ead5fd531ae9178600cb16373c8d8d4b034c0d61d055a1cab308975fca",
-      "baseline_bytes": 3928
+      "baseline_sha256": "75956b8af08f459af9447b8d89eaaac0af44415e6addd500573cf92059e03af4",
+      "baseline_bytes": 3924
     },
     {
       "tool_name": "euaiact_get_article",

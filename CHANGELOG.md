@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-08-24
+
+Link-correctness patch. No legal content, classification logic, or decision
+contract changed.
+
+### Fixed
+
+- Repointed the `lexbeam_url` field of every `euaiact_classify_system` response
+  from `https://lexbeam.com/tools/mcp`, which returns 404, to
+  `https://lexbeam.com/kontakt`. The dead path shipped in 1.5.0 and reached
+  callers on npm, `mcp.lexbeam.com`, and Smithery.
+
+### Changed
+
+- Rewrote the `smithery.yaml` listing description to state the operative law
+  basis, the deterministic tool set, the fail-closed behaviour on sparse input,
+  and the absence of API keys and telemetry.
+
+### Verification
+
+- Regenerated the twelve golden contract responses, their pinned RFC 8785
+  hashes, the atomic-tools 1.5 compatibility baseline, and the `day-4-baseline`
+  evaluation record. The golden and evaluation regenerations carry the version
+  string only; no assessment result changed.
+
 ## [1.5.0] - 2026-08-14
 
 Decision-contract and verification release. It adds one bounded assessment tool,
